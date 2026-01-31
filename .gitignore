@@ -1,0 +1,19 @@
+# 1. Ignorar toda la carpeta de configuración de Obsidian
+.obsidian/
+
+# 2. Permitir exclusivamente las carpetas de plugins y temas
+!.obsidian/plugins/
+!.obsidian/themes/
+
+# 3. Ignorar los archivos de configuración interna de cada plugin (opcional pero limpio)
+# Esto evita guardar los 'data.json' que contienen tus ajustes personales dentro de cada plugin
+.obsidian/plugins/*/*.json
+
+# 4. Ignorar archivos temporales o de sistema que Obsidian crea ahí dentro
+.obsidian/workspace.json
+.obsidian/workspace-mobile.json
+.obsidian/cache/
+
+# 5. Quitar elementos Que no Iran en Github
+
+Conocimiento-Listado.md
