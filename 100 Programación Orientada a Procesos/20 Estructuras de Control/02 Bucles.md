@@ -55,7 +55,7 @@ flowchart TD
 
 
 
-### Iteración sobre [[listas|Listas]]
+### Iteración sobre [[01 Listas|Listas]]
 ```python
 frutas = ["manzana", "banana", "naranja"]
 
@@ -71,7 +71,7 @@ for fruta in frutas:
 # Tiene 7 letras
 ```
 
-### Iteración sobre [[Tuplas|Tuplas]]
+### Iteración sobre [[02 Tuplas|Tuplas]]
 ```python
 coordenadas = (10, 20, 30)
 
@@ -85,7 +85,7 @@ for coord in coordenadas:
 
 ```
 
-### Iteración sobre [[Cadenas|Cadenas (Strings)]]
+### Iteración sobre [[05 Cadenas|Cadenas (Strings)]]
 ```python
 texto = "Python"
 
@@ -100,7 +100,7 @@ for caracter in texto:
 # N
 ```
 
-### Iteración sobre [[Diccionarios|Diccionarios]]
+### Iteración sobre [[03 Diccionarios|Diccionarios]]
 ```python
 persona = {
     "nombre": "Ana",

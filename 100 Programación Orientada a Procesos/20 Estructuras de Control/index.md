@@ -70,7 +70,7 @@ Al completar este módulo, podrás:
 # **Relaciones con Otros Módulos**
 
 ## **Prerrequisitos:**
-- **[[Variables y Tipos de Datos|Variables y Tipos de Datos]]** : Para evaluar condiciones
+- **[[100 Programación Orientada a Procesos/10 Variables y Tipos de Datos/index|Variables y Tipos de Datos]]** : Para evaluar condiciones
 - **[[Operadores de Variables|Operadores]]** : Para construir expresiones booleanas
 
 ## **Aplicaciones Futuras:**

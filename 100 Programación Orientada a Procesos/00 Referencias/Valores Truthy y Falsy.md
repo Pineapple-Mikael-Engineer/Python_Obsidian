@@ -199,7 +199,7 @@ if valor:
 ```
 
 # Casos de Borde
-> [!important] Importante
+> [!error] Importante
 > Leer esta parte con conocimiento de [[POO|POO]]
 
 

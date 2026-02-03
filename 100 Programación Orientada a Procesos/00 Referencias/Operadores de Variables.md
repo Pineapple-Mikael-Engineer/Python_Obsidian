@@ -8,7 +8,7 @@ Los operadores en Python son símbolos especiales que permiten realizar operacio
 # Tipos de Operadores
 
 ```mermaid
-flowchart TD
+flowchart LR
     %% Definición de Estilos
     classDef principal fill:#2d3436,stroke:#dfe6e9,stroke-width:2px,color:#fff,font-weight:bold;
     classDef categoria fill:#636e72,stroke:#dfe6e9,stroke-width:1px,color:#fff;
