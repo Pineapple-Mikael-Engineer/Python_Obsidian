@@ -3,7 +3,7 @@ title: Mutabilidad y Inmutabilidad
 draft: false
 weight: 2
 ---
-# Definición
+
 
 En Python, cada vez que creas un dato, se genera un **objeto** en memoria con un identificador único. La mutabilidad se define así:
 
@@ -52,7 +52,7 @@ flowchart TD
 
 ## I. Tipos Inmutables (Hashables)
 
-Son seguros y predecibles. Se pueden usar como claves en [[diccionarios|diccionarios]].
+Son seguros y predecibles. Se pueden usar como claves en [[Diccionarios|diccionarios]].
 
 - **Numéricos:** `int`, `float`, `complex`, `bool`.
 - **Secuencias:** `str`, `tuple`, `bytes`.

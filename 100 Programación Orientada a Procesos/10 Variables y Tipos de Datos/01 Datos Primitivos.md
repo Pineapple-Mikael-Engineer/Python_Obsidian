@@ -3,7 +3,7 @@ title: Datos Primitivos
 draft: false
 weight: 1
 ---
-# Definición
+
 
 **Datos Primitivos** o **Tipos Primitivos** se refiere a los *bloques de construcción* mas básicos y fundamentales para la manipulación de datos.
 Son los tipos de información más simples que el lenguaje puede procesar y que no pueden descomponerse en algo más sencillo.
@@ -77,6 +77,8 @@ Los enteros soportan las operaciones aritméticas estándar. Es vital distinguir
 | **División Entera (`//`)**                        | Trunca el resultado y devuelve solo la parte entera. | `7 // 2` resulta en `3`   |
 | **Módulo (`%`)**                                  | Devuelve el residuo de la división.                  | `7 % 2` resulta en `1`    |
 | **Exponente** **(**`**`**)**                      | Eleva un número a una potencia.                      | `2 ** 3` resulta en `8`   |
+> [!note] Nota
+> Para ver mas Operaciones revisar [[Operadores de Variables]]
 #### Enteros Grandes (Arbitrary Precision)
 Esta es una de las características interesante de Python. Mientras que lenguajes como Java o C++ tienen un límite máximo para un entero (usualmente $2^{63}-1$ para un _long_ de 64 bits), Python maneja el crecimiento de forma dinámica.
 
@@ -181,8 +183,12 @@ num3 = num1 / num2       # num3 = -4-6j
 num4 = num1.conjugate()  # num4 = 4-6j
 ```
 
+> [!note] Nota
+> Para ver mas Operaciones revisar [[Operadores de Variables]]
+
+
 ### Booleanos-`bool`
-El tipo `bool` representa valores de **lógica binaria**. Se utiliza para evaluar si una condición es verdadera o falsa, siendo la base de todas las [[Estructuras de Control|estructuras de control]] (como los `if` y los `while`). Solo puede tener dos valores:
+El tipo `bool` representa valores de **lógica binaria**. Se utiliza para evaluar si una condición es verdadera o falsa, siendo la base de todas las [[100 Programación Orientada a Procesos/20 Estructuras de Control/index|estructuras de control]] (como los `if` y los `while`). Solo puede tener dos valores:
 - **`True`** (Verdadero)
 - **`False`** (Falso)
 
@@ -207,7 +213,7 @@ Históricamente, Python no tenía un tipo booleano dedicado y usaba `0` para fal
     - `False - 5` → `-5`
 
 
-#### La lógica de la "Verdad" ([[Truthy y Falsy|Truthiness]])
+#### La lógica de la "Verdad" ([[Valores Truthy y Falsy|Truthiness]])
 
 Dado que los booleanos son números, Python extiende este concepto a otros tipos de datos. Casi cualquier objeto en Python puede evaluarse en un contexto booleano:
 
@@ -219,6 +225,8 @@ Dado que los booleanos son números, Python extiende este concepto a otros tipos
     - Cualquier número distinto de cero.
     - Cualquier cadena o contenedor que no esté vacío.
 
+> [!note] Nota
+> Si se desea entender mejor la logica de "Verdad" de Python, revisar: [[Valores Truthy y Falsy|Valores Truthy y Falsy]]
 ## Secuencias
 
 ### Dato Cadena-`str`
