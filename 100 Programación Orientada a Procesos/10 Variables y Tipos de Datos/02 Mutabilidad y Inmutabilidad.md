@@ -32,7 +32,6 @@ La mutabilidad en Python es una propiedad del **tipo de dato**, no del valor. El
 
 ```mermaid
 flowchart LR
-    %% Definición de Estilos
     classDef principal fill:#2d3436,stroke:#dfe6e9,stroke-width:2px,color:#fff,font-weight:bold;
     classDef categoria fill:#636e72,stroke:#dfe6e9,stroke-width:1px,color:#fff;
     classDef tipo fill:#f9f9f9,stroke:#636e72,stroke-width:1px,color:#2d3436;
@@ -40,11 +39,9 @@ flowchart LR
 
     Title((Clasificación por Mutabilidad)):::principal
 
-    %% Ramas Principales
     Title --> Inmutables[Inmutables - Hashables]:::categoria
     Title --> Mutables[Mutables - No Hashables]:::categoria
 
-    %% Grupo Inmutables
     subgraph G1 [Seguros / Estáticos]
         Inmutables --> Num["int, float, complex, bool"]:::tipo
         Inmutables --> SecIn["str, tuple, bytes"]:::tipo
@@ -52,14 +49,12 @@ flowchart LR
         Inmutables --> Cst("None"):::especial
     end
 
-    %% Grupo Mutables
     subgraph G2 [Dinámicos / Flexibles]
         Mutables --> Col["list, dict, set"]:::tipo
         Mutables --> Bin("bytearray"):::tipo
         Mutables --> User("Objetos de Usuario"):::especial
     end
 
-    %% Notas estéticas
     style G1 fill:#f1f2f6,stroke:#ced4da,stroke-dasharray: 5 5
     style G2 fill:#f1f2f6,stroke:#ced4da,stroke-dasharray: 5 5
 ```

@@ -9,7 +9,6 @@ Los operadores en Python son símbolos especiales que permiten realizar operacio
 
 ```mermaid
 flowchart LR
-    %% Definición de Estilos
     classDef principal fill:#2d3436,stroke:#dfe6e9,stroke-width:2px,color:#fff,font-weight:bold;
     classDef categoria fill:#636e72,stroke:#dfe6e9,stroke-width:1px,color:#fff;
     classDef tipo fill:#f9f9f9,stroke:#636e72,stroke-width:1px,color:#2d3436;
@@ -17,7 +16,6 @@ flowchart LR
 
     Title((Tipos De Operadores)):::principal
 
-    %% Ramas Principales
     Title --> Aritmeticos[Aritmeticos]:::categoria
     Title --> Comparación[De Comparación]:::categoria
     Title --> Lógicos[Lógicos]:::categoria
@@ -388,7 +386,6 @@ print("(x & y) == 2 =", resultado)  # True
 
 ```mermaid
 flowchart TD
-    %% Definición de Estilos
     classDef principal fill:#2d3436,stroke:#dfe6e9,stroke-width:2px,color:#fff,font-weight:bold;
     classDef categoria fill:#636e72,stroke:#dfe6e9,stroke-width:1px,color:#fff;
     classDef tipo fill:#f9f9f9,stroke:#636e72,stroke-width:1px,color:#2d3436;
@@ -396,7 +393,6 @@ flowchart TD
 
     Title((Prioridad de Operadores)):::principal
 
-    %% Flujo Lineal corregido sin puntos conflictivos
     Title --> B1["( ) Paréntesis"]:::especial
     B1 --> B2["** Potencia"]:::tipo
     
@@ -428,7 +424,6 @@ flowchart TD
         B14 --> B15["= += -= Asignación"]:::especial
     end
 
-    %% Notas estéticas de los grupos
     style G1 fill:#f1f2f6,stroke:#ced4da,stroke-dasharray: 5 5
     style G2 fill:#f1f2f6,stroke:#ced4da,stroke-dasharray: 5 5
     style G3 fill:#f1f2f6,stroke:#ced4da,stroke-dasharray: 5 5

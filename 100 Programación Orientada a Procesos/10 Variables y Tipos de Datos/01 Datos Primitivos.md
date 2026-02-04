@@ -13,7 +13,6 @@ Podemos clasificaros en:
 
 ```mermaid
 flowchart TD
-    %% Definición de Estilos
     classDef principal fill:#2d3436,stroke:#dfe6e9,stroke-width:2px,color:#fff,font-weight:bold;
     classDef categoria fill:#636e72,stroke:#dfe6e9,stroke-width:1px,color:#fff;
     classDef tipo fill:#f9f9f9,stroke:#636e72,stroke-width:1px,color:#2d3436;
@@ -21,12 +20,10 @@ flowchart TD
 
     Title((Datos Primitivos)):::principal
 
-    %% Ramas Principales
     Title --> Numericos[Numericos]:::categoria
     Title --> Secuencias[Secuencias]:::categoria
     Title --> Vacio[Vacio]:::categoria
 
-    %% Grupo Numéricos
     subgraph G1 [Matemática]
         Numericos --> Entero(int):::tipo
         Numericos --> Flotante(float):::tipo
@@ -34,18 +31,15 @@ flowchart TD
         Entero -.-> Booleano(bool):::especial
     end
 
-    %% Grupo Secuencias
     subgraph G2 [Datos]
         Secuencias --> Cadenas(str):::tipo
         Secuencias --> Binarios(bytes / bytearray):::tipo
     end
 
-    %% Grupo Vacío
     subgraph G3 [Nulo]
         Vacio --> NoneT(NoneType):::especial
     end
 
-    %% Notas estéticas
     style G1 fill:#f1f2f6,stroke:#ced4da,stroke-dasharray: 5 5
     style G2 fill:#f1f2f6,stroke:#ced4da,stroke-dasharray: 5 5
     style G3 fill:#f1f2f6,stroke:#ced4da,stroke-dasharray: 5 5

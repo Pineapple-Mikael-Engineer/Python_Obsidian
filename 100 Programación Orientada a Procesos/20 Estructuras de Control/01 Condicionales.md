@@ -128,7 +128,6 @@ else:
 
 ```mermaid
 flowchart TD
-    %% Definición de Estilos
     classDef principal fill:#2d3436,stroke:#dfe6e9,stroke-width:2px,color:#fff,font-weight:bold;
     classDef condicion fill:#636e72,stroke:#dfe6e9,stroke-width:1px,color:#fff;
     classDef accion fill:#f9f9f9,stroke:#636e72,stroke-width:1px,color:#2d3436;
@@ -136,7 +135,6 @@ flowchart TD
 
     Start((Inicio)):::principal --> C1{if principal}:::condicion
 
-    %% Rama IF Principal + Anidados
     C1 -- True --> A1[código_bloque_1]:::accion
     A1 --> C_Anid{if anidado}:::condicion
     
@@ -144,12 +142,10 @@ flowchart TD
     C_Anid -- elif --> AA2[otro_anidado]:::accion
     C_Anid -- else --> AA3[else_anidado]:::especial
 
-    %% Ramas secundarias (alineadas para ahorrar espacio)
     C1 -- False --> C2{elif secundaria}:::condicion
     C2 -- True --> A2[código_bloque_2]:::accion
     C2 -- False --> A3[código_bloque_3]:::especial
 
-    %% Convergencia Final
     AA1 & AA2 & AA3 & A2 & A3 --> Final[Código Final]:::principal
     Final --> End((Fin)):::principal
 ```

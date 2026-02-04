@@ -1,26 +1,17 @@
 ---
-title: '"Listas"'
+title: 'Listas'
 draft: false
 weight: 1
 ---
 
 ```mermaid
 flowchart LR
-    %% =========================
-    %% Definición de Estilos
-    %% =========================
     classDef principal fill:#2d3436,stroke:#dfe6e9,stroke-width:2px,color:#ffffff,font-weight:bold;
     classDef categoria fill:#636e72,stroke:#dfe6e9,stroke-width:1.5px,color:#ffffff,font-weight:bold;
     classDef tipo fill:#f9f9f9,stroke:#636e72,stroke-width:1px,color:#2d3436;
 
-    %% =========================
-    %% Nodo Central
-    %% =========================
     A((Listas en Python)):::principal
 
-    %% =========================
-    %% 1. Características
-    %% =========================
     A --> B[Características Principales]:::categoria
 
     subgraph G1 [ ]
@@ -32,9 +23,6 @@ flowchart LR
         B --> B5(Iterables):::tipo
     end
 
-    %% =========================
-    %% 2. Sintaxis y Creación
-    %% =========================
     A --> C[Sintaxis y Creación]:::categoria
 
     subgraph G2 [ ]
@@ -45,9 +33,6 @@ flowchart LR
         C --> C4["Comprensión"]:::tipo
     end
 
-    %% =========================
-    %% 3. Operaciones Básicas
-    %% =========================
     A --> D[Operaciones Básicas]:::categoria
 
     subgraph G3 [ ]
@@ -59,9 +44,6 @@ flowchart LR
         D --> D5["Longitud len()"]:::tipo
     end
 
-    %% =========================
-    %% 4. Métodos Principales
-    %% =========================
     A --> E[Métodos Principales]:::categoria
 
     subgraph G4 [ ]
@@ -73,9 +55,6 @@ flowchart LR
         E --> E5(Modificar):::tipo
     end
 
-    %% =========================
-    %% 5. Listas Multidimensionales
-    %% =========================
     A --> F[Listas Multidimensionales]:::categoria
 
     subgraph G5 [ ]
@@ -85,9 +64,6 @@ flowchart LR
         F --> F3(Comprensión Anidada):::tipo
     end
 
-    %% =========================
-    %% Estilo de Subgrafos
-    %% =========================
     style G1 fill:#f1f2f6,stroke:#ced4da,stroke-dasharray:8 6
     style G2 fill:#f1f2f6,stroke:#ced4da,stroke-dasharray:8 6
     style G3 fill:#f1f2f6,stroke:#ced4da,stroke-dasharray:8 6

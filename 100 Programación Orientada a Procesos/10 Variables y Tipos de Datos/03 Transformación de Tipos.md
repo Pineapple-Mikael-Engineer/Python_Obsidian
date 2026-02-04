@@ -7,7 +7,6 @@ weight: 3
 
 ```mermaid
 flowchart LR
-    %% Definición de Estilos
     classDef principal fill:#2d3436,stroke:#dfe6e9,stroke-width:2px,color:#fff,font-weight:bold;
     classDef categoria fill:#636e72,stroke:#dfe6e9,stroke-width:1px,color:#fff;
     classDef subcategoria fill:#b2bec3,stroke:#636e72,stroke-width:1px,color:#2d3436;
@@ -16,13 +15,11 @@ flowchart LR
     
     Title((Transformación de Tipos)):::principal
     
-    %% Ramas Principales
     Title --> Coercion["Conversión Implícita (Coerción)"]:::categoria
     Title --> Explicita["Conversión Explícita"]:::categoria
     Title --> Validacion["Validación de Tipos"]:::categoria
     Title --> TypeHints["Type Hints"]:::categoria
     
-    %% Conversión Implícita
     Coercion --> Coer1["Int → Float"]:::subcategoria
     Coercion --> Coer2["Bool → Int"]:::subcategoria
     Coercion --> Coer3["Promoción Numérica"]:::subcategoria
@@ -31,7 +28,6 @@ flowchart LR
     Coer2 --> EjCoer2["`True + 5 → 6`"]:::ejemplo
     Coer3 --> EjCoer3["`int + complex → complex`"]:::ejemplo
     
-    %% Conversión Explícita
     Explicita --> Constructores["Constructores"]:::subcategoria
     Explicita --> Colecciones["Colecciones"]:::subcategoria
     Explicita --> Caracteres["Caracteres"]:::subcategoria
@@ -42,14 +38,12 @@ flowchart LR
     Caracteres --> CharList["chr(), ord()"]:::tipo
     Sistemas --> SysList["bin(), hex(), oct()"]:::tipo
     
-    %% Validación
     Validacion --> Isinstance["isinstance()"]:::subcategoria
     Validacion --> Type["type()"]:::subcategoria
     
     Isinstance --> EjIs["isinstance(True, int) → True"]:::ejemplo
     Type --> EjType["type(True) == int → False"]:::ejemplo
     
-    %% Type Hints
     TypeHints --> Variables["Variables"]:::subcategoria
     TypeHints --> Funciones["Funciones"]:::subcategoria
     TypeHints --> Retorno["Valor de Retorno"]:::subcategoria
@@ -69,14 +63,12 @@ La **coerción** ocurre automáticamente cuando Python realiza una operación en
 
 ```mermaid
 flowchart LR
-    %% Definición de Estilos
     classDef principal fill:#2d3436,stroke:#dfe6e9,stroke-width:2px,color:#fff,font-weight:bold;
     classDef nivel fill:#f9f9f9,stroke:#636e72,stroke-width:1px,color:#2d3436;
     classDef flecha stroke:#e17055,stroke-width:2px;
 
     Title((Coerción de Tipos)):::principal
 
-    %% Flujo de Coerción
     Title --> B
     B("bool"):::nivel --> I("int"):::nivel
     I --> F("float"):::nivel

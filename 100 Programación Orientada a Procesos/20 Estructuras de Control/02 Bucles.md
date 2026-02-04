@@ -25,32 +25,28 @@ for elemento in iterable:
 
 ```mermaid
 flowchart TD
-    %% Definición de Estilos
     classDef principal fill:#2d3436,stroke:#dfe6e9,stroke-width:2px,color:#fff,font-weight:bold;
     classDef condicion fill:#636e72,stroke:#dfe6e9,stroke-width:1px,color:#fff;
     classDef accion fill:#f9f9f9,stroke:#636e72,stroke-width:1px,color:#2d3436;
+    classDef tipo fill:#dcdde1,stroke:#7f8fa6,color:#2d3436;
     classDef especial fill:#fab1a0,stroke:#e17055,stroke-width:1px,color:#2d3436;
 
     Start((Inicio For)):::principal --> C1{¿Hay más elementos en el iterable?}:::condicion
 
-    %% Proceso de Iteración
     C1 -- Sí --> A1["Asignar elemento actual"]:::especial
     A1 --> A2["Ejecutar código del bloque"]:::accion
     
-    %% Retorno (El bucle)
     A2 -- "Siguiente iteración" --> C1
 
-    %% Salida del bucle
+    
     C1 -- No --> End((Fin For)):::principal
 
-    %% Nota de funcionamiento
+    
     subgraph Nota [Lógica de Python]
         direction LR
         N1["Itera sobre: list, str, range, dict, etc."]:::tipo
     end
-    
-    style Nota fill:#f1f2f6,stroke:#ced4da,stroke-dasharray: 5 5
-```
+   ```
 
 
 
@@ -217,7 +213,6 @@ while condición:
 
 ```mermaid
 flowchart TD
-    %% Definición de Estilos (Tu Paleta)
     classDef principal fill:#2d3436,stroke:#dfe6e9,stroke-width:2px,color:#fff,font-weight:bold;
     classDef categoria fill:#636e72,stroke:#dfe6e9,stroke-width:1px,color:#fff;
     classDef tipo fill:#f9f9f9,stroke:#636e72,stroke-width:1px,color:#2d3436;
@@ -227,12 +222,10 @@ flowchart TD
     
     Eval -- "True (Truthy)" --> Body[Código del bloque<br/>indentado]:::tipo
     
-    %% El bucle de retorno
     Body --> Eval
     
     Eval -- "False (Falsy)" --> End((Fin / Salida)):::especial
 
-    %% Nota visual sobre el flujo
     linkStyle 1 stroke:#28a745,stroke-width:2px;
     linkStyle 2 stroke:#01579b,stroke-width:2px;
     linkStyle 3 stroke:#dc3545,stroke-width:2px;
@@ -340,7 +333,6 @@ else:
 
 ```mermaid
 flowchart TD
-    %% Definición de Estilos (Tu Paleta)
     classDef principal fill:#2d3436,stroke:#dfe6e9,stroke-width:2px,color:#fff,font-weight:bold;
     classDef categoria fill:#636e72,stroke:#dfe6e9,stroke-width:1px,color:#fff;
     classDef tipo fill:#f9f9f9,stroke:#636e72,stroke-width:1px,color:#2d3436;
@@ -351,17 +343,16 @@ flowchart TD
     GetNext -- Si --> Body[Código for]:::tipo
     Body --> CheckBreak{¿Break?}:::categoria
     
-    %% Camino del Break
+    
     CheckBreak -- Si --> End((Fin)):::especial
     
-    %% Camino Normal
+    
     CheckBreak -- No --> GetNext
     
     %% Camino del Else
     GetNext -- No --> ElseBlock[Código ELSE]:::tipo
     ElseBlock --> End
 
-    %% Estilización de líneas
     linkStyle 4 stroke:#dc3545,stroke-width:2px;
     linkStyle 5 stroke:#28a745,stroke-width:2px;
 ```
@@ -380,7 +371,6 @@ else:
 
 ```mermaid
 flowchart TD
-    %% Definición de Estilos (Tu Paleta)
     classDef principal fill:#2d3436,stroke:#dfe6e9,stroke-width:2px,color:#fff,font-weight:bold;
     classDef categoria fill:#636e72,stroke:#dfe6e9,stroke-width:1px,color:#fff;
     classDef tipo fill:#f9f9f9,stroke:#636e72,stroke-width:1px,color:#2d3436;
@@ -388,21 +378,21 @@ flowchart TD
 
     Start((Inicio)):::principal --> Cond{¿Condición<br/>While?}:::categoria
     
-    %% Camino del Bucle
+    
     Cond -- True --> Body[Código Bucle]:::tipo
     Body --> CheckBreak{¿Break?}:::categoria
     
-    %% Ruptura
+    
     CheckBreak -- Si --> End((Fin)):::especial
     
-    %% Continuación
+    
     CheckBreak -- No --> Cond
     
-    %% Finalización Normal
+    
     Cond -- False --> ElseBlock[Código ELSE]:::tipo
     ElseBlock --> End
 
-    %% Estilización de líneas
+    
     linkStyle 3 stroke:#dc3545,stroke-width:2px;
     linkStyle 4 stroke:#28a745,stroke-width:2px;
 ```

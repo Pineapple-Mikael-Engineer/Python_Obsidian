@@ -1,5 +1,5 @@
 ---
-title: '"Estructuras de Control"'
+title: 'Estructuras de Control'
 draft: false
 weight: 0
 description: '"Descripcion"'

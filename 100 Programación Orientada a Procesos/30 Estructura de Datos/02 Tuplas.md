@@ -6,7 +6,6 @@ weight: 2
 
 ```mermaid
 flowchart LR
-    %% Definición de Estilos
     classDef principal fill:#2d3436,stroke:#dfe6e9,stroke-width:2px,color:#fff,font-weight:bold;
     classDef categoria fill:#636e72,stroke:#dfe6e9,stroke-width:1px,color:#fff;
     classDef tipo fill:#f9f9f9,stroke:#636e72,stroke-width:1px,color:#2d3436;
@@ -14,14 +13,12 @@ flowchart LR
 
     A((Tuplas en Python)):::principal
 
-    %% Ramas Principales
     A --> B[Características Principales]:::categoria
     A --> C[Sintaxis y Creación]:::categoria
     A --> D[Operaciones y Métodos]:::categoria
     A --> E[Usos Comunes]:::categoria
     A --> F[Namedtuple]:::especial
 
-    %% Características
     subgraph G1 [Propiedades Esenciales]
         B --> B1(Inmutables):::tipo
         B --> B2(Ordenadas):::tipo
@@ -30,7 +27,6 @@ flowchart LR
         B --> B5(Heterogéneas):::tipo
     end
 
-    %% Sintaxis
     subgraph G2 [Cómo Definirlas]
         C --> C1("Paréntesis ()"):::tipo
         C --> C2("Sin paréntesis (desempaquetado)"):::tipo
@@ -39,7 +35,6 @@ flowchart LR
         C --> C5("Desempaquetado de tuplas"):::tipo
     end
 
-    %% Operaciones
     subgraph G3 [Interactuando con Tuplas]
         D --> D1(Indexación):::tipo
         D --> D2(Slicing):::tipo
@@ -48,7 +43,6 @@ flowchart LR
         D --> D5("Métodos count() e index()"):::tipo
     end
 
-    %% Usos
     subgraph G4 [Aplicaciones Prácticas]
         E --> E1(Retorno múltiple de funciones):::tipo
         E --> E2(Claves en diccionarios):::tipo
@@ -57,7 +51,6 @@ flowchart LR
         E --> E5(Protección de datos):::tipo
     end
 
-    %% Namedtuple
     subgraph G5 [Tuplas con Nombre]
         F --> F1(Definición):::tipo
         F --> F2(Creación):::tipo
@@ -66,7 +59,6 @@ flowchart LR
         F --> F5(Conversión a dict / list)::::tipo
     end
 
-    %% Estética de subgrafos
     style G1 fill:#f1f2f6,stroke:#ced4da,stroke-dasharray: 5 5
     style G2 fill:#f1f2f6,stroke:#ced4da,stroke-dasharray: 5 5
     style G3 fill:#f1f2f6,stroke:#ced4da,stroke-dasharray: 5 5

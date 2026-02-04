@@ -28,7 +28,6 @@ for elemento in iterable:
 
 ```mermaid
 flowchart TD
-    %% Definición de Estilos (Tu Paleta)
     classDef principal fill:#2d3436,stroke:#dfe6e9,stroke-width:2px,color:#fff,font-weight:bold;
     classDef categoria fill:#636e72,stroke:#dfe6e9,stroke-width:1px,color:#fff;
     classDef tipo fill:#f9f9f9,stroke:#636e72,stroke-width:1px,color:#2d3436;
@@ -39,10 +38,8 @@ flowchart TD
     GetNext_1 -- Si --> Body_1[Código for]:::tipo
     Body_1 --> CheckBreak_1{¿Break?}:::categoria
     
-    %% Camino del Break
     CheckBreak_1 -- Si --> End_1((Fin)):::especial
     
-    %% Camino Normal
     CheckBreak_1 -- No --> GetNext_1
     GetNext_1 -- No --> End_1
 
@@ -50,17 +47,13 @@ flowchart TD
     
     Start_2((Inicio While)):::principal --> Cond_2{¿Condición<br/>While?}:::categoria
     
-    %% Camino del Bucle
     Cond_2 -- True --> Body_2[Código Bucle]:::tipo
     Body_2 --> CheckBreak_2{¿Break?}:::categoria
     
-    %% Ruptura
     CheckBreak_2 -- Si --> End_2((Fin)):::especial
     
-    %% Continuación
     CheckBreak_2 -- No --> Cond_2
     
-    %% Finalización Normal
     Cond_2 -- False --> End_2
 
 ```
@@ -144,38 +137,31 @@ while condición:
 
 ```mermaid
 flowchart TD
-    %% Definición de Estilos (Misma Paleta)
     classDef principal fill:#2d3436,stroke:#dfe6e9,stroke-width:2px,color:#fff,font-weight:bold;
     classDef categoria fill:#636e72,stroke:#dfe6e9,stroke-width:1px,color:#fff;
     classDef tipo fill:#f9f9f9,stroke:#636e72,stroke-width:1px,color:#2d3436;
     classDef especial fill:#fab1a0,stroke:#e17055,stroke-width:1px,color:#2d3436;
 
-    %% DIAGRAMA FOR
     Start_For((Inicio For)):::principal --> GetNext_For{¿Hay elementos?}:::categoria
     
     GetNext_For -- Sí --> CodeBefore_For[Código antes<br/>del continue]:::tipo
     CodeBefore_For --> CheckContinue_For{¿Continue?}:::categoria
     
-    %% Camino del Continue (salta a la siguiente iteración)
     CheckContinue_For -- Sí --> GetNext_For
     
-    %% Camino normal (sin continue)
     CheckContinue_For -- No --> CodeAfter_For[Código después<br/>del continue]:::tipo
     CodeAfter_For --> GetNext_For
     
     GetNext_For -- No --> End_For((Fin)):::principal
 
 
-    %% DIAGRAMA WHILE (estructura homogénea)
     Start_While((Inicio While)):::principal --> Cond_While{¿Condición?}:::categoria
     
     Cond_While -- True --> CodeBefore_While[Código antes<br/>del continue]:::tipo
     CodeBefore_While --> CheckContinue_While{¿Continue?}:::categoria
     
-    %% Continue: salta a la evaluación de condición
     CheckContinue_While -- Sí --> Cond_While
     
-    %% Sin continue: ejecuta el código después
     CheckContinue_While -- No --> CodeAfter_While[Código después<br/>del continue]:::tipo
     CodeAfter_While --> Cond_While
     
