@@ -1,0 +1,3 @@
+[submodule "content"]
+	path = content
+	url = https://github.com/Pineapple-Mikael-Engineer/Python_Obsidian
