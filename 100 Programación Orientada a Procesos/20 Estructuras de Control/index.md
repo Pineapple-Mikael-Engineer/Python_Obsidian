@@ -1,7 +1,6 @@
 ---
-title: Estructuras de Control
+title: 02-Estructuras de Control
 draft: false
-order: 20
 description: '"Descripcion"'
 ---
 

@@ -1,7 +1,6 @@
 ---
-title: Variables y Tipos de Datos
+title: 01-Variables y Tipos de Datos
 draft: false
-order: 10
 description: Descripcion de Variables y Datos Python
 ---
 

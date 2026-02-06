@@ -1,5 +1,4 @@
 ---
-title: Estructuras de Datos
+title: 03-Estructuras de Datos
 draft: false
-order: 30
 ---

@@ -1,6 +1,5 @@
 ---
-title: Programación Orientada a Procesos
+title: "Tema 1: Programación Orientada a Procesos"
 draft: false
-order: 100
 ---
 # Programación Orientada a Procesos
