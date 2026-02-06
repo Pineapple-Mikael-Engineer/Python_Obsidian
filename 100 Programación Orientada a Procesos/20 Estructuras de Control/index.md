@@ -1,7 +1,7 @@
 ---
-title: 'Estructuras de Control'
+title: Estructuras de Control
 draft: false
-weight: 0
+order: 20
 description: '"Descripcion"'
 ---
 

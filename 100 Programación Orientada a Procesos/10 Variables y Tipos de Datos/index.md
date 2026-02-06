@@ -1,7 +1,7 @@
 ---
 title: Variables y Tipos de Datos
 draft: false
-weight: 0
+order: 10
 description: Descripcion de Variables y Datos Python
 ---
 

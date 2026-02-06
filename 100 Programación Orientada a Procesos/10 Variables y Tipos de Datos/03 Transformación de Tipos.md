@@ -1,7 +1,7 @@
 ---
 title: Transformación de Tipos
 draft:
-weight: 3
+order: 3
 ---
 
 

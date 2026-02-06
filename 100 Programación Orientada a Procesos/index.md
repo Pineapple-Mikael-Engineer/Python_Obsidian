@@ -1,6 +1,6 @@
 ---
-title : "Programación Orientada a Objetos"
+title: Programación Orientada a Procesos
 draft: false
-weight: 1
+order: 100
 ---
 # Programación Orientada a Procesos

@@ -1,7 +1,7 @@
 ---
-title: 'Listas'
+title: Listas
 draft: false
-weight: 1
+order: 1
 ---
 
 ```mermaid

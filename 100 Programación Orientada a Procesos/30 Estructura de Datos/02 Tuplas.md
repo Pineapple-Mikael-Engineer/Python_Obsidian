@@ -1,7 +1,7 @@
 ---
 title: Tuplas
 draft: false
-weight: 2
+order: 2
 ---
 
 ```mermaid

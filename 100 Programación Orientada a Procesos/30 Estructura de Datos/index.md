@@ -1,5 +1,5 @@
 ---
-title: 'Estructuras de Datos'
+title: Estructuras de Datos
 draft: false
-weight: 0
+order: 30
 ---

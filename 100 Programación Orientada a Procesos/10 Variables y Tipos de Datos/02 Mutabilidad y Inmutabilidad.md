@@ -1,7 +1,7 @@
 ---
 title: Mutabilidad y Inmutabilidad
 draft: false
-weight: 2
+order: 2
 ---
 
 La mutabilidad en Python es una propiedad del **tipo de dato**, no del valor. El intérprete CPython implementa esta distinción a nivel de C, donde cada tipo define si sus instancias pueden ser modificadas *in-place*.

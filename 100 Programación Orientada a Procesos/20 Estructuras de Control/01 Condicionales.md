@@ -1,7 +1,7 @@
 ---
-title: "Condicionales (if, elif, else)"
+title: Condicionales (if, elif, else)
 draft: false
-weight: 1
+order: 1
 ---
 
 
