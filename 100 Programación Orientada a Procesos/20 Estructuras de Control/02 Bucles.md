@@ -25,11 +25,11 @@ for elemento in iterable:
 
 ```mermaid
 flowchart TD
-    classDef principal fill:#2d3436,stroke:#dfe6e9,stroke-width:2px,color:#fff,font-weight:bold;
-    classDef condicion fill:#636e72,stroke:#dfe6e9,stroke-width:1px,color:#fff;
-    classDef accion fill:#f9f9f9,stroke:#636e72,stroke-width:1px,color:#2d3436;
-    classDef tipo fill:#dcdde1,stroke:#7f8fa6,color:#2d3436;
-    classDef especial fill:#fab1a0,stroke:#e17055,stroke-width:1px,color:#2d3436;
+    classDef principal fill:#3b4252,stroke:#88c0d0,stroke-width:3px,color:#eceff4,font-weight:bold;
+    classDef condicion fill:#434c5e,stroke:#81a1c1,stroke-width:2px,color:#eceff4;
+    classDef accion fill:#2e3440,stroke:#81a1c1,stroke-width:1.6px,color:#eceff4;
+    classDef tipo fill:#2e3440,stroke:#5e81ac,stroke-width:1.4px,color:#eceff4;
+    classDef especial fill:#bf616a,stroke:#d08770,stroke-width:2px,color:#eceff4;
 
     Start((Inicio For)):::principal --> C1{¿Hay más elementos en el iterable?}:::condicion
 
@@ -38,15 +38,18 @@ flowchart TD
     
     A2 -- "Siguiente iteración" --> C1
 
-    
     C1 -- No --> End((Fin For)):::principal
 
-    
     subgraph Nota [Lógica de Python]
         direction LR
         N1["Itera sobre: list, str, range, dict, etc."]:::tipo
     end
-   ```
+
+    linkStyle default stroke:#81a1c1,stroke-width:1.6px
+    linkStyle 1 stroke:#88c0d0,stroke-width:2px
+    linkStyle 4 stroke:#bf616a,stroke-width:2px
+
+```
 
 
 
@@ -213,10 +216,10 @@ while condición:
 
 ```mermaid
 flowchart TD
-    classDef principal fill:#2d3436,stroke:#dfe6e9,stroke-width:2px,color:#fff,font-weight:bold;
-    classDef categoria fill:#636e72,stroke:#dfe6e9,stroke-width:1px,color:#fff;
-    classDef tipo fill:#f9f9f9,stroke:#636e72,stroke-width:1px,color:#2d3436;
-    classDef especial fill:#fab1a0,stroke:#e17055,stroke-width:1px,color:#2d3436;
+    classDef principal fill:#3b4252,stroke:#88c0d0,stroke-width:3px,color:#eceff4,font-weight:bold;
+    classDef categoria fill:#434c5e,stroke:#81a1c1,stroke-width:2px,color:#eceff4;
+    classDef tipo fill:#2e3440,stroke:#81a1c1,stroke-width:1.6px,color:#eceff4;
+    classDef especial fill:#bf616a,stroke:#d08770,stroke-width:2px,color:#eceff4;
 
     Start((Inicio)):::principal --> Eval{¿Condición?}:::categoria
     
@@ -226,9 +229,11 @@ flowchart TD
     
     Eval -- "False (Falsy)" --> End((Fin / Salida)):::especial
 
-    linkStyle 1 stroke:#28a745,stroke-width:2px;
-    linkStyle 2 stroke:#01579b,stroke-width:2px;
-    linkStyle 3 stroke:#dc3545,stroke-width:2px;
+    linkStyle default stroke:#81a1c1,stroke-width:1.6px
+    linkStyle 1 stroke:#88c0d0,stroke-width:2px
+    linkStyle 2 stroke:#5e81ac,stroke-width:2px
+    linkStyle 3 stroke:#bf616a,stroke-width:2px
+
 ```
 ## Ejemplos Básicos
 ```python
@@ -333,28 +338,27 @@ else:
 
 ```mermaid
 flowchart TD
-    classDef principal fill:#2d3436,stroke:#dfe6e9,stroke-width:2px,color:#fff,font-weight:bold;
-    classDef categoria fill:#636e72,stroke:#dfe6e9,stroke-width:1px,color:#fff;
-    classDef tipo fill:#f9f9f9,stroke:#636e72,stroke-width:1px,color:#2d3436;
-    classDef especial fill:#fab1a0,stroke:#e17055,stroke-width:1px,color:#2d3436;
+    classDef principal fill:#3b4252,stroke:#88c0d0,stroke-width:3px,color:#eceff4,font-weight:bold;
+    classDef categoria fill:#434c5e,stroke:#81a1c1,stroke-width:2px,color:#eceff4;
+    classDef tipo fill:#2e3440,stroke:#81a1c1,stroke-width:1.6px,color:#eceff4;
+    classDef especial fill:#bf616a,stroke:#d08770,stroke-width:2px,color:#eceff4;
 
     Start((Inicio)):::principal --> GetNext{¿Hay<br/>elementos?}:::categoria
     
     GetNext -- Si --> Body[Código for]:::tipo
     Body --> CheckBreak{¿Break?}:::categoria
     
-    
     CheckBreak -- Si --> End((Fin)):::especial
-    
-    
     CheckBreak -- No --> GetNext
     
-    %% Camino del Else
     GetNext -- No --> ElseBlock[Código ELSE]:::tipo
     ElseBlock --> End
 
-    linkStyle 4 stroke:#dc3545,stroke-width:2px;
-    linkStyle 5 stroke:#28a745,stroke-width:2px;
+    linkStyle default stroke:#81a1c1,stroke-width:1.6px
+    linkStyle 1 stroke:#88c0d0,stroke-width:2px
+    linkStyle 4 stroke:#bf616a,stroke-width:2px
+    linkStyle 5 stroke:#5e81ac,stroke-width:2px
+
 ```
 
 ### `while-else`
@@ -371,30 +375,27 @@ else:
 
 ```mermaid
 flowchart TD
-    classDef principal fill:#2d3436,stroke:#dfe6e9,stroke-width:2px,color:#fff,font-weight:bold;
-    classDef categoria fill:#636e72,stroke:#dfe6e9,stroke-width:1px,color:#fff;
-    classDef tipo fill:#f9f9f9,stroke:#636e72,stroke-width:1px,color:#2d3436;
-    classDef especial fill:#fab1a0,stroke:#e17055,stroke-width:1px,color:#2d3436;
+    classDef principal fill:#3b4252,stroke:#88c0d0,stroke-width:3px,color:#eceff4,font-weight:bold;
+    classDef categoria fill:#434c5e,stroke:#81a1c1,stroke-width:2px,color:#eceff4;
+    classDef tipo fill:#2e3440,stroke:#81a1c1,stroke-width:1.6px,color:#eceff4;
+    classDef especial fill:#bf616a,stroke:#d08770,stroke-width:2px,color:#eceff4;
 
-    Start((Inicio)):::principal --> Cond{¿Condición<br/>While?}:::categoria
+    Start((Inicio)):::principal --> GetNext{¿Condicion While?}:::categoria
     
-    
-    Cond -- True --> Body[Código Bucle]:::tipo
+    GetNext -- True --> Body[Código for]:::tipo
     Body --> CheckBreak{¿Break?}:::categoria
     
-    
     CheckBreak -- Si --> End((Fin)):::especial
+    CheckBreak -- No --> GetNext
     
-    
-    CheckBreak -- No --> Cond
-    
-    
-    Cond -- False --> ElseBlock[Código ELSE]:::tipo
+    GetNext -- False --> ElseBlock[Código ELSE]:::tipo
     ElseBlock --> End
 
-    
-    linkStyle 3 stroke:#dc3545,stroke-width:2px;
-    linkStyle 4 stroke:#28a745,stroke-width:2px;
+    linkStyle default stroke:#81a1c1,stroke-width:1.6px
+    linkStyle 1 stroke:#88c0d0,stroke-width:2px
+    linkStyle 4 stroke:#bf616a,stroke-width:2px
+    linkStyle 5 stroke:#5e81ac,stroke-width:2px
+
 ```
 ## Ejemplos con `for-else`
 

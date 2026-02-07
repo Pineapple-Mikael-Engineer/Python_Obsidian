@@ -28,10 +28,10 @@ for elemento in iterable:
 
 ```mermaid
 flowchart TD
-    classDef principal fill:#2d3436,stroke:#dfe6e9,stroke-width:2px,color:#fff,font-weight:bold;
-    classDef categoria fill:#636e72,stroke:#dfe6e9,stroke-width:1px,color:#fff;
-    classDef tipo fill:#f9f9f9,stroke:#636e72,stroke-width:1px,color:#2d3436;
-    classDef especial fill:#fab1a0,stroke:#e17055,stroke-width:1px,color:#2d3436;
+    classDef principal fill:#3b4252,stroke:#88c0d0,stroke-width:3px,color:#eceff4,font-weight:bold;
+    classDef categoria fill:#434c5e,stroke:#81a1c1,stroke-width:2px,color:#eceff4;
+    classDef tipo fill:#2e3440,stroke:#81a1c1,stroke-width:1.6px,color:#eceff4;
+    classDef especial fill:#bf616a,stroke:#d08770,stroke-width:2px,color:#eceff4;
 
     Start_1((Inicio For)):::principal --> GetNext_1{¿Hay<br/>elementos?}:::categoria
     
@@ -39,22 +39,24 @@ flowchart TD
     Body_1 --> CheckBreak_1{¿Break?}:::categoria
     
     CheckBreak_1 -- Si --> End_1((Fin)):::especial
-    
     CheckBreak_1 -- No --> GetNext_1
     GetNext_1 -- No --> End_1
 
-
-    
     Start_2((Inicio While)):::principal --> Cond_2{¿Condición<br/>While?}:::categoria
     
     Cond_2 -- True --> Body_2[Código Bucle]:::tipo
     Body_2 --> CheckBreak_2{¿Break?}:::categoria
     
     CheckBreak_2 -- Si --> End_2((Fin)):::especial
-    
     CheckBreak_2 -- No --> Cond_2
     
     Cond_2 -- False --> End_2
+
+    linkStyle default stroke:#81a1c1,stroke-width:1.6px
+    linkStyle 1 stroke:#88c0d0,stroke-width:2px
+    linkStyle 4 stroke:#bf616a,stroke-width:2px
+    linkStyle 8 stroke:#88c0d0,stroke-width:2px
+    linkStyle 11 stroke:#bf616a,stroke-width:2px
 
 ```
 
@@ -137,17 +139,17 @@ while condición:
 
 ```mermaid
 flowchart TD
-    classDef principal fill:#2d3436,stroke:#dfe6e9,stroke-width:2px,color:#fff,font-weight:bold;
-    classDef categoria fill:#636e72,stroke:#dfe6e9,stroke-width:1px,color:#fff;
-    classDef tipo fill:#f9f9f9,stroke:#636e72,stroke-width:1px,color:#2d3436;
-    classDef especial fill:#fab1a0,stroke:#e17055,stroke-width:1px,color:#2d3436;
+    classDef principal fill:#2e3440,stroke:#5e81ac,stroke-width:2px,color:#eceff4,font-weight:bold;
+    classDef categoria fill:#434c5e,stroke:#5e81ac,stroke-width:1px,color:#eceff4;
+    classDef tipo fill:#4c566a,stroke:#5e81ac,stroke-width:1px,color:#eceff4;
+    classDef especial fill:#bf616a,stroke:#5e81ac,stroke-width:1px,color:#eceff4;
 
     Start_For((Inicio For)):::principal --> GetNext_For{¿Hay elementos?}:::categoria
     
-    GetNext_For -- Sí --> CodeBefore_For[Código antes<br/>del continue]:::tipo
+    GetNext_For -- Si --> CodeBefore_For[Código antes<br/>del continue]:::tipo
     CodeBefore_For --> CheckContinue_For{¿Continue?}:::categoria
     
-    CheckContinue_For -- Sí --> GetNext_For
+    CheckContinue_For -- Si --> GetNext_For
     
     CheckContinue_For -- No --> CodeAfter_For[Código después<br/>del continue]:::tipo
     CodeAfter_For --> GetNext_For
@@ -155,17 +157,18 @@ flowchart TD
     GetNext_For -- No --> End_For((Fin)):::principal
 
 
-    Start_While((Inicio While)):::principal --> Cond_While{¿Condición?}:::categoria
+    Start_While((Inicio While)):::principal --> Cond_While{¿Condicion?}:::categoria
     
     Cond_While -- True --> CodeBefore_While[Código antes<br/>del continue]:::tipo
     CodeBefore_While --> CheckContinue_While{¿Continue?}:::categoria
     
-    CheckContinue_While -- Sí --> Cond_While
+    CheckContinue_While -- Si --> Cond_While
     
     CheckContinue_While -- No --> CodeAfter_While[Código después<br/>del continue]:::tipo
     CodeAfter_While --> Cond_While
     
     Cond_While -- False --> End_While((Fin)):::principal
+
 ```
 ## Ejemplos Prácticos
 

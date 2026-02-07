@@ -13,36 +13,40 @@ Podemos clasificaros en:
 
 ```mermaid
 flowchart TD
-    classDef principal fill:#2d3436,stroke:#dfe6e9,stroke-width:2px,color:#fff,font-weight:bold;
-    classDef categoria fill:#636e72,stroke:#dfe6e9,stroke-width:1px,color:#fff;
-    classDef tipo fill:#f9f9f9,stroke:#636e72,stroke-width:1px,color:#2d3436;
-    classDef especial fill:#fab1a0,stroke:#e17055,stroke-width:1px,color:#2d3436;
+    classDef raiz fill:#3b4252,stroke:#88c0d0,stroke-width:3px,color:#eceff4,font-weight:bold;
+    classDef categoria fill:#434c5e,stroke:#81a1c1,stroke-width:2px,color:#eceff4;
+    classDef subcategoria fill:#4c566a,stroke:#5e81ac,stroke-width:1.5px,color:#eceff4;
+    classDef especial fill:#bf616a,stroke:#d08770,stroke-width:2px,color:#eceff4,font-weight:bold;
 
-    Title((Datos Primitivos)):::principal
+    Title((Datos Primitivos)):::raiz
 
-    Title --> Numericos[Numericos]:::categoria
+    Title --> Numericos[Numéricos]:::categoria
     Title --> Secuencias[Secuencias]:::categoria
-    Title --> Vacio[Vacio]:::categoria
+    Title --> Vacio[Vacío]:::categoria
 
     subgraph G1 [Matemática]
-        Numericos --> Entero(int):::tipo
-        Numericos --> Flotante(float):::tipo
-        Numericos --> Complejo(complex):::tipo
-        Entero -.-> Booleano(bool):::especial
+        Numericos --> Entero[int]:::subcategoria
+        Numericos --> Flotante[float]:::subcategoria
+        Numericos --> Complejo[complex]:::subcategoria
+        Entero -.-> Booleano[bool]:::especial
     end
 
     subgraph G2 [Datos]
-        Secuencias --> Cadenas(str):::tipo
-        Secuencias --> Binarios(bytes / bytearray):::tipo
+        Secuencias --> Cadenas[str]:::subcategoria
+        Secuencias --> Binarios[bytes / bytearray]:::subcategoria
     end
 
     subgraph G3 [Nulo]
-        Vacio --> NoneT(NoneType):::especial
+        Vacio --> NoneT[NoneType]:::especial
     end
 
-    style G1 fill:#f1f2f6,stroke:#ced4da,stroke-dasharray: 5 5
-    style G2 fill:#f1f2f6,stroke:#ced4da,stroke-dasharray: 5 5
-    style G3 fill:#f1f2f6,stroke:#ced4da,stroke-dasharray: 5 5
+    style G1 fill:#2e3440,stroke:#5e81ac,stroke-dasharray:5 5,stroke-width:1.5px
+    style G2 fill:#2e3440,stroke:#5e81ac,stroke-dasharray:5 5,stroke-width:1.5px
+    style G3 fill:#2e3440,stroke:#5e81ac,stroke-dasharray:5 5,stroke-width:1.5px
+
+    linkStyle default stroke:#81a1c1,stroke-width:1.6px
+    linkStyle 6 stroke:#bf616a,stroke-width:1.6px,stroke-dasharray:3 3
+
 ```
 ## Numéricos
 

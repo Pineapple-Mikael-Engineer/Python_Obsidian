@@ -32,31 +32,34 @@ La mutabilidad en Python es una propiedad del **tipo de dato**, no del valor. El
 
 ```mermaid
 flowchart LR
-    classDef principal fill:#2d3436,stroke:#dfe6e9,stroke-width:2px,color:#fff,font-weight:bold;
-    classDef categoria fill:#636e72,stroke:#dfe6e9,stroke-width:1px,color:#fff;
-    classDef tipo fill:#f9f9f9,stroke:#636e72,stroke-width:1px,color:#2d3436;
-    classDef especial fill:#fab1a0,stroke:#e17055,stroke-width:1px,color:#2d3436;
+    classDef raiz fill:#3b4252,stroke:#88c0d0,stroke-width:3px,color:#eceff4,font-weight:bold;
+    classDef categoria fill:#434c5e,stroke:#81a1c1,stroke-width:2px,color:#eceff4;
+    classDef subcategoria fill:#4c566a,stroke:#5e81ac,stroke-width:1.5px,color:#eceff4;
+    classDef especial fill:#bf616a,stroke:#d08770,stroke-width:2px,color:#eceff4,font-weight:bold;
 
-    Title((Clasificación por Mutabilidad)):::principal
+    Title((Clasificación por Mutabilidad)):::raiz
 
-    Title --> Inmutables[Inmutables - Hashables]:::categoria
-    Title --> Mutables[Mutables - No Hashables]:::categoria
+    Title --> Inmutables[Inmutables · Hashables]:::categoria
+    Title --> Mutables[Mutables · No Hashables]:::categoria
 
-    subgraph G1 [Seguros / Estáticos]
-        Inmutables --> Num["int, float, complex, bool"]:::tipo
-        Inmutables --> SecIn["str, tuple, bytes"]:::tipo
-        Inmutables --> FSet("frozenset"):::especial
-        Inmutables --> Cst("None"):::especial
+    subgraph G1 [Seguros · Estáticos]
+        Inmutables --> Num[int · float · complex · bool]:::subcategoria
+        Inmutables --> SecIn[str · tuple · bytes]:::subcategoria
+        Inmutables --> FSet[frozenset]:::especial
+        Inmutables --> Cst[None]:::especial
     end
 
-    subgraph G2 [Dinámicos / Flexibles]
-        Mutables --> Col["list, dict, set"]:::tipo
-        Mutables --> Bin("bytearray"):::tipo
-        Mutables --> User("Objetos de Usuario"):::especial
+    subgraph G2 [Dinámicos · Flexibles]
+        Mutables --> Col[list · dict · set]:::subcategoria
+        Mutables --> Bin[bytearray]:::subcategoria
+        Mutables --> User[Objetos de Usuario]:::especial
     end
 
-    style G1 fill:#f1f2f6,stroke:#ced4da,stroke-dasharray: 5 5
-    style G2 fill:#f1f2f6,stroke:#ced4da,stroke-dasharray: 5 5
+    style G1 fill:#2e3440,stroke:#5e81ac,stroke-dasharray:5 5,stroke-width:1.5px
+    style G2 fill:#2e3440,stroke:#5e81ac,stroke-dasharray:5 5,stroke-width:1.5px
+
+    linkStyle default stroke:#81a1c1,stroke-width:1.6px
+
 ```
 
 ## I. Tipos Inmutables (Hashables)
@@ -142,15 +145,15 @@ print(s3 is s4)  # False (depende del contexto)
 
 ## Tabla Comparativa Detallada
 
-| Tipo | Mutable | Hashable | Thread-safe | Copia por defecto | Uso memoria |
-|------|---------|----------|-------------|-------------------|-------------|
-| `int`, `float` | ❌ | ✅ | ✅ | Por valor | Optimizado |
-| `str` | ❌ | ✅ | ✅ | Por valor | Interning |
-| `tuple` | ❌* | ✅ | ✅ | Por valor | Eficiente |
-| `list` | ✅ | ❌ | ❌ | Por referencia | Dinámico |
-| `dict` | ✅ | ❌ | ❌ | Por referencia | Hash table |
-| `set` | ✅ | ❌ | ❌ | Por referencia | Hash table |
-| `frozenset` | ❌ | ✅ | ✅ | Por valor | Hash table |
+| Tipo           | Mutable | Hashable | Thread-safe | Copia por defecto | Uso memoria |
+| -------------- | ------- | -------- | ----------- | ----------------- | ----------- |
+| `int`, `float` | ❌       | ✅        | ✅           | Por valor         | Optimizado  |
+| `str`          | ❌       | ✅        | ✅           | Por valor         | Interning   |
+| `tuple`        | ❌       | ✅        | ✅           | Por valor         | Eficiente   |
+| `list`         | ✅       | ❌        | ❌           | Por referencia    | Dinámico    |
+| `dict`         | ✅       | ❌        | ❌           | Por referencia    | Hash table  |
+| `set`          | ✅       | ❌        | ❌           | Por referencia    | Hash table  |
+| `frozenset`    | ❌       | ✅        | ✅           | Por valor         | Hash table  |
 
 
 # Temas Avanzados

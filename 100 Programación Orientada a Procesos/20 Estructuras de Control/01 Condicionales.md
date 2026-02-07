@@ -22,19 +22,24 @@ if condición:
 
 ```mermaid
 flowchart TD
-    classDef principal fill:#2d3436,stroke:#dfe6e9,stroke-width:2px,color:#fff,font-weight:bold;
-    classDef condicion fill:#636e72,stroke:#dfe6e9,stroke-width:1px,color:#fff;
-    classDef accion fill:#f9f9f9,stroke:#636e72,stroke-width:1px,color:#2d3436;
-    classDef especial fill:#fab1a0,stroke:#e17055,stroke-width:1px,color:#2d3436;
+    classDef principal fill:#3b4252,stroke:#88c0d0,stroke-width:3px,color:#eceff4,font-weight:bold;
+    classDef condicion fill:#434c5e,stroke:#81a1c1,stroke-width:2px,color:#eceff4;
+    classDef accion fill:#2e3440,stroke:#81a1c1,stroke-width:1.6px,color:#eceff4;
+    classDef especial fill:#bf616a,stroke:#d08770,stroke-width:2px,color:#eceff4;
 
     Start((Inicio)):::principal --> Cond{¿if?}:::condicion
     
     Cond -- Verdadero --> B1
     Cond -- Falso --> End((Fin)):::principal
 
-	B1["Acción IF"]:::accion
+    B1["Acción IF"]:::accion
 
     B1 --> End
+
+    linkStyle default stroke:#81a1c1,stroke-width:1.6px
+    linkStyle 1 stroke:#88c0d0,stroke-width:2px
+    linkStyle 2 stroke:#bf616a,stroke-width:2px
+
 ```
 
 ## **`elif` (Sino-Si)**
@@ -49,10 +54,10 @@ elif condición_2:
 
 ```mermaid
 flowchart TD
-    classDef principal fill:#2d3436,stroke:#dfe6e9,stroke-width:2px,color:#fff,font-weight:bold;
-    classDef condicion fill:#636e72,stroke:#dfe6e9,stroke-width:1px,color:#fff;
-    classDef accion fill:#f9f9f9,stroke:#636e72,stroke-width:1px,color:#2d3436;
-    classDef especial fill:#fab1a0,stroke:#e17055,stroke-width:1px,color:#2d3436;
+    classDef principal fill:#3b4252,stroke:#88c0d0,stroke-width:3px,color:#eceff4,font-weight:bold;
+    classDef condicion fill:#434c5e,stroke:#81a1c1,stroke-width:2px,color:#eceff4;
+    classDef accion fill:#2e3440,stroke:#81a1c1,stroke-width:1.6px,color:#eceff4;
+    classDef especial fill:#bf616a,stroke:#d08770,stroke-width:2px,color:#eceff4;
 
     Start((Inicio)):::principal --> C1{¿if?}:::condicion
     
@@ -64,6 +69,12 @@ flowchart TD
 
     A1 --> End
     A2 --> End
+
+    linkStyle default stroke:#81a1c1,stroke-width:1.6px
+    linkStyle 1 stroke:#88c0d0,stroke-width:2px
+    linkStyle 2 stroke:#88c0d0,stroke-width:2px
+    linkStyle 3 stroke:#bf616a,stroke-width:2px
+
 ```
 
 ## **`else` (Sino)**
@@ -80,10 +91,10 @@ else:
 
 ```mermaid
 flowchart TD
-    classDef principal fill:#2d3436,stroke:#dfe6e9,stroke-width:2px,color:#fff,font-weight:bold;
-    classDef condicion fill:#636e72,stroke:#dfe6e9,stroke-width:1px,color:#fff;
-    classDef accion fill:#f9f9f9,stroke:#636e72,stroke-width:1px,color:#2d3436;
-    classDef especial fill:#fab1a0,stroke:#e17055,stroke-width:1px,color:#2d3436;
+    classDef principal fill:#3b4252,stroke:#88c0d0,stroke-width:3px,color:#eceff4,font-weight:bold;
+    classDef condicion fill:#434c5e,stroke:#81a1c1,stroke-width:2px,color:#eceff4;
+    classDef accion fill:#2e3440,stroke:#81a1c1,stroke-width:1.6px,color:#eceff4;
+    classDef especial fill:#bf616a,stroke:#d08770,stroke-width:2px,color:#eceff4;
 
     Start((Inicio)):::principal --> C1{¿if?}:::condicion
     
@@ -96,6 +107,12 @@ flowchart TD
     A1 --> End((Fin)):::principal
     A2 --> End
     A3 --> End
+
+    linkStyle default stroke:#81a1c1,stroke-width:1.6px
+    linkStyle 1 stroke:#88c0d0,stroke-width:2px
+    linkStyle 2 stroke:#88c0d0,stroke-width:2px
+    linkStyle 3 stroke:#bf616a,stroke-width:2px
+
 ```
 
 # Sintaxis Anidada (Forma Completa)
@@ -128,10 +145,10 @@ else:
 
 ```mermaid
 flowchart TD
-    classDef principal fill:#2d3436,stroke:#dfe6e9,stroke-width:2px,color:#fff,font-weight:bold;
-    classDef condicion fill:#636e72,stroke:#dfe6e9,stroke-width:1px,color:#fff;
-    classDef accion fill:#f9f9f9,stroke:#636e72,stroke-width:1px,color:#2d3436;
-    classDef especial fill:#fab1a0,stroke:#e17055,stroke-width:1px,color:#2d3436;
+    classDef principal fill:#3b4252,stroke:#88c0d0,stroke-width:3px,color:#eceff4,font-weight:bold;
+    classDef condicion fill:#434c5e,stroke:#81a1c1,stroke-width:2px,color:#eceff4;
+    classDef accion fill:#2e3440,stroke:#81a1c1,stroke-width:1.6px,color:#eceff4;
+    classDef especial fill:#bf616a,stroke:#d08770,stroke-width:2px,color:#eceff4;
 
     Start((Inicio)):::principal --> C1{if principal}:::condicion
 
@@ -148,6 +165,12 @@ flowchart TD
 
     AA1 & AA2 & AA3 & A2 & A3 --> Final[Código Final]:::principal
     Final --> End((Fin)):::principal
+
+    linkStyle default stroke:#81a1c1,stroke-width:1.6px
+    linkStyle 1 stroke:#88c0d0,stroke-width:2px
+    linkStyle 3 stroke:#88c0d0,stroke-width:2px
+    linkStyle 6 stroke:#bf616a,stroke-width:2px
+
 ```
 
 ## Partes Sintácticas de la Forma Anidada

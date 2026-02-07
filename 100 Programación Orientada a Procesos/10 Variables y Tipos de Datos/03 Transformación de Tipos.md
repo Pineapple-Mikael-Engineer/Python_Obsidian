@@ -1,18 +1,18 @@
 ---
 title: Transformación de Tipos
-draft:
+draft: false
 order: 3
 ---
 
 
 ```mermaid
 flowchart LR
-    classDef principal fill:#2d3436,stroke:#dfe6e9,stroke-width:2px,color:#fff,font-weight:bold;
-    classDef categoria fill:#636e72,stroke:#dfe6e9,stroke-width:1px,color:#fff;
-    classDef subcategoria fill:#b2bec3,stroke:#636e72,stroke-width:1px,color:#2d3436;
-    classDef tipo fill:#f9f9f9,stroke:#636e72,stroke-width:1px,color:#2d3436;
-    classDef ejemplo fill:#dfe6e9,stroke:#b2bec3,stroke-width:1px,color:#2d3436,font-size:12px;
-    
+    classDef principal fill:#3b4252,stroke:#88c0d0,stroke-width:3px,color:#eceff4,font-weight:bold;
+    classDef categoria fill:#434c5e,stroke:#81a1c1,stroke-width:2px,color:#eceff4;
+    classDef subcategoria fill:#4c566a,stroke:#5e81ac,stroke-width:1.6px,color:#eceff4;
+    classDef tipo fill:#2e3440,stroke:#81a1c1,stroke-width:1.4px,color:#eceff4;
+    classDef ejemplo fill:#2e3440,stroke:#5e81ac,stroke-width:1.2px,stroke-dasharray:3 3,color:#eceff4,font-size:12px;
+
     Title((Transformación de Tipos)):::principal
     
     Title --> Coercion["Conversión Implícita (Coerción)"]:::categoria
@@ -51,6 +51,9 @@ flowchart LR
     Variables --> EjVar["`edad: int = 25`"]:::ejemplo
     Funciones --> EjFun["`def saludar(nombre: str)`"]:::ejemplo
     Retorno --> EjRet["`def suma(a: int, b: int) -> int:`"]:::ejemplo
+
+    linkStyle default stroke:#81a1c1,stroke-width:1.6px
+
 ```
 
 ## Conversión Implícita (Coerción)
@@ -63,16 +66,18 @@ La **coerción** ocurre automáticamente cuando Python realiza una operación en
 
 ```mermaid
 flowchart LR
-    classDef principal fill:#2d3436,stroke:#dfe6e9,stroke-width:2px,color:#fff,font-weight:bold;
-    classDef nivel fill:#f9f9f9,stroke:#636e72,stroke-width:1px,color:#2d3436;
-    classDef flecha stroke:#e17055,stroke-width:2px;
-
+    classDef principal fill:#3b4252,stroke:#88c0d0,stroke-width:3px,color:#eceff4,font-weight:bold;
+    classDef nivel fill:#2e3440,stroke:#81a1c1,stroke-width:1.6px,color:#eceff4;
+    
     Title((Coerción de Tipos)):::principal
 
     Title --> B
     B("bool"):::nivel --> I("int"):::nivel
     I --> F("float"):::nivel
     F --> C("complex"):::nivel
+
+    linkStyle default stroke:#88c0d0,stroke-width:2px
+
 ```
 **`str` mantiene su propio espacio**
 

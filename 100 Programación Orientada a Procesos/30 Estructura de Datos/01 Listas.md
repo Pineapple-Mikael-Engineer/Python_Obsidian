@@ -6,9 +6,9 @@ order: 1
 
 ```mermaid
 flowchart LR
-    classDef principal fill:#2d3436,stroke:#dfe6e9,stroke-width:2px,color:#ffffff,font-weight:bold;
-    classDef categoria fill:#636e72,stroke:#dfe6e9,stroke-width:1.5px,color:#ffffff,font-weight:bold;
-    classDef tipo fill:#f9f9f9,stroke:#636e72,stroke-width:1px,color:#2d3436;
+    classDef principal fill:#2e3440,stroke:#5e81ac,stroke-width:2px,color:#eceff4,font-weight:bold;
+    classDef categoria fill:#434c5e,stroke:#5e81ac,stroke-width:1.5px,color:#eceff4,font-weight:bold;
+    classDef tipo fill:#4c566a,stroke:#5e81ac,stroke-width:1px,color:#eceff4;
 
     A((Listas en Python)):::principal
 
@@ -64,11 +64,11 @@ flowchart LR
         F --> F3(Comprensión Anidada):::tipo
     end
 
-    style G1 fill:#f1f2f6,stroke:#ced4da,stroke-dasharray:8 6
-    style G2 fill:#f1f2f6,stroke:#ced4da,stroke-dasharray:8 6
-    style G3 fill:#f1f2f6,stroke:#ced4da,stroke-dasharray:8 6
-    style G4 fill:#f1f2f6,stroke:#ced4da,stroke-dasharray:8 6
-    style G5 fill:#f1f2f6,stroke:#ced4da,stroke-dasharray:8 6
+    style G1 fill:#3b4252,stroke:#5e81ac,stroke-dasharray:8 6
+    style G2 fill:#3b4252,stroke:#5e81ac,stroke-dasharray:8 6
+    style G3 fill:#3b4252,stroke:#5e81ac,stroke-dasharray:8 6
+    style G4 fill:#3b4252,stroke:#5e81ac,stroke-dasharray:8 6
+    style G5 fill:#3b4252,stroke:#5e81ac,stroke-dasharray:8 6
 
 ```
 

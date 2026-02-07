@@ -9,21 +9,22 @@ Los operadores en Python son símbolos especiales que permiten realizar operacio
 
 ```mermaid
 flowchart LR
-    classDef principal fill:#2d3436,stroke:#dfe6e9,stroke-width:2px,color:#fff,font-weight:bold;
-    classDef categoria fill:#636e72,stroke:#dfe6e9,stroke-width:1px,color:#fff;
-    classDef tipo fill:#f9f9f9,stroke:#636e72,stroke-width:1px,color:#2d3436;
-    classDef especial fill:#fab1a0,stroke:#e17055,stroke-width:1px,color:#2d3436;
+    classDef raiz fill:#3b4252,stroke:#88c0d0,stroke-width:3px,color:#eceff4,font-weight:bold;
+    classDef categoria fill:#434c5e,stroke:#81a1c1,stroke-width:2px,color:#eceff4;
 
-    Title((Tipos De Operadores)):::principal
+    Title((Tipos de Operadores)):::raiz
 
-    Title --> Aritmeticos[Aritmeticos]:::categoria
-    Title --> Comparación[De Comparación]:::categoria
-    Title --> Lógicos[Lógicos]:::categoria
-	Title --> Asignación[De Asignacion]:::categoria
-	Title --> Identidad[De Identidad]:::categoria
-	Title --> Pertenece[De Pertenece]:::categoria
-	Title --> BitABit[Bit A Bit]:::categoria
-	Title --> Ternario[Ternario]:::categoria
+    Title --> Aritmeticos[Aritméticos]:::categoria
+    Title --> Comparacion[De Comparación]:::categoria
+    Title --> Logicos[Lógicos]:::categoria
+    Title --> Asignacion[De Asignación]:::categoria
+    Title --> Identidad[De Identidad]:::categoria
+    Title --> Pertenece[De Pertenencia]:::categoria
+    Title --> BitABit[Bit a Bit]:::categoria
+    Title --> Ternario[Ternario]:::categoria
+
+    linkStyle default stroke:#81a1c1,stroke-width:1.6px
+
 ```
 ## Operadores Aritméticos
 

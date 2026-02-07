@@ -6,10 +6,10 @@ order: 2
 
 ```mermaid
 flowchart LR
-    classDef principal fill:#2d3436,stroke:#dfe6e9,stroke-width:2px,color:#fff,font-weight:bold;
-    classDef categoria fill:#636e72,stroke:#dfe6e9,stroke-width:1px,color:#fff;
-    classDef tipo fill:#f9f9f9,stroke:#636e72,stroke-width:1px,color:#2d3436;
-    classDef especial fill:#fab1a0,stroke:#e17055,stroke-width:1px,color:#2d3436;
+    classDef principal fill:#2e3440,stroke:#5e81ac,stroke-width:2px,color:#eceff4,font-weight:bold;
+    classDef categoria fill:#434c5e,stroke:#5e81ac,stroke-width:1px,color:#eceff4;
+    classDef tipo fill:#4c566a,stroke:#5e81ac,stroke-width:1px,color:#eceff4;
+    classDef especial fill:#d08770,stroke:#bf616a,stroke-width:1px,color:#2e3440;
 
     A((Tuplas en Python)):::principal
 
@@ -38,32 +38,33 @@ flowchart LR
     subgraph G3 [Interactuando con Tuplas]
         D --> D1(Indexación):::tipo
         D --> D2(Slicing):::tipo
-        D --> D3(Concatenación +):::tipo
-        D --> D4(Pertenencia in):::tipo
+        D --> D3("Concatenación +"):::tipo
+        D --> D4("Pertenencia in"):::tipo
         D --> D5("Métodos count() e index()"):::tipo
     end
 
     subgraph G4 [Aplicaciones Prácticas]
-        E --> E1(Retorno múltiple de funciones):::tipo
-        E --> E2(Claves en diccionarios):::tipo
-        E --> E3(Elementos de sets):::tipo
-        E --> E4(Intercambio de variables):::tipo
-        E --> E5(Protección de datos):::tipo
+        E --> E1("Retorno múltiple de funciones"):::tipo
+        E --> E2("Claves en diccionarios"):::tipo
+        E --> E3("Elementos de sets"):::tipo
+        E --> E4("Intercambio de variables"):::tipo
+        E --> E5("Protección de datos"):::tipo
     end
 
     subgraph G5 [Tuplas con Nombre]
         F --> F1(Definición):::tipo
         F --> F2(Creación):::tipo
-        F --> F3(Acceso por nombre o índice):::tipo
-        F --> F4(Inmutabilidad como tuplas):::tipo
-        F --> F5(Conversión a dict / list)::::tipo
+        F --> F3("Acceso por nombre o índice"):::tipo
+        F --> F4("Inmutabilidad como tuplas"):::tipo
+        F --> F5("Conversión a dict / list"):::tipo
     end
 
-    style G1 fill:#f1f2f6,stroke:#ced4da,stroke-dasharray: 5 5
-    style G2 fill:#f1f2f6,stroke:#ced4da,stroke-dasharray: 5 5
-    style G3 fill:#f1f2f6,stroke:#ced4da,stroke-dasharray: 5 5
-    style G4 fill:#f1f2f6,stroke:#ced4da,stroke-dasharray: 5 5
-    style G5 fill:#f1f2f6,stroke:#ced4da,stroke-dasharray: 5 5
+    style G1 fill:#3b4252,stroke:#5e81ac,stroke-dasharray:5 5
+    style G2 fill:#3b4252,stroke:#5e81ac,stroke-dasharray:5 5
+    style G3 fill:#3b4252,stroke:#5e81ac,stroke-dasharray:5 5
+    style G4 fill:#3b4252,stroke:#5e81ac,stroke-dasharray:5 5
+    style G5 fill:#3b4252,stroke:#5e81ac,stroke-dasharray:5 5
+
 ```
 
 # Definición y Características
@@ -595,17 +596,17 @@ print(f"¿Sigue siendo tupla?: {isinstance(p, tuple)}")  # True
 
 # Tabla Comparativa: Listas vs Tuplas
 
-| Característica | Listas | Tuplas |
-|----------------|---------|---------|
-| **Mutabilidad** | ✅ Mutable | ❌ Inmutable |
-| **Sintaxis** | `[]` | `()` o sin paréntesis |
-| **Rendimiento** | Más lento | Más rápido |
-| **Uso memoria** | Más memoria | Menos memoria |
-| **Métodos** | Muchos | Solo `count()` e `index()` |
-| **Hashable** | ❌ No hashable | ✅ Hashable (si elementos inmutables) |
-| **Uso típico** | Datos que cambian | Datos constantes, configuraciones |
-| **Claves dict** | ❌ No permitido | ✅ Permitido |
-| **Elementos set** | ❌ No permitido | ✅ Permitido |
+| Característica    | Listas            | Tuplas                             |
+| ----------------- | ----------------- | ---------------------------------- |
+| **Mutabilidad**   | Mutable           | Inmutable                          |
+| **Sintaxis**      | `[]`              | `()` o sin paréntesis              |
+| **Rendimiento**   | Más lento         | Más rápido                         |
+| **Uso memoria**   | Más memoria       | Menos memoria                      |
+| **Métodos**       | Muchos            | Solo `count()` e `index()`         |
+| **Hashable**      | No hashable       | Hashable (si elementos inmutables) |
+| **Uso típico**    | Datos que cambian | Datos constantes, configuraciones  |
+| **Claves dict**   | No permitido      | Permitido                          |
+| **Elementos set** | No permitido      | Permitido                          |
 
 # Ejemplos Prácticos y Casos de Uso
 
@@ -697,23 +698,23 @@ print(f"IPs permitidas: {config.allowed_ips}")
 7. **Usa `_` para ignorar valores** en desempaquetado
 
 ```python
-# ✅ BIEN: Tuplas para datos constantes
+# BIEN: Tuplas para datos constantes
 COLORES_PRIMARIOS = ("rojo", "verde", "azul")
 
-# ✅ BIEN: Desempaquetado claro
+# BIEN: Desempaquetado claro
 x, y = obtener_coordenadas()
 
-# ✅ BIEN: Ignorar valores no necesarios
+# BIEN: Ignorar valores no necesarios
 nombre, _, edad = obtener_datos_personales()
 
-# ✅ BIEN: Namedtuples para estructuras
+# BIEN: Namedtuples para estructuras
 from collections import namedtuple
 Producto = namedtuple('Producto', 'nombre precio stock')
 
-# ❌ EVITA: Usar listas para datos constantes
+# EVITA: Usar listas para datos constantes
 # COLORES_PRIMARIOS = ["rojo", "verde", "azul"]  # Riesgo de modificación
 
-# ✅ BIEN: Usar tuplas en funciones que devuelven múltiples valores
+# BIEN: Usar tuplas en funciones que devuelven múltiples valores
 def dividir(num, den):
     cociente = num // den
     resto = num % den
