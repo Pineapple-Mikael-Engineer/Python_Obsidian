@@ -387,16 +387,16 @@ print("(x & y) == 2 =", resultado)  # True
 
 ```mermaid
 flowchart TD
-    classDef principal fill:#2d3436,stroke:#dfe6e9,stroke-width:2px,color:#fff,font-weight:bold;
-    classDef categoria fill:#636e72,stroke:#dfe6e9,stroke-width:1px,color:#fff;
-    classDef tipo fill:#f9f9f9,stroke:#636e72,stroke-width:1px,color:#2d3436;
-    classDef especial fill:#fab1a0,stroke:#e17055,stroke-width:1px,color:#2d3436;
+    classDef principal fill:#2e3440,stroke:#5e81ac,stroke-width:2px,color:#eceff4,font-weight:bold;
+    classDef categoria fill:#434c5e,stroke:#5e81ac,stroke-width:1px,color:#eceff4;
+    classDef tipo fill:#4c566a,stroke:#5e81ac,stroke-width:1px,color:#eceff4;
+    classDef especial fill:#d08770,stroke:#bf616a,stroke-width:1px,color:#2e3440;
 
     Title((Prioridad de Operadores)):::principal
 
     Title --> B1["( ) Paréntesis"]:::especial
     B1 --> B2["** Potencia"]:::tipo
-    
+
     subgraph G1 [Aritmética]
         B2 --> B3["*, /, //, %, Multiplicativos"]:::tipo
         B3 --> B4["+, - Aditivos"]:::tipo
@@ -425,11 +425,13 @@ flowchart TD
         B14 --> B15["= += -= Asignación"]:::especial
     end
 
-    style G1 fill:#f1f2f6,stroke:#ced4da,stroke-dasharray: 5 5
-    style G2 fill:#f1f2f6,stroke:#ced4da,stroke-dasharray: 5 5
-    style G3 fill:#f1f2f6,stroke:#ced4da,stroke-dasharray: 5 5
-    style G4 fill:#f1f2f6,stroke:#ced4da,stroke-dasharray: 5 5
-    style G5 fill:#f1f2f6,stroke:#ced4da,stroke-dasharray: 5 5
+    style G1 fill:#3b4252,stroke:#5e81ac,stroke-dasharray:5 5
+    style G2 fill:#3b4252,stroke:#5e81ac,stroke-dasharray:5 5
+    style G3 fill:#3b4252,stroke:#5e81ac,stroke-dasharray:5 5
+    style G4 fill:#3b4252,stroke:#5e81ac,stroke-dasharray:5 5
+    style G5 fill:#3b4252,stroke:#5e81ac,stroke-dasharray:5 5
+
 ```
+
 
 
