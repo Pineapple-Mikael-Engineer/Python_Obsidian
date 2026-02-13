@@ -4,7 +4,7 @@ draft: false
 ---
 
 
-Los operadores en Python son símbolos especiales que permiten realizar operaciones sobre valores y variables. Estos operadores son fundamentales para la manipulación de datos y la lógica de programación.
+Los operadores en Python **son símbolos especiales que permiten realizar operaciones sobre valores y variables**. Estos operadores son fundamentales para la manipulación de datos y la lógica de programación.
 # Tipos de Operadores
 
 ```mermaid
@@ -150,7 +150,7 @@ print(minimo)  # 10
 
 # Precedencia de Operadores en Python
 
-La precedencia de operadores determina el orden en que Python evalúa diferentes operadores en una expresión. Cuando una expresión contiene múltiples operadores, Python los evalúa siguiendo un orden específico.
+**La precedencia de operadores determina el orden en que Python evalúa diferentes operadores en una expresión**. Cuando una expresión contiene múltiples operadores, Python los evalúa siguiendo un orden específico.
 
 ## Tabla Completa de Precedencia
 

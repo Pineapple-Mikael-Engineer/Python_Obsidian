@@ -2,6 +2,9 @@
 title: 01-Variables y Tipos de Datos
 draft: false
 description: Descripcion de Variables y Datos Python
+tags:
+  - Index
+  - Tema
 ---
 
 En el desarrollo de software, entender la diferencia entre el **contenedor** y el **contenido** es el primer paso para escribir código sólido.

@@ -1,7 +1,6 @@
 ---
-title: Datos Primitivos
+title: 01 Datos Primitivos
 draft: false
-order: 1
 ---
 
 
@@ -85,7 +84,7 @@ Cuando un número supera el tamaño de palabra estándar del procesador, Python 
 
 - **Sin desbordamiento (Overflow):** No recibirás un error de `OverflowError` al realizar cálculos masivos con enteros.
     
-- **Ejemplo:** Puedes calcular 21000 y Python te entregará el número exacto con todos sus dígitos sin despeinarse.
+- **Ejemplo:** Puedes calcular $2^{1000}$ y Python te entregará el número exacto con todos sus dígitos sin despeinarse.
 $$
 2^{1000}=107150860718626732094842504906...
 $$
@@ -99,7 +98,7 @@ Es un tipo de dato que representa números con **punto decimal**. Se llaman "pun
 #### Precisión
 La precisión de un flotante no es infinita. Al tener solo 64 bits de espacio, Python puede representar aproximadamente **15 a 17 dígitos significativos**.
 - Si intentas manejar un número con 30 decimales, Python "cortará" el resto.
-- Esto es suficiente para la mayoría de los cálculos científicos, pero crítico en sistemas financieros (donde se prefiere usar el módulo `decimal`).
+- Esto es suficiente para la mayoría de los cálculos científicos, pero crítico en sistemas financieros (donde se prefiere usar el [[Modulo y Paquetes|módulo]] `decimal`).
 
 #### Limites
 A diferencia de los enteros, los flotantes **sí tienen un límite máximo y mínimo**. Si intentas superar estos límites, Python te devolverá errores o valores especiales:
@@ -228,7 +227,7 @@ Dado que los booleanos son números, Python extiende este concepto a otros tipos
 ## Secuencias
 
 ### Dato Cadena-`str`
-Una cadena (**string**) es una **secuencia inmutable de caracteres**. "Inmutable" significa que, una vez creada, no puedes cambiar una letra individual de esa cadena; para "modificarla", Python en realidad crea una nueva cadena en memoria.
+Una [[05 Cadenas|cadena]] (**string**) es una **secuencia [[02 Mutabilidad y Inmutabilidad|inmutable]] de caracteres**. "Inmutable" significa que, una vez creada, no puedes cambiar una letra individual de esa cadena; para "modificarla", Python en realidad crea una nueva cadena en memoria.
 
 Se definen usando comillas simples (`'...'`), dobles (`"..."`) o triples (`'''...'''` o `"""..."""`) para textos de múltiples líneas.
 #### Caracteres

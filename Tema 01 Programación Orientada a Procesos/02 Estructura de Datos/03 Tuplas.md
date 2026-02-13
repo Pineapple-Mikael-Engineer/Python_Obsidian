@@ -1,7 +1,6 @@
 ---
 title: Tuplas
 draft: false
-order: 2
 ---
 
 ```mermaid
@@ -199,10 +198,10 @@ print(tupla[-1])  # "e" - último elemento
 print(tupla[-3])  # "c" - tercero desde el final
 
 # IndexError si índice fuera de rango
-# print(tupla[10])  # ❌ IndexError: tuple index out of range
+# print(tupla[10])  # IndexError: tuple index out of range
 
 # Las tuplas son inmutables, no se puede modificar
-# tupla[1] = "B"  # ❌ TypeError: 'tuple' object does not support item assignment
+# tupla[1] = "B"  # TypeError: 'tuple' object does not support item assignment
 
 # Pero se puede acceder a elementos mutables dentro
 tupla_mixta = (1, 2, [3, 4])
@@ -495,7 +494,7 @@ print(f"p1.y: {p1.y}")    # 20
 print(f"p1[0]: {p1[0]}")  # 10 (también accesible por índice)
 
 # Inmutabilidad (igual que tupla normal)
-# p1.x = 30  # ❌ AttributeError: can't set attribute
+# p1.x = 30  # AttributeError: can't set attribute
 
 # Comparación
 print(f"p1 == p2: {p1 == p2}")          # False
@@ -684,7 +683,7 @@ print(f"Modo: {config.mode}")
 print(f"IPs permitidas: {config.allowed_ips}")
 
 # Configuración no puede ser modificada accidentalmente
-# config.port = 9090  # ❌ Error
+# config.port = 9090  # Error
 ```
 
 # Buenas Prácticas con Tuplas

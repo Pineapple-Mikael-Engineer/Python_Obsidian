@@ -1,11 +1,14 @@
 ---
-title: 02-Estructuras de Control
+title: 03-Estructuras de Control
 draft: false
 description: '"Descripcion"'
+tags:
+  - Index
+  - Tema
 ---
 
 
-# **Introducción**
+
 Las estructuras de control son fundamentales para dirigir el flujo de ejecución de un programa en Python. Permiten tomar decisiones, repetir acciones y controlar cómo se ejecuta el código según condiciones específicas.
 
 ---

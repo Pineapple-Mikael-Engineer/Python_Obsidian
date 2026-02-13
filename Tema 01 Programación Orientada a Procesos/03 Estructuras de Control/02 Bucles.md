@@ -1,7 +1,6 @@
 ---
 title: Bucles
 draft: false
-order: 2
 ---
 
 
@@ -99,7 +98,7 @@ for caracter in texto:
 # N
 ```
 
-### Iteración sobre [[03 Diccionarios|Diccionarios]]
+### Iteración sobre [[04 Diccionarios|Diccionarios]]
 ```python
 persona = {
     "nombre": "Ana",

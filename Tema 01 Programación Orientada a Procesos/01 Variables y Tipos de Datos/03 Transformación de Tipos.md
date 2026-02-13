@@ -1,7 +1,6 @@
 ---
-title: Transformación de Tipos
+title: 02 Transformación de Tipos
 draft: false
-order: 3
 ---
 
 
@@ -180,7 +179,7 @@ print(set([1, 2, 2, 3, 3]))     # {1, 2, 3}
 print(set("banana"))            # {'b', 'a', 'n'}
 ```
 
-# `dict()` - Crea [[03 Diccionarios|diccionario]]
+# `dict()` - Crea [[04 Diccionarios|diccionario]]
 
 ```python
 print(dict([('a', 1), ('b', 2)]))  # {'a': 1, 'b': 2}

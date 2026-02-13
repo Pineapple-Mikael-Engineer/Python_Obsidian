@@ -1,7 +1,6 @@
 ---
-title: Mutabilidad y Inmutabilidad
+title: 03 Mutabilidad y Inmutabilidad
 draft: false
-order: 2
 ---
 
 La mutabilidad en Python es una propiedad del **tipo de dato**, no del valor. El intérprete CPython implementa esta distinción a nivel de C, donde cada tipo define si sus instancias pueden ser modificadas *in-place*.
@@ -11,7 +10,7 @@ La mutabilidad en Python es una propiedad del **tipo de dato**, no del valor. El
 
 
 > [!tip] Tip
-> Puedes comprobar esto con la función `id(objeto)`. Si el `id` cambia tras una operación, el dato es inmutable.
+> Puedes comprobar esto con la función `id(objeto)`. Si el `id` cambia tras una operación, el dato es [[02 Mutabilidad y Inmutabilidad|inmutable]].
 > ```python
 ># Verificación de identidad y mutabilidad
 >a = (1, 2, 3)  # Tupla - inmutable
@@ -25,7 +24,6 @@ La mutabilidad en Python es una propiedad del **tipo de dato**, no del valor. El
 >b.append(4)  # Modifica EN SITIO
 >print(f"id(b) después: {id(b)}")  # MISMO id
 >```
-
 
 
 # Clasificación de Datos
@@ -64,7 +62,7 @@ flowchart LR
 
 ## I. Tipos Inmutables (Hashables)
 
-Son seguros y predecibles. Se pueden usar como claves en [[03 Diccionarios|diccionarios]].
+Son seguros y predecibles. Se pueden usar como claves en [[04 Diccionarios|diccionarios]].
 
 - **Numéricos:** `int`, `float`, `complex`, `bool`.
 - **Secuencias:** `str`, `tuple`, `bytes`.
@@ -83,13 +81,13 @@ Son potentes pero requieren cuidado, ya que los cambios en una variable pueden a
 
 ### 1. **Inmutabilidad Estricta vs. Relativa**
 - **Estricta**: `int`, `float`, `str`, `bytes`, `tuple` (de elementos inmutables)
-- **Relativa**: `tuple` con elementos mutables (la tupla no cambia, pero su contenido sí)
+- **Relativa**: [[02 Tuplas|`tuple`]] con elementos mutables (la tupla no cambia, pero su contenido sí)
 
 ```python
 # Tupla con lista - inmutabilidad "superficial"
 t = ([1, 2], 3)
 print(f"id(t): {id(t)}")  # Constante
-t[0].append(3)  # ¡PERMITIDO! La lista dentro cambia
+t[0].append(3)  # PERMITIDO La lista dentro cambia
 print(f"t después: {t}")  # ([1, 2, 3], 3)
 ```
 

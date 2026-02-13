@@ -1,7 +1,6 @@
 ---
 title: Listas
 draft: false
-order: 1
 ---
 
 ```mermaid
@@ -360,7 +359,7 @@ lista = ["a", "b", "c", "d", "e", "b"]
 # remove() - elimina primera aparición del valor
 lista.remove("b")
 print(lista)  # ["a", "c", "d", "e", "b"]
-# lista.remove("z")  # ❌ ValueError si no existe
+# lista.remove("z")  # ValueError si no existe
 
 # pop() - elimina y devuelve por índice (último por defecto)
 elemento = lista.pop()  # Sin índice = último
@@ -534,19 +533,19 @@ for fila in tabla:
 
 # Tabla Resumen de Métodos
 
-| Método | Descripción | Modifica Lista | Ejemplo |
-|--------|-------------|----------------|---------|
-| **append(x)** | Añade x al final | ✅ | `[1,2].append(3) → [1,2,3]` |
-| **extend(iter)** | Añade elementos de iter | ✅ | `[1,2].extend([3,4]) → [1,2,3,4]` |
-| **insert(i,x)** | Inserta x en posición i | ✅ | `[1,3].insert(1,2) → [1,2,3]` |
-| **remove(x)** | Elimina primera x | ✅ | `[1,2,1].remove(1) → [2,1]` |
-| **pop([i])** | Elimina y devuelve elemento i | ✅ | `[1,2,3].pop(1) → 2` |
-| **clear()** | Elimina todos elementos | ✅ | `[1,2].clear() → []` |
-| **index(x)** | Devuelve índice de x | ❌ | `[1,2,1].index(2) → 1` |
-| **count(x)** | Cuenta apariciones de x | ❌ | `[1,2,1].count(1) → 2` |
-| **sort()** | Ordena la lista | ✅ | `[3,1,2].sort() → [1,2,3]` |
-| **reverse()** | Invierte orden | ✅ | `[1,2,3].reverse() → [3,2,1]` |
-| **copy()** | Copia superficial | ❌ | `[1,2].copy() → [1,2]` |
+| Método           | Descripción                   | Modifica Lista | Ejemplo                           |
+| ---------------- | ----------------------------- | -------------- | --------------------------------- |
+| **append(x)**    | Añade x al final              | ✅              | `[1,2].append(3) → [1,2,3]`       |
+| **extend(iter)** | Añade elementos de iter       | ✅              | `[1,2].extend([3,4]) → [1,2,3,4]` |
+| **insert(i,x)**  | Inserta x en posición i       | ✅              | `[1,3].insert(1,2) → [1,2,3]`     |
+| **remove(x)**    | Elimina primera x             | ✅              | `[1,2,1].remove(1) → [2,1]`       |
+| **pop([i])**     | Elimina y devuelve elemento i | ✅              | `[1,2,3].pop(1) → 2`              |
+| **clear()**      | Elimina todos elementos       | ✅              | `[1,2].clear() → []`              |
+| **index(x)**     | Devuelve índice de x          | ❌              | `[1,2,1].index(2) → 1`            |
+| **count(x)**     | Cuenta apariciones de x       | ❌              | `[1,2,1].count(1) → 2`            |
+| **sort()**       | Ordena la lista               | ✅              | `[3,1,2].sort() → [1,2,3]`        |
+| **reverse()**    | Invierte orden                | ✅              | `[1,2,3].reverse() → [3,2,1]`     |
+| **copy()**       | Copia superficial             | ❌              | `[1,2].copy() → [1,2]`            |
 
 # Buenas Prácticas y Consejos
 

@@ -4,7 +4,7 @@ draft: false
 ---
 
 
-En Python, cualquier valor puede ser evaluado en un contexto booleano (como en una condición  [[01 Condicionales|`if` o `while`]]). Los valores que se evalúan como **`False`** se llaman **falsy**, y los que se evalúan como **`True`** se llaman **truthy**.
+En Python, **cualquier valor puede ser evaluado en un contexto booleano** (como en una condición  [[01 Condicionales|`if` o `while`]]). Los valores que se evalúan como **`False`** se llaman **falsy**, y los que se evalúan como **`True`** se llaman **truthy**.
 
 # `bool`: Una Subclase de `int`
 
