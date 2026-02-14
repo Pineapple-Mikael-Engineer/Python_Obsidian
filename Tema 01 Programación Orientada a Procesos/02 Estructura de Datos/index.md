@@ -137,7 +137,7 @@ flowchart LR
 
     A((Clasificación de Estructuras en Python)):::principal
 
-    %% SEGÚN MUTABILIDAD
+
     A --> M[Según Mutabilidad]:::categoria
     
     subgraph G1 [ ]
@@ -151,7 +151,7 @@ flowchart LR
         M2 --> M2b[Tuplas]:::tipo
     end
 
-    %% SEGÚN ORGANIZACIÓN
+
     A --> O[Según Organización Interna]:::categoria
 
     subgraph G2 [ ]
@@ -172,7 +172,7 @@ flowchart LR
         O2 --> O2d[Basados en hashing]:::tipo
     end
 
-    %% SEGÚN DUPLICADOS
+
     A --> D[Según Permisión de Duplicados]:::categoria
 
     subgraph G3 [ ]
