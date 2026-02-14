@@ -7,37 +7,154 @@ tags:
   - Tema
 ---
 
-En el desarrollo de software, entender la diferencia entre el **contenedor** y el **contenido** es el primer paso para escribir código sólido.
 
-# Conceptos Fundamentales
 
-- **Variable:** Es un nombre (identificador) que apunta a un lugar en la memoria de la computadora donde se almacena un valor. En Python, son dinámicas: una misma variable puede apuntar a diferentes tipos de datos a lo largo del programa.    
-- **Dato:** Es la unidad mínima de información que el programa manipula. Cada dato tiene un **tipo**, que determina qué operaciones se pueden realizar con él y cuánta memoria ocupa.
+##  ¿Qué es una Variable?
+
+Técnicamente:
+
+> Una **variable** es una referencia simbólica que apunta a un objeto almacenado en memoria.
+
+En Python, las variables **no almacenan el dato directamente**, sino que almacenan una referencia al objeto.  
+Esto tiene implicaciones profundas en:
+
+- Asignación
     
-# Contenido del Módulo
-
-## [[01 Datos Primitivos|Datos Primitivos]]
-
-Exploración de los ladrillos básicos del lenguaje.
-
-- **Numéricos:** `int` (enteros de precisión infinita), `float` (punto flotante y sus problemas de precisión) y `complex`.
-- **Lógica:** `bool` como subclase de entero.
-- **Cadenas:** `str` y el estándar Unicode/UTF-8.    
-- **Vacío:** `NoneType` para representar la ausencia de valor.
-
-## [[02 Mutabilidad y Inmutabilidad|Mutabilidad y Inmutabilidad]]
-
-El concepto más crítico para la gestión de memoria y evitar efectos secundarios.
-
-- **Inmutables:** Objetos que no cambian (Números, Cadenas, Tuplas). Son seguros y _hashables_.
-- **Mutables:** Objetos modificables (Listas, Diccionarios). Requieren cuidado con las referencias y copias.
-- **Implicaciones:** Diferencia entre asignar una nueva etiqueta y modificar el contenido interno.
+- Copia
+    
+- Mutabilidad
+    
+- Paso de argumentos
+    
+- Gestión de memoria
     
 
-## [[03 Transformación de Tipos|Transformación de Tipos]]
+En otras palabras:
 
-Cómo mover datos entre diferentes categorías de forma segura.
+-  En Python, _las variables apuntan; los objetos viven en memoria._
 
-- **Implícita:** Coerción automática realizada por el intérprete.
-- **Explícita:** Uso de constructores como `int()`, `str()` o `list()`.
-- **Validación:** Herramientas para asegurar la integridad de los datos (`isinstance()`) y el uso de _Type Hints_.    
+---
+
+##  ¿Qué es un Tipo de Dato?
+
+Un **tipo de dato** define:
+
+- La naturaleza del valor
+    
+- Las operaciones permitidas
+    
+- El comportamiento en memoria
+    
+- La forma en que se interpreta el contenido
+    
+
+Python es un lenguaje de **tipado dinámico y fuerte**, lo que significa que:
+
+- El tipo se determina en tiempo de ejecución.
+    
+- No se permiten operaciones inválidas entre tipos incompatibles.
+    
+
+---
+
+#  Contenido de los Tipos de Datos en Python
+
+En este módulo abordamos los fundamentos que permiten comprender todo lo que viene después.
+
+---
+
+## Datos Primitivos
+
+Los tipos básicos incorporados en el lenguaje que representan valores simples.
+
+- [[01 Datos Primitivos|Datos Primitivos]]
+    
+
+Incluyen conceptos como:
+
+- Números enteros
+    
+- Números reales
+    
+- Valores booleanos
+    
+- Texto
+    
+
+Son la base sobre la que se construyen las estructuras más complejas.
+
+
+## Mutabilidad e Inmutabilidad
+
+Uno de los conceptos más importantes en Python.
+
+- [[02 Mutabilidad y Inmutabilidad|Mutabilidad y Inmutabilidad]]
+    
+
+Aquí se Presenta:
+
+- Qué significa que un objeto sea mutable
+    
+- Qué significa que sea inmutable
+    
+- Cómo afecta esto a la memoria
+    
+- Diferencia entre modificar y reasignar
+    
+- Implicaciones en funciones y copias
+    
+
+Este tema conecta directamente con estructuras de datos.
+
+
+## Transformación de Tipos
+
+También conocido como _casting_ o conversión de tipos.
+
+- [[03 Transformación de Tipos|Transformación de Tipos]]
+    
+
+Se estudia:
+
+- Conversión explícita
+    
+- Conversión implícita
+    
+- Validación de tipos
+    
+- Errores comunes al convertir
+    
+- Buenas prácticas
+    
+
+Es el puente entre diferentes representaciones de datos.
+
+---
+
+#  Conexión con Otros Módulos
+
+Este módulo es la base para:
+
+- Estructuras de Datos
+    
+- Funciones
+    
+- Programación Orientada a Objetos
+    
+- Manejo de memoria
+    
+
+Sin comprender bien este bloque, lo demás se vuelve confuso.
+
+
+---
+
+#  Notas del Módulo
+
+- [[01 Datos Primitivos|Datos Primitivos]]
+    
+- [[02 Mutabilidad y Inmutabilidad|Mutabilidad y Inmutabilidad]]
+    
+- [[03 Transformación de Tipos|Transformación de Tipos]]
+    
+

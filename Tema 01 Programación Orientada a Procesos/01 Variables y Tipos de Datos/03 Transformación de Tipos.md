@@ -156,7 +156,7 @@ print(bool(None))         # False
 ```
 
 ### B. Constructores de Colecciones
-# `list()` - Crea [[01 Listas|lista]] desde iterable
+# `list()` - Crea [[02 Listas|lista]] desde iterable
 
 ```python
 print(list("Python"))           # ['P', 'y', 't', 'h', 'o', 'n']
@@ -165,14 +165,14 @@ print(list({1, 2, 3}))          # [1, 2, 3] (orden puede variar)
 print(list(range(5)))           # [0, 1, 2, 3, 4]
 ```
 
-# `tuple()` - Crea [[02 Tuplas|tupla]] desde iterable
+# `tuple()` - Crea [[03 Tuplas|tupla]] desde iterable
 
 ```python
 print(tuple([1, 2, 3]))         # (1, 2, 3)
 print(tuple("abc"))             # ('a', 'b', 'c')
 ```
 
-# `set()` - Crea [[04 Conjunto|conjunto]] (elimina duplicados)
+# `set()` - Crea [[05 Conjuntos|conjunto]] (elimina duplicados)
 
 ```python
 print(set([1, 2, 2, 3, 3]))     # {1, 2, 3}

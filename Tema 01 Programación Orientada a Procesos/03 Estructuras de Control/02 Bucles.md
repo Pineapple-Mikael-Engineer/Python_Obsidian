@@ -1,5 +1,5 @@
 ---
-title: Bucles
+title: 02 Bucles
 draft: false
 ---
 
@@ -53,7 +53,7 @@ flowchart TD
 
 
 
-### Iteración sobre [[01 Listas|Listas]]
+### Iteración sobre [[02 Listas|Listas]]
 ```python
 frutas = ["manzana", "banana", "naranja"]
 
@@ -69,7 +69,7 @@ for fruta in frutas:
 # Tiene 7 letras
 ```
 
-### Iteración sobre [[02 Tuplas|Tuplas]]
+### Iteración sobre [[03 Tuplas|Tuplas]]
 ```python
 coordenadas = (10, 20, 30)
 
@@ -83,7 +83,7 @@ for coord in coordenadas:
 
 ```
 
-### Iteración sobre [[05 Cadenas|Cadenas (Strings)]]
+### Iteración sobre [[01 Cadenas|Cadenas (Strings)]]
 ```python
 texto = "Python"
 

@@ -9,106 +9,131 @@ tags:
 
 
 
-Las estructuras de control son fundamentales para dirigir el flujo de ejecución de un programa en Python. Permiten tomar decisiones, repetir acciones y controlar cómo se ejecuta el código según condiciones específicas.
+##  ¿Qué son las Estructuras de Control?
+
+Desde un punto de vista técnico:
+
+> Las **estructuras de control** son construcciones sintácticas que determinan el orden de ejecución de las instrucciones en un programa.
+
+Por defecto, Python ejecuta el código de manera **secuencial** (de arriba hacia abajo).  
+Las estructuras de control permiten:
+
+- Tomar decisiones
+    
+- Repetir bloques de código
+    
+- Alterar el flujo normal de ejecución
+    
+- Manejar interrupciones
+    
+
+En esencia:
+
+- Son el sistema nervioso del programa.
 
 ---
 
-# **Contenido del Módulo**
+#  Clasificación de las Estructuras de Control
 
-## **[[01 Condicionales|Condicionales (if, elif, else)]]**
-- Toma de decisiones basada en condiciones
+Podemos agruparlas según su función dentro del flujo de ejecución.
+
+
+##  Estructuras Condicionales
+
+Permiten ejecutar bloques de código dependiendo de una condición lógica.
+
+- [[01 Condicionales|Condicionales]]
+    
+
+Características fundamentales:
+
 - Evaluación de expresiones booleanas
-- Anidamiento de condicionales
-- Operadores lógicos y de comparación
+    
+- Ejecución selectiva
+    
+- Ramificación del flujo
+    
+- Toma de decisiones dinámicas
+    
 
-**Conceptos clave:**
-- Sintaxis básica de `if`, `elif`, `else`
-- Condicionales ternarios
-- Encadenamiento de comparaciones
-- Valores Truthy y Falsy
+Conceptualmente, responden a la pregunta:
 
-## **[[02 Bucles|Bucles (for, while)]]**
-- Repetición de código mediante iteración
-- Control de procesos repetitivos
-- Iteración sobre diferentes tipos de datos
-
-**Tipos de bucles:**
-- **Bucle `for`**: Para iterar sobre secuencias conocidas
-- **Bucle `while`**: Para repetir mientras se cumpla una condición
-- **Bucles anidados**: Bucles dentro de bucles
-
-## **[[03 Control de Flujo|Control de Flujo (break, continue, pass)]]**
-- Modificación del comportamiento estándar de los bucles
-- Control preciso de la ejecución
-- Manejo de situaciones especiales
-
-**Palabras clave:**
-- **`break`**: Salir inmediatamente de un bucle
-- **`continue`**: Saltar a la siguiente iteración
-- **`pass`**: Marcador de posición (no hace nada)
-- **`else` en bucles**: Se ejecuta si NO se usa `break`
+> “¿Debe ejecutarse esto o no?”
 
 ---
 
-# **Objetivos de Aprendizaje**
-Al completar este módulo, podrás:
+## Estructuras Iterativas (Bucles)
 
-1. **Condicionales:**
-   - Escribir estructuras `if`, `elif`, `else` eficientes
-   - Evaluar múltiples condiciones complejas
-   - Usar condicionales ternarios correctamente
+Permiten repetir un bloque de código mientras se cumpla una condición o se recorra una secuencia.
 
-2. **Bucles:**
-   - Elegir entre `for` y `while` según el problema
-   - Iterar sobre listas, diccionarios, strings y rangos
-   - Implementar bucles anidados para problemas multidimensionales
+- [[02 Bucles|Bucles]]
+    
 
-3. **Control de Flujo:**
-   - Usar `break` y `continue` de forma apropiada
-   - Entender cuándo usar `pass`
-   - Implementar la cláusula `else` en bucles
+Características fundamentales:
 
----
-# **Relaciones con Otros Módulos**
+- Repetición controlada
+    
+- Iteración sobre estructuras de datos
+    
+- Control de número de ejecuciones
+    
+- Automatización de procesos repetitivos
+    
 
-## **Prerrequisitos:**
-- **[[100 Programación Orientada a Procesos/10 Variables y Tipos de Datos/index|Variables y Tipos de Datos]]** : Para evaluar condiciones
-- **[[Operadores de Variables|Operadores]]** : Para construir expresiones booleanas
+Conceptualmente, responden a:
 
-## **Aplicaciones Futuras:**
-- **[[Funciones|Funciones]]** → Las estructuras de control son esenciales dentro de funciones
-- **[[Estructuras de Datos|Estructuras de Datos]]** → Para iterar y manipular colecciones
-- **[[Manejo de Errores|Manejo de Errores]]** → Condicionales para verificación de errores
+> “¿Cuántas veces debe ejecutarse esto?”
 
----
 
-# **Buenas Prácticas**
-- Mantener las condiciones simples y legibles
-- Evitar bucles infinitos con `while`
-- Usar `enumerate()` para obtener índice y valor en bucles `for`
-- Preferir `for` sobre `while` cuando se itera sobre secuencias conocidas
-- Limitar la profundidad de anidamiento (máximo 3 niveles)
+##  Control Explícito del Flujo
 
----
+Mecanismos que alteran el comportamiento interno de condicionales o bucles.
 
-# **Errores Comunes**
-1. **Olvidar los dos puntos (`:`)** al final de `if`, `for`, `while`
-2. **Indentación incorrecta** (Python usa indentación para definir bloques)
-3. **Confundir `=` (asignación) con `==` (comparación)**
-4. **Bucles infinitos** por no actualizar la condición en `while`
-5. **Uso incorrecto de `break`** fuera de bucles
+- [[03 Control de Flujo|Control de Flujo]]
+    
+
+Incluye conceptos como:
+
+- Interrupción anticipada
+    
+- Salto a la siguiente iteración
+    
+- Finalización forzada de bloques
+    
+- Manejo estructurado del flujo interno
+    
+
+Conceptualmente, responde a:
+
+> “¿Debemos alterar el comportamiento normal del bloque actual?”
 
 ---
 
-# **Recursos Adicionales**
-- [Documentación oficial: Control Flow](https://docs.python.org/3/tutorial/controlflow.html)
-- [Python Style Guide (PEP 8) para estructuras de control](https://peps.python.org/pep-0008/#other-recommendations)
-- [Visual Python: Flujo de control](https://pythontutor.com/visualize.html)
+#  Relación con Otros Módulos
+
+Las estructuras de control dependen directamente de:
+
+- Variables y Tipos de Datos
+    
+- Expresiones booleanas
+    
+- Operadores lógicos
+    
+- Estructuras de datos
+    
+
+Sin datos no hay decisiones.  
+Sin decisiones no hay lógica.  
+Sin lógica no hay programa.
+
 
 ---
 
-# **Siguientes Pasos**
-Una vez domines las estructuras de control, estarás listo para:
-1. **[[Estructuras de Datos|Estructuras de Datos]]** → Aplicar bucles para manipular listas, diccionarios, etc.
-2. **[[Funciones|Funciones]]** → Encapsular lógica condicional y repetitiva en funciones reutilizables
+#  Notas del Módulo
 
+- [[01 Condicionales|Condicionales]]
+    
+- [[02 Bucles|Bucles]]
+    
+- [[03 Control de Flujo|Control de Flujo]]
+    

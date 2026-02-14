@@ -81,7 +81,7 @@ Son potentes pero requieren cuidado, ya que los cambios en una variable pueden a
 
 ### 1. **Inmutabilidad Estricta vs. Relativa**
 - **Estricta**: `int`, `float`, `str`, `bytes`, `tuple` (de elementos inmutables)
-- **Relativa**: [[02 Tuplas|`tuple`]] con elementos mutables (la tupla no cambia, pero su contenido sí)
+- **Relativa**: [[03 Tuplas|`tuple`]] con elementos mutables (la tupla no cambia, pero su contenido sí)
 
 ```python
 # Tupla con lista - inmutabilidad "superficial"

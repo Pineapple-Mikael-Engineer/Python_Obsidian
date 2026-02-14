@@ -75,7 +75,7 @@ Los enteros soportan las operaciones aritméticas estándar. Es vital distinguir
 | **Módulo (`%`)**                                  | Devuelve el residuo de la división.                  | `7 % 2` resulta en `1`    |
 | **Exponente** **(**`**`**)**                      | Eleva un número a una potencia.                      | `2 ** 3` resulta en `8`   |
 > [!note] Nota
-> Para ver mas Operaciones revisar [[Operadores de Variables]]
+> Para ver mas Operaciones revisar [[Operadores de Variables|Operadores de Variable]]
 #### Enteros Grandes (Arbitrary Precision)
 Esta es una de las características interesante de Python. Mientras que lenguajes como Java o C++ tienen un límite máximo para un entero (usualmente $2^{63}-1$ para un _long_ de 64 bits), Python maneja el crecimiento de forma dinámica.
 
@@ -185,7 +185,7 @@ num4 = num1.conjugate()  # num4 = 4-6j
 
 
 ### Booleanos-`bool`
-El tipo `bool` representa valores de **lógica binaria**. Se utiliza para evaluar si una condición es verdadera o falsa, siendo la base de todas las [[100 Programación Orientada a Procesos/20 Estructuras de Control/index|estructuras de control]] (como los `if` y los `while`). Solo puede tener dos valores:
+El tipo `bool` representa valores de **lógica binaria**. Se utiliza para evaluar si una condición es verdadera o falsa, siendo la base de todas las [[Tema 01 Programación Orientada a Procesos/03 Estructuras de Control/index|estructuras de control]] (como los `if` y los `while`). Solo puede tener dos valores:
 - **`True`** (Verdadero)
 - **`False`** (Falso)
 
@@ -216,7 +216,7 @@ Dado que los booleanos son números, Python extiende este concepto a otros tipos
 
 - **Valores que equivalen a `False`:**
     - El número `0` (`0`, `0.0`, `0j`).
-    - [[Estructuras de Datos|Contenedores vacíos]] (`""`, `[]`, `()`, `{}`).
+    - [[Tema 01 Programación Orientada a Procesos/02 Estructura de Datos/index|Contenedores vacíos]] (`""`, `[]`, `()`, `{}`).
     - El valor `None`.
 - **Valores que equivalen a `True`:**
     - Cualquier número distinto de cero.
@@ -227,7 +227,7 @@ Dado que los booleanos son números, Python extiende este concepto a otros tipos
 ## Secuencias
 
 ### Dato Cadena-`str`
-Una [[05 Cadenas|cadena]] (**string**) es una **secuencia [[02 Mutabilidad y Inmutabilidad|inmutable]] de caracteres**. "Inmutable" significa que, una vez creada, no puedes cambiar una letra individual de esa cadena; para "modificarla", Python en realidad crea una nueva cadena en memoria.
+Una [[01 Cadenas|cadena]] (**string**) es una **secuencia [[02 Mutabilidad y Inmutabilidad|inmutable]] de caracteres**. "Inmutable" significa que, una vez creada, no puedes cambiar una letra individual de esa cadena; para "modificarla", Python en realidad crea una nueva cadena en memoria.
 
 Se definen usando comillas simples (`'...'`), dobles (`"..."`) o triples (`'''...'''` o `"""..."""`) para textos de múltiples líneas.
 #### Caracteres
