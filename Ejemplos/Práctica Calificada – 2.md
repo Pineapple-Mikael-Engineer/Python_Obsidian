@@ -4,17 +4,6 @@ draft: true
 ---
 
 # Práctica Calificada – 2
-## Solucionario - Documento Base
-
----
-
-## Estructura del Documento a Entregar
-
-El solucionario debe contener:
-1. **Carátula** con datos del estudiante
-2. **Ejercicio 1**: Código + Captura de ejecución
-3. **Ejercicio 2**: Código + Captura de ejecución
-4. **Ejercicio 3**: Código + Captura de ejecución
 
 ---
 
