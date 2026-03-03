@@ -1,6 +1,6 @@
 ---
 title: Práctica Calificada – 2
-draft: false
+draft: true
 ---
 
 # Práctica Calificada – 2
