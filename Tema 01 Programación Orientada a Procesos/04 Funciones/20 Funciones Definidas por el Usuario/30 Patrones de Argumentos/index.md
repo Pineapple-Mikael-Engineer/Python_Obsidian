@@ -1,14 +1,12 @@
 ---
-title: 40 Patrones de Argumentos
+title: Usuario · 30 Patrones de Argumentos
 draft: false
 ---
 
-# 40 · Patrones de Argumentos
+# Patrones de Argumentos
 
-## Subtemas
 - [[01 Posicionales y Nombrados]]
 - [[02 args kwargs y restricciones]]
 - [[00 Patrones de Argumentos|Nota extensa integrada]]
 
-## Cierre
-- Volver a [[../index|índice de Funciones]].
+Siguiente: [[../40 Lambda y Recursión/index|Lambda y Recursión]].

@@ -308,7 +308,7 @@ Su tipo de dato oficial es `NoneType`.
 
 **Casos de uso comunes:**
 - **Inicialización:** Cuando declaras una variable pero aún no tienes un valor real para ella.
-- **Retorno por defecto:** Si una [[../../04 Funciones/10 Definición y Llamada/00 Definición, Llamada y Estructura|función]] no tiene una sentencia `return` explícita, Python devuelve `None` automáticamente.
+- **Retorno por defecto:** Si una [[../../04 Funciones/20 Funciones Definidas por el Usuario/10 Definición y Llamada/00 Definición, Llamada y Estructura|función]] no tiene una sentencia `return` explícita, Python devuelve `None` automáticamente.
 - **Parámetros opcionales:** Se usa para identificar si un usuario pasó o no un argumento a una función.
 
 ### Identidad y Comparación
