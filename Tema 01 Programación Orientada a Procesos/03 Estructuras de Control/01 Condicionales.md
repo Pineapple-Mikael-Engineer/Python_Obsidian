@@ -234,7 +234,7 @@ status = "Mayor" if edad >= 18 else "Menor"
   print(mayor)  # 15
   ```
 
-- **Ejemplo 4:** Con [[01 Definición, Llamada y Estructura|funciones]]
+- **Ejemplo 4:** Con [[../04 Funciones/10 Definición y Llamada/00 Definición, Llamada y Estructura|funciones]]
   ```python
   def positivo_o_negativo(n):
      return "Positivo" if n > 0 else ("Cero" if n == 0 else "Negativo")
@@ -245,7 +245,7 @@ status = "Mayor" if edad >= 18 else "Menor"
   ```
 
   > [!Important] Importante
-  > Si desea entender la sintaxis `def`, `return`, etc. Revisar: [[01 Definición, Llamada y Estructura|Funciones]] 
+  > Si desea entender la sintaxis `def`, `return`, etc. Revisar: [[../04 Funciones/10 Definición y Llamada/00 Definición, Llamada y Estructura|Funciones]] 
 
 # Patrones de Comparación Especiales
 

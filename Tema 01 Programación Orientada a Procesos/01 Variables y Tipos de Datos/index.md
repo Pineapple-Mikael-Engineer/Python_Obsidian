@@ -67,7 +67,7 @@ En este módulo abordamos los fundamentos que permiten comprender todo lo que vi
 
 Los tipos básicos incorporados en el lenguaje que representan valores simples.
 
-- [[01 Datos Primitivos|Datos Primitivos]]
+- [[01 Datos Primitivos/index|Datos Primitivos]]
     
 
 Incluyen conceptos como:
@@ -151,7 +151,7 @@ Sin comprender bien este bloque, lo demás se vuelve confuso.
 
 #  Notas del Módulo
 
-- [[01 Datos Primitivos|Datos Primitivos]]
+- [[01 Datos Primitivos/index|Datos Primitivos]]
     
 - [[02 Mutabilidad y Inmutabilidad|Mutabilidad y Inmutabilidad]]
     

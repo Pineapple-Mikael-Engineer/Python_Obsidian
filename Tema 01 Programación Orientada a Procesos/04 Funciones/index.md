@@ -8,16 +8,15 @@ tags:
 
 # Funciones en Python
 
-## Contenido del módulo
-- [[01 Definición, Llamada y Estructura|Definición, llamada y estructura]]
-- [[02 Clasificación de Funciones|Clasificación de funciones]]
-- [[03 Ámbitos y Espacios de Nombres|Ámbitos y espacios de nombres]]
-- [[04 Patrones de Argumentos|Patrones de argumentos]]
+## Ruta de dificultad
+1. [[10 Definición y Llamada/index|10 · Definición y Llamada]]
+2. [[20 Clasificación/index|20 · Clasificación]]
+3. [[30 Ámbitos y Nombres/index|30 · Ámbitos y Espacios de Nombres]]
+4. [[40 Patrones de Argumentos/index|40 · Patrones de Argumentos]]
 
-## Relación con otros módulos
-- Depende de [[../01 Variables y Tipos de Datos/index|Variables y Tipos de Datos]].
-- Se apoya en [[../03 Estructuras de Control/index|Estructuras de Control]].
-- Trabaja constantemente con [[../02 Estructura de Datos/index|Estructura de Datos]].
+## Dependencias
+- [[../01 Variables y Tipos de Datos/index|Variables y Tipos de Datos]]
+- [[../03 Estructuras de Control/index|Estructuras de Control]]
 
 ## Navegación
-- Volver a [[../index|Tema 01 · Programación Orientada a Procesos]].
+- Volver a [[../index|Tema 01]].

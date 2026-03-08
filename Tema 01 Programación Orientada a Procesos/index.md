@@ -19,3 +19,11 @@ tags:
 ## Ruta sugerida de estudio
 - Fundamentos de tipo y memoria → Estructuras → Control → Funciones → Excepciones.
 - Usa `00 Referencias` como apoyo para conceptos compartidos.
+
+
+## Secuencia de dificultad (recomendada)
+- Nivel 1: [[01 Variables y Tipos de Datos/index|Tipos y memoria]].
+- Nivel 2: [[02 Estructura de Datos/index|Estructuras de datos]].
+- Nivel 3: [[03 Estructuras de Control/index|Control de flujo]].
+- Nivel 4: [[04 Funciones/index|Funciones ramificadas]].
+- Nivel 5: [[05 Manejo de Exepciones/index|Manejo de excepciones]].
