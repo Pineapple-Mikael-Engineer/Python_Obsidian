@@ -52,7 +52,7 @@ flowchart TD
 ### Entero-`int`
 Es un tipo de dato que representa **números abstractos sin parte fraccionaria**. Incluye números positivos, negativos y el cero. En Python, los enteros tienen **precisión arbitraria**, lo que significa que el único límite para el tamaño de un número es la memoria disponible de tu computadora.
 #### Representación
-Python permite escribir enteros en diferentes bases numéricas, lo cual es muy útil para [[programación de bajo nivel o sistemas|programación de bajo nivel o sistemas]]:
+Python permite escribir enteros en diferentes bases numéricas, lo cual es muy útil para programación de bajo nivel o sistemas:
 
 | Tipo                      | Funcionamiento      | Ejemplo                  |
 | ------------------------- | ------------------- | ------------------------ |
@@ -98,7 +98,7 @@ Es un tipo de dato que representa números con **punto decimal**. Se llaman "pun
 #### Precisión
 La precisión de un flotante no es infinita. Al tener solo 64 bits de espacio, Python puede representar aproximadamente **15 a 17 dígitos significativos**.
 - Si intentas manejar un número con 30 decimales, Python "cortará" el resto.
-- Esto es suficiente para la mayoría de los cálculos científicos, pero crítico en sistemas financieros (donde se prefiere usar el [[Modulo y Paquetes|módulo]] `decimal`).
+- Esto es suficiente para la mayoría de los cálculos científicos, pero crítico en sistemas financieros (donde se prefiere usar el [[Modulo y Paquetes|módulo y paquetes]] `decimal`).
 
 #### Limites
 A diferencia de los enteros, los flotantes **sí tienen un límite máximo y mínimo**. Si intentas superar estos límites, Python te devolverá errores o valores especiales:
@@ -308,7 +308,7 @@ Su tipo de dato oficial es `NoneType`.
 
 **Casos de uso comunes:**
 - **Inicialización:** Cuando declaras una variable pero aún no tienes un valor real para ella.
-- **Retorno por defecto:** Si una [[Funciones|función]] no tiene una sentencia `return` explícita, Python devuelve `None` automáticamente.
+- **Retorno por defecto:** Si una [[01 Definición, Llamada y Estructura|función]] no tiene una sentencia `return` explícita, Python devuelve `None` automáticamente.
 - **Parámetros opcionales:** Se usa para identificar si un usuario pasó o no un argumento a una función.
 
 ### Identidad y Comparación
