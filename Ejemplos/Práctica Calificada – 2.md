@@ -1,6 +1,6 @@
 ---
 title: Práctica Calificada – 2
-draft: true
+draft: false
 ---
 
 # Práctica Calificada – 2
@@ -225,10 +225,10 @@ Estado académico: SUSTITUTORIO
 Desempeño: Desempeño desigual
 
 ****Nota nueva****
-Ingrese nota Sustitutoria: 17
+Ingrese nota Sustitutoria: 16
 
 VECTORES DE NOTAS ORIGINAL:
-Técnica: [12.0, 10.0, 17.0]
+Técnica: [12.0, 16.0, 11.0]
 Comunicativa: [14.0, 16.0, 15.0]
 
 RESULTADOS:
@@ -254,273 +254,143 @@ Desempeño: Desempeño consistente
 ```python
 print("=== SISTEMA DE EVALUACIÓN POR COMPETENCIAS ===")
 
-  
-
 # Entrada de datos
-
 t1 = float(input("Ingrese nota técnica 1: "))
-
 t2 = float(input("Ingrese nota técnica 2: "))
-
 t3 = float(input("Ingrese nota técnica 3: "))
-
 c1 = float(input("Ingrese nota comunicativa 1: "))
-
 c2 = float(input("Ingrese nota comunicativa 2: "))
-
 c3 = float(input("Ingrese nota comunicativa 3: "))
-
-  
 
 # Construcción de lista
 
-  
-
 notas_T = [t1, t2, t3]
-
 notas_C = [c1, c2, c3]
 
-  
-  
 
 print("\nVECTORES DE NOTAS ORIGINAL:")
-
 print("Técnica:", notas_T)
-
 print("Comunicativa:", notas_C)
 
-  
-
 # Promedios
-
 prom_tecnica = (notas_T[0] + notas_T[1] + notas_T[2]) / 3
-
 prom_comunicativa = (notas_C[0] + notas_C[1] + notas_C[2]) / 3
-
 prom_general = (prom_tecnica + prom_comunicativa) / 2
 
-  
-
 # Competencia más fuerte
-
 if prom_tecnica > prom_comunicativa:
-
-fuerte = "Técnica"
-
+	fuerte = "Técnica"
 elif prom_comunicativa > prom_tecnica:
-
-fuerte = "Comunicativa"
-
+	fuerte = "Comunicativa"
 else:
-
-fuerte = "Iguales"
-
-  
+	fuerte = "Iguales"
 
 # Equilibrio
-
 equilibradas = "Sí" if abs(prom_tecnica - prom_comunicativa) < 1.5 else "No"
 
-  
-
 # Estado académico
-
 if prom_general >= 14:
-
-estado = "APROBADO"
-
+	estado = "APROBADO"
 elif prom_general >= 9:
-
-estado = "SUSTITUTORIO"
-
+	estado = "SUSTITUTORIO"
 else:
-
-estado = "DESAPROBADO"
-
-  
+	estado = "DESAPROBADO"
 
 # Desempeño
-
 if prom_tecnica >= 13 and prom_comunicativa >= 13:
-
-desempeno = "Desempeño consistente"
-
+	desempeno = "Desempeño consistente"
 else:
-
-desempeno = "Desempeño desigual"
-
-  
+	desempeno = "Desempeño desigual"
 
 print("\nRESULTADOS:")
-
 print("Promedio Técnica:", prom_tecnica)
-
 print("Promedio Comunicativa:", prom_comunicativa)
-
 print("Promedio General:", prom_general)
-
 print("Competencia más fuerte:", fuerte)
-
 print("Competencias equilibradas?", equilibradas)
-
 print("Estado académico:", estado)
-
 print("Desempeño:", desempeno)
-
-  
 
 # Recalificación
-
 if estado == "SUSTITUTORIO":
 
-  
-
-print("\n ****Nota nueva****")
-
-nota_susti = float(input("Ingrese nota Sustitutoria: "))
-
-  
-
-# Re-Construcción de listas
-
-  
-
-nota_min_T = notas_T[0]
-
-indice_menor_T = 0
-
-  
-
-if nota_min_T > notas_T[1]:
-
-nota_min = notas_T[1]
-
-indice_menor_T = 1
-
-if nota_min_T > notas_T[2]:
-
-nota_min = notas_T[2]
-
-indice_menor_T = 2
-
-  
-  
-
-nota_min_C = notas_C[0]
-
-indice_menor_C = 0
-
-  
-
-if nota_min_C > notas_C[1]:
-
-nota_min = notas_C[1]
-
-indice_menor_C = 1
-
-if nota_min_C > notas_C[2]:
-
-nota_min = notas_C[2]
-
-indice_menor_C = 2
-
-  
-
-# Re-Asignacion de Notas
-
-if nota_min_T <= nota_min_C:
-
-notas_T[indice_menor_T] = nota_susti
-
-else:
-
-notas_C[indice_menor_C] = nota_susti
-
-  
-
-print("\nVECTORES DE NOTAS ORIGINAL:")
-
-print("Técnica:", notas_T)
-
-print("Comunicativa:", notas_C)
-
-  
-
-# Promedios
-
-prom_tecnica = (notas_T[0] + notas_T[1] + notas_T[2]) / 3
-
-prom_comunicativa = (notas_C[0] + notas_C[1] + notas_C[2]) / 3
-
-prom_general = (prom_tecnica + prom_comunicativa) / 2
-
-  
-
-# Competencia más fuerte
-
-if prom_tecnica > prom_comunicativa:
-
-fuerte = "Técnica"
-
-elif prom_comunicativa > prom_tecnica:
-
-fuerte = "Comunicativa"
-
-else:
-
-fuerte = "Iguales"
-
-  
-
-# Equilibrio
-
-equilibradas = "Sí" if abs(prom_tecnica - prom_comunicativa) < 1.5 else "No"
-
-  
-
-# Estado académico
-
-if prom_general >= 14:
-
-estado = "APROBADO"
-
-elif prom_general >= 9:
-
-estado = "SUSTITUTORIO"
-
-else:
-
-estado = "DESAPROBADO"
-
-  
-
-# Desempeño
-
-if prom_tecnica >= 13 and prom_comunicativa >= 13:
-
-desempeno = "Desempeño consistente"
-
-else:
-
-desempeno = "Desempeño desigual"
-
-  
-
-print("\nRESULTADOS:")
-
-print("Promedio Técnica:", prom_tecnica)
-
-print("Promedio Comunicativa:", prom_comunicativa)
-
-print("Promedio General:", prom_general)
-
-print("Competencia más fuerte:", fuerte)
-
-print("Competencias equilibradas?", equilibradas)
-
-print("Estado académico:", estado)
-
-print("Desempeño:", desempeno)
+	print("\n ****Nota nueva****")
+	nota_susti = float(input("Ingrese nota Sustitutoria: "))
+
+	# Re-Construcción de listas
+
+	nota_min_T = notas_T[0]
+	indice_menor_T = 0
+
+	if nota_min_T > notas_T[1]:
+		nota_min_T = notas_T[1] 
+		indice_menor_T = 1
+	
+	if nota_min_T > notas_T[2]:
+		nota_min_T = notas_T[2] 
+		indice_menor_T = 2
+
+
+	nota_min_C = notas_C[0]
+	indice_menor_C = 0
+
+	if nota_min_C > notas_C[1]:
+		nota_min_C = notas_C[1] 
+		indice_menor_C = 1
+	
+	if nota_min_C > notas_C[2]:
+		nota_min_C = notas_C[2] 
+		indice_menor_C = 2
+
+	# Re-Asignacion de Notas
+	if nota_min_T <= nota_min_C:
+		notas_T[indice_menor_T] = nota_susti
+	else:
+		notas_C[indice_menor_C] = nota_susti
+
+	
+	print("\nVECTORES DE NOTAS ORIGINAL:")
+	print("Técnica:", notas_T)
+	print("Comunicativa:", notas_C)
+
+	# Promedios
+	prom_tecnica = (notas_T[0] + notas_T[1] + notas_T[2]) / 3
+	prom_comunicativa = (notas_C[0] + notas_C[1] + notas_C[2]) / 3
+	prom_general = (prom_tecnica + prom_comunicativa) / 2
+
+	# Competencia más fuerte
+	if prom_tecnica > prom_comunicativa:
+		fuerte = "Técnica"
+	elif prom_comunicativa > prom_tecnica:
+		fuerte = "Comunicativa"
+	else:
+		fuerte = "Iguales"
+
+	# Equilibrio
+	equilibradas = "Sí" if abs(prom_tecnica - prom_comunicativa) < 1.5 else "No"
+
+	# Estado académico
+	if prom_general >= 14:
+		estado = "APROBADO"
+	elif prom_general >= 9:
+		estado = "SUSTITUTORIO"
+	else:
+		estado = "DESAPROBADO"
+
+	# Desempeño
+	if prom_tecnica >= 13 and prom_comunicativa >= 13:
+		desempeno = "Desempeño consistente"
+	else:
+		desempeno = "Desempeño desigual"
+
+	print("\nRESULTADOS:")
+	print("Promedio Técnica:", prom_tecnica)
+	print("Promedio Comunicativa:", prom_comunicativa)
+	print("Promedio General:", prom_general)
+	print("Competencia más fuerte:", fuerte)
+	print("Competencias equilibradas?", equilibradas)
+	print("Estado académico:", estado)
+	print("Desempeño:", desempeno)
 ```
 
 ---
