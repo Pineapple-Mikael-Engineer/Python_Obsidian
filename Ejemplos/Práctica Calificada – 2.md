@@ -82,77 +82,43 @@ Categoría: Bonificación media
 ```python
 print ( "=== SISTEMA DE BONIFICACIONES ===" )
 
-  
-
 rendimiento = float ( input ( "Ingrese puntuación de rendimiento (0 -100) : " ) )
-
 antiguedad = int ( input ( "Ingrese años de antigüedad : " ) )
-
 proyectos = int ( input ( "Ingrese número de proyectos exitosos : "))
 
-  
-  
 
 # Bonificación base usando operador ternario anidado
-
 bonificacion_base = 2000 if rendimiento >= 90 else \
-
 1200 if rendimiento >= 70 else 500
-
 bonificacion_final = bonificacion_base
 
-  
-  
 
 # Ajuste por antigüedad
-
 if antiguedad > 10:
-
-bonificacion_final = bonificacion_final * 1.30
-
+    bonificacion_final = bonificacion_final * 1.30
 elif antiguedad >= 5:
+    bonificacion_final = bonificacion_final * 1.15
 
-bonificacion_final = bonificacion_final * 1.15
-
-  
-  
 
 # Ajuste por proyectos
-
 if proyectos > 5:
-
-bonificacion_final = bonificacion_final + 300
-
+    bonificacion_final = bonificacion_final + 300
 elif proyectos >= 3:
+    bonificacion_final = bonificacion_final + 150
 
-bonificacion_final = bonificacion_final + 150
-
-  
-  
 
 # Categor í a final
-
 if bonificacion_final > 2500:
-
-categoria = "Bonificación alta "
-
+    categoria = "Bonificación alta "
 elif bonificacion_final >= 1500:
-
-categoria = "Bonificación media "
-
+    categoria = "Bonificación media "
 else :
+    categoria = "Bonificación estándar "
 
-categoria = "Bonificación estándar "
-
-  
-  
 
 print ( "\nRESULTADOS : " )
-
 print ( "Bonificación base : " , bonificacion_base )
-
 print ( "Bonificación final : " , bonificacion_final )
-
 print ( "Categoría : " , categoria )
 ```
 
@@ -510,195 +476,105 @@ Ingrese Valores Validos
 ```python
 print("=== ANALIZADOR AVANZADO DE COLORES RGB ===")
 
-  
-
 error = False
-
 r = int(input("Ingrese valor de Rojo (0-255): "))
-
 if not (0 <= r <= 255) : error = True
 
-  
-
 g = int(input("Ingrese valor de Verde (0-255): "))
-
 if not (0 <= g <= 255) : error = True
 
-  
-
 b = int(input("Ingrese valor de Azul (0-255): "))
-
 if not (0 <= b <= 255) : error = True
-
-  
 
 if not error:
 
-  
+	color = [r, g, b]
 
-color = [r, g, b]
+	color_nombres = ["Rojo", "Verde", "Azul"]
 
-  
+	print("\nColor analizado:", color)
 
-color_nombres = ["Rojo", "Verde", "Azul"]
+	# Determinar máximo
+	valor_max = color[0]
 
-  
+	if valor_max < color[1]:
+		valor_max = color[1]
 
-print("\nColor analizado:", color)
+	if valor_max < color[2]:
+		valor_max = color[2]
 
-  
+	# Determinando mínimo 
+	valor_min = color[0]
 
-# Determinar máximo
+	if valor_min > color[1]:
+		valor_min = color[1]
 
-valor_max = color[0]
+	if valor_min > color[2]:
+		valor_min = color[2]
 
-  
+	# Determinar predominante
+	colores_max = []
 
-if valor_max < color[1]:
+	if valor_max == color[0]:
+		colores_max.append(0)
+	
+	if valor_max == color[1]:
+		colores_max.append(1)
 
-valor_max = color[1]
+	if valor_max == color[2]:
+		colores_max.append(2)
 
-  
+	numero_empates = len(colores_max)
 
-if valor_max < color[2]:
+	if numero_empates == 3:
+		predominante = "No Hay colores Dominantes ni Secundarios"
+	elif numero_empates == 2:
+		predominante = f"Hay 2 colores empatados: {color_nombres[colores_max[0]]} y {color_nombres[colores_max[1]]} "
+	else:
+		predominante = f"{color_nombres[colores_max[0]]}"
 
-valor_max = color[2]
+	# Brillo
+	brillo = (r + g + b) / 3
 
-  
+	if brillo > 200:
+		categoria_brillo = "Muy brillante"
+	elif brillo >= 100:
+		categoria_brillo = "Brillo medio"
+	else:
+		categoria_brillo = "Oscuro"
 
-# Determinando mínimo
 
-valor_min = color[0]
 
-  
+	# Saturacion
+	saturacion = valor_max - valor_min
 
-if valor_min > color[1]:
+	if saturacion > 150:
+		categoria_sat = "Color muy saturado (vibrante)"
+	elif saturacion >= 50:
+		categoria_sat = "Color moderadamente saturado"
+	else:
+		categoria_sat = "Color poco saturado (grisáceo)"
 
-valor_min = color[1]
+	# Clasificación térmica
+	if predominante == "Rojo":
+		clasificacion = "Cálido"
+	elif predominante == "Azul":
+		clasificacion = "Frío"
+	else:
+		clasificacion = "Neutro"
 
-  
 
-if valor_min > color[2]:
 
-valor_min = color[2]
-
-  
-
-# Determinar predominante
-
-colores_max = []
-
-  
-
-if valor_max == color[0]:
-
-colores_max.append(0)
-
-if valor_max == color[1]:
-
-colores_max.append(1)
-
-  
-
-if valor_max == color[2]:
-
-colores_max.append(2)
-
-  
-
-numero_empates = len(colores_max)
-
-  
-
-if numero_empates == 3:
-
-predominante = "No Hay colores Dominantes ni Secundarios"
-
-elif numero_empates == 2:
-
-predominante = f"Hay 2 colores empatados: {color_nombres[colores_max[0]]} y {color_nombres[colores_max[1]]} "
-
-else:
-
-predominante = f"{color_nombres[colores_max[0]]}"
-
-  
-
-# Brillo
-
-brillo = (r + g + b) / 3
-
-  
-
-if brillo > 200:
-
-categoria_brillo = "Muy brillante"
-
-elif brillo >= 100:
-
-categoria_brillo = "Brillo medio"
+	print("\nRESULTADOS DEL ANÁLISIS:")
+	print("1. Color predominante:", predominante)
+	print("2. Brillo:", brillo, "-", categoria_brillo)
+	print("3. Saturación:", saturacion, "-", categoria_sat)
+	print("4. Clasificación térmica:", clasificacion)
+	
 
 else:
+	print("\nIngrese Valores Validos")
 
-categoria_brillo = "Oscuro"
-
-  
-  
-  
-
-# Saturacion
-
-saturacion = valor_max - valor_min
-
-  
-
-if saturacion > 150:
-
-categoria_sat = "Color muy saturado (vibrante)"
-
-elif saturacion >= 50:
-
-categoria_sat = "Color moderadamente saturado"
-
-else:
-
-categoria_sat = "Color poco saturado (grisáceo)"
-
-  
-
-# Clasificación térmica
-
-if predominante == "Rojo":
-
-clasificacion = "Cálido"
-
-elif predominante == "Azul":
-
-clasificacion = "Frío"
-
-else:
-
-clasificacion = "Neutro"
-
-  
-  
-  
-
-print("\nRESULTADOS DEL ANÁLISIS:")
-
-print("1. Color predominante:", predominante)
-
-print("2. Brillo:", brillo, "-", categoria_brillo)
-
-print("3. Saturación:", saturacion, "-", categoria_sat)
-
-print("4. Clasificación térmica:", clasificacion)
-
-  
-
-else:
-
-print("\nIngrese Valores Validos")
 ```
 
 ---
