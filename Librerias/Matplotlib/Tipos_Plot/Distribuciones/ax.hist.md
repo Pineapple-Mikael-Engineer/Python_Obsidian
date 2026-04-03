@@ -1,16 +1,26 @@
 ---
 title: ax.hist — Histograma
-alias:
+aliases:
   - hist
   - histograma
   - distribución
+  - ax.hist
 tags:
   - matplotlib
-  - axes
-  - graficos
-  - distribuciones
+  - api/metodo
+  - axes/metodos
+lib: matplotlib
+obj: Axes
+tipo: metodo
+muta_estado: true
+requiere: []
 draft: false
 ---
+
+
+
+
+
 
 # ax.hist — Histograma
 
@@ -50,7 +60,7 @@ Axes.hist(
 | `histtype` | `str` | `'bar'` | Tipo: `'bar'`, `'step'`, `'stepfilled'`, `'barstacked'` |
 | `orientation` | `str` | `'vertical'` | Orientación: `'vertical'`, `'horizontal'` |
 | `stacked` | `bool` | `False` | Apilar múltiples datasets |
-| `**kwargs` | - | - | Propiedades de [[Rectangle]] o [[Patch]] |
+| `**kwargs` | - | - | Propiedades de [[patches.Rectangle]] o [[patches.Patch]] |
 
 ## Valor de retorno
 
@@ -64,7 +74,7 @@ Retorna una tupla con tres elementos:
 |---------|------|-------------|
 | `n` | array | Valores de los bins (frecuencias o densidades) |
 | `bins` | array | Bordes de los bins (longitud = len(n) + 1) |
-| `patches` | lista de [[Rectangle]] | Objetos de las barras (uno por bin) |
+| `patches` | lista de [[patches.Rectangle]] | Objetos de las barras (uno por bin) |
 
 ### Modificación posterior
 
@@ -259,7 +269,7 @@ ax.legend()
 
 - [[ax.boxplot]]
 - [[ax.ecdf]] 
-- [[Rectangle]]
+- [[patches.Rectangle]]
 - [[ax.legend]]
 - [[ax.axvline]]
 - [[ax.set_xlabel_ylabel]]

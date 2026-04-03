@@ -1,16 +1,26 @@
 ---
 title: ax.set_title — Título del axes
-alias:
+aliases:
   - set_title
   - titulo
   - title
+  - ax.set_title
 tags:
   - matplotlib
-  - axes
-  - labels
-  - formato
+  - api/metodo
+  - axes/metodos
+lib: matplotlib
+obj: Axes
+tipo: metodo
+muta_estado: true
+requiere: []
 draft: false
 ---
+
+
+
+
+
 
 # ax.set_title — Título del axes
 
@@ -34,7 +44,7 @@ Axes.set_title(
 | `fontdict` | `dict` | `None` | Diccionario de propiedades de fuente |
 | `loc` | `str` | `'center'` | Posición del título |
 | `pad` | `float` | `None` | Espacio entre título y axes (puntos) |
-| `**kwargs` | - | - | Propiedades de [[Text]] (color, size, weight, etc.) |
+| `**kwargs` | - | - | Propiedades de [[text.Text]] (color, size, weight, etc.) |
 
 ## Posiciones disponibles (loc)
 
@@ -52,7 +62,7 @@ ax.set_title('Derecha', loc='right')
 
 ## Parámetros de fuente (kwargs)
 
-Los argumentos adicionales se pasan al objeto [[Text]] interno.
+Los argumentos adicionales se pasan al objeto [[text.Text]] interno.
 
 | Parámetro | Ejemplo | Descripción |
 |-----------|---------|-------------|
@@ -132,7 +142,7 @@ axs[0, 1].set_title('Subplot 2')
 2. Mantener `fontsize` del título mayor que el de etiquetas de ejes
 3. Usar `pad` para evitar solapamiento con elementos superiores (como títulos de otros subplots)
 4. Para múltiples subplots, usar `fig.suptitle` para título global y `ax.set_title` para títulos individuales
-5. Usar [[LaTeX]] para notación matemática (con `r''` raw string)
+5. Usar [[text.latex]] para notación matemática (con `r''` raw string)
 
 ## Errores comunes
 
@@ -146,7 +156,7 @@ axs[0, 1].set_title('Subplot 2')
 ## Notas relacionadas
 
 - [[ax.set_xlabel_ylabel]]
-- [[fig.suptitle]]
-- [[Text]]
-- [[LaTeX]]
+- [[figure.fig.suptitle]]
+- [[text.Text]]
+- [[text.latex]]
 - [[plt.subplots]]

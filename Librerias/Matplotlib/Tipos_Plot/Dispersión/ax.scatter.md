@@ -1,16 +1,26 @@
 ---
 title: ax.scatter — Diagrama de dispersión
-alias:
+aliases:
   - scatter
   - dispersión
   - puntos
+  - ax.scatter
 tags:
   - matplotlib
-  - axes
-  - graficos
-  - dispersion
+  - api/metodo
+  - axes/metodos
+lib: matplotlib
+obj: Axes
+tipo: metodo
+muta_estado: true
+requiere: []
 draft: false
 ---
+
+
+
+
+
 
 # ax.scatter — Diagrama de dispersión
 
@@ -41,7 +51,7 @@ Axes.scatter(
 | `x`, `y` | array-like (N,) | - | Coordenadas de los puntos |
 | `s` | escalar o array (N,) | `20` | Tamaño del marcador (puntos cuadrados) |
 | `c` | color, secuencia o array (N,) | `None` | Color de los puntos |
-| `marker` | `str` | `'o'` | Estilo del marcador (ver [[marker]]) |
+| `marker` | `str` | `'o'` | Estilo del marcador (ver [[lines.marker]]) |
 | `cmap` | `str` o `Colormap` | `None` | Mapa de colores para `c` numérico |
 | `norm` | `Normalize` | `None` | Normalización para `c` |
 | `vmin`, `vmax` | `float` | `None` | Límites para la normalización |
@@ -140,7 +150,7 @@ ax.scatter(x, y, marker='^')  # triángulos
 ax.scatter(x, y, marker='D')  # diamantes
 ```
 
-Ver [[marker]] para lista completa.
+Ver [[lines.marker]] para lista completa.
 
 ## Transparencia (alpha)
 
@@ -220,7 +230,7 @@ Para **miles de puntos**, `ax.plot` con marcador puede ser más rápido que `sca
 2. Para más de 5000 puntos, considerar `plot` en lugar de `scatter`
 3. Usar `colormap` secuencial (`'viridis'`, `'plasma'`) para datos ordenados
 4. Usar `colormap` divergente (`'coolwarm'`, `'RdBu'`) para datos con punto cero
-5. Añadir [[plt.colorbar]] cuando se usa `c` numérico
+5. Añadir [[pyplot.plt.colorbar]] cuando se usa `c` numérico
 6. Usar `edgecolors='none'` para eliminar bordes si no son necesarios
 
 ## Errores comunes
@@ -236,8 +246,8 @@ Para **miles de puntos**, `ax.plot` con marcador puede ser más rápido que `sca
 ## Notas relacionadas
 
 - [[ax.plot]]
-- [[marker]]
-- [[Colores_Nombres]]
-- [[Colormaps]]
-- [[plt.colorbar]]
-- [[PathCollection]]
+- [[lines.marker]]
+- [[colors.nombres]]
+- [[cm.Colormaps]]
+- [[pyplot.plt.colorbar]]
+- [[collections.PathCollection]]

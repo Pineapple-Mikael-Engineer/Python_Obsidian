@@ -1,6 +1,22 @@
 ---
+title: GridSpec — documentación
+aliases:
+  - GridSpec
+tags:
+  - matplotlib
+  - api/clase
+  - api/clase
+lib: matplotlib
+tipo: clase
+muta_estado: false
+requiere: []
 draft: false
 ---
+
+
+
+
+
 Contenido:
 
 - `width_ratios`, `height_ratios`

@@ -1,16 +1,26 @@
 ---
 title: ax.fill_betweenx — Relleno horizontal entre curvas
-alias:
+aliases:
   - fill_betweenx
   - área horizontal
   - banda horizontal
+  - ax.fill_betweenx
 tags:
   - matplotlib
-  - axes
-  - graficos
-  - relleno
+  - api/metodo
+  - axes/metodos
+lib: matplotlib
+obj: Axes
+tipo: metodo
+muta_estado: true
+requiere: []
 draft: false
 ---
+
+
+
+
+
 
 # ax.fill_betweenx — Relleno horizontal entre curvas
 
@@ -39,7 +49,7 @@ Axes.fill_betweenx(
 | `where` | array de bool (N,) | `None` | Rellenar solo donde `True` |
 | `interpolate` | `bool` | `False` | Interpolar entre puntos where |
 | `step` | `str` | `None` | Estilo escalonado: `'pre'`, `'post'`, `'mid'` |
-| `**kwargs` | - | - | Propiedades de [[Polygon]] |
+| `**kwargs` | - | - | Propiedades de [[patches.Polygon]] |
 
 ## Valor de retorno
 
@@ -47,7 +57,7 @@ Axes.fill_betweenx(
 poly = ax.fill_betweenx(y, x1, x2)
 ```
 
-Retorna una **lista de objetos [[Polygon]]** (similar a `ax.fill_between`). Cada polígono representa una región contigua de relleno.
+Retorna una **lista de objetos [[patches.Polygon]]** (similar a `ax.fill_between`). Cada polígono representa una región contigua de relleno.
 
 ### Modificación posterior
 
@@ -232,5 +242,5 @@ ax.fill_betweenx(y, x1, x2)  # con x1, x2 funciones de y
 
 - [[ax.fill_between]]
 - [[ax.plot]]
-- [[Polygon]]
+- [[patches.Polygon]]
 - [[ax.legend]]

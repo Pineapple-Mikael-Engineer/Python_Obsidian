@@ -1,17 +1,26 @@
 ---
 title: Locators — Generación automática de ticks
-alias:
+aliases:
   - locators
   - tick locators
   - MultipleLocator
   - AutoLocator
+  - Locators
 tags:
   - matplotlib
-  - ticks
-  - locators
-  - ejes
+  - api/clase
+  - api/clase
+lib: matplotlib
+tipo: clase
+muta_estado: false
+requiere: []
 draft: false
 ---
+
+
+
+
+
 
 # Locators — Generación automática de ticks
 
@@ -194,8 +203,8 @@ ax.xaxis.set_major_formatter(ticker.PercentFormatter())
 
 ## Notas relacionadas
 
-- [[Formatters]]
+- [[ticker.Formatters]]
 - [[ax.set_xticks_yticks]]
 - [[ax.tick_params]]
-- [[DateFormatter]]
-- [[FuncFormatter]]
+- [[ticker.DateFormatter]]
+- [[ticker.FuncFormatter]]

@@ -1,15 +1,25 @@
 ---
-title: Manejo de arrays de Axes
-alias:
+title: Manejo Arrays Axes — Manejo de arrays de Axes
+aliases:
   - arrays de axes
   - multiple axes
   - iterar subplots
+  - Manejo Arrays Axes
 tags:
   - matplotlib
-  - axes
-  - patrones
+  - api/clase
+  - api/clase
+lib: matplotlib
+tipo: clase
+muta_estado: false
+requiere: []
 draft: false
 ---
+
+
+
+
+
 
 # Manejo de arrays de Axes
 
@@ -230,4 +240,4 @@ En el contexto de matplotlib, solo necesitas saber:
 
 - [[plt.subplots]]
 - [[GridSpec]]
-- [[Ejes_Compartidos]]
+- [[ax.shared_axes]]

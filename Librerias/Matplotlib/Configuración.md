@@ -1,11 +1,22 @@
 ---
-title: Configuración Inicial de Matplotlib
+title: Configuración — Configuración Inicial de Matplotlib
+aliases:
+  - Configuración
 tags:
   - matplotlib
-  - setup
-  - base
+  - api/clase
+  - api/clase
+lib: matplotlib
+tipo: clase
+muta_estado: false
+requiere: []
 draft: false
 ---
+
+
+
+
+
 
 # Importación estándar
 
@@ -277,15 +288,15 @@ plt.show()
 # Notas relacionadas
 
 - [[plt.subplots]]
-- [[Tipos_Plot/Lineas/ax.plot]]
-- [[Tipos_Plot/Lineas/Estilos_Linea/marker]]
-- [[Tipos_Plot/Lineas/Estilos_Linea/linestyle]]
-- [[Labels_Leyendas/ax.set_xlabel_ylabel]]
-- [[Labels_Leyendas/ax.set_title]]
-- [[Labels_Leyendas/ax.legend]]
+- [[ax.plot]]
+- [[lines.marker]]
+- [[lines.linestyle]]
+- [[ax.set_xlabel_ylabel]]
+- [[ax.set_title]]
+- [[ax.legend]]
 - [[ax.grid]]
-- [[Ejes_Formato/Limites_Escalas]]
-- [[Control/plt.show]]
-- [[Guardar_Exportar/plt.savefig]]
-- [[Color_Estilo/Colores_Nombres]]
-- [[Color_Estilo/Colormaps]]
+- [[axes.limites_escalas]]
+- [[pyplot.plt.show]]
+- [[pyplot.plt.savefig]]
+- [[colors.nombres]]
+- [[cm.Colormaps]]

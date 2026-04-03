@@ -1,17 +1,26 @@
 ---
 title: ax.tick_params — Estilo de ticks
-alias:
+aliases:
   - tick_params
   - estilo ticks
   - personalizar ticks
+  - ax.tick_params
 tags:
   - matplotlib
-  - axes
-  - formato
-  - ticks
-  - estilo
+  - api/metodo
+  - axes/metodos
+lib: matplotlib
+obj: Axes
+tipo: metodo
+muta_estado: true
+requiere: []
 draft: false
 ---
+
+
+
+
+
 
 # ax.tick_params — Estilo de ticks
 
@@ -163,7 +172,7 @@ ax.set_xticklabels(['cero', 'dos', 'cuatro', 'seis', 'ocho', 'diez'])
 ## Notas relacionadas
 
 - [[ax.set_xticks_yticks]]
-- [[TickLocators]]
-- [[TickFormatters]]
+- [[ticker.Locators]]
+- [[ticker.Formatters]]
 - [[ax.set_xlabel_ylabel]]
 - [[ax.grid]]

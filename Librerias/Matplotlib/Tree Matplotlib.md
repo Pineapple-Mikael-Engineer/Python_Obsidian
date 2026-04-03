@@ -1,7 +1,22 @@
 ---
-title: Tree Matplotlib
+title: Tree Matplotlib — Tree Matplotlib
+aliases:
+  - Tree Matplotlib
+tags:
+  - matplotlib
+  - api/clase
+  - api/clase
+lib: matplotlib
+tipo: clase
+muta_estado: false
+requiere: []
 draft: true
 ---
+
+
+
+
+
 # Tree
 
 ```tree

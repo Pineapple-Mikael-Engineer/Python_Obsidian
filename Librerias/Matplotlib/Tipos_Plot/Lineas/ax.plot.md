@@ -1,17 +1,26 @@
 ---
 title: ax.plot — Gráfico de líneas
-alias:
+aliases:
   - plot
   - gráfico de líneas
   - line plot
+  - ax.plot
 tags:
   - matplotlib
-  - axes
-  - graficos
-  - lineas
-  - funcion
+  - api/metodo
+  - axes/metodos
+lib: matplotlib
+obj: Axes
+tipo: metodo
+muta_estado: true
+requiere: []
 draft: false
 ---
+
+
+
+
+
 
 # ax.plot — Gráfico de líneas
 
@@ -29,7 +38,7 @@ Axes.plot(
 
 ## Valor de retorno
 
-La función retorna una lista de objetos [[Line2D]]. La longitud de la lista depende de cuántas líneas se grafican:
+La función retorna una lista de objetos [[lines.Line2D]]. La longitud de la lista depende de cuántas líneas se grafican:
 
 | Entrada | Retorno | Ejemplo |
 |---------|---------|---------|
@@ -95,7 +104,7 @@ for line in lines:
 
 ### `fmt` — formato compacto
 
-String que combina color, marcador y estilo de línea. Los códigos completos están documentados en [[Colores_Nombres]], [[marker]] y [[Estilos_Linea]].
+String que combina color, marcador y estilo de línea. Los códigos completos están documentados en [[colors.nombres]], [[lines.marker]] y [[lines.linestyle]].
 
 **Resumen rápido:**
 
@@ -122,7 +131,7 @@ ax.plot(x, y, c=(0.2, 0.4, 0.6))  # RGB (0-1)
 ax.plot(x, y, c='0.5')            # escala de grises
 ```
 
-Ver [[Colores_Nombres]] para más opciones.
+Ver [[colors.nombres]] para más opciones.
 
 #### `linestyle` / `ls` — estilo de línea
 
@@ -134,7 +143,7 @@ ax.plot(x, y, ls='dashdot')        # '-.'
 ax.plot(x, y, ls='none')           # sin línea
 ```
 
-Ver [[Estilos_Linea]] para más detalles.
+Ver [[lines.linestyle]] para más detalles.
 
 #### `linewidth` / `lw` — grosor de línea
 
@@ -152,7 +161,7 @@ ax.plot(x, y, marker='^')      # triángulo
 ax.plot(x, y, marker='none')   # sin marcador
 ```
 
-Ver [[marker]] para lista completa.
+Ver [[lines.marker]] para lista completa.
 
 #### `markersize` / `ms` — tamaño del marcador
 
@@ -206,7 +215,7 @@ Valores más altos = más arriba. Por defecto: líneas = 2, marcadores = 3.
 
 ## Objeto Line2D
 
-El objeto retornado tiene métodos para modificar la línea después de creada. Ver [[Line2D]] para detalles completos.
+El objeto retornado tiene métodos para modificar la línea después de creada. Ver [[lines.Line2D]] para detalles completos.
 
 ```python
 line, = ax.plot(x, y)  # la coma desempaqueta la lista
@@ -218,7 +227,7 @@ line.set_linewidth(3)
 
 ### Línea vertical u horizontal infinita
 
-Para líneas que cruzan todo el gráfico, usar [[axhline_axvline]] en lugar de `ax.plot`.
+Para líneas que cruzan todo el gráfico, usar [[ax.axhline_axvline]] en lugar de `ax.plot`.
 
 ```python
 ax.axvline(x=5, color='red', linestyle='--')
@@ -227,7 +236,7 @@ ax.axhline(y=0, color='gray', linestyle=':')
 
 ### Relleno entre líneas
 
-Ver [[fill_between]].
+Ver [[ax.fill_between]].
 
 ```python
 ax.plot(x, y1, label='superior')
@@ -237,7 +246,7 @@ ax.fill_between(x, y1, y2, alpha=0.3)
 
 ### Escala logarítmica
 
-Ver [[Limites_Escalas]].
+Ver [[axes.limites_escalas]].
 
 ```python
 ax.plot(x, y)
@@ -251,8 +260,8 @@ ax.set_yscale('log')
 2. Definir [[plt.subplots]] con `figsize` antes de graficar
 3. Usar `alpha` para solapamiento cuando hay muchas líneas
 4. Limitar a 5-6 líneas por axes; usar [[Manejo_Arrays_Axes]] para más
-5. Preferir colores accesibles (ver [[Colores_Nombres]])
-6. Guardar referencia de línea si se modificará después (ver [[Line2D]])
+5. Preferir colores accesibles (ver [[colors.nombres]])
+6. Guardar referencia de línea si se modificará después (ver [[lines.Line2D]])
 
 ## Errores comunes
 
@@ -260,7 +269,7 @@ ax.set_yscale('log')
 |-------|---------|----------|
 | Dimensiones inconsistentes | `x=[1,2,3]`, `y=[1,2]` | `x` e `y` deben tener misma longitud |
 | Olvidar que retorna lista | `lines.set_color('red')` | `lines[0].set_color('red')` |
-| Formato no reconocido | `ax.plot(x, y, 'z')` | usar código válido de [[Colores_Nombres]], [[marker]] o [[Estilos_Linea]] |
+| Formato no reconocido | `ax.plot(x, y, 'z')` | usar código válido de [[colors.nombres]], [[lines.marker]] o [[lines.linestyle]] |
 | Mezclar fmt con kwargs redundante | `ax.plot(x, y, 'r--', color='blue')` | usar uno solo |
 | Desempaquetado incorrecto con 2D | `line, = ax.plot(x, y_matrix.T)` | `lines = ax.plot(...)` y luego iterar |
 
@@ -268,11 +277,11 @@ ax.set_yscale('log')
 
 - [[plt.subplots]]
 - [[Manejo_Arrays_Axes]]
-- [[Line2D]]
-- [[fill_between]]
-- [[axhline_axvline]]
-- [[Limites_Escalas]]
+- [[lines.Line2D]]
+- [[ax.fill_between]]
+- [[ax.axhline_axvline]]
+- [[axes.limites_escalas]]
 - [[ax.legend]]
-- [[Colores_Nombres]]
-- [[marker]]
-- [[Estilos_Linea]]
+- [[colors.nombres]]
+- [[lines.marker]]
+- [[lines.linestyle]]

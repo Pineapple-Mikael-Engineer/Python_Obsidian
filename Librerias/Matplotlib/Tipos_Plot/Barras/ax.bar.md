@@ -1,16 +1,26 @@
 ---
 title: ax.bar — Gráfico de barras verticales
-alias:
+aliases:
   - bar
   - barras
   - gráfico barras
+  - ax.bar
 tags:
   - matplotlib
-  - axes
-  - graficos
-  - barras
+  - api/metodo
+  - axes/metodos
+lib: matplotlib
+obj: Axes
+tipo: metodo
+muta_estado: true
+requiere: []
 draft: false
 ---
+
+
+
+
+
 
 # ax.bar — Gráfico de barras verticales
 
@@ -36,7 +46,7 @@ Axes.bar(
 | `width` | escalar o array-like | `0.8` | Ancho de las barras |
 | `bottom` | escalar o array-like | `0` | Base de las barras (para apiladas) |
 | `align` | `'center'` o `'edge'` | `'center'` | Alineación de la barra respecto a x |
-| `**kwargs` | - | - | Propiedades de [[Rectangle]] |
+| `**kwargs` | - | - | Propiedades de [[patches.Rectangle]] |
 
 ## Parámetros adicionales (kwargs comunes)
 
@@ -74,7 +84,7 @@ for bar in bars:
     bar.set_edgecolor('black')
 ```
 
-Ver [[Rectangle]] para métodos completos.
+Ver [[patches.Rectangle]] para métodos completos.
 
 ## Alineación (align)
 
@@ -151,11 +161,11 @@ colores = cm.viridis(np.linspace(0, 1, len(x)))
 ax.bar(x, height, color=colores)
 ```
 
-Ver [[Colormaps]] para más opciones.
+Ver [[cm.Colormaps]] para más opciones.
 
 ## Barras con barras de error
 
-`ax.bar` acepta parámetros para barras de error que se pasan internamente a [[errorbar]].
+`ax.bar` acepta parámetros para barras de error que se pasan internamente a [[ax.errorbar]].
 
 | Parámetro | Descripción | Ejemplo |
 |-----------|-------------|---------|
@@ -163,7 +173,7 @@ Ver [[Colormaps]] para más opciones.
 | `xerr` | Error absoluto en X (escalar o array) | `xerr=0.5` |
 | `capsize` | Tamaño de los extremos de la barra de error (puntos) | `capsize=4` |
 | `capthick` | Grosor de los extremos | `capthick=2` |
-| `error_kw` | Diccionario con kwargs para [[errorbar]] | `error_kw={'linewidth': 2, 'color': 'red'}` |
+| `error_kw` | Diccionario con kwargs para [[ax.errorbar]] | `error_kw={'linewidth': 2, 'color': 'red'}` |
 | `ecolor` | Color de las barras de error (alternativa a error_kw) | `ecolor='black'` |
 
 ```python
@@ -247,10 +257,10 @@ ax.barh(y, width)  # alternativa para barras horizontales
 ## Notas relacionadas
 
 - [[ax.barh]]
-- [[Rectangle]]
+- [[patches.Rectangle]]
 - [[ax.legend]]
 - [[ax.set_xlabel_ylabel]]
 - [[ax.set_xticks_yticks]]
-- [[errorbar]]
+- [[ax.errorbar]]
 - [[ax.text]]
-- [[Colormaps]]
+- [[cm.Colormaps]]

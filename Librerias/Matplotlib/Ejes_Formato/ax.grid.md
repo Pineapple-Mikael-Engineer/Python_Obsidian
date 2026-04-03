@@ -1,16 +1,26 @@
 ---
 title: ax.grid — Cuadrícula del gráfico
-alias:
+aliases:
   - grid
   - cuadrícula
   - rejilla
+  - ax.grid
 tags:
   - matplotlib
-  - axes
-  - formato
-  - visual
+  - api/metodo
+  - axes/metodos
+lib: matplotlib
+obj: Axes
+tipo: metodo
+muta_estado: true
+requiere: []
 draft: false
 ---
+
+
+
+
+
 
 # ax.grid — Cuadrícula del gráfico
 
@@ -51,7 +61,7 @@ ax.grid(True, color='gray', linestyle='--', linewidth=0.5, alpha=0.7)
 
 ## Parámetros de estilo (kwargs)
 
-Los `**kwargs` se pasan a `Line2D`. Ver [[Estilos_Linea]].
+Los `**kwargs` se pasan a `Line2D`. Ver [[lines.linestyle]].
 
 | Parámetro | Ejemplo | Descripción |
 |-----------|---------|-------------|
@@ -164,7 +174,7 @@ Ver [[Configuracion]].
 ## Notas relacionadas
 
 - [[ax.tick_params]]
-- [[Locators]]
-- [[Estilos_Linea]]
+- [[ticker.Locators]]
+- [[lines.linestyle]]
 - [[Configuracion]]
 - [[ax.set_xticks_yticks]]

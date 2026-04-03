@@ -1,17 +1,26 @@
 ---
 title: ax.contour — Curvas de nivel
-alias:
+aliases:
   - contour
   - curvas nivel
   - isolineas
+  - ax.contour
 tags:
   - matplotlib
-  - metodo
-  - graficos
-  - contornos
-  - tiene_retorno
+  - api/metodo
+  - axes/metodos
+lib: matplotlib
+obj: Axes
+tipo: metodo
+muta_estado: true
+requiere: []
 draft: false
 ---
+
+
+
+
+
 
 # ax.contour — Curvas de nivel
 
@@ -74,7 +83,7 @@ ax.contour(Z, levels=10)
 contour_set = ax.contour(X, Y, Z)
 ```
 
-Retorna un objeto **[[QuadContourSet]]** que contiene todas las curvas de nivel.
+Retorna un objeto **[[contour.QuadContourSet]]** que contiene todas las curvas de nivel.
 
 ### Modificación posterior básica
 
@@ -140,7 +149,7 @@ cs.remove()
 |-------|--------|---------|
 | Color único | Todas las líneas del mismo color | `colors='black'` |
 | Lista de colores | Un color por nivel | `colors=['red', 'green', 'blue']` |
-| `None` | Usa [[Colormaps]] | `colors=None, cmap='viridis'` |
+| `None` | Usa [[cm.Colormaps]] | `colors=None, cmap='viridis'` |
 
 ### cmap — mapa de colores
 
@@ -149,7 +158,7 @@ ax.contour(X, Y, Z, cmap='viridis')     # secuencial
 ax.contour(X, Y, Z, cmap='coolwarm')    # divergente
 ```
 
-Ver [[Colormaps]].
+Ver [[cm.Colormaps]].
 
 ### norm — normalización
 
@@ -189,7 +198,7 @@ ax.contour(X, Y, Z, linestyles='dashdot')
 ax.contour(X, Y, Z, linestyles='dotted')
 ```
 
-Ver [[Estilos_Linea]].
+Ver [[lines.linestyle]].
 
 ### alpha — transparencia
 
@@ -286,7 +295,7 @@ ax.contour(X, Y, Z_log, levels=20, norm=colors.LogNorm(), cmap='viridis')
 2. Combinar `contourf` + `contour` para mejor visualización
 3. Usar `ax.set_aspect('equal')` para no distorsionar curvas
 4. Usar `clabel` para curvas con valores importantes (especialmente nivel cero)
-5. Elegir [[Colormaps]] apropiado: secuencial para datos monótonos, divergente para datos con punto medio
+5. Elegir [[cm.Colormaps]] apropiado: secuencial para datos monótonos, divergente para datos con punto medio
 6. Para datos con cero, usar colormap divergente con blanco/neutro en cero (ej: `'RdBu'`, `'coolwarm'`)
 
 ## Errores comunes
@@ -302,12 +311,12 @@ ax.contour(X, Y, Z_log, levels=20, norm=colors.LogNorm(), cmap='viridis')
 ## Notas relacionadas
 
 - [[ax.contourf]]
-- [[QuadContourSet]]
-- [[Colormaps]]
-- [[plt.colorbar]]
+- [[contour.QuadContourSet]]
+- [[cm.Colormaps]]
+- [[pyplot.plt.colorbar]]
 - [[ax.clabel]]
-- [[np.meshgrid]]
-- [[Line2D]]
-- [[Estilos_Linea]]
-- [[Normalize]]
-- [[LogNorm]]
+- [[numpy.meshgrid]]
+- [[lines.Line2D]]
+- [[lines.linestyle]]
+- [[colors.Normalize]]
+- [[colors.LogNorm]]

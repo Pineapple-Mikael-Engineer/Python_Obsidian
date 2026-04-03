@@ -1,17 +1,27 @@
 ---
-title: ax.set_xticks / ax.set_yticks — Control de ticks
-alias:
+title: ax.set_xticks_yticks — Control de ticks
+aliases:
   - set_xticks
   - set_yticks
   - ticks
   - ejes
+  - ax.set_xticks_yticks
 tags:
   - matplotlib
-  - axes
-  - formato
-  - ticks
+  - api/metodo
+  - axes/metodos
+lib: matplotlib
+obj: Axes
+tipo: metodo
+muta_estado: true
+requiere: []
 draft: false
 ---
+
+
+
+
+
 
 # ax.set_xticks / ax.set_yticks — Control de ticks
 
@@ -29,7 +39,7 @@ Axes.set_yticks(ticks, labels=None, minor=False, **kwargs)
 | `ticks` | lista de `float` | - | Posiciones donde colocar los ticks |
 | `labels` | lista de `str` | `None` | Etiquetas para cada tick |
 | `minor` | `bool` | `False` | Si `True`, controla ticks menores |
-| `**kwargs` | - | - | Propiedades de [[Text]] para etiquetas |
+| `**kwargs` | - | - | Propiedades de [[text.Text]] para etiquetas |
 
 ## Casos básicos
 
@@ -90,7 +100,7 @@ ax.set_xticks([0, 5, 10], labels=['A', 'B', 'C'], fontsize=12, rotation=45)
 
 ## Formato de ticks con locators y formatters
 
-Para formatos avanzados (fechas, monedas, porcentajes), ver [[TickLocators]] y [[TickFormatters]].
+Para formatos avanzados (fechas, monedas, porcentajes), ver [[ticker.Locators]] y [[ticker.Formatters]].
 
 ```python
 import matplotlib.ticker as ticker
@@ -164,9 +174,9 @@ ax.xaxis.set_major_formatter(mdates.DateFormatter('%Y-%m'))
 
 ## Notas relacionadas
 
-- [[TickLocators]]
-- [[TickFormatters]]
+- [[ticker.Locators]]
+- [[ticker.Formatters]]
 - [[ax.tick_params]]
 - [[ax.set_xlim_ylim]]
 - [[ax.set_xscale_yscale]]
-- [[Text]]
+- [[text.Text]]

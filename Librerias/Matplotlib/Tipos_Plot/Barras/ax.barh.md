@@ -1,16 +1,26 @@
 ---
 title: ax.barh — Gráfico de barras horizontales
-alias:
+aliases:
   - barh
   - barras horizontales
   - horizontal bar
+  - ax.barh
 tags:
   - matplotlib
-  - axes
-  - graficos
-  - barras
+  - api/metodo
+  - axes/metodos
+lib: matplotlib
+obj: Axes
+tipo: metodo
+muta_estado: true
+requiere: []
 draft: false
 ---
+
+
+
+
+
 
 # ax.barh — Gráfico de barras horizontales
 
@@ -36,7 +46,7 @@ Axes.barh(
 | `height` | escalar o array-like | `0.8` | Altura (grosor) de las barras |
 | `left` | escalar o array-like | `0` | Punto de inicio horizontal (para apiladas) |
 | `align` | `'center'` o `'edge'` | `'center'` | Alineación respecto a `y` |
-| `**kwargs` | - | - | Propiedades de [[Rectangle]] |
+| `**kwargs` | - | - | Propiedades de [[patches.Rectangle]] |
 
 ## Diferencia clave con bar
 
@@ -64,7 +74,7 @@ bars[0].set_width(15)  # cambiar longitud horizontal
 bars[0].set_height(0.5)  # cambiar grosor
 ```
 
-Ver [[Rectangle]] y [[ax.bar]] para más detalles de modificación.
+Ver [[patches.Rectangle]] y [[ax.bar]] para más detalles de modificación.
 
 ## Parámetros de estilo (kwargs)
 
@@ -172,7 +182,7 @@ ax.barh(y, width, xerr=[errores_izq, errores_der], capsize=5)
 |-----------|-------------|
 | `xerr` | Error horizontal (similar a `yerr` en `bar`) |
 | `capsize` | Tamaño de extremos |
-| `error_kw` | Diccionario con kwargs para [[errorbar]] |
+| `error_kw` | Diccionario con kwargs para [[ax.errorbar]] |
 
 ## Casos comunes
 
@@ -233,8 +243,8 @@ bars[2].set_linewidth(2)
 ## Notas relacionadas
 
 - [[ax.bar]]
-- [[Rectangle]]
+- [[patches.Rectangle]]
 - [[ax.legend]]
-- [[errorbar]]
+- [[ax.errorbar]]
 - [[ax.text]]
-- [[Colormaps]]
+- [[cm.Colormaps]]

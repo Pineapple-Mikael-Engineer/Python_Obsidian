@@ -1,16 +1,25 @@
 ---
 title: plt.subplots — Creación de figura y ejes
-alias:
+aliases:
   - subplots
   - crear figura y ejes
   - layout básico
+  - plt.subplots
 tags:
   - matplotlib
-  - figure
-  - axes
-  - layout
+  - api/funcion
+  - pyplot/funciones
+lib: matplotlib
+tipo: funcion
+muta_estado: true
+requiere: []
 draft: false
 ---
+
+
+
+
+
 
 # plt.subplots — Creación de figura y ejes
 
@@ -69,7 +78,7 @@ El valor de `squeeze` controla la forma del objeto `axs`:
 
 | Configuración | `squeeze=True` (default) | `squeeze=False` |
 |---------------|--------------------------|-----------------|
-| `1, 1` | `axs` = `Axes` (objeto único) | `axs` = array `[[Axes]]` |
+| `1, 1` | `axs` = `Axes` (objeto único) | `axs` = array `[[axes.Axes]]` |
 | `1, N` | `axs` = array `(N,)` 1D | `axs` = array `(1, N)` 2D |
 | `N, 1` | `axs` = array `(N,)` 1D | `axs` = array `(N, 1)` 2D |
 | `N, M` | `axs` = array `(N, M)` 2D | `axs` = array `(N, M)` 2D |
@@ -156,7 +165,7 @@ fig, axs = plt.subplots(2, 2, sharex=True, sharey=True)
 | `'col'` | Subplots en misma columna comparten eje X |
 | `False` | Sin compartición (default) |
 
-> [!tip] Compartir ejes elimina ticks redundantes y facilita comparación visual directa entre subplots. Ver [[Multiples_Graficos/Ejes_Compartidos]] para más detalles.
+> [!tip] Compartir ejes elimina ticks redundantes y facilita comparación visual directa entre subplots. Ver [[ax.shared_axes]] para más detalles.
 
 ### `subplot_kw` — personalización por Axes
 
@@ -208,7 +217,7 @@ fig, axs = plt.subplots(2, 2, figsize=(8, 5))
 | Compartición de ejes | Parámetros integrados | Manual, propenso a errores |
 | Escalabilidad | Alta (cambias N y M fácil) | Baja (requiere reescribir) |
 
-> [!tip] `subplots()` es el estándar moderno. Reservar `add_subplot()` para casos donde necesitas construir la figura de forma dinámica o no rectangular (ver [[Multiples_Graficos/GridSpec]]).
+> [!tip] `subplots()` es el estándar moderno. Reservar `add_subplot()` para casos donde necesitas construir la figura de forma dinámica o no rectangular (ver [[GridSpec]]).
 
 ---
 
@@ -277,8 +286,8 @@ axs[1].plot(x, y)               # indexación 1D
 
 - [[Manejo_Arrays_Axes]]
 - [[GridSpec]]
-- [[Ejes_Compartidos]]
+- [[ax.shared_axes]]
 - [[Configuracion]]
 - [[ax.plot]]
-- [[plt.show]]
-- [[plt.savefig]]
+- [[pyplot.plt.show]]
+- [[pyplot.plt.savefig]]

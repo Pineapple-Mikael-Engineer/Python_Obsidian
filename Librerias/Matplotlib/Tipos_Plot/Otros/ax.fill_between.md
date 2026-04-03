@@ -1,16 +1,26 @@
 ---
-title: fill_between — Relleno entre curvas
-alias:
+title: ax.fill_between — Relleno entre curvas
+aliases:
   - fill_between
   - área sombreada
   - banda confianza
+  - ax.fill_between
 tags:
   - matplotlib
-  - axes
-  - graficos
-  - relleno
+  - api/metodo
+  - axes/metodos
+lib: matplotlib
+obj: Axes
+tipo: metodo
+muta_estado: true
+requiere: []
 draft: false
 ---
+
+
+
+
+
 
 # fill_between — Relleno entre curvas
 
@@ -38,7 +48,7 @@ Axes.fill_between(
 | `where` | array de bool (N,) | `None` | Rellenar solo donde `True` |
 | `interpolate` | `bool` | `False` | Interpolar entre puntos where |
 | `step` | `str` | `None` | Estilo escalonado: `'pre'`, `'post'`, `'mid'` |
-| `**kwargs` | - | - | Propiedades de [[Polygon]] |
+| `**kwargs` | - | - | Propiedades de [[patches.Polygon]] |
 
 ## Valor de retorno
 
@@ -46,7 +56,7 @@ Axes.fill_between(
 poly = ax.fill_between(x, y1, y2)
 ```
 
-Retorna una **lista de objetos [[Polygon]]**. La longitud de la lista depende de cuántos polígonos contiguos se generan:
+Retorna una **lista de objetos [[patches.Polygon]]**. La longitud de la lista depende de cuántos polígonos contiguos se generan:
 
 | Caso | Longitud de lista | Ejemplo |
 |------|-------------------|---------|
@@ -299,7 +309,7 @@ El orden de llamado importa, pero `zorder` es más explícito y robusto. Valores
 ## Notas relacionadas
 
 - [[ax.plot]]
-- [[Polygon]]
+- [[patches.Polygon]]
 - [[ax.legend]]
 - [[ax.fill_betweenx]]
-- [[Animacion]]
+- [[animation.FuncAnimation]]

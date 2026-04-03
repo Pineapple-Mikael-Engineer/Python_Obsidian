@@ -1,16 +1,25 @@
 ---
 title: ax.legend — Leyenda de axes
-alias:
+aliases:
   - legend
   - leyenda
+  - ax.legend
 tags:
   - matplotlib
-  - axes
-  - labels
-  - leyenda
-  - posicionamiento
+  - api/metodo
+  - axes/metodos
+lib: matplotlib
+obj: Axes
+tipo: metodo
+muta_estado: true
+requiere: []
 draft: false
 ---
+
+
+
+
+
 
 # ax.legend — Leyenda de axes
 
@@ -31,12 +40,12 @@ Axes.legend(
 
 | Parámetro | Tipo | Default | Descripción |
 |-----------|------|---------|-------------|
-| `handles` | lista de [[Artist]] | `None` | Elementos a incluir en leyenda ([[Line2D]], [[Patch]], etc.) |
+| `handles` | lista de [[artist.Artist]] | `None` | Elementos a incluir en leyenda ([[lines.Line2D]], [[patches.Patch]], etc.) |
 | `labels` | lista de `str` | `None` | Etiquetas correspondientes a handles |
 | `loc` | `str` o `int` | `'best'` | Posición de la leyenda |
 | `bbox_to_anchor` | tupla `(x, y)` o `(x, y, width, height)` | `None` | Anclaje para posicionamiento avanzado |
 | `ncol` | `int` | `1` | Número de columnas |
-| `**kwargs` | - | - | Ver [[Personalizacion_Leyendas]] |
+| `**kwargs` | - | - | Ver [[axes.personalizacion_leyendas]] |
 
 ## Posiciones predefinidas (loc)
 
@@ -164,7 +173,7 @@ ax.plot(x, y2, label='_nolegend_')  # no aparece en leyenda
 ax.legend(title='Curvas', title_fontsize=12)
 ```
 
-Para más opciones de personalización, ver [[Personalizacion_Leyendas]].
+Para más opciones de personalización, ver [[axes.personalizacion_leyendas]].
 
 ### Leyenda fuera del axes con ajuste automático
 
@@ -197,9 +206,9 @@ fig.subplots_adjust(right=0.8)  # alternativa manual
 
 ## Notas relacionadas
 
-- [[Artist]]
-- [[Line2D]]
-- [[Personalizacion_Leyendas]]
-- [[Multiples_Leyendas]]
-- [[fig.legend]]
+- [[artist.Artist]]
+- [[lines.Line2D]]
+- [[axes.personalizacion_leyendas]]
+- [[axes.multiples_leyendas]]
+- [[figure.fig.legend]]
 - [[ax.plot]]

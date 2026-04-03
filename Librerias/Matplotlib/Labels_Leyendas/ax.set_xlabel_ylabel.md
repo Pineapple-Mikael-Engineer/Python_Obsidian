@@ -1,17 +1,27 @@
 ---
-title: ax.set_xlabel / ax.set_ylabel — Etiquetas de ejes
-alias:
+title: ax.set_xlabel_ylabel — Etiquetas de ejes
+aliases:
   - set_xlabel
   - set_ylabel
   - etiquetas ejes
   - axis labels
+  - ax.set_xlabel_ylabel
 tags:
   - matplotlib
-  - axes
-  - labels
-  - formato
+  - api/metodo
+  - axes/metodos
+lib: matplotlib
+obj: Axes
+tipo: metodo
+muta_estado: true
+requiere: []
 draft: false
 ---
+
+
+
+
+
 
 # ax.set_xlabel / ax.set_ylabel — Etiquetas de ejes
 
@@ -43,7 +53,7 @@ Axes.set_ylabel(
 | `fontdict` | `dict` | `None` | Diccionario de propiedades de fuente |
 | `labelpad` | `float` | `None` | Espacio entre etiqueta y eje (puntos) |
 | `loc` | `str` | `'center'` | Posición de la etiqueta en el eje |
-| `**kwargs` | - | - | Propiedades de [[Text]] (color, size, weight, etc.) |
+| `**kwargs` | - | - | Propiedades de [[text.Text]] (color, size, weight, etc.) |
 
 ## Posiciones disponibles (loc)
 
@@ -70,7 +80,7 @@ ax.set_ylabel('Amplitud', loc='top')
 
 ## Parámetros de fuente (kwargs)
 
-Los argumentos adicionales se pasan al objeto [[Text]] interno.
+Los argumentos adicionales se pasan al objeto [[text.Text]] interno.
 
 | Parámetro | Ejemplo | Descripción |
 |-----------|---------|-------------|
@@ -154,7 +164,7 @@ ax.set_xlabel('')  # o simplemente no llamar al método
 2. Mantener `fontsize` consistente entre etiquetas y títulos
 3. Usar `labelpad` para evitar solapamiento con ticks largos
 4. Para etiquetas Y largas, considerar `rotation=0` y ajustar con `labelpad`
-5. Usar [[LaTeX]] para notación matemática (con `r''` raw string)
+5. Usar [[text.latex]] para notación matemática (con `r''` raw string)
 
 ## Errores comunes
 
@@ -163,13 +173,13 @@ ax.set_xlabel('')  # o simplemente no llamar al método
 | Etiqueta cortada en el borde | Usar `fig.tight_layout()` o aumentar `labelpad` |
 | LaTeX no se renderiza | Usar raw string `r'$...$'` y tener LaTeX instalado |
 | Confundir `set_xlabel` con `set_title` | `set_xlabel` para eje horizontal, `set_title` para título superior |
-| Olvidar que `**kwargs` pasa a [[Text]] | Revisar documentación de Text para opciones avanzadas |
+| Olvidar que `**kwargs` pasa a [[text.Text]] | Revisar documentación de Text para opciones avanzadas |
 
 ## Notas relacionadas
 
 - [[ax.set_title]]
-- [[fig.suptitle]]
+- [[figure.fig.suptitle]]
 - [[ax.set_xticklabels]]
-- [[Text]]
-- [[LaTeX]]
+- [[text.Text]]
+- [[text.latex]]
 - [[Configuracion]]
