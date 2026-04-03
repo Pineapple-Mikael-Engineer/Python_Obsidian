@@ -241,7 +241,7 @@ ax.barh(y, width)  # alternativa para barras horizontales
 3. Limitar número de barras (< 20) para legibilidad
 4. Usar colores contrastantes para grupos diferentes
 5. Para barras apiladas, ordenar de mayor a menor (o viceversa)
-6. Siempre etiquetar ejes ([[ax.set_xlabel_ylabel]])
+6. Siempre etiquetar ejes ([[ax.set_xlabel]])
 
 ## Errores comunes
 
@@ -249,7 +249,7 @@ ax.barh(y, width)  # alternativa para barras horizontales
 |-------|----------|
 | `len(x) != len(height)` | Deben tener misma longitud |
 | Barras superpuestas | Verificar `width` y posiciones `x` |
-| Etiquetas X cortadas | Usar `fig.tight_layout()` o [[ax.set_xticks_yticks]] con rotación |
+| Etiquetas X cortadas | Usar `fig.tight_layout()` o [[ax.set_xticks]] con rotación |
 | Barras apiladas mal ordenadas | Verificar que `bottom` acumula correctamente |
 | Colormap no funciona en `color` | Usar `color` con lista de colores, `cmap` no aplica a `bar` |
 
@@ -258,8 +258,8 @@ ax.barh(y, width)  # alternativa para barras horizontales
 - [[ax.barh]]
 - [[Rectangle]]
 - [[ax.legend]]
-- [[ax.set_xlabel_ylabel]]
-- [[ax.set_xticks_yticks]]
+- [[ax.set_xlabel]]
+- [[ax.set_xticks]]
 - [[errorbar]]
 - [[ax.text]]
 - [[Colormaps]]

@@ -1,23 +1,21 @@
 ---
-title: Configuración Inicial de Matplotlib
-
+title: Introducción a pyplot — Flujo básico y buenas prácticas
+aliases:
+  - introduccion
+  - flujo basico
 tags:
   - matplotlib
   - api/config
-  - styling
-
-# --- Clasificación ---
+  - pyplot/intro
 lib: matplotlib
-obj: matplotlib
+obj: pyplot
 tipo: config
-
-# --- Comportamiento ---
-muta_estado: false
-
 draft: false
 ---
 
-# Importación estándar
+# Introducción a pyplot — Flujo básico y buenas prácticas
+
+## Importación estándar
 
 ```python
 import matplotlib.pyplot as plt
@@ -35,7 +33,7 @@ from matplotlib import pyplot as plt
 
 ---
 
-# Flujo mínimo de uso
+## Flujo mínimo de uso
 
 ```python
 fig, ax = plt.subplots()
@@ -67,93 +65,7 @@ fig, axs = plt.subplots(2, 3)  # 2 filas, 3 columnas → axs es array de axes
 
 ---
 
-# Configuración global
-
-## Estilos predefinidos
-
-`pyplot` incluye estilos predefinidos que cambian la apariencia global:
-
-```python
-plt.style.use("ggplot")  # estilo similar a ggplot2 de R
-plt.style.use("seaborn-v0_8")  # estilo seaborn
-plt.style.use("classic")  # estilo clásico de matplotlib
-plt.style.use("dark_background")  # fondo oscuro
-plt.style.use("bmh")  # estilo Bayesian Methods for Hackers
-```
-
-Listar todos los estilos disponibles:
-
-```python
-print(plt.style.available)
-```
-
-Usar estilo solo para un bloque:
-
-```python
-with plt.style.context("dark_background"):
-    fig, ax = plt.subplots()
-    ax.plot(x, y)  # este gráfico usa estilo oscuro
-# fuera del contexto, vuelve al estilo anterior
-```
-
-## rcParams (ajustes persistentes)
-
-`rcParams` es un diccionario global que controla los defaults de matplotlib.
-
-```python
-import matplotlib as mpl
-
-# Ver todos los parámetros
-mpl.rcParams.keys()
-
-# Modificar individualmente
-plt.rcParams["figure.dpi"] = 120
-plt.rcParams["font.size"] = 12
-plt.rcParams["lines.linewidth"] = 1.5
-plt.rcParams["axes.grid"] = True  # grid activado por defecto
-```
-
-| Parámetro | Valor por defecto | Uso |
-|-----------|------------------|-----|
-| `figure.figsize` | `[6.4, 4.8]` | Tamaño de figura en pulgadas |
-| `figure.dpi` | `100.0` | Resolución de pantalla |
-| `figure.facecolor` | `'white'` | Color de fondo de figure |
-| `axes.facecolor` | `'white'` | Color de fondo de axes |
-| `axes.grid` | `False` | Grid activado por defecto |
-| `axes.labelsize` | `'medium'` | Tamaño de etiquetas |
-| `xtick.labelsize` | `'medium'` | Tamaño de ticks en X |
-| `ytick.labelsize` | `'medium'` | Tamaño de ticks en Y |
-| `lines.linewidth` | `1.5` | Grosor de línea por defecto |
-| `lines.markersize` | `6.0` | Tamaño de marcador por defecto |
-| `savefig.dpi` | `'figure'` | DPI al guardar (`'figure'` usa figure.dpi) |
-| `savefig.bbox` | `'standard'` | Área guardada (`'tight'` recorta bordes) |
-
-Modificar múltiples parámetros de una vez:
-
-```python
-plt.rcParams.update({
-    "figure.figsize": (8, 5),
-    "font.size": 12,
-    "axes.grid": True,
-    "grid.alpha": 0.3
-})
-```
-
-Guardar configuración personalizada en archivo `matplotlibrc`:
-
-```python
-# ubicado en ~/.config/matplotlib/matplotlibrc
-figure.figsize: 8, 5
-font.size: 12
-axes.grid: True
-```
-
-> [!note] rcParams es para defaults globales  
-> No usar rcParams para ajustes de una figura específica. En ese caso, pasar argumentos directamente a las funciones.
-
----
-
-# Sintaxis base recurrente
+## Sintaxis base recurrente
 
 | Acción | Código | Parámetros útiles |
 |--------|--------|-------------------|
@@ -169,7 +81,7 @@ axes.grid: True
 
 ---
 
-# Buenas prácticas
+## Buenas prácticas
 
 1. **Usar API orientada a objetos siempre**
    ```python
@@ -239,17 +151,11 @@ plt.show()
 
 ---
 
-# Snippet base reutilizable
+## Snippet base reutilizable
 
 ```python
 import matplotlib.pyplot as plt
 import numpy as np
-
-# Configuración global (opcional - ajustar según necesidad)
-plt.style.use("seaborn-v0_8")
-plt.rcParams["figure.dpi"] = 120
-plt.rcParams["axes.grid"] = True
-plt.rcParams["grid.alpha"] = 0.3
 
 # Datos de ejemplo
 x = np.linspace(0, 10, 100)
@@ -275,27 +181,29 @@ ax.set_xlim(0, 10)
 ax.set_ylim(-1.5, 1.5)
 
 # Mostrar
-plt.tight_layout()  # ajusta márgenes automáticamente
+plt.tight_layout()
 plt.show()
-
-# Para guardar en lugar de mostrar:
-# plt.savefig("mi_grafico.png", dpi=150, bbox_inches="tight")
 ```
 
 ---
 
-# Notas relacionadas
+## Notas relacionadas
 
 - [[plt.subplots]]
 - [[ax.plot]]
-- [[Tipos_Plot/Lineas/Estilos_Linea/marker]]
-- [[Tipos_Plot/Lineas/Estilos_Linea/linestyle]]
-- [[Labels_Leyendas/ax.set_xlabel_ylabel]]
+- [[lines.marker]]
+- [[lines.linestyle]]
+- [[ax.set_xlabel]]
+- [[ax.set_ylabel]]
 - [[ax.set_title]]
 - [[ax.legend]]
 - [[ax.grid]]
-- [[Ejes_Formato/Limites_Escalas]]
+- [[ax.set_xlim]]
+- [[ax.set_ylim]]
+- [[ax.set_xscale]]
+- [[ax.set_yscale]]
 - [[plt.show]]
 - [[plt.savefig]]
-- [[Color_Estilo/Colores_Nombres]]
-- [[Colormaps]]
+- [[colors.nombres]]
+- [[cm.Colormaps]]
+

@@ -154,7 +154,7 @@ axs[0, 1].set_title('Subplot 2')
 
 ## Notas relacionadas
 
-- [[ax.set_xlabel_ylabel]]
+- [[ax.set_xlabel]]
 - [[fig.suptitle]]
 - [[Text]]
 - [[LaTeX]]

@@ -204,7 +204,7 @@ ax.xaxis.set_major_formatter(ticker.PercentFormatter())
 ## Notas relacionadas
 
 - [[Formatters]]
-- [[ax.set_xticks_yticks]]
+- [[ax.set_xticks]]
 - [[ax.tick_params]]
 - [[DateFormatter]]
 - [[FuncFormatter]]

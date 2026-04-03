@@ -176,4 +176,4 @@ Ver [[Configuracion]].
 - [[Locators]]
 - [[Estilos_Linea]]
 - [[Configuracion]]
-- [[ax.set_xticks_yticks]]
+- [[ax.set_xticks]]

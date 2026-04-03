@@ -1,40 +1,26 @@
 ---
-title: ax.set_xlabel / ax.set_ylabel — Etiquetas de ejes
+title: ax.set_ylabel — Etiqueta del eje Y
 aliases:
-  - set_xlabel
   - set_ylabel
-  - etiquetas ejes
-  - axis labels
-
+  - etiqueta eje y
+  - ylabel
 tags:
   - matplotlib
   - api/metodo
-  - styling
-
-# --- Clasificación ---
+  - axes/formato
 lib: matplotlib
 obj: Axes
 tipo: metodo
-
-# --- Comportamiento ---
+retorna: Text
 muta_estado: true
-
 draft: false
 ---
 
-# ax.set_xlabel / ax.set_ylabel — Etiquetas de ejes
+# ax.set_ylabel — Etiqueta del eje Y
 
-## Firmas
+## Firma
 
 ```python
-Axes.set_xlabel(
-    xlabel,
-    fontdict=None,
-    labelpad=None,
-    loc='center',
-    **kwargs
-)
-
 Axes.set_ylabel(
     ylabel,
     fontdict=None,
@@ -44,27 +30,26 @@ Axes.set_ylabel(
 )
 ```
 
-## Parámetros principales
+## Parámetros
 
 | Parámetro | Tipo | Default | Descripción |
 |-----------|------|---------|-------------|
-| `xlabel` / `ylabel` | `str` | - | Texto de la etiqueta |
+| `ylabel` | `str` | - | Texto de la etiqueta |
 | `fontdict` | `dict` | `None` | Diccionario de propiedades de fuente |
 | `labelpad` | `float` | `None` | Espacio entre etiqueta y eje (puntos) |
-| `loc` | `str` | `'center'` | Posición de la etiqueta en el eje |
+| `loc` | `str` | `'center'` | Posición: `'bottom'`, `'center'`, `'top'` |
 | `**kwargs` | - | - | Propiedades de [[Text]] (color, size, weight, etc.) |
 
+## Valor de retorno
+
+Retorna el objeto [[Text]] creado, permitiendo modificaciones posteriores.
+
+```python
+text_obj = ax.set_ylabel('Amplitud')
+text_obj.set_color('blue')
+```
+
 ## Posiciones disponibles (loc)
-
-### Para set_xlabel
-
-| Valor | Posición |
-|-------|----------|
-| `'left'` | Izquierda |
-| `'center'` | Centro (default) |
-| `'right'` | Derecha |
-
-### Para set_ylabel
 
 | Valor | Posición |
 |-------|----------|
@@ -73,7 +58,6 @@ Axes.set_ylabel(
 | `'top'` | Arriba |
 
 ```python
-ax.set_xlabel('Tiempo (s)', loc='left')
 ax.set_ylabel('Amplitud', loc='top')
 ```
 
@@ -92,7 +76,7 @@ Los argumentos adicionales se pasan al objeto [[Text]] interno.
 | `alpha` | `alpha=0.7` | Transparencia |
 
 ```python
-ax.set_xlabel('Tiempo (s)', fontsize=14, fontweight='bold', color='navy')
+ax.set_ylabel('Amplitud', fontsize=14, fontweight='bold', color='darkgreen')
 ```
 
 ## Uso de fontdict
@@ -101,7 +85,7 @@ ax.set_xlabel('Tiempo (s)', fontsize=14, fontweight='bold', color='navy')
 
 ```python
 font = {'family': 'serif', 'color': 'darkred', 'weight': 'normal', 'size': 12}
-ax.set_xlabel('Tiempo (s)', fontdict=font)
+ax.set_ylabel('Amplitud', fontdict=font)
 ```
 
 ## labelpad — espaciado
@@ -109,7 +93,6 @@ ax.set_xlabel('Tiempo (s)', fontdict=font)
 Controla la distancia entre la etiqueta y el eje (en puntos).
 
 ```python
-ax.set_xlabel('Eje X', labelpad=10)   # más separación
 ax.set_ylabel('Eje Y', labelpad=15)
 ```
 
@@ -118,14 +101,12 @@ ax.set_ylabel('Eje Y', labelpad=15)
 ### Etiquetas con unidades
 
 ```python
-ax.set_xlabel('Tiempo (s)')
 ax.set_ylabel('Velocidad (m/s)')
 ```
 
 ### Etiquetas con formato matemático (LaTeX)
 
 ```python
-ax.set_xlabel(r'$\theta$ (radianes)')
 ax.set_ylabel(r'$\sin(\theta)$')
 ```
 
@@ -139,23 +120,24 @@ ax.set_ylabel('Variable muy larga que ocupa espacio', rotation=0, labelpad=20)
 ### Múltiples líneas
 
 ```python
-ax.set_xlabel('Primera línea\nSegunda línea')
+ax.set_ylabel('Primera línea\nSegunda línea')
 ```
 
 ### Ocultar etiqueta
 
 ```python
-ax.set_xlabel('')  # o simplemente no llamar al método
+ax.set_ylabel('')  # o simplemente no llamar al método
 ```
 
 ## Relación con otros métodos
 
 | Método | Ámbito |
 |--------|--------|
-| `ax.set_xlabel` / `ax.set_ylabel` | Etiquetas de ejes |
-| `ax.set_title` | Título del axes |
-| `fig.suptitle` | Título de la figura |
-| `ax.set_xticklabels` | Etiquetas de ticks |
+| `ax.set_ylabel` | Etiqueta del eje Y |
+| `ax.set_xlabel` | Etiqueta del eje X |
+| [[ax.set_title]] | Título del axes |
+| [[fig.suptitle]] | Título de la figura |
+| [[ax.set_yticklabels]] | Etiquetas de ticks |
 
 ## Buenas prácticas
 
@@ -171,14 +153,14 @@ ax.set_xlabel('')  # o simplemente no llamar al método
 |-------|----------|
 | Etiqueta cortada en el borde | Usar `fig.tight_layout()` o aumentar `labelpad` |
 | LaTeX no se renderiza | Usar raw string `r'$...$'` y tener LaTeX instalado |
-| Confundir `set_xlabel` con `set_title` | `set_xlabel` para eje horizontal, `set_title` para título superior |
+| Confundir `set_ylabel` con `set_title` | `set_ylabel` para eje vertical, `set_title` para título superior |
 | Olvidar que `**kwargs` pasa a [[Text]] | Revisar documentación de Text para opciones avanzadas |
 
 ## Notas relacionadas
 
+- [[ax.set_xlabel]]
 - [[ax.set_title]]
 - [[fig.suptitle]]
-- [[ax.set_xticklabels]]
+- [[ax.set_yticklabels]]
 - [[Text]]
 - [[LaTeX]]
-- [[Configuracion]]

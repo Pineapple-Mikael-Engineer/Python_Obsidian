@@ -83,7 +83,7 @@ El valor de `squeeze` controla la forma del objeto `axs`:
 | `N, 1` | `axs` = array `(N,)` 1D | `axs` = array `(N, 1)` 2D |
 | `N, M` | `axs` = array `(N, M)` 2D | `axs` = array `(N, M)` 2D |
 
-> [!tip] `squeeze=True` es cómodo para casos simples, pero puede causar errores si el código espera un array y recibe un solo objeto. Para código robusto, considerar usar `squeeze=False` o aplicar [[Manejo Arrays Axes]].
+> [!tip] `squeeze=True` es cómodo para casos simples, pero puede causar errores si el código espera un array y recibe un solo objeto. Para código robusto, considerar usar `squeeze=False` o aplicar [[arrays]].
 
 ---
 
@@ -284,7 +284,7 @@ axs[1].plot(x, y)               # indexación 1D
 
 ## Notas relacionadas
 
-- [[Manejo Arrays Axes]]
+- [[arrays]]
 - [[GridSpec]]
 - [[Ejes_Compartidos]]
 - [[Configuracion]]

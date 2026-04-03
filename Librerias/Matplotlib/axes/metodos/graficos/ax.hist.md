@@ -271,4 +271,4 @@ ax.legend()
 - [[Rectangle]]
 - [[ax.legend]]
 - [[ax.axvline]]
-- [[ax.set_xlabel_ylabel]]
+- [[ax.set_xlabel]]

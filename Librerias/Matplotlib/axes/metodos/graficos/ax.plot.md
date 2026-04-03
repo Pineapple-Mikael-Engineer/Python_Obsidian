@@ -258,7 +258,7 @@ ax.set_yscale('log')
 1. Siempre incluir `label` si se planea usar [[ax.legend]]
 2. Definir [[plt.subplots]] con `figsize` antes de graficar
 3. Usar `alpha` para solapamiento cuando hay muchas líneas
-4. Limitar a 5-6 líneas por axes; usar [[Manejo Arrays Axes]] para más
+4. Limitar a 5-6 líneas por axes; usar [[arrays]] para más
 5. Preferir colores accesibles (ver [[Colores_Nombres]])
 6. Guardar referencia de línea si se modificará después (ver [[Line2D]])
 
@@ -275,7 +275,7 @@ ax.set_yscale('log')
 ## Notas relacionadas
 
 - [[plt.subplots]]
-- [[Manejo Arrays Axes]]
+- [[arrays]]
 - [[Line2D]]
 - [[ax.fill_between]]
 - [[axhline_axvline]]

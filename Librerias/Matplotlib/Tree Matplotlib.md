@@ -2,186 +2,162 @@
 title: Tree Matplotlib
 draft: true
 ---
-# Tree
+
+# Tree Matplotlib (Estructura actual)
 
 ```tree
 Matplotlib/
 ├── pyplot/
 │   ├── funciones/
-│   │   ├── plt.subplots.md
-│   │   ├── plt.figure.md
-│   │   ├── plt.savefig.md
-│   │   ├── plt.show.md
-│   │   ├── plt.close.md
-│   │   ├── plt.clf.md
-│   │   └── plt.colorbar.md
+│   │   └── plt.subplots.md
 │   └── config/
 │       └── plt.style.use.md
 ├── figure/
-│   ├── Figure.md
 │   └── metodos/
-│       ├── fig.suptitle.md
-│       ├── fig.tight_layout.md
-│       └── fig.add_subplot.md
 ├── axes/
-│   ├── Axes.md
+│   ├── arrays.md
 │   └── metodos/
 │       ├── graficos/
-│       │   ├── ax.plot.md
-│       │   ├── ax.scatter.md
 │       │   ├── ax.bar.md
 │       │   ├── ax.barh.md
-│       │   ├── ax.hist.md
-│       │   ├── ax.boxplot.md
 │       │   ├── ax.contour.md
-│       │   ├── ax.contourf.md
-│       │   ├── ax.imshow.md
 │       │   ├── ax.fill_between.md
-│       │   └── ax.pie.md
+│       │   ├── ax.fill_betweenx.md
+│       │   ├── ax.hist.md
+│       │   ├── ax.plot.md
+│       │   └── ax.scatter.md
 │       ├── formato/
+│       │   ├── ax.grid.md
+│       │   ├── ax.legend.md
 │       │   ├── ax.set_title.md
 │       │   ├── ax.set_xlabel.md
-│       │   ├── ax.set_ylabel.md
-│       │   ├── ax.legend.md
-│       │   ├── ax.grid.md
-│       │   ├── ax.set_xlim.md
-│       │   ├── ax.set_ylim.md
-│       │   ├── ax.set_xscale.md
-│       │   ├── ax.set_yscale.md
 │       │   ├── ax.set_xticks.md
+│       │   ├── ax.set_ylabel.md
 │       │   ├── ax.set_yticks.md
-│       │   ├── ax.tick_params.md
-│       │   └── ax.set_facecolor.md
+│       │   └── ax.tick_params.md
 │       ├── anotaciones/
-│       │   ├── ax.text.md
-│       │   └── ax.annotate.md
 │       └── spines/
-│           └── ax.spines.md
-├── gridspec/
-│   ├── GridSpec.md
-│   └── GridSpecFromSubplotSpec.md
-├── ticker/
-│   ├── Locators.md
-│   ├── Formatters.md
-│   ├── DateFormatter.md
-│   └── FuncFormatter.md
-├── cm/
-│   ├── Colormaps.md
-│   └── ListedColormap.md
-├── patches/
-│   ├── Patch.md
-│   ├── Rectangle.md
-│   ├── Polygon.md
-│   ├── Circle.md
-│   └── Ellipse.md
-├── collections/
-│   ├── PathCollection.md
-│   └── QuadContourSet.md
-├── image/
-│   ├── imread.md
-│   └── imsave.md
-├── text/
-│   ├── Text.md
-│   └── Annotation.md
-├── lines/
-│   ├── Line2D.md
-│   └── marker.md
-├── animation/
-│   └── FuncAnimation.md
 ├── backend/
-│   ├── backends.md
-│   └── cambiar_backend.md
+├── cm/
+├── collections/
+├── config/
+│   ├── plt.style.use.md
+│   └── rcParams.md
+├── gridspec/
+│   └── GridSpec.md
+├── image/
+├── lines/
+├── patches/
+├── text/
+├── ticker/
+│   └── Locators.md
 ├── toolkits/
 │   └── mplot3d/
-│       ├── plot_surface.md
-│       └── axes3d.md
-└── config/
-    ├── rcParams.md
-    └── estilos.md
+├── introduccion.md
+└── REPORTE_REFACTORIZACION.md
 ```
 
-**chat** : [Chat](https://chat.deepseek.com/a/chat/s/e0e24ee8-216a-4703-b37b-4777590b5644)
+## Notas existentes: 26 archivos
 
-# Futuro
+| Módulo | Archivos existentes |
+|--------|---------------------|
+| pyplot/funciones/ | plt.subplots.md |
+| pyplot/config/ | plt.style.use.md |
+| axes/metodos/graficos/ | ax.bar.md, ax.barh.md, ax.contour.md, ax.fill_between.md, ax.fill_betweenx.md, ax.hist.md, ax.plot.md, ax.scatter.md |
+| axes/metodos/formato/ | ax.grid.md, ax.legend.md, ax.set_title.md, ax.set_xlabel.md, ax.set_xticks.md, ax.set_ylabel.md, ax.set_yticks.md, ax.tick_params.md |
+| axes/ | arrays.md |
+| config/ | rcParams.md |
+| gridspec/ | GridSpec.md |
+| ticker/ | Locators.md |
+| raíz | introduccion.md, REPORTE_REFACTORIZACION.md |
 
+## Notas pendientes por crear (esqueleto)
 
+<details>
+<summary>Hacer clic para ver lista completa</summary>
 
-## 1. La API Orientada a Objetos (El "verdadero" poder)
+```bash
+# pyplot/funciones/
+plt.figure.md
+plt.savefig.md
+plt.show.md
+plt.close.md
+plt.clf.md
+plt.colorbar.md
 
-Mientras que `pyplot` gestiona cosas automáticamente, la API orientada a objetos te da el control total. Se basa en dos componentes principales:
+# figure/
+Figure.md
+figure/metodos/fig.suptitle.md
+figure/metodos/fig.tight_layout.md
+figure/metodos/fig.add_subplot.md
 
-- **Figure:** El lienzo completo o ventana donde se dibuja.
-    
-- **Axes:** El área específica donde se grafican los datos (un "gráfico" individual con sus ejes $x$ e $y$).
-    
+# axes/
+Axes.md
+axes/metodos/anotaciones/ax.text.md
+axes/metodos/anotaciones/ax.annotate.md
+axes/metodos/spines/ax.spines.md
+axes/metodos/formato/ax.set_xlim.md
+axes/metodos/formato/ax.set_ylim.md
+axes/metodos/formato/ax.set_xscale.md
+axes/metodos/formato/ax.set_yscale.md
+axes/metodos/formato/ax.set_facecolor.md
+axes/metodos/graficos/ax.boxplot.md
+axes/metodos/graficos/ax.contourf.md
+axes/metodos/graficos/ax.imshow.md
+axes/metodos/graficos/ax.pie.md
 
----
+# gridspec/
+GridSpecFromSubplotSpec.md
 
-## 2. Matplotlib Patches y Shapes
+# ticker/
+Formatters.md
+DateFormatter.md
+FuncFormatter.md
 
-No todo son líneas y puntos. El módulo `matplotlib.patches` permite dibujar formas geométricas complejas manualmente:
+# cm/
+Colormaps.md
+ListedColormap.md
 
-- **Círculos, Elipses y Rectángulos.**
-    
-- **Polígonos** con cualquier número de lados.
-    
-- **Flechas y cuñas** (útiles para diagramas de flujo o anotaciones personalizadas).
-    
+# patches/
+Patch.md
+Rectangle.md
+Polygon.md
+Circle.md
+Ellipse.md
 
----
+# collections/
+PathCollection.md
+QuadContourSet.md
 
-## 3. Manejo de Imágenes (`matplotlib.image`)
+# image/
+imread.md
+imsave.md
 
-Matplotlib no solo genera gráficos, también es un procesador de imágenes básico. Con el módulo `image` puedes:
+# text/
+Text.md
+Annotation.md
 
-- Leer archivos (PNG, JPG).
-    
-- Visualizar matrices de datos como imágenes (mapas de calor o _heatmaps_).
-    
-- Aplicar filtros de interpolación y ajustar escalas de colores (_colormaps_).
-    
+# lines/
+Line2D.md
+marker.md
 
----
+# animation/
+FuncAnimation.md
 
-## 4. Toolkits Especializados
+# backend/
+backends.md
+cambiar_backend.md
 
-Matplotlib incluye extensiones para nichos específicos que mucha gente olvida:
+# toolkits/mplot3d/
+plot_surface.md
+axes3d.md
 
-- **mplot3d:** Para visualizaciones en 3D (superficies, nubes de puntos tridimensionales).
-    
-- **AxesGrid:** Para crear rejillas de gráficos muy precisas y alineadas, común en publicaciones científicas.
-    
-- **Cartopy / Basemap:** (Aunque a veces requieren instalación extra) se integran con Matplotlib para crear mapas geográficos y proyecciones de la Tierra.
-    
+# config/
+estilos.md
+```
+</details>
 
----
+## Notas relacionadas
 
-## 5. El Backend (La capa invisible)
-
-Esta es la parte técnica que hace que Matplotlib funcione en cualquier lugar. Se divide en dos:
-
-1. **Backends de Usuario (Interactivos):** Permiten que el gráfico aparezca en una ventana (usando librerías como Qt, Tkinter o GTK) y que puedas hacer zoom o moverte por el gráfico.
-    
-2. **Backends de Renderizado (Hardcopy):** Se encargan de convertir tus comandos en archivos reales como **PDF, SVG, EPS** (vectores) o **PNG, JPG** (píxeles).
-    
-
----
-
-## 6. Animaciones y Eventos
-
-- **`matplotlib.animation`:** Permite crear GIFs o videos (MP4) actualizando los datos de un gráfico en tiempo real.
-    
-- **Manejo de Eventos:** Puedes programar Matplotlib para que responda a clics del ratón o pulsaciones de teclas. Por ejemplo, que al hacer clic en un punto del gráfico, se muestre más información sobre ese dato.
-    
-
----
-
-## 7. Estilos y Tipografías (`rcParams`)
-
-Matplotlib tiene un motor de configuración global llamado `rcParams`. Con esto puedes:
-
-- Configurar el uso de **LaTeX** para fórmulas matemáticas complejas: $E = mc^2$.
-    
-- Cambiar estilos visuales completos (como `ggplot`, `seaborn` o el modo oscuro) con una sola línea de código.
-    
-
+- [[REPORTE_REFACTORIZACION]]
+- [[introduccion]]

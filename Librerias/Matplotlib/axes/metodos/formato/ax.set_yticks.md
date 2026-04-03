@@ -1,37 +1,30 @@
 ---
-title: ax.set_xticks / ax.set_yticks — Control de ticks
+title: ax.set_yticks — Control de ticks del eje Y
 aliases:
-  - set_xticks
   - set_yticks
-  - ticks
-  - ejes
-
+  - ticks y
+  - yticks
 tags:
   - matplotlib
   - api/metodo
-  - styling
-
-# --- Clasificación ---
+  - axes/formato
 lib: matplotlib
 obj: Axes
 tipo: metodo
-
-# --- Comportamiento ---
+retorna: list
 muta_estado: true
-
 draft: false
 ---
 
-# ax.set_xticks / ax.set_yticks — Control de ticks
+# ax.set_yticks — Control de ticks del eje Y
 
-## Firmas
+## Firma
 
 ```python
-Axes.set_xticks(ticks, labels=None, minor=False, **kwargs)
 Axes.set_yticks(ticks, labels=None, minor=False, **kwargs)
 ```
 
-## Parámetros principales
+## Parámetros
 
 | Parámetro | Tipo | Default | Descripción |
 |-----------|------|---------|-------------|
@@ -40,7 +33,11 @@ Axes.set_yticks(ticks, labels=None, minor=False, **kwargs)
 | `minor` | `bool` | `False` | Si `True`, controla ticks menores |
 | `**kwargs` | - | - | Propiedades de [[Text]] para etiquetas |
 
-## Casos básicos
+## Valor de retorno
+
+Retorna una lista de objetos [[Text]] (uno por etiqueta).
+
+## Uso básico
 
 ### Ticks automáticos (default)
 
@@ -52,28 +49,28 @@ ax.plot(x, y)
 ### Ticks personalizados (posiciones)
 
 ```python
-ax.set_xticks([0, 2, 4, 6, 8, 10])
 ax.set_yticks([-1, 0, 1])
 ```
 
 ### Ticks personalizados con etiquetas
 
 ```python
-ax.set_xticks([0, 5, 10])
-ax.set_xticklabels(['Inicio', 'Mitad', 'Final'])
+# forma antigua (obsoleta pero aún funciona)
+ax.set_yticks([-1, 0, 1])
+ax.set_yticklabels(['Bajo', 'Medio', 'Alto'])
 
 # forma moderna (recomendada)
-ax.set_xticks([0, 5, 10], labels=['Inicio', 'Mitad', 'Final'])
+ax.set_yticks([-1, 0, 1], labels=['Bajo', 'Medio', 'Alto'])
 ```
 
 ## Ticks mayores y menores
 
 ```python
 # Ticks mayores (principales)
-ax.set_xticks([0, 2, 4, 6, 8, 10])
+ax.set_yticks([-1, 0, 1])
 
 # Ticks menores (intermedios, más pequeños)
-ax.set_xticks([1, 3, 5, 7, 9], minor=True)
+ax.set_yticks([-0.5, 0.5], minor=True)
 ```
 
 ## Personalización de etiquetas
@@ -81,20 +78,21 @@ ax.set_xticks([1, 3, 5, 7, 9], minor=True)
 ### Rotación
 
 ```python
-ax.set_xticklabels(['Ene', 'Feb', 'Mar', 'Abr'], rotation=45)
+ax.set_yticks([-1, 0, 1])
+ax.set_yticklabels(['Bajo', 'Medio', 'Alto'], rotation=45)
 ```
 
 ### Tamaño y color
 
 ```python
-ax.set_xticks([0, 5, 10])
-ax.set_xticklabels(['A', 'B', 'C'], fontsize=12, color='red')
+ax.set_yticks([-1, 0, 1])
+ax.set_yticklabels(['A', 'B', 'C'], fontsize=12, color='blue')
 ```
 
-### Con kwargs
+### Con kwargs (forma moderna)
 
 ```python
-ax.set_xticks([0, 5, 10], labels=['A', 'B', 'C'], fontsize=12, rotation=45)
+ax.set_yticks([-1, 0, 1], labels=['A', 'B', 'C'], fontsize=12, rotation=45)
 ```
 
 ## Formato de ticks con locators y formatters
@@ -108,7 +106,7 @@ import matplotlib.ticker as ticker
 ax.yaxis.set_major_formatter(ticker.PercentFormatter())
 
 # Formato con decimales
-ax.xaxis.set_major_formatter(ticker.FormatStrFormatter('%.2f'))
+ax.yaxis.set_major_formatter(ticker.FormatStrFormatter('%.2f'))
 ```
 
 ## Casos comunes
@@ -116,24 +114,23 @@ ax.xaxis.set_major_formatter(ticker.FormatStrFormatter('%.2f'))
 ### Ocultar ticks
 
 ```python
-ax.set_xticks([])  # sin ticks en X
 ax.set_yticks([])  # sin ticks en Y
 ```
 
 ### Ticks en posiciones específicas con formato
 
 ```python
-posiciones = [0, 30, 60, 90, 120]
-etiquetas = ['0°', '30°', '60°', '90°', '120°']
-ax.set_xticks(posiciones, labels=etiquetas, rotation=45)
+posiciones = [0, 25, 50, 75, 100]
+etiquetas = ['0%', '25%', '50%', '75%', '100%']
+ax.set_yticks(posiciones, labels=etiquetas)
 ```
 
 ### Ticks logarítmicos
 
 ```python
-ax.set_xscale('log')
-ax.set_xticks([1, 10, 100, 1000])
-ax.get_xaxis().set_major_formatter(ticker.ScalarFormatter())
+ax.set_yscale('log')
+ax.set_yticks([0.1, 1, 10, 100])
+ax.get_yaxis().set_major_formatter(ticker.ScalarFormatter())
 ```
 
 ### Fechas como ticks
@@ -141,22 +138,22 @@ ax.get_xaxis().set_major_formatter(ticker.ScalarFormatter())
 ```python
 import matplotlib.dates as mdates
 
-ax.xaxis.set_major_locator(mdates.MonthLocator())
-ax.xaxis.set_major_formatter(mdates.DateFormatter('%Y-%m'))
+ax.yaxis.set_major_locator(mdates.YearLocator())
+ax.yaxis.set_major_formatter(mdates.DateFormatter('%Y'))
 ```
 
-## Relación entre métodos
+## Relación con otros métodos
 
 | Método | Propósito |
 |--------|-----------|
-| `set_xticks` / `set_yticks` | Definir **dónde** están los ticks |
-| `set_xticklabels` / `set_yticklabels` | Definir **qué texto** muestran (obsoleto, usar `labels` en `set_xticks`) |
-| `tick_params` | Estilo de ticks (tamaño, color, dirección) |
-| `set_xlim` / `set_ylim` | Definir límites del eje (no los ticks) |
+| `set_yticks` | Definir **dónde** están los ticks |
+| `set_yticklabels` | Definir **qué texto** muestran (obsoleto, usar `labels` en `set_yticks`) |
+| [[ax.tick_params]] | Estilo de ticks (tamaño, color, dirección) |
+| [[ax.set_ylim]] | Definir límites del eje (no los ticks) |
 
 ## Buenas prácticas
 
-1. Usar `labels` dentro de `set_xticks` en lugar de `set_xticklabels` separado
+1. Usar `labels` dentro de `set_yticks` en lugar de `set_yticklabels` separado
 2. Rotar etiquetas largas con `rotation` para evitar solapamiento
 3. No sobrecargar con ticks (5-10 es legible, más de 15 es confuso)
 4. Usar ticks menores solo cuando aporten información
@@ -167,15 +164,16 @@ ax.xaxis.set_major_formatter(mdates.DateFormatter('%Y-%m'))
 | Error | Solución |
 |-------|----------|
 | `len(ticks) != len(labels)` | Deben tener la misma longitud |
-| Ticks fuera del rango visible | Definir `set_xlim` antes o después, los ticks fuera no se muestran |
-| Usar `set_xticklabels` sin `set_xticks` | No tiene efecto; definir primero las posiciones |
+| Ticks fuera del rango visible | Definir `set_ylim` antes o después, los ticks fuera no se muestran |
+| Usar `set_yticklabels` sin `set_yticks` | No tiene efecto; definir primero las posiciones |
 | Etiquetas rotadas se cortan | Usar `fig.tight_layout()` o aumentar márgenes |
 
 ## Notas relacionadas
 
+- [[ax.set_xticks]]
+- [[ax.tick_params]]
+- [[ax.set_ylim]]
+- [[ax.set_yscale]]
 - [[Locators]]
 - [[Formatters]]
-- [[ax.tick_params]]
-- [[ax.set_xlim_ylim]]
-- [[ax.set_xscale_yscale]]
 - [[Text]]

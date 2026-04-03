@@ -170,8 +170,8 @@ ax.set_xticklabels(['cero', 'dos', 'cuatro', 'seis', 'ocho', 'diez'])
 
 ## Notas relacionadas
 
-- [[ax.set_xticks_yticks]]
+- [[ax.set_xticks]]
 - [[Locators]]
 - [[Formatters]]
-- [[ax.set_xlabel_ylabel]]
+- [[ax.set_xlabel]]
 - [[ax.grid]]
