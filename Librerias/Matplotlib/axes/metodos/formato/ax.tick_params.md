@@ -4,16 +4,21 @@ aliases:
   - tick_params
   - estilo ticks
   - personalizar ticks
+
 tags:
   - matplotlib
-  - axes
-  - formato
-  - ticks
-  - estilo
-draft: false
+  - api/metodo
+  - styling
+
+# --- Clasificación ---
 lib: matplotlib
 obj: Axes
 tipo: metodo
+
+# --- Comportamiento ---
+muta_estado: true
+
+draft: false
 ---
 
 # ax.tick_params — Estilo de ticks

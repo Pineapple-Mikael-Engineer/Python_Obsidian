@@ -1,8 +1,20 @@
 ---
-draft: false
+title: GridSpec
+
+tags:
+  - matplotlib
+  - api/clase
+  - layout
+
+# --- Clasificación ---
 lib: matplotlib
 obj: GridSpec
 tipo: clase
+
+# --- Comportamiento ---
+muta_estado: false
+
+draft: false
 ---
 Contenido:
 

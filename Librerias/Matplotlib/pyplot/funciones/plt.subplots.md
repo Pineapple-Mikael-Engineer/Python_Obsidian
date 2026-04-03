@@ -4,15 +4,21 @@ aliases:
   - subplots
   - crear figura y ejes
   - layout básico
+
 tags:
   - matplotlib
-  - figure
-  - axes
+  - api/funcion
   - layout
-draft: false
+
+# --- Clasificación ---
 lib: matplotlib
 obj: pyplot
 tipo: funcion
+
+# --- Comportamiento ---
+muta_estado: true
+
+draft: false
 ---
 
 # plt.subplots — Creación de figura y ejes

@@ -4,16 +4,21 @@ aliases:
   - plot
   - gráfico de líneas
   - line plot
+
 tags:
   - matplotlib
-  - axes
-  - graficos
-  - lineas
-  - funcion
-draft: false
+  - api/metodo
+  - plot/lineas
+
+# --- Clasificación ---
 lib: matplotlib
 obj: Axes
 tipo: metodo
+
+# --- Comportamiento ---
+muta_estado: true
+
+draft: false
 ---
 
 # ax.plot — Gráfico de líneas

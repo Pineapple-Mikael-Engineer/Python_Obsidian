@@ -5,15 +5,21 @@ aliases:
   - tick locators
   - MultipleLocator
   - AutoLocator
+
 tags:
   - matplotlib
-  - ticks
-  - locators
-  - ejes
-draft: false
+  - api/objeto
+  - styling
+
+# --- Clasificación ---
 lib: matplotlib
 obj: ticker
 tipo: objeto
+
+# --- Comportamiento ---
+muta_estado: false
+
+draft: false
 ---
 
 # Locators — Generación automática de ticks

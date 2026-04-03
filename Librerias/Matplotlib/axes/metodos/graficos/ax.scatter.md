@@ -4,15 +4,21 @@ aliases:
   - scatter
   - dispersión
   - puntos
+
 tags:
   - matplotlib
-  - axes
-  - graficos
-  - dispersion
-draft: false
+  - api/metodo
+  - plot/dispersión
+
+# --- Clasificación ---
 lib: matplotlib
 obj: Axes
 tipo: metodo
+
+# --- Comportamiento ---
+muta_estado: true
+
+draft: false
 ---
 
 # ax.scatter — Diagrama de dispersión

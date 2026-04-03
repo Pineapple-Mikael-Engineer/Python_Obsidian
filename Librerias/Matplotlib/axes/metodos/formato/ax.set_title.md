@@ -4,15 +4,21 @@ aliases:
   - set_title
   - titulo
   - title
+
 tags:
   - matplotlib
-  - axes
-  - labels
-  - formato
-draft: false
+  - api/metodo
+  - styling
+
+# --- Clasificación ---
 lib: matplotlib
 obj: Axes
 tipo: metodo
+
+# --- Comportamiento ---
+muta_estado: true
+
+draft: false
 ---
 
 # ax.set_title — Título del axes

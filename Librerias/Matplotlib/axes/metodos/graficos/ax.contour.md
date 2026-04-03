@@ -4,16 +4,26 @@ aliases:
   - contour
   - curvas nivel
   - isolineas
+
 tags:
   - matplotlib
-  - metodo
-  - graficos
-  - contornos
-  - tiene_retorno
-draft: false
+  - api/metodo
+  - plot/contornos
+
+# --- Clasificación ---
 lib: matplotlib
 obj: Axes
 tipo: metodo
+
+# --- Comportamiento ---
+retorna: QuadContourSet
+muta_estado: true
+
+# --- Dependencias ---
+requiere:
+  - numpy.meshgrid
+
+draft: false
 ---
 
 # ax.contour — Curvas de nivel

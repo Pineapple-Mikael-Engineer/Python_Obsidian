@@ -4,11 +4,20 @@ aliases:
   - fill_betweenx
   - área horizontal
   - banda horizontal
+
 tags:
   - matplotlib
-  - axes
-  - graficos
-  - relleno
+  - api/metodo
+  - plot/lineas
+
+# --- Clasificación ---
+lib: matplotlib
+obj: Axes
+tipo: metodo
+
+# --- Comportamiento ---
+muta_estado: true
+
 draft: false
 ---
 

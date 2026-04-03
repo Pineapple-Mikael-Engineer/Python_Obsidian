@@ -4,15 +4,21 @@ aliases:
   - hist
   - histograma
   - distribución
+
 tags:
   - matplotlib
-  - axes
-  - graficos
-  - distribuciones
-draft: false
+  - api/metodo
+  - plot/distribuciones
+
+# --- Clasificación ---
 lib: matplotlib
 obj: Axes
 tipo: metodo
+
+# --- Comportamiento ---
+muta_estado: true
+
+draft: false
 ---
 
 # ax.hist — Histograma

@@ -3,16 +3,21 @@ title: ax.legend — Leyenda de axes
 aliases:
   - legend
   - leyenda
+
 tags:
   - matplotlib
-  - axes
-  - labels
-  - leyenda
-  - posicionamiento
-draft: false
+  - api/metodo
+  - styling
+
+# --- Clasificación ---
 lib: matplotlib
 obj: Axes
 tipo: metodo
+
+# --- Comportamiento ---
+muta_estado: true
+
+draft: false
 ---
 
 # ax.legend — Leyenda de axes

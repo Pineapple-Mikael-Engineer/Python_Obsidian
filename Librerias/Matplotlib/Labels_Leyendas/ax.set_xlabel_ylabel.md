@@ -5,11 +5,20 @@ aliases:
   - set_ylabel
   - etiquetas ejes
   - axis labels
+
 tags:
   - matplotlib
-  - axes
-  - labels
-  - formato
+  - api/metodo
+  - styling
+
+# --- Clasificación ---
+lib: matplotlib
+obj: Axes
+tipo: metodo
+
+# --- Comportamiento ---
+muta_estado: true
+
 draft: false
 ---
 

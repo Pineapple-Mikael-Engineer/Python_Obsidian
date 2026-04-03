@@ -1,4 +1,19 @@
 ---
+title: Ejes Compartidos
+
+tags:
+  - matplotlib
+  - api/objeto
+  - layout
+
+# --- Clasificación ---
+lib: matplotlib
+obj: Axes
+tipo: objeto
+
+# --- Comportamiento ---
+muta_estado: false
+
 draft: false
 ---
 Contenido:

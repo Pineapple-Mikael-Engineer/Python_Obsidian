@@ -4,10 +4,20 @@ aliases:
   - arrays de axes
   - multiple axes
   - iterar subplots
+
 tags:
   - matplotlib
-  - axes
-  - patrones
+  - api/objeto
+  - layout
+
+# --- Clasificación ---
+lib: matplotlib
+obj: Axes
+tipo: objeto
+
+# --- Comportamiento ---
+muta_estado: false
+
 draft: false
 ---
 

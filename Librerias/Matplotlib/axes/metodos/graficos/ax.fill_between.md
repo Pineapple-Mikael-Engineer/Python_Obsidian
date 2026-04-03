@@ -4,15 +4,21 @@ aliases:
   - fill_between
   - área sombreada
   - banda confianza
+
 tags:
   - matplotlib
-  - axes
-  - graficos
-  - relleno
-draft: false
+  - api/metodo
+  - plot/lineas
+
+# --- Clasificación ---
 lib: matplotlib
 obj: Axes
 tipo: metodo
+
+# --- Comportamiento ---
+muta_estado: true
+
+draft: false
 ---
 
 # fill_between — Relleno entre curvas

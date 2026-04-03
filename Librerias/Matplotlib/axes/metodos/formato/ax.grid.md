@@ -4,15 +4,21 @@ aliases:
   - grid
   - cuadrícula
   - rejilla
+
 tags:
   - matplotlib
-  - axes
-  - formato
-  - visual
-draft: false
+  - api/metodo
+  - styling
+
+# --- Clasificación ---
 lib: matplotlib
 obj: Axes
 tipo: metodo
+
+# --- Comportamiento ---
+muta_estado: true
+
+draft: false
 ---
 
 # ax.grid — Cuadrícula del gráfico

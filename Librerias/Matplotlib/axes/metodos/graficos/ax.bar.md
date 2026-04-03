@@ -4,15 +4,21 @@ aliases:
   - bar
   - barras
   - gráfico barras
+
 tags:
   - matplotlib
-  - axes
-  - graficos
-  - barras
-draft: false
+  - api/metodo
+  - plot/barras
+
+# --- Clasificación ---
 lib: matplotlib
 obj: Axes
 tipo: metodo
+
+# --- Comportamiento ---
+muta_estado: true
+
+draft: false
 ---
 
 # ax.bar — Gráfico de barras verticales

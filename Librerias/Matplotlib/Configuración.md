@@ -1,9 +1,19 @@
 ---
 title: Configuración Inicial de Matplotlib
+
 tags:
   - matplotlib
-  - setup
-  - base
+  - api/config
+  - styling
+
+# --- Clasificación ---
+lib: matplotlib
+obj: matplotlib
+tipo: config
+
+# --- Comportamiento ---
+muta_estado: false
+
 draft: false
 ---
 
