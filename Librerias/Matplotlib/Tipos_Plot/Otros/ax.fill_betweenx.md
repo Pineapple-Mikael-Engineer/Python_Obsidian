@@ -1,6 +1,6 @@
 ---
 title: ax.fill_betweenx — Relleno horizontal entre curvas
-alias:
+aliases:
   - fill_betweenx
   - área horizontal
   - banda horizontal

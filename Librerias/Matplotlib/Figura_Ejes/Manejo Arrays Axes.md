@@ -1,6 +1,6 @@
 ---
 title: Manejo de arrays de Axes
-alias:
+aliases:
   - arrays de axes
   - multiple axes
   - iterar subplots

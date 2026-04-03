@@ -1,6 +1,6 @@
 ---
 title: ax.set_xlabel / ax.set_ylabel — Etiquetas de ejes
-alias:
+aliases:
   - set_xlabel
   - set_ylabel
   - etiquetas ejes
