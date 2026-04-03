@@ -8,9 +8,9 @@ draft: true
 ## Resumen
 - Total notas procesadas: 18
 - Notas movidas/renombradas: 14
-- Notas draft:true ignoradas: 2
+- Notas draft:true ignoradas: 1
 - Links renombrados: 20
-- Ambigüedades encontradas: 5
+- Ambigüedades encontradas: 6
 
 ## Notas movidas correctamente
 | Nombre original | Nueva ruta | Nuevo nombre |
@@ -34,7 +34,6 @@ draft: true
 | Ruta original | Motivo |
 |---------------|--------|
 | Librerias/Matplotlib/Tree Matplotlib.md | draft:true (intocable por regla) |
-| Librerias/Matplotlib/Multiples_Graficos/Ejes Compartidos.md | draft:true (intocable por regla) |
 
 ## Ambigüedades / Problemas (SOLO ESTO SE REPORTA)
 | Tipo | Elemento | Nota origen | Posibles opciones | Decisión tomada |
@@ -44,3 +43,4 @@ draft: true
 | Nota ambigua | ax.set_xlabel_ylabel.md | Librerias/Matplotlib/Labels_Leyendas/ax.set_xlabel_ylabel.md | `ax.set_xlabel.md`, `ax.set_ylabel.md` | No mover/renombrar |
 | Nota ambigua | ax.set_xticks_yticks.md | Librerias/Matplotlib/Ejes_Formato/Ticks/ax.set_xticks_yticks.md | `ax.set_xticks.md`, `ax.set_yticks.md` | No mover/renombrar |
 | Nota fuera de árbol objetivo | ax.fill_betweenx.md | Librerias/Matplotlib/Tipos_Plot/Otros/ax.fill_betweenx.md | integrar en `ax.fill_between.md` o crear `ax.fill_betweenx.md` fuera de estándar dado | No mover/renombrar |
+| Nota fuera de árbol objetivo | Ejes Compartidos.md | Librerias/Matplotlib/Multiples_Graficos/Ejes Compartidos.md | incorporar en `axes/Axes.md` o crear nota de layout fuera del árbol actual | No mover/renombrar |

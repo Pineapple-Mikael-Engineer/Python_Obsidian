@@ -6,72 +6,98 @@ draft: true
 
 ```tree
 Matplotlib/
-├── Configuracion.md
-├── Figura_Ejes/
-│   ├── plt.subplots.md
-│   ├── plt.figure.md
-│   ├── figsize_dpi.md
-│   └── add_subplot.md
-│   └── Manejo_Arrays_Axes.md
-├── Tipos_Plot/
-│   ├── Lineas/
-│   │   ├── ax.plot.md
-│   │   └── Estilos_Linea/
-│   │       ├── marker.md
-│   │       └── linestyle.md
-│   ├── Dispersión/
-│   │   ├── ax.scatter.md
-│   │   └── colormap_en_scatter.md
-│   ├── Barras/
-│   │   ├── ax.bar.md
-│   │   ├── ax.barh.md
-│   │   └── Barras_Apiladas.md
-│   ├── Distribuciones/
-│   │   ├── ax.hist.md
-│   │   └── ax.boxplot.md
-│   ├── Contornos_Imagenes/
-│   │   ├── ax.contour.md
-│   │   ├── ax.contourf.md
-│   │   └── ax.imshow.md
-│   └── Otros/
-│       ├── ax.fill_between.md
-│       └── ax.pie.md
-├── Ejes_Formato/
-│   ├── Limites_Escalas.md
-│   ├── Ticks/
-│   │   ├── ax.set_xticks_yticks.md
-│   │   ├── ax.tick_params.md
-│   │   └── Formato_Ticks/
-│   │       ├── Locators.md
-│   │       ├── Formatters.md
-│   │       ├── DateFormatter.md
-│   │       └── FuncFormatter.md
-│   └── ax.grid.md
-├── Labels_Leyendas/
-│   ├── ax.set_title.md
-│   ├── ax.set_xlabel_ylabel.md
-│   └── ax.legend.md
-├── Anotaciones/
-│   ├── ax.text.md
-│   └── ax.annotate.md
-├── Color_Estilo/
-│   ├── Colores_Nombres.md
-│   ├── Colormaps/
-│   │   ├── reversed.md
-│   │   └── ListedColormap.md
-│   └── plt.colorbar.md
-├── Multiples_Graficos/
-│   ├── subplots_adjust_tight.md
+├── pyplot/
+│   ├── funciones/
+│   │   ├── plt.subplots.md
+│   │   ├── plt.figure.md
+│   │   ├── plt.savefig.md
+│   │   ├── plt.show.md
+│   │   ├── plt.close.md
+│   │   ├── plt.clf.md
+│   │   └── plt.colorbar.md
+│   └── config/
+│       └── plt.style.use.md
+├── figure/
+│   ├── Figure.md
+│   └── metodos/
+│       ├── fig.suptitle.md
+│       ├── fig.tight_layout.md
+│       └── fig.add_subplot.md
+├── axes/
+│   ├── Axes.md
+│   └── metodos/
+│       ├── graficos/
+│       │   ├── ax.plot.md
+│       │   ├── ax.scatter.md
+│       │   ├── ax.bar.md
+│       │   ├── ax.barh.md
+│       │   ├── ax.hist.md
+│       │   ├── ax.boxplot.md
+│       │   ├── ax.contour.md
+│       │   ├── ax.contourf.md
+│       │   ├── ax.imshow.md
+│       │   ├── ax.fill_between.md
+│       │   └── ax.pie.md
+│       ├── formato/
+│       │   ├── ax.set_title.md
+│       │   ├── ax.set_xlabel.md
+│       │   ├── ax.set_ylabel.md
+│       │   ├── ax.legend.md
+│       │   ├── ax.grid.md
+│       │   ├── ax.set_xlim.md
+│       │   ├── ax.set_ylim.md
+│       │   ├── ax.set_xscale.md
+│       │   ├── ax.set_yscale.md
+│       │   ├── ax.set_xticks.md
+│       │   ├── ax.set_yticks.md
+│       │   ├── ax.tick_params.md
+│       │   └── ax.set_facecolor.md
+│       ├── anotaciones/
+│       │   ├── ax.text.md
+│       │   └── ax.annotate.md
+│       └── spines/
+│           └── ax.spines.md
+├── gridspec/
 │   ├── GridSpec.md
-│   └── Ejes_Compartidos.md
-├── Guardar_Exportar/
-│   ├── plt.savefig.md
-│   └── Formatos/
-│       ├── pdf_svg.md
-│       └── transparent.md
-└── Control/
-    ├── plt.show.md
-    └── plt.close_clf.md
+│   └── GridSpecFromSubplotSpec.md
+├── ticker/
+│   ├── Locators.md
+│   ├── Formatters.md
+│   ├── DateFormatter.md
+│   └── FuncFormatter.md
+├── cm/
+│   ├── Colormaps.md
+│   └── ListedColormap.md
+├── patches/
+│   ├── Patch.md
+│   ├── Rectangle.md
+│   ├── Polygon.md
+│   ├── Circle.md
+│   └── Ellipse.md
+├── collections/
+│   ├── PathCollection.md
+│   └── QuadContourSet.md
+├── image/
+│   ├── imread.md
+│   └── imsave.md
+├── text/
+│   ├── Text.md
+│   └── Annotation.md
+├── lines/
+│   ├── Line2D.md
+│   └── marker.md
+├── animation/
+│   └── FuncAnimation.md
+├── backend/
+│   ├── backends.md
+│   └── cambiar_backend.md
+├── toolkits/
+│   └── mplot3d/
+│       ├── plot_surface.md
+│       └── axes3d.md
+└── config/
+    ├── rcParams.md
+    └── estilos.md
 ```
 
 **chat** : [Chat](https://chat.deepseek.com/a/chat/s/e0e24ee8-216a-4703-b37b-4777590b5644)
