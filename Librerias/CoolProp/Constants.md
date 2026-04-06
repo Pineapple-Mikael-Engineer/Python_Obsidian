@@ -3,7 +3,7 @@ title: Constants — Identificadores para variables termodinámicas
 aliases:
   - constantes CoolProp
   - CP.iT
-  - CP.iP
+  - CP.PT_INPUTS
   - identificadores
 
 tags:
@@ -23,109 +23,105 @@ draft: false
 
 ## Descripción
 
-El módulo `Constants` de CoolProp proporciona **enteros predefinidos** que actúan como identificadores para las variables termodinámicas. Se utilizan exclusivamente en la API de bajo nivel ([[AbstractState]]) para especificar qué variables se están proporcionando o consultando.
+El módulo `Constants` de CoolProp proporciona **enteros predefinidos** que actúan como identificadores. Se dividen en tres categorías:
 
-**No son strings.** No se usan con [[CoolProp.PropsSI]].
+1. **Combinaciones de entrada** → para `AbstractState.update`
+2. **Variables individuales** → para derivadas parciales
+3. **Identificadores de fase** → para `specify_phase`
 
 ## Importación
 
 ```python
 import CoolProp.CoolProp as CP
 
-# Las constantes están disponibles directamente en CP
-print(CP.iT)   # 0
-print(CP.iP)   # 1
+# Todas las constantes están disponibles directamente en CP
 ```
 
-## Tabla de constantes
+## 1. Combinaciones de entrada (para update)
 
-| Constante | Valor | Variable | Unidad | Uso típico |
-|-----------|-------|----------|--------|------------|
-| `CP.iT` | 0 | Temperatura | K | `update`, derivadas |
-| `CP.iP` | 1 | Presión | Pa | `update`, derivadas |
-| `CP.iD` | 2 | Densidad | kg/m³ | `update`, derivadas |
-| `CP.iH` | 4 | Entalpía específica | J/kg | `update`, derivadas |
-| `CP.iSmass` | 5 | Entropía específica | J/(kg·K) | `update`, derivadas |
-| `CP.iU` | 6 | Energía interna específica | J/kg | `update`, derivadas |
-| `CP.iQ` | 8 | Calidad (0=líquido, 1=vapor) | - | `update` |
-| `CP.iCpmass` | 9 | Cp (calor específico a P cte) | J/(kg·K) | derivadas |
-| `CP.iCvmass` | 10 | Cv (calor específico a V cte) | J/(kg·K) | derivadas |
+Estas son las **más importantes** para `AbstractState.update`. Definen qué par de variables se está especificando y en qué orden.
 
-## Constantes de fase (specify_phase)
+| Constante | Variables | Orden | Uso típico |
+|-----------|-----------|-------|------------|
+| `CP.PT_INPUTS` | Presión, Temperatura | `(P, T)` | Estado general |
+| `CP.PQ_INPUTS` | Presión, Calidad | `(P, Q)` | Saturación por presión |
+| `CP.TQ_INPUTS` | Temperatura, Calidad | `(T, Q)` | Saturación por temperatura |
+| `CP.PH_INPUTS` | Presión, Entalpía | `(P, H)` | Procesos reales |
+| `CP.PSmass_INPUTS` | Presión, Entropía | `(P, S)` | Procesos isentrópicos |
+| `CP.HmassP_INPUTS` | Entalpía, Presión | `(H, P)` | Estado por entalpía |
+| `CP.SmassP_INPUTS` | Entropía, Presión | `(S, P)` | Estado por entropía |
+| `CP.DP_INPUTS` | Densidad, Presión | `(D, P)` | Líquido comprimido |
+| `CP.DT_INPUTS` | Densidad, Temperatura | `(D, T)` | Estado por densidad |
+| `CP.HmassQ_INPUTS` | Entalpía, Calidad | `(H, Q)` | Saturación por entalpía |
+| `CP.SmassQ_INPUTS` | Entropía, Calidad | `(S, Q)` | Saturación por entropía |
 
-Usadas con [[AbstractState.specify_phase]] para forzar una fase específica:
-
-| Constante | Valor | Fase |
-|-----------|-------|------|
-| `CP.iphase_liquid` | 0 | Líquido |
-| `CP.iphase_gas` | 1 | Gas/vapor |
-| `CP.iphase_supercritical` | 2 | Supercrítico |
-| `CP.iphase_supercritical_gas` | 3 | Gas supercrítico |
-| `CP.iphase_supercritical_liquid` | 4 | Líquido supercrítico |
-| `CP.iphase_critical_point` | 5 | Punto crítico |
-| `CP.iphase_twophase` | 6 | Mezcla saturada (líquido+vapor) |
-
-## Uso en AbstractState.update
+### Ejemplo
 
 ```python
-import CoolProp.CoolProp as CP
-
-state = CP.AbstractState('HEOS', 'Water')
-
-# Usando constantes como identificadores
-state.update(CP.iT, 300, CP.iP, 101325)  # T y P
-state.update(CP.iP, 1e5, CP.iQ, 1.0)     # P y calidad (vapor saturado)
-state.update(CP.iT, 373.15, CP.iQ, 0.0)  # T y calidad (líquido saturado)
-state.update(CP.iP, 5e5, CP.iH, 450000)  # P y entalpía
+state.update(CP.PT_INPUTS, 101325, 298.15)  # P y T
+state.update(CP.PQ_INPUTS, 101325, 1.0)     # P y Q (vapor saturado)
+state.update(CP.PSmass_INPUTS, 1e6, s1)     # P y S (isentrópico)
 ```
 
-## Uso en derivadas parciales
+## 2. Variables individuales (para derivadas)
+
+Usadas en `first_partial_deriv` y `second_partial_deriv`.
+
+| Constante | Variable | Unidad |
+|-----------|----------|--------|
+| `CP.iT` | Temperatura | K |
+| `CP.iP` | Presión | Pa |
+| `CP.iD` | Densidad | kg/m³ |
+| `CP.iH` | Entalpía específica | J/kg |
+| `CP.iSmass` | Entropía específica | J/(kg·K) |
+| `CP.iU` | Energía interna específica | J/kg |
+| `CP.iQ` | Calidad | - |
+| `CP.iCpmass` | Cp | J/(kg·K) |
+| `CP.iCvmass` | Cv | J/(kg·K) |
+
+### Ejemplo
 
 ```python
 # (∂ρ/∂T) a P constante
 deriv = state.first_partial_deriv(CP.iD, CP.iT, CP.iP)
-
-# (∂h/∂P) a T constante
-deriv = state.first_partial_deriv(CP.iH, CP.iP, CP.iT)
 ```
 
-Los parámetros siguen el orden: `(output, input1, input2)`.
+## 3. Identificadores de fase (para specify_phase)
 
-## Uso en consultas de propiedades
+Usados con `AbstractState.specify_phase` para forzar una fase específica.
 
-Las constantes **no** se usan para consultar propiedades. Para eso existen métodos específicos:
+| Constante | Valor | Fase |
+|-----------|-------|------|
+| `CP.iphase_liquid` | 0 | Líquido |
+| `CP.iphase_gas` | 1 | Gas / Vapor |
+| `CP.iphase_supercritical` | 2 | Supercrítico |
+| `CP.iphase_supercritical_gas` | 3 | Gas supercrítico |
+| `CP.iphase_supercritical_liquid` | 4 | Líquido supercrítico |
+| `CP.iphase_critical_point` | 5 | Punto crítico |
+| `CP.iphase_twophase` | 6 | Mezcla saturada |
+
+### Ejemplo
 
 ```python
-# Correcto
-T = state.T()
-rho = state.rho()
-
-# Incorrecto (no funciona)
-T = state.update(CP.iT)  # No tiene sentido
+state.specify_phase(CP.iphase_gas)  # Forzar fase gas
+state.update(CP.PT_INPUTS, 2.2e7, 374.15)
 ```
 
-## Relación con PropsSI
+## Resumen de uso
 
-| Aspecto | [[CoolProp.PropsSI]] | `Constants` + [[AbstractState]] |
-|---------|---------------------|--------------------------------|
-| Identificadores | Strings (`'T'`, `'P'`) | Enteros (`CP.iT`, `CP.iP`) |
-| Facilidad | Alta (legible) | Media (requiere conocer códigos) |
-| Flexibilidad | Baja | Alta (derivadas, control de fase) |
-
-## Buenas prácticas
-
-1. **Siempre importar `CoolProp.CoolProp as CP`** para tener acceso a las constantes
-2. **Usar los nombres simbólicos** (`CP.iT`), no los valores numéricos (`0`)
-3. **Para derivadas**, recordar el orden: `first_partial_deriv(output, input1, input2)`
-4. **Para `specify_phase`**, usar las constantes `CP.iphase_*`
+| Método | Qué constantes usa |
+|--------|-------------------|
+| `AbstractState.update` | `CP.PT_INPUTS`, `CP.PQ_INPUTS`, etc. |
+| `AbstractState.first_partial_deriv` | `CP.iT`, `CP.iP`, `CP.iD`, etc. |
+| `AbstractState.specify_phase` | `CP.iphase_liquid`, `CP.iphase_gas`, etc. |
 
 ## Errores comunes
 
 | Error | Causa | Solución |
 |-------|-------|----------|
-| `NameError: name 'iT' is not defined` | No se importó CP correctamente | `import CoolProp.CoolProp as CP` |
-| `Expected int, got str` | Se usó string en lugar de constante | Usar `CP.iT` no `'T'` |
-| `Invalid input pair` | Combinación de constantes no válida | Verificar tabla de combinaciones en [[AbstractState.update]] |
+| `NameError: name 'PT_INPUTS' is not defined` | Importación incorrecta | `import CoolProp.CoolProp as CP` |
+| `Expected int, got str` | Se usó string en lugar de constante | Usar `CP.PT_INPUTS` no `'PT_INPUTS'` |
+| `Invalid input pair` | Combinación no válida para el fluido | Usar `PT_INPUTS` o `PQ_INPUTS` |
 
 ## Notas relacionadas
 

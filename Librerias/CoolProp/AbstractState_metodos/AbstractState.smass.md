@@ -47,7 +47,7 @@ AbstractState.smass() -> float
 import CoolProp.CoolProp as CP
 
 state = CP.AbstractState('HEOS', 'Water')
-state.update(CP.iT, 298.15, CP.iP, 101325)
+state.update(CP.PT_INPUTS, 101325, 298.15)
 
 s = state.smass()
 print(f"Entropía: {s:.1f} J/(kg·K)")  # Entropía: 367.0 J/(kg·K)
@@ -57,11 +57,11 @@ print(f"Entropía: {s:.1f} J/(kg·K)")  # Entropía: 367.0 J/(kg·K)
 
 ```python
 # Guardar entropía del estado inicial
-state.update(CP.iT, 263.15, CP.iQ, 1)  # -10°C, vapor saturado
+state.update(CP.TQ_INPUTS, 263.15, 1)  # -10°C, vapor saturado
 s1 = state.smass()
 
 # Forzar misma entropía con nueva presión
-state.update(CP.iP, 1e6, CP.iSmass, s1)  # Compresión isentrópica
+state.update(CP.PSmass_INPUTS, 1e6, s1)  # Compresión isentrópica
 h2 = state.hmass()
 ```
 
@@ -69,11 +69,11 @@ h2 = state.hmass()
 
 ```python
 # Estado inicial
-state.update(CP.iT, 300, CP.iP, 1e5)
+state.update(CP.PT_INPUTS, 101325, 300)
 s1 = state.smass()
 
 # Estado final
-state.update(CP.iT, 350, CP.iP, 1e5)
+state.update(CP.PT_INPUTS, 101325, 350)
 s2 = state.smass()
 
 # Cambio de entropía
@@ -87,5 +87,4 @@ print(f"Δs: {delta_s:.1f} J/(kg·K)")
 - [[AbstractState.update]]
 - [[AbstractState.hmass]]
 - [[AbstractState.rho]]
-- [[Constants.iSmass]]
 - [[CoolProp.PropsSI]]

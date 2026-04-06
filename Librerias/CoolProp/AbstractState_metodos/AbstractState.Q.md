@@ -1,4 +1,3 @@
-```markdown
 ---
 title: AbstractState.Q — Calidad (título de vapor)
 aliases:
@@ -52,7 +51,7 @@ import CoolProp.CoolProp as CP
 state = CP.AbstractState('HEOS', 'Water')
 
 # Mezcla con calidad 0.5 (50% vapor, 50% líquido)
-state.update(CP.iP, 101325, CP.iQ, 0.5)
+state.update(CP.PQ_INPUTS, 101325, 0.5)
 Q = state.Q()
 print(f"Calidad: {Q}")  # 0.5
 ```
@@ -75,7 +74,7 @@ else:
 
 ```python
 # Para una mezcla, cualquier propiedad es el promedio ponderado
-state.update(CP.iP, 101325, CP.iQ, 0.3)  # 30% vapor
+state.update(CP.PQ_INPUTS, 101325, 0.3)  # 30% vapor
 
 h_mix = state.hmass()  # h_f + Q * h_fg
 # Equivalente a:
@@ -86,12 +85,12 @@ h_mix = state.hmass()  # h_f + Q * h_fg
 
 ```python
 # Líquido saturado (Q=0)
-state.update(CP.iP, 101325, CP.iQ, 0)
+state.update(CP.PQ_INPUTS, 101325, 0)
 h_f = state.hmass()
 rho_f = state.rho()
 
 # Vapor saturado (Q=1)
-state.update(CP.iP, 101325, CP.iQ, 1)
+state.update(CP.PQ_INPUTS, 101325, 1)
 h_g = state.hmass()
 rho_g = state.rho()
 

@@ -47,7 +47,7 @@ AbstractState.cpmass() -> float
 import CoolProp.CoolProp as CP
 
 state = CP.AbstractState('HEOS', 'Water')
-state.update(CP.iT, 298.15, CP.iP, 101325)
+state.update(CP.PT_INPUTS, 101325, 298.15)
 
 cp = state.cpmass()
 print(f"Cp: {cp:.1f} J/(kg·K)")  # Cp: 4180.0 J/(kg·K)
@@ -59,7 +59,7 @@ print(f"Cp: {cp:.1f} J/(kg·K)")  # Cp: 4180.0 J/(kg·K)
 state = CP.AbstractState('HEOS', 'Air')
 
 for T in [300, 500, 1000]:
-    state.update(CP.iT, T, CP.iP, 101325)
+    state.update(CP.PT_INPUTS, 101325, T)
     cp = state.cpmass()
     print(f"T={T}K, Cp={cp:.1f} J/(kg·K)")
 ```

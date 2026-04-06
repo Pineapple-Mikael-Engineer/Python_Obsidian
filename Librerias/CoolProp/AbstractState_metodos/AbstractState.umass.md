@@ -46,7 +46,7 @@ AbstractState.umass() -> float
 import CoolProp.CoolProp as CP
 
 state = CP.AbstractState('HEOS', 'Water')
-state.update(CP.iT, 298.15, CP.iP, 101325)
+state.update(CP.PT_INPUTS, 101325, 298.15)
 
 u = state.umass()
 print(f"Energía interna: {u:.0f} J/kg")
@@ -72,12 +72,12 @@ print(f"Directo: {u_direct:.0f} J/kg")
 
 ```python
 # Estado inicial
-state.update(CP.iT, 300, CP.iP, 1e5)
+state.update(CP.PT_INPUTS, 101325, 300)
 u1 = state.umass()
 v1 = 1.0 / state.rho()
 
 # Volumen constante -> misma densidad
-state.update(CP.iT, 400, CP.iD, state.rho())
+state.update(CP.DP_INPUTS, state.rho(), 101325)
 u2 = state.umass()
 
 # Calor a volumen constante = Δu

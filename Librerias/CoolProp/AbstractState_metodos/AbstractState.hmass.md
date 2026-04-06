@@ -47,7 +47,7 @@ AbstractState.hmass() -> float
 import CoolProp.CoolProp as CP
 
 state = CP.AbstractState('HEOS', 'Water')
-state.update(CP.iT, 298.15, CP.iP, 101325)
+state.update(CP.PT_INPUTS, 101325, 298.15)
 
 h = state.hmass()
 print(f"Entalpía: {h:.0f} J/kg")  # Entalpía: 104900 J/kg
@@ -57,11 +57,11 @@ print(f"Entalpía: {h:.0f} J/kg")  # Entalpía: 104900 J/kg
 
 ```python
 # Líquido saturado
-state.update(CP.iP, 101325, CP.iQ, 0)
+state.update(CP.PQ_INPUTS, 101325, 0)
 h_f = state.hmass()
 
 # Vapor saturado
-state.update(CP.iP, 101325, CP.iQ, 1)
+state.update(CP.PQ_INPUTS, 101325, 1)
 h_g = state.hmass()
 
 # Calor latente de vaporización
@@ -72,13 +72,13 @@ print(f"Calor latente: {h_fg:.0f} J/kg")  # ~2,257,000 J/kg
 ## Proceso isentrópico (compresor)
 
 ```python
-# Estado 1: entrada (vapor saturado)
-state.update(CP.iT, 263.15, CP.iQ, 1)  # -10°C
+# Estado 1: entrada (vapor saturado a -10°C)
+state.update(CP.TQ_INPUTS, 263.15, 1)
 h1 = state.hmass()
 s1 = state.smass()
 
-# Estado 2: compresión isentrópica
-state.update(CP.iP, 1e6, CP.iSmass, s1)  # 10 bar, misma entropía
+# Estado 2: compresión isentrópica hasta 10 bar
+state.update(CP.PSmass_INPUTS, 1e6, s1)
 h2 = state.hmass()
 
 # Trabajo del compresor
@@ -90,11 +90,11 @@ print(f"Trabajo: {w_comp:.0f} J/kg")
 
 ```python
 # Entrada: líquido saturado
-state.update(CP.iP, 1e6, CP.iQ, 0)
+state.update(CP.PQ_INPUTS, 1e6, 0)
 h_in = state.hmass()
 
 # Salida: vapor sobrecalentado
-state.update(CP.iP, 1e6, CP.iT, 573.15)  # 300°C
+state.update(CP.PT_INPUTS, 1e6, 573.15)  # 300°C
 h_out = state.hmass()
 
 # Calor añadido

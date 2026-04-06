@@ -51,7 +51,7 @@ AbstractState.phase() -> int
 import CoolProp.CoolProp as CP
 
 state = CP.AbstractState('HEOS', 'Water')
-state.update(CP.iT, 298.15, CP.iP, 101325)
+state.update(CP.PT_INPUTS, 101325, 298.15)
 
 phase = state.phase()
 print(f"Fase: {phase}")  # 0 (líquido)
@@ -77,7 +77,7 @@ else:
 
 ```python
 # Q() falla fuera de saturación, phase() no
-state.update(CP.iT, 300, CP.iP, 1e7)  # Líquido comprimido
+state.update(CP.PT_INPUTS, 1e7, 300)  # Líquido comprimido
 
 if state.phase() == 6:
     Q = state.Q()  # Solo seguro en saturación

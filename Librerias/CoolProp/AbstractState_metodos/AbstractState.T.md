@@ -47,7 +47,7 @@ AbstractState.T() -> float
 import CoolProp.CoolProp as CP
 
 state = CP.AbstractState('HEOS', 'Water')
-state.update(CP.iP, 101325, CP.iQ, 1)  # Vapor saturado a 1 atm
+state.update(CP.PQ_INPUTS, 101325, 1)  # Vapor saturado a 1 atm
 
 T = state.T()
 print(f"Temperatura de saturación: {T - 273.15:.2f} °C")  # 100.00 °C
@@ -65,7 +65,7 @@ T_F = T_K * 9/5 - 459.67  # Fahrenheit
 
 ```python
 # Dada una presión, obtener Tsat
-state.update(CP.iP, 5e5, CP.iQ, 0)  # Líquido saturado a 5 bar
+state.update(CP.PQ_INPUTS, 5e5, 0)  # Líquido saturado a 5 bar
 Tsat = state.T()
 print(f"Tsat a 5 bar: {Tsat - 273.15:.2f} °C")
 ```
@@ -74,7 +74,7 @@ print(f"Tsat a 5 bar: {Tsat - 273.15:.2f} °C")
 
 ```python
 # Conocer T dado un estado (P, H)
-state.update(CP.iP, 1e6, CP.iH, 3e6)
+state.update(CP.PH_INPUTS, 1e6, 3e6)
 T = state.T()
 ```
 

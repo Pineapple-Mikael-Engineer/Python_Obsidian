@@ -47,7 +47,7 @@ AbstractState.cvmass() -> float
 import CoolProp.CoolProp as CP
 
 state = CP.AbstractState('HEOS', 'Water')
-state.update(CP.iT, 298.15, CP.iP, 101325)
+state.update(CP.PT_INPUTS, 101325, 298.15)
 
 cv = state.cvmass()
 print(f"Cv: {cv:.1f} J/(kg·K)")  # Cv: 4180.0 J/(kg·K) (líquido)
@@ -57,14 +57,14 @@ print(f"Cv: {cv:.1f} J/(kg·K)")  # Cv: 4180.0 J/(kg·K) (líquido)
 
 ```python
 # Estado inicial
-state.update(CP.iT, 300, CP.iP, 1e5)
+state.update(CP.PT_INPUTS, 101325, 300)
 cv = state.cvmass()
 u1 = state.umass()
 
 # Calor añadido a volumen constante
 # q = ∫ cv dT ≈ cv * ΔT (aproximación)
 # Mejor: q = Δu
-state.update(CP.iT, 400, CP.iD, state.rho())
+state.update(CP.DP_INPUTS, state.rho(), 101325)
 u2 = state.umass()
 q = u2 - u1
 ```

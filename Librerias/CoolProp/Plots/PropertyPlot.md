@@ -37,11 +37,12 @@ draft: false
 
 ```python
 class PropertyPlot(
-    fluid: str,
-    diagram_type: str,
+    fluid_ref: Union[str, AbstractState],
+    graph_type: str,
     *,
     unit_system: str = 'SI',
-    backend: str = 'HEOS'
+    tp_limits: str = 'DEF',
+    **kwargs
 )
 ```
 
@@ -49,96 +50,120 @@ class PropertyPlot(
 
 | Parámetro | Tipo | Descripción | Ejemplo |
 |-----------|------|-------------|---------|
-| `fluid` | `str` | Nombre del fluido | `'Water'`, `'R134a'` |
-| `diagram_type` | `str` | Tipo de diagrama | `'PH'`, `'TS'`, `'HS'`, `'PS'` |
-| `unit_system` | `str` | Sistema de unidades | `'SI'`, `'EUR'` |
-| `backend` | `str` | Backend a utilizar | `'HEOS'`, `'IF97'` |
+| `fluid_ref` | `str` o `AbstractState` | Nombre del fluido o instancia de `AbstractState` | `'Water'`, `state` |
+| `graph_type` | `str` | Tipo de diagrama (ver tabla) | `'PH'`, `'TS'`, `'HS'` |
+| `unit_system` | `str` | Sistema de unidades | `'SI'`, `'EUR'`, `'KSI'` |
+| `tp_limits` | `str` | Límites predefinidos del diagrama | `'DEF'`, `'ACHP'`, `'ORC'`, `'NONE'` |
+| `**kwargs` | `dict` | Argumentos adicionales para matplotlib | `figsize=(10, 8)` |
 
-## Tipos de diagrama
+## Tipos de diagrama (graph_type)
 
-| `diagram_type` | Nombre | Ejes | Uso típico |
-|----------------|--------|------|------------|
+| Valor | Nombre | Ejes | Uso típico |
+|-------|--------|------|------------|
 | `'PH'` | Mollier / P-h | Presión - Entalpía | Ciclos de refrigeración, bombas de calor |
 | `'TS'` | Temperatura - Entropía | Temperatura - Entropía | Ciclos Rankine, Brayton |
 | `'HS'` | Mollier / h-s | Entalpía - Entropía | Turbinas, compresores |
 | `'PS'` | Presión - Entropía | Presión - Entropía | Análisis de ciclos |
+| `'PT'` | Presión - Temperatura | Presión - Temperatura | Curvas de saturación |
+| `'TD'` | Temperatura - Densidad | Temperatura - Densidad | Propiedades de fluidos |
+| `'PD'` | Presión - Densidad | Presión - Densidad | Compresibilidad |
+
+## Sistemas de unidades (unit_system)
+
+| Sistema | Presión | Temperatura | Entalpía / Entropía | Uso típico |
+|---------|---------|-------------|---------------------|------------|
+| `'SI'` | Pa | K | J/kg, J/(kg·K) | Científico (default) |
+| `'KSI'` | kPa | K | kJ/kg, kJ/(kg·K) | Ingeniería |
+| `'EUR'` | bar | °C | kJ/kg, kJ/(kg·K) | Europeo (común en HVAC) |
+
+```python
+# Sistema europeo (más común en ingeniería práctica)
+plot = PropertyPlot('R134a', 'PH', unit_system='EUR')
+```
+
+## Límites predefinidos (tp_limits)
+
+| Valor | Aplicación | Rango típico |
+|-------|------------|--------------|
+| `'DEF'` | Por defecto | Factor 1.01-2.25 alrededor del punto crítico |
+| `'ACHP'` | Aire acondicionado / bomba de calor | Presiones típicas de evaporación y condensación |
+| `'ORC'` | Ciclo Rankine orgánico | Temperaturas bajas a medias |
+| `'NONE'` | Sin límites predefinidos | El usuario define ejes manualmente |
 
 ## Uso básico
 
 ```python
 from CoolProp.Plots import PropertyPlot
-import matplotlib.pyplot as plt
+import CoolProp.CoolProp as CP
 
-# Crear diagrama P-h para R134a
-plot = PropertyPlot('R134a', 'PH', unit_system='SI')
+# Crear diagrama P-h para R134a (sistema europeo)
+plot = PropertyPlot('R134a', 'PH', unit_system='EUR')
 
-# Dibujar isolíneas
-plot.calc_isolines()
+# Calcular isolíneas
+plot.calc_isolines(CP.iT, num=15)      # Isotermas
+plot.calc_isolines(CP.iQ, num=10)      # Líneas de calidad
+
+# Dibujar
 plot.draw_isolines()
-
-# Mostrar
 plot.show()
 ```
 
 ## Integración con matplotlib
 
-`PropertyPlot` expone el objeto `figure` y `axis` internos, permitiendo personalización avanzada con matplotlib.
+`PropertyPlot` expone los objetos `figure` y `axis` internos para personalización avanzada.
 
 ### Acceder a figure y axis
 
 ```python
 plot = PropertyPlot('Water', 'TS')
 
-# Acceder a la figura y ejes de matplotlib
-fig = plot.figure
-ax = plot.axis
+fig = plot.figure  # Figura de matplotlib
+ax = plot.axis     # Ejes de matplotlib
 
-# Ahora usar matplotlib directamente
+# Personalización directa
 ax.grid(True, linestyle='--', alpha=0.7)
 ax.set_facecolor('#f0f0f0')
 fig.suptitle('Diagrama Personalizado', fontsize=14)
 ```
 
-### Añadir elementos con matplotlib
+### Añadir puntos y líneas personalizados
 
 ```python
 plot = PropertyPlot('R134a', 'PH', unit_system='EUR')
-plot.calc_isolines()
+plot.calc_isolines(CP.iT, num=12)
 plot.draw_isolines()
 
-# Añadir puntos personalizados
 ax = plot.axis
-ax.plot(400, 5, 'ro', markersize=8, label='Punto 1')
-ax.plot(420, 8, 'bs', markersize=8, label='Punto 2')
+
+# Añadir punto de evaporación
+ax.plot(400, 2, 'ro', markersize=8, label='Evaporador')
+
+# Añadir punto de condensación
+ax.plot(430, 10, 'bs', markersize=8, label='Condensador')
+
 ax.legend()
-
-# Añadir anotaciones
-ax.annotate('Evaporador', xy=(400, 5), xytext=(380, 10),
-            arrowprops=dict(arrowstyle='->'))
-
 plot.show()
 ```
 
-### Combinar con subplots de matplotlib
+### Crear subplots
 
 ```python
 import matplotlib.pyplot as plt
 from CoolProp.Plots import PropertyPlot
 
-# Crear figura con 2 subplots
 fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 5))
 
 # Diagrama P-h en primer subplot
 plot_ph = PropertyPlot('Water', 'PH')
-plot_ph.axis = ax1  # Asignar ejes existentes
-plot_ph.calc_isolines()
+plot_ph.axis = ax1
+plot_ph.calc_isolines(CP.iT, num=10)
 plot_ph.draw_isolines()
 ax1.set_title('Diagrama P-h')
 
 # Diagrama T-s en segundo subplot
 plot_ts = PropertyPlot('Water', 'TS')
 plot_ts.axis = ax2
-plot_ts.calc_isolines()
+plot_ts.calc_isolines(CP.iP, num=10)
 plot_ts.draw_isolines()
 ax2.set_title('Diagrama T-s')
 
@@ -146,70 +171,30 @@ plt.tight_layout()
 plt.show()
 ```
 
-### Guardar con matplotlib
+## Control de ejes
 
 ```python
-plot = PropertyPlot('R290', 'PH')
-plot.calc_isolines()
-plot.draw_isolines()
+# Establecer límites manualmente
+plot.axis_limits(x_min=200, x_max=600, y_min=1, y_max=20)
 
-# Usar matplotlib para guardar
-plt.savefig('diagrama.png', dpi=300, bbox_inches='tight')
-
-# O usar método de PropertyPlot
-plot.savefig('diagrama_v2.png', dpi=300)
-```
-
-### Personalización avanzada con rcParams
-
-```python
-import matplotlib.pyplot as plt
-
-# Configurar estilo global de matplotlib
-plt.rcParams['font.size'] = 12
-plt.rcParams['lines.linewidth'] = 1.5
-
-plot = PropertyPlot('R134a', 'PH')
-plot.calc_isolines()
-plot.draw_isolines()
-
-# Los cambios de rcParams se aplican al diagrama
-plot.show()
-```
-
-## Configuración de ejes y título
-
-```python
-plot = PropertyPlot('Water', 'TS')
-
-# Configurar ejes
-plot.axis_limits(x_min=0, x_max=10, y_min=0, y_max=2000)
-
-# Título
-plot.title('Diagrama T-s del Agua')
-
-# Etiquetas personalizadas
-plot.xlabel('Entropía (kJ/kg·K)')
-plot.ylabel('Temperatura (K)')
+# Título y etiquetas personalizadas
+plot.title('Diagrama P-h de R134a')
+plot.xlabel('Entalpía (kJ/kg)')
+plot.ylabel('Presión (bar)')
 ```
 
 ## Guardar figura
 
 ```python
-plot.savefig('diagrama_ph_r134a.png', dpi=300)
+# Usando método de PropertyPlot
+plot.savefig('diagrama.png', dpi=300)
+
+# Usando matplotlib directamente
+import matplotlib.pyplot as plt
+plt.savefig('diagrama.pdf')
 ```
 
-## Sistema de unidades
-
-```python
-# SI (default): Pa, K, J/kg
-plot_si = PropertyPlot('Water', 'PH', unit_system='SI')
-
-# EUR: bar, °C, kJ/kg (más común en ingeniería europea)
-plot_eur = PropertyPlot('Water', 'PH', unit_system='EUR')
-```
-
-## Ejemplo completo con integración matplotlib
+## Ejemplo completo: Ciclo de refrigeración
 
 ```python
 from CoolProp.Plots import PropertyPlot
@@ -218,30 +203,30 @@ import matplotlib.pyplot as plt
 
 # Crear diagrama
 plot = PropertyPlot('R134a', 'PH', unit_system='EUR')
-
-# Calcular y dibujar isolíneas
-plot.calc_isolines(CP.iQ, num=10)      # Líneas de calidad
-plot.calc_isolines(CP.iT, num=10)      # Líneas isotermas
+plot.calc_isolines(CP.iT, num=10)
+plot.calc_isolines(CP.iQ, num=8)
 plot.draw_isolines()
 
-# Personalización con matplotlib
-ax = plot.axis
-ax.grid(True, linestyle=':', alpha=0.5)
-ax.set_xlim(200, 500)
-ax.set_ylim(1, 20)
-ax.set_title('Diagrama P-h de R134a', fontsize=14, fontweight='bold')
-ax.set_xlabel('Entalpía (kJ/kg)')
-ax.set_ylabel('Presión (bar)')
+# Configurar ejes
+plot.title('Ciclo de Refrigeración R134a')
+plot.xlabel('Entalpía (kJ/kg)')
+plot.ylabel('Presión (bar)')
 
-# Añadir ciclo de refrigeración
-# Evaporación
-ax.plot([390, 410], [2, 2], 'r-', linewidth=2)
+# Datos del ciclo (valores de ejemplo)
+evap_P = 2    # bar
+cond_P = 10   # bar
+
+# Dibujar ciclo
+ax = plot.axis
+
+# Evaporación (isobara a baja presión)
+ax.hlines(evap_P, 380, 400, 'r', linewidth=2)
 # Compresión
-ax.plot([410, 430], [2, 10], 'r-', linewidth=2)
-# Condensación
-ax.plot([430, 240], [10, 10], 'r-', linewidth=2)
+ax.plot([400, 425], [2, 10], 'r', linewidth=2)
+# Condensación (isobara a alta presión)
+ax.hlines(cond_P, 425, 240, 'r', linewidth=2)
 # Expansión
-ax.plot([240, 390], [10, 2], 'r--', linewidth=1.5)
+ax.plot([240, 380], [10, 2], 'r--', linewidth=1.5)
 
 plt.show()
 ```

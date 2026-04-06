@@ -72,8 +72,8 @@ state.set_mass_fractions([0.5, 0.5])
 # 1. Instanciar
 state = CP.AbstractState('HEOS', 'Water')
 
-# 2. Actualizar estado (definir T y P)
-state.update(CP.iT, 300, CP.iP, 101325)
+# 2. Actualizar estado (definir P y T)
+state.update(CP.PT_INPUTS, 101325, 298.15)
 
 # 3. Consultar propiedades
 rho = state.rho()      # densidad [kg/m³]
@@ -81,28 +81,30 @@ h = state.hmass()      # entalpía [J/kg]
 s = state.smass()      # entropía [J/(kg·K)]
 
 # 4. Cambiar estado sin recrear el objeto
-state.update(CP.iT, 350, CP.iP, 200000)
+state.update(CP.PT_INPUTS, 200000, 350)
 rho2 = state.rho()     # nueva densidad
 ```
 
 ## Estados de entrada (update)
 
-El método [[AbstractState.update]] define el estado termodinámico usando pares de variables independientes:
+El método [[AbstractState.update]] define el estado termodinámico usando combinaciones predefinidas:
 
-| Par de entrada | Constantes | Uso típico |
-|----------------|------------|------------|
-| `iT` + `iP` | [[Constants.iT]], [[Constants.iP]] | Estado general |
-| `iP` + `iQ` | [[Constants.iP]], [[Constants.iQ]] | Saturación con calidad |
-| `iT` + `iQ` | [[Constants.iT]], [[Constants.iQ]] | Saturación con calidad |
-| `iP` + `iH` | [[Constants.iP]], [[Constants.iH]] | Procesos reales (compresores) |
-| `iP` + `iSmass` | [[Constants.iP]], [[Constants.iSmass]] | Procesos isentrópicos |
+| Input Constante | Orden de valores | Uso típico |
+|----------------|------------------|------------|
+| `CP.PT_INPUTS` | `(P, T)` | Estado general |
+| `CP.PQ_INPUTS` | `(P, Q)` | Saturación por presión |
+| `CP.TQ_INPUTS` | `(T, Q)` | Saturación por temperatura |
+| `CP.PH_INPUTS` | `(P, H)` | Procesos reales (compresores) |
+| `CP.PSmass_INPUTS` | `(P, S)` | Procesos isentrópicos |
+| `CP.HmassP_INPUTS` | `(H, P)` | Entalpía y presión |
+| `CP.SmassP_INPUTS` | `(S, P)` | Entropía y presión |
 
 ```python
 # Ejemplo: vapor saturado a 1 bar
-state.update(CP.iP, 1e5, CP.iQ, 1.0)
+state.update(CP.PQ_INPUTS, 1e5, 1.0)
 
 # Ejemplo: líquido subenfriado a 25°C
-state.update(CP.iT, 298.15, CP.iQ, 0.0)
+state.update(CP.PT_INPUTS, 1e5, 298.15)
 ```
 
 ## Propiedades consultables
@@ -118,7 +120,7 @@ state.update(CP.iT, 298.15, CP.iQ, 0.0)
 | [[AbstractState.cpmass]] | Cp (calor específico a P cte) | J/(kg·K) |
 | [[AbstractState.cvmass]] | Cv (calor específico a V cte) | J/(kg·K) |
 | [[AbstractState.Q]] | Calidad (0=líquido, 1=vapor) | - |
-| [[AbstractState.phase]] | Fase actual (0,1,6,etc.) | - |
+| [[AbstractState.phase]] | Fase actual | - |
 
 ## Mezclas
 
@@ -131,11 +133,8 @@ state = CP.AbstractState('HEOS', 'R32&R134a')
 # Fracciones másicas (50% cada uno)
 state.set_mass_fractions([0.5, 0.5])
 
-# Verificar fracciones actuales
-mass_fracs = state.get_mass_fractions()  # [0.5, 0.5]
-
 # Actualizar estado de la mezcla
-state.update(CP.iT, 300, CP.iP, 1e5)
+state.update(CP.PT_INPUTS, 1e5, 300)
 h_mix = state.hmass()
 ```
 
@@ -165,7 +164,7 @@ for T in temperaturas:
 # Rápido: AbstractState
 state = CP.AbstractState('HEOS', 'Water')
 for T in temperaturas:
-    state.update(CP.iT, T, CP.iP, 1e5)
+    state.update(CP.PT_INPUTS, 1e5, T)
     h = state.hmass()
 ```
 
@@ -175,26 +174,17 @@ for T in temperaturas:
 |---------|---------------------|-----------------|
 | Facilidad | Alta (una línea) | Media (requiere instanciación) |
 | Velocidad (1 consulta) | Buena | Similar |
-| Velocidad (N consultas) | Lenta (recalcula backend) | Rápida (reutiliza estado) |
+| Velocidad (N consultas) | Lenta | Rápida |
 | Derivadas parciales | No | Sí |
 | Control de fase | Limitado | `specify_phase` disponible |
 | Mezclas | Limitado | Completo |
-
-## Buenas prácticas
-
-1. **Reutilizar el mismo objeto** para múltiples actualizaciones en lugar de crear uno nuevo
-2. **Usar `'HEOS'` como backend** a menos que tengas razón específica para otro
-3. **Para agua en aplicaciones industriales**, considerar `'IF97'`
-4. **Verificar fase** con [[AbstractState.phase]] cuando los resultados sean inesperados
-5. **En bucles largos**, instanciar fuera del bucle y solo llamar a `update` dentro
 
 ## Errores comunes
 
 | Error | Causa | Solución |
 |-------|-------|----------|
 | `AbstractState.__init__() missing 1 required positional argument: 'fluid'` | Faltó el fluido | `CP.AbstractState('HEOS', 'Water')` |
-| `The given state is not valid` | Estado fuera de rango físico | Verificar T, P dentro de región válida |
-| `Index out of bounds` | Fracciones mal especificadas | Asegurar que sum(fraciones) = 1.0 |
+| `The given state is not valid` | Estado fuera de rango | Verificar P, T dentro de región válida |
 
 ## Notas relacionadas
 
@@ -203,6 +193,5 @@ for T in temperaturas:
 - [[AbstractState.update]]
 - [[AbstractState.rho]]
 - [[AbstractState.hmass]]
-- [[Constants.iT]]
-- [[Constants.iP]]
+- [[Constants]]
 - [[AbstractState.set_mass_fractions]]
