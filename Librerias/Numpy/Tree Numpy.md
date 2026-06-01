@@ -84,14 +84,14 @@ NumPy/
 │   │       ├── ✅ np.repeat.md
 │   │       └── ✅ np.roll.md
 │   │
-│   ├── 📁 seleccion/
-│   │   ├── np.where.md
-│   │   ├── np.take.md
-│   │   ├── np.put.md
-│   │   ├── np.clip.md
-│   │   ├── np.choose.md
-│   │   ├── np.select.md
-│   │   └── np.nonzero.md
+│   ├── 📁 seleccion/                  (7/7 ✅ completo)
+│   │   ├── ✅ np.where.md
+│   │   ├── ✅ np.take.md
+│   │   ├── ✅ np.put.md
+│   │   ├── ✅ np.clip.md
+│   │   ├── ✅ np.choose.md
+│   │   ├── ✅ np.select.md
+│   │   └── ✅ np.nonzero.md
 │   │
 │   ├── 📁 operaciones/
 │   │   ├── np.add.md
@@ -400,7 +400,8 @@ NumPy/
 | `np/creacion/` | 11 | 11 | ✅ completo |
 | `np/manipulacion_forma/` | 19 | 19 | ✅ completo (subdividida) |
 | `np/reducciones/` | 29 | 29 | ✅ completo (subdividida, incl. `nan_safe/`) |
-| **Total** | **69** | — | — |
+| `np/seleccion/` | 7 | 7 | ✅ completo |
+| **Total** | **76** | — | — |
 
 ### Notas existentes
 
@@ -411,6 +412,7 @@ np/creacion/              → COMPLETO (11): array, zeros, ones, empty, full, ar
                             logspace, eye, identity, fromfunction
 np/manipulacion_forma/    → COMPLETO (19): cambio_forma, reordenar_ejes, combinar, dividir, repetir_desplazar
 np/reducciones/           → COMPLETO (29): agregacion, promedios, extremos, diferencial, nan_safe
+np/seleccion/             → COMPLETO (7): where, take, put, clip, choose, select, nonzero
 ```
 
 ### Cambios de estructura aplicados
