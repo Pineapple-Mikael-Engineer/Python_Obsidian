@@ -205,70 +205,70 @@ NumPy/
 │       ├── ✅ np.polyint.md
 │       └── ✅ np.roots.md
 │
-├── 📁 np.ndarray/
+├── 📁 np.ndarray/                     (49/49 ✅ completo · objeto base)
 │   │
-│   ├── 📁 atributos/
-│   │   ├── ndarray.shape.md
-│   │   ├── ndarray.dtype.md
-│   │   ├── ndarray.size.md
-│   │   ├── ndarray.ndim.md
-│   │   ├── ndarray.itemsize.md
-│   │   ├── ndarray.nbytes.md
-│   │   ├── ndarray.T.md
-│   │   ├── ndarray.real.md
-│   │   ├── ndarray.imag.md
-│   │   ├── ndarray.flat.md
-│   │   ├── ndarray.strides.md
-│   │   ├── ndarray.base.md
-│   │   ├── ndarray.ctypes.md
-│   │   ├── ndarray.data.md
-│   │   └── ndarray.flags.md
+│   ├── 📁 atributos/                  (15/15 ✅)
+│   │   ├── ✅ ndarray.shape.md
+│   │   ├── ✅ ndarray.dtype.md
+│   │   ├── ✅ ndarray.size.md
+│   │   ├── ✅ ndarray.ndim.md
+│   │   ├── ✅ ndarray.itemsize.md
+│   │   ├── ✅ ndarray.nbytes.md
+│   │   ├── ✅ ndarray.T.md
+│   │   ├── ✅ ndarray.real.md
+│   │   ├── ✅ ndarray.imag.md
+│   │   ├── ✅ ndarray.flat.md
+│   │   ├── ✅ ndarray.strides.md
+│   │   ├── ✅ ndarray.base.md
+│   │   ├── ✅ ndarray.ctypes.md
+│   │   ├── ✅ ndarray.data.md
+│   │   └── ✅ ndarray.flags.md
 │   │
-│   └── 📁 metodos/
+│   └── 📁 metodos/                    (34/34 ✅)
 │       │
 │       ├── 📁 forma/
-│       │   ├── ndarray.reshape.md
-│       │   ├── ndarray.ravel.md
-│       │   ├── ndarray.flatten.md
-│       │   ├── ndarray.transpose.md
-│       │   ├── ndarray.swapaxes.md
-│       │   └── ndarray.squeeze.md
+│       │   ├── ✅ ndarray.reshape.md
+│       │   ├── ✅ ndarray.ravel.md
+│       │   ├── ✅ ndarray.flatten.md
+│       │   ├── ✅ ndarray.transpose.md
+│       │   ├── ✅ ndarray.swapaxes.md
+│       │   └── ✅ ndarray.squeeze.md
 │       │
 │       ├── 📁 seleccion/
-│       │   ├── ndarray.take.md
-│       │   ├── ndarray.put.md
-│       │   ├── ndarray.compress.md
-│       │   └── ndarray.nonzero.md
+│       │   ├── ✅ ndarray.take.md
+│       │   ├── ✅ ndarray.put.md
+│       │   ├── ✅ ndarray.compress.md
+│       │   └── ✅ ndarray.nonzero.md
 │       │
 │       ├── 📁 reducciones/
-│       │   ├── ndarray.sum.md
-│       │   ├── ndarray.cumsum.md
-│       │   ├── ndarray.prod.md
-│       │   ├── ndarray.cumprod.md
-│       │   ├── ndarray.mean.md
-│       │   ├── ndarray.var.md
-│       │   ├── ndarray.std.md
-│       │   ├── ndarray.min.md
-│       │   ├── ndarray.max.md
-│       │   ├── ndarray.argmin.md
-│       │   ├── ndarray.argmax.md
-│       │   ├── ndarray.ptp.md
-│       │   ├── ndarray.clip.md
-│       │   └── ndarray.round.md
+│       │   ├── ✅ ndarray.sum.md
+│       │   ├── ✅ ndarray.cumsum.md
+│       │   ├── ✅ ndarray.prod.md
+│       │   ├── ✅ ndarray.cumprod.md
+│       │   ├── ✅ ndarray.mean.md
+│       │   ├── ✅ ndarray.var.md
+│       │   ├── ✅ ndarray.std.md
+│       │   ├── ✅ ndarray.min.md
+│       │   ├── ✅ ndarray.max.md
+│       │   ├── ✅ ndarray.argmin.md
+│       │   ├── ✅ ndarray.argmax.md
+│       │   ├── ✅ ndarray.ptp.md
+│       │   ├── ✅ ndarray.clip.md
+│       │   └── ✅ ndarray.round.md
 │       │
 │       ├── 📁 transformacion/
-│       │   ├── ndarray.astype.md
-│       │   ├── ndarray.byteswap.md
-│       │   ├── ndarray.view.md
-│       │   ├── ndarray.copy.md
-│       │   └── ndarray.fill.md
+│       │   ├── ✅ ndarray.astype.md
+│       │   ├── ✅ ndarray.byteswap.md
+│       │   ├── ✅ ndarray.view.md
+│       │   ├── ✅ ndarray.copy.md
+│       │   └── ✅ ndarray.fill.md
 │       │
 │       └── 📁 serializacion/
-│           ├── ndarray.tofile.md
-│           ├── ndarray.tolist.md
-│           ├── ndarray.tobytes.md
-│           ├── ndarray.dump.md
-│           └── ndarray.dumps.md
+│           ├── ✅ ndarray.tofile.md
+│           ├── ✅ ndarray.tolist.md
+│           ├── ✅ ndarray.tobytes.md
+│           ├── ✅ ndarray.dump.md
+│           └── ✅ ndarray.dumps.md
 │
 ├── 📁 np.linalg/
 │   │
@@ -414,8 +414,9 @@ NumPy/
 | `np/conjuntos/` | 5 | 5 | ✅ completo |
 | `np/io/` | 8 | 8 | ✅ completo |
 | `np/polinomios/` | 6 | 6 | ✅ completo |
-| **Total** | **129** | — | — |
-|  | | | **🎉 namespace `np/` (funciones) COMPLETO** |
+| `np.ndarray/` (atributos+métodos) | 49 | 49 | ✅ completo (15 atrib + 34 métodos) |
+| **Total** | **178** | — | — |
+|  | | | **🎉 namespace `np/` + objeto `np.ndarray` COMPLETOS** |
 
 ### Notas existentes
 
@@ -432,6 +433,8 @@ np/estadisticas/          → COMPLETO (8): corrcoef, cov, histogram, histogram2
 np/conjuntos/             → COMPLETO (5): unique, intersect1d, union1d, setdiff1d, setxor1d
 np/io/                    → COMPLETO (8): loadtxt, savetxt, genfromtxt, load, save, savez, savez_compressed, memmap
 np/polinomios/            → COMPLETO (6): poly1d, polyfit, polyval, polyder, polyint, roots
+np.ndarray/atributos/     → COMPLETO (15): shape, dtype, size, ndim, itemsize, nbytes, T, real, imag, flat, strides, base, ctypes, data, flags
+np.ndarray/metodos/       → COMPLETO (34): forma(6), seleccion(4), reducciones(14), transformacion(5), serializacion(5)
 ```
 
 ### Cambios de estructura aplicados
