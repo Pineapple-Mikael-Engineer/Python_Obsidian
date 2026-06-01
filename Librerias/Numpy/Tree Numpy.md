@@ -93,33 +93,41 @@ NumPy/
 │   │   ├── ✅ np.select.md
 │   │   └── ✅ np.nonzero.md
 │   │
-│   ├── 📁 operaciones/
-│   │   ├── np.add.md
-│   │   ├── np.subtract.md
-│   │   ├── np.multiply.md
-│   │   ├── np.divide.md
-│   │   ├── np.power.md
-│   │   ├── np.mod.md
-│   │   ├── np.log.md
-│   │   ├── np.log2.md
-│   │   ├── np.log10.md
-│   │   ├── np.exp.md
-│   │   ├── np.expm1.md
-│   │   ├── np.sin.md
-│   │   ├── np.cos.md
-│   │   ├── np.tan.md
-│   │   ├── np.arcsin.md
-│   │   ├── np.arccos.md
-│   │   ├── np.arctan.md
-│   │   ├── np.sinh.md
-│   │   ├── np.cosh.md
-│   │   ├── np.tanh.md
-│   │   ├── np.sqrt.md
-│   │   ├── np.square.md
-│   │   ├── np.abs.md
-│   │   ├── np.fabs.md
-│   │   ├── np.sign.md
-│   │   └── np.ceil.md
+│   ├── 📁 operaciones/                (26/26 ✅ completo · subdividida por conveniencia)
+│   │   │
+│   │   ├── 📁 aritmeticas/
+│   │   │   ├── ✅ np.add.md
+│   │   │   ├── ✅ np.subtract.md
+│   │   │   ├── ✅ np.multiply.md
+│   │   │   ├── ✅ np.divide.md
+│   │   │   ├── ✅ np.power.md
+│   │   │   └── ✅ np.mod.md
+│   │   │
+│   │   ├── 📁 trigonometricas/
+│   │   │   ├── ✅ np.sin.md
+│   │   │   ├── ✅ np.cos.md
+│   │   │   ├── ✅ np.tan.md
+│   │   │   ├── ✅ np.arcsin.md
+│   │   │   ├── ✅ np.arccos.md
+│   │   │   ├── ✅ np.arctan.md
+│   │   │   ├── ✅ np.sinh.md
+│   │   │   ├── ✅ np.cosh.md
+│   │   │   └── ✅ np.tanh.md
+│   │   │
+│   │   ├── 📁 exponenciales_log/
+│   │   │   ├── ✅ np.exp.md
+│   │   │   ├── ✅ np.expm1.md
+│   │   │   ├── ✅ np.log.md
+│   │   │   ├── ✅ np.log2.md
+│   │   │   ├── ✅ np.log10.md
+│   │   │   ├── ✅ np.sqrt.md
+│   │   │   └── ✅ np.square.md
+│   │   │
+│   │   └── 📁 redondeo_signo/
+│   │       ├── ✅ np.abs.md
+│   │       ├── ✅ np.fabs.md
+│   │       ├── ✅ np.sign.md
+│   │       └── ✅ np.ceil.md
 │   │
 │   ├── 📁 reducciones/                (29/29 ✅ completo · subdividida por conveniencia)
 │   │   │
@@ -401,7 +409,8 @@ NumPy/
 | `np/manipulacion_forma/` | 19 | 19 | ✅ completo (subdividida) |
 | `np/reducciones/` | 29 | 29 | ✅ completo (subdividida, incl. `nan_safe/`) |
 | `np/seleccion/` | 7 | 7 | ✅ completo |
-| **Total** | **76** | — | — |
+| `np/operaciones/` | 26 | 26 | ✅ completo (subdividida en 4 ufunc-grupos) |
+| **Total** | **102** | — | — |
 
 ### Notas existentes
 
@@ -413,6 +422,7 @@ np/creacion/              → COMPLETO (11): array, zeros, ones, empty, full, ar
 np/manipulacion_forma/    → COMPLETO (19): cambio_forma, reordenar_ejes, combinar, dividir, repetir_desplazar
 np/reducciones/           → COMPLETO (29): agregacion, promedios, extremos, diferencial, nan_safe
 np/seleccion/             → COMPLETO (7): where, take, put, clip, choose, select, nonzero
+np/operaciones/           → COMPLETO (26): aritmeticas, trigonometricas, exponenciales_log, redondeo_signo
 ```
 
 ### Cambios de estructura aplicados
@@ -422,6 +432,8 @@ np/seleccion/             → COMPLETO (7): where, take, put, clip, choose, sele
 - `reducciones/` se **subdividió** en `agregacion/`, `promedios/`, `extremos/`, `diferencial/`
   y `nan_safe/`. El bloque `nan_safe/` agrupa todas las variantes `nan*` que ignoran NaN;
   se añadieron `np.nanprod` y `np.nanmedian` (no estaban en el plano original) → 29 notas.
+- `operaciones/` se **subdividió** en `aritmeticas/`, `trigonometricas/`, `exponenciales_log/`
+  y `redondeo_signo/` (26 ufuncs en plano). Todas etiquetadas como `transformaciones` (dominio).
 - Corregido el wikilink `concepto_dtype_sistema` → `concepto_dtype` (canónico) en `concepto_ndarray`.
 
 ---
