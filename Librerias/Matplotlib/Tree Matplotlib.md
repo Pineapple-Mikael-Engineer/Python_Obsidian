@@ -54,7 +54,7 @@ Matplotlib/
 │       ├── ✅ fig.tight_layout.md
 │       └── ✅ fig.add_subplot.md
 │
-├── 📁 axes/                           (30/30 ✅ completo)
+├── 📁 axes/                           (32/32 ✅ completo)
 │   ├── ✅ arrays.md
 │   ├── ✅ Axes.md
 │   └── 📁 metodos/
@@ -71,7 +71,8 @@ Matplotlib/
 │       │   ├── ✅ ax.boxplot.md
 │       │   ├── ✅ ax.contourf.md
 │       │   ├── ✅ ax.imshow.md
-│       │   └── ✅ ax.pie.md
+│       │   ├── ✅ ax.pie.md
+│       │   └── ✅ ax.add_patch.md
 │       │
 │       ├── 📁 formato/
 │       │   ├── ✅ ax.grid.md
@@ -86,7 +87,8 @@ Matplotlib/
 │       │   ├── ✅ ax.set_ylim.md
 │       │   ├── ✅ ax.set_xscale.md
 │       │   ├── ✅ ax.set_yscale.md
-│       │   └── ✅ ax.set_facecolor.md
+│       │   ├── ✅ ax.set_facecolor.md
+│       │   └── ✅ ax.set_aspect.md
 │       │
 │       ├── 📁 anotaciones/
 │       │   ├── ✅ ax.text.md
@@ -133,9 +135,11 @@ Matplotlib/
 │   ├── ✅ Text.md
 │   └── ✅ Annotation.md
 │
-├── 📁 lines/                          (2/2 ✅ completo)
+├── 📁 lines/                          (4/4 ✅ completo · incl. referencias de estilo)
 │   ├── ✅ Line2D.md
-│   └── ✅ marker.md
+│   ├── ✅ marker.md
+│   ├── ✅ Colores_Nombres.md
+│   └── ✅ Estilos_Linea.md
 │
 ├── 📁 animation/                      (1/1 ✅ completo)
 │   └── ✅ FuncAnimation.md
@@ -164,11 +168,11 @@ Matplotlib/
 | `config/` | 3 | 3 | ✅ completo |
 | `gridspec/` | 2 | 2 | ✅ completo |
 | `ticker/` | 4 | 4 | ✅ completo |
-| `lines/` | 2 | 2 | ✅ completo |
-| `axes/` (métodos + arrays) | 30 | 30 | ✅ completo |
+| `lines/` (incl. referencias de estilo) | 4 | 4 | ✅ completo |
+| `axes/` (métodos + arrays) | 32 | 32 | ✅ completo |
 | `patches/` · `cm/` · `collections/` · `image/` · `text/` · `animation/` · `backend/` · `toolkits/mplot3d/` | 18 | 18 | ✅ completo (Artists primitivos) |
 | raíz (`introduccion.md`) | 1 | — | ✅ |
-| **Total** | **76** | **76** | 🎉 roadmap completo |
+| **Total** | **80** | **80** | 🎉 roadmap completo |
 
 ### Cambios de sincronización aplicados
 
