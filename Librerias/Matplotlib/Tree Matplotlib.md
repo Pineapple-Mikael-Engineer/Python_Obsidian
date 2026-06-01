@@ -30,14 +30,17 @@ Matplotlib/
 │
 ├── ✅ introduccion.md
 │
-├── 📁 conceptos_transversales/        (5/5 ✅ · modelo mental)
+├── 📁 conceptos_transversales/        (5/8 · modelo mental)
 │   ├── ✅ concepto_figure_axes.md
 │   ├── ✅ concepto_artist.md
 │   ├── ✅ concepto_pyplot_vs_oo.md
 │   ├── ✅ concepto_anatomia_figura.md
-│   └── ✅ concepto_backend.md
+│   ├── ✅ concepto_backend.md
+│   ├── concepto_color_mapping.md
+│   ├── concepto_property_cycle.md
+│   └── concepto_transforms.md
 │
-├── 📁 pyplot/                         (7/7 ✅ completo)
+├── 📁 pyplot/                         (7/8)
 │   └── 📁 funciones/
 │       ├── ✅ plt.subplots.md
 │       ├── ✅ plt.figure.md
@@ -45,16 +48,19 @@ Matplotlib/
 │       ├── ✅ plt.show.md
 │       ├── ✅ plt.close.md
 │       ├── ✅ plt.clf.md
-│       └── ✅ plt.colorbar.md
+│       ├── ✅ plt.colorbar.md
+│       └── plt.subplot_mosaic.md
 │
-├── 📁 figure/                         (4/4 ✅ completo)
+├── 📁 figure/                         (4/6)
 │   ├── ✅ Figure.md
 │   └── 📁 metodos/
 │       ├── ✅ fig.suptitle.md
 │       ├── ✅ fig.tight_layout.md
-│       └── ✅ fig.add_subplot.md
+│       ├── ✅ fig.add_subplot.md
+│       ├── fig.add_axes.md
+│       └── constrained_layout.md
 │
-├── 📁 axes/                           (32/32 ✅ completo)
+├── 📁 axes/                           (32/33)
 │   ├── ✅ arrays.md
 │   ├── ✅ Axes.md
 │   └── 📁 metodos/
@@ -94,8 +100,11 @@ Matplotlib/
 │       │   ├── ✅ ax.text.md
 │       │   └── ✅ ax.annotate.md
 │       │
-│       └── 📁 spines/
-│           └── ✅ ax.spines.md
+│       ├── 📁 spines/
+│       │   └── ✅ ax.spines.md
+│       │
+│       └── 📁 composicion/
+│           └── ax.inset_axes.md
 │
 ├── 📁 config/                         (3/3 ✅ completo)
 │   ├── ✅ rcParams.md
@@ -116,6 +125,19 @@ Matplotlib/
 │   ├── ✅ Colormaps.md
 │   └── ✅ ListedColormap.md
 │
+├── 📁 colors/                         (0/5 · normalización y mapeo de color)
+│   ├── Colorbar.md
+│   ├── Normalize.md
+│   ├── LogNorm.md
+│   ├── BoundaryNorm.md
+│   └── LinearSegmentedColormap.md
+│
+├── 📁 legend/                         (0/4 · leyendas)
+│   ├── Legend.md
+│   ├── Personalizacion_Leyendas.md
+│   ├── Multiples_Leyendas.md
+│   └── handles_labels.md
+│
 ├── 📁 patches/                        (5/5 ✅ completo)
 │   ├── ✅ Patch.md
 │   ├── ✅ Rectangle.md
@@ -123,17 +145,21 @@ Matplotlib/
 │   ├── ✅ Circle.md
 │   └── ✅ Ellipse.md
 │
-├── 📁 collections/                    (2/2 ✅ completo)
+├── 📁 collections/                    (2/4)
 │   ├── ✅ PathCollection.md
-│   └── ✅ QuadContourSet.md
+│   ├── ✅ QuadContourSet.md
+│   ├── PatchCollection.md
+│   └── LineCollection.md
 │
 ├── 📁 image/                          (2/2 ✅ completo)
 │   ├── ✅ imread.md
 │   └── ✅ imsave.md
 │
-├── 📁 text/                           (2/2 ✅ completo)
+├── 📁 text/                           (2/4)
 │   ├── ✅ Text.md
-│   └── ✅ Annotation.md
+│   ├── ✅ Annotation.md
+│   ├── LaTeX_mathtext.md
+│   └── fontdict.md
 │
 ├── 📁 lines/                          (4/4 ✅ completo · incl. referencias de estilo)
 │   ├── ✅ Line2D.md
@@ -149,9 +175,14 @@ Matplotlib/
 │   └── ✅ cambiar_backend.md
 │
 └── 📁 toolkits/
-    └── 📁 mplot3d/                    (2/2 ✅ completo)
+    └── 📁 mplot3d/                    (2/7)
         ├── ✅ plot_surface.md
-        └── ✅ axes3d.md
+        ├── ✅ axes3d.md
+        ├── plot_wireframe.md
+        ├── scatter3D.md
+        ├── contour3D.md
+        ├── bar3d.md
+        └── view_init.md
 ```
 
 ---
@@ -160,19 +191,24 @@ Matplotlib/
 
 > Sincronizado con el disco. `✅` = nota creada · sin marca = pendiente (roadmap).
 
+> **Base v1 (80 notas) completa.** Roadmap ampliado con los bloques 🅱️🅲️🅳️ (+25 pendientes).
+
 | Carpeta | Existentes | Plan | Estado |
 |---------|-----------|------|--------|
-| `conceptos_transversales/` | 5 | 5 | ✅ completo (modelo mental) |
-| `pyplot/` | 7 | 7 | ✅ completo |
-| `figure/` | 4 | 4 | ✅ completo |
-| `config/` | 3 | 3 | ✅ completo |
-| `gridspec/` | 2 | 2 | ✅ completo |
-| `ticker/` | 4 | 4 | ✅ completo |
+| `conceptos_transversales/` | 5 | 8 | +3 (color_mapping, property_cycle, transforms) |
+| `pyplot/` | 7 | 8 | +1 (subplot_mosaic) |
+| `figure/` | 4 | 6 | +2 (add_axes, constrained_layout) |
+| `config/` · `gridspec/` · `ticker/` | 9 | 9 | ✅ completo |
 | `lines/` (incl. referencias de estilo) | 4 | 4 | ✅ completo |
-| `axes/` (métodos + arrays) | 32 | 32 | ✅ completo |
-| `patches/` · `cm/` · `collections/` · `image/` · `text/` · `animation/` · `backend/` · `toolkits/mplot3d/` | 18 | 18 | ✅ completo (Artists primitivos) |
+| `axes/` (métodos + arrays) | 32 | 33 | +1 (composicion/ax.inset_axes) |
+| `colors/` 🆕 | 0 | 5 | pendiente (Colorbar, Normalize, LogNorm, BoundaryNorm, LinearSegmentedColormap) |
+| `legend/` 🆕 | 0 | 4 | pendiente (Legend, personalización, múltiples, handles) |
+| `collections/` | 2 | 4 | +2 (PatchCollection, LineCollection) |
+| `text/` | 2 | 4 | +2 (LaTeX_mathtext, fontdict) |
+| `toolkits/mplot3d/` | 2 | 7 | +5 (wireframe, scatter3D, contour3D, bar3d, view_init) |
+| `patches/` · `cm/` · `image/` · `animation/` · `backend/` | 16 | 16 | ✅ completo |
 | raíz (`introduccion.md`) | 1 | — | ✅ |
-| **Total** | **80** | **80** | 🎉 roadmap completo |
+| **Total** | **80** | **105** | base ✅ · expansión pendiente (25) |
 
 ### Cambios de sincronización aplicados
 
@@ -183,11 +219,13 @@ Matplotlib/
 - Añadidas marcas `✅` a las 58 notas existentes y sección "Estado actual".
 - ✅ Completados los módulos de Artists primitivos (`patches/`, `cm/`, `collections/`, `image/`, `text/`, `animation/`, `backend/`, `toolkits/mplot3d/`) — **roadmap del Tree al 100% (76 notas)**.
 
-### Próximos pasos sugeridos
+### Expansión del roadmap (bloques aprobados 🅱️🅲️🅳️)
 
-- ✅ `conceptos_transversales/` creada (figure_axes, artist, pyplot_vs_oo, anatomia_figura, backend).
-- Crear las clases base que vertebran el modelo de objetos: `figure/Figure.md`, `axes/Axes.md`, `lines/Line2D.md`.
-- Rellenar las hojas pendientes (pyplot, figure/metodos, axes/metodos restantes, ticker, patches…).
+- 🅱️ **Leyendas y color** — módulos nuevos `legend/` (4) y `colors/` (5) + `collections/` (+2). Resuelve links rotos: `Colorbar`, `Normalize`, `LogNorm`, `PatchCollection`, `Personalizacion_Leyendas`, `Multiples_Leyendas`.
+- 🅲️ **Conceptos + layout** — 3 conceptos (`color_mapping`, `property_cycle`, `transforms`) + layout avanzado (`subplot_mosaic`, `constrained_layout`, `fig.add_axes`, `ax.inset_axes`).
+- 🅳️ **Texto/LaTeX + 3D** — `text/` (+2: `LaTeX_mathtext`, `fontdict`) + `mplot3d` (+5). Resuelve `LaTeX`.
+- ⏭️ Bloque 🅰️ (más gráficos + ejes) NO incluido; queda como posible ampliación futura.
+- Siguiente acción: **rellenar** estas 25 hojas con subagentes + revisión (cuando se indique).
 
 ---
 
