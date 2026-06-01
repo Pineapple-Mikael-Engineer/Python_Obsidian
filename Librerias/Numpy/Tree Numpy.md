@@ -40,18 +40,18 @@ NumPy/
 │
 ├── 📁 np/
 │   │
-│   ├── 📁 creacion/                   (5/11 ✅)
+│   ├── 📁 creacion/                   (11/11 ✅ completo)
 │   │   ├── ✅ np.array.md
 │   │   ├── ✅ np.zeros.md
 │   │   ├── ✅ np.ones.md
-│   │   ├── np.empty.md
+│   │   ├── ✅ np.empty.md
 │   │   ├── ✅ np.arange.md
 │   │   ├── ✅ np.linspace.md
-│   │   ├── np.logspace.md
-│   │   ├── np.eye.md
-│   │   ├── np.identity.md
-│   │   ├── np.full.md
-│   │   └── np.fromfunction.md
+│   │   ├── ✅ np.logspace.md
+│   │   ├── ✅ np.eye.md
+│   │   ├── ✅ np.identity.md
+│   │   ├── ✅ np.full.md
+│   │   └── ✅ np.fromfunction.md
 │   │
 │   ├── 📁 manipulacion_forma/         (19/19 ✅ completo · subdividida por conveniencia)
 │   │   │
@@ -121,7 +121,7 @@ NumPy/
 │   │   ├── np.sign.md
 │   │   └── np.ceil.md
 │   │
-│   ├── 📁 reducciones/                (17/27 ✅ · subdividida por conveniencia)
+│   ├── 📁 reducciones/                (29/29 ✅ completo · subdividida por conveniencia)
 │   │   │
 │   │   ├── 📁 agregacion/
 │   │   │   ├── ✅ np.sum.md
@@ -148,19 +148,19 @@ NumPy/
 │   │   │   ├── ✅ np.gradient.md
 │   │   │   └── ✅ np.trapz.md
 │   │   │
-│   │   └── 📁 nan_safe/                (pendiente · variantes que ignoran NaN)
-│   │       ├── np.nansum.md
-│   │       ├── np.nanprod.md
-│   │       ├── np.nancumsum.md
-│   │       ├── np.nancumprod.md
-│   │       ├── np.nanmean.md
-│   │       ├── np.nanmedian.md
-│   │       ├── np.nanstd.md
-│   │       ├── np.nanvar.md
-│   │       ├── np.nanmin.md
-│   │       ├── np.nanmax.md
-│   │       ├── np.nanargmin.md
-│   │       └── np.nanargmax.md
+│   │   └── 📁 nan_safe/                (12/12 ✅ · variantes que ignoran NaN)
+│   │       ├── ✅ np.nansum.md
+│   │       ├── ✅ np.nanprod.md
+│   │       ├── ✅ np.nancumsum.md
+│   │       ├── ✅ np.nancumprod.md
+│   │       ├── ✅ np.nanmean.md
+│   │       ├── ✅ np.nanmedian.md
+│   │       ├── ✅ np.nanstd.md
+│   │       ├── ✅ np.nanvar.md
+│   │       ├── ✅ np.nanmin.md
+│   │       ├── ✅ np.nanmax.md
+│   │       ├── ✅ np.nanargmin.md
+│   │       └── ✅ np.nanargmax.md
 │   │
 │   ├── 📁 estadisticas/
 │   │   ├── np.corrcoef.md
@@ -397,23 +397,20 @@ NumPy/
 | Carpeta | Existentes | Plan | Estado |
 |---------|-----------|------|--------|
 | `conceptos_transversales/` | 10 | 10 | ✅ núcleo completo |
-| `np/creacion/` | 5 | 11 | en progreso |
+| `np/creacion/` | 11 | 11 | ✅ completo |
 | `np/manipulacion_forma/` | 19 | 19 | ✅ completo (subdividida) |
-| `np/reducciones/` | 17 | 27 | en progreso (subdividida; falta `nan_safe/`) |
-| **Total** | **51** | — | — |
+| `np/reducciones/` | 29 | 29 | ✅ completo (subdividida, incl. `nan_safe/`) |
+| **Total** | **69** | — | — |
 
 ### Notas existentes
 
 ```text
-conceptos_transversales/  → ndarray, broadcasting, vectorizacion, shape, dtype,
+conceptos_transversales/  → COMPLETO (10): ndarray, broadcasting, vectorizacion, shape, dtype,
                             views_vs_copias, indexing, contiguidad_memoria, ufuncs, axis_parametro
-np/creacion/              → np.array, np.zeros, np.ones, np.arange, np.linspace
+np/creacion/              → COMPLETO (11): array, zeros, ones, empty, full, arange, linspace,
+                            logspace, eye, identity, fromfunction
 np/manipulacion_forma/    → COMPLETO (19): cambio_forma, reordenar_ejes, combinar, dividir, repetir_desplazar
-np/reducciones/
-    agregacion/           → np.sum, np.prod, np.cumsum, np.cumprod
-    promedios/            → np.mean, np.median, np.average, np.std, np.var
-    extremos/             → np.min, np.max, np.ptp, np.argmin, np.argmax
-    diferencial/          → np.diff, np.gradient, np.trapz
+np/reducciones/           → COMPLETO (29): agregacion, promedios, extremos, diferencial, nan_safe
 ```
 
 ### Cambios de estructura aplicados
@@ -421,8 +418,8 @@ np/reducciones/
 - `manipulacion_forma/` se **subdividió** en `cambio_forma/`, `reordenar_ejes/`, `combinar/`,
   `dividir/` y `repetir_desplazar/` (19 funciones en plano era difícil de navegar).
 - `reducciones/` se **subdividió** en `agregacion/`, `promedios/`, `extremos/`, `diferencial/`
-  y `nan_safe/` (27 funciones en plano). El bloque `nan_safe/` agrupa todas las variantes `nan*`
-  que ignoran NaN, pendientes de crear.
+  y `nan_safe/`. El bloque `nan_safe/` agrupa todas las variantes `nan*` que ignoran NaN;
+  se añadieron `np.nanprod` y `np.nanmedian` (no estaban en el plano original) → 29 notas.
 - Corregido el wikilink `concepto_dtype_sistema` → `concepto_dtype` (canónico) en `concepto_ndarray`.
 
 ---
