@@ -270,43 +270,43 @@ NumPy/
 │           ├── ✅ ndarray.dump.md
 │           └── ✅ ndarray.dumps.md
 │
-├── 📁 np.linalg/
+├── 📁 np.linalg/                      (22/22 ✅ completo · submódulo)
 │   │
 │   ├── 📁 normas_condiciones/
-│   │   ├── np.linalg.norm.md
-│   │   ├── np.linalg.cond.md
-│   │   └── np.linalg.matrix_rank.md
+│   │   ├── ✅ np.linalg.norm.md
+│   │   ├── ✅ np.linalg.cond.md
+│   │   └── ✅ np.linalg.matrix_rank.md
 │   │
 │   ├── 📁 determinantes/
-│   │   ├── np.linalg.det.md
-│   │   └── np.linalg.slogdet.md
+│   │   ├── ✅ np.linalg.det.md
+│   │   └── ✅ np.linalg.slogdet.md
 │   │
 │   ├── 📁 inversas/
-│   │   ├── np.linalg.inv.md
-│   │   └── np.linalg.pinv.md
+│   │   ├── ✅ np.linalg.inv.md
+│   │   └── ✅ np.linalg.pinv.md
 │   │
 │   ├── 📁 eigen/
-│   │   ├── np.linalg.eig.md
-│   │   ├── np.linalg.eigvals.md
-│   │   ├── np.linalg.eigh.md
-│   │   └── np.linalg.eigvalsh.md
+│   │   ├── ✅ np.linalg.eig.md
+│   │   ├── ✅ np.linalg.eigvals.md
+│   │   ├── ✅ np.linalg.eigh.md
+│   │   └── ✅ np.linalg.eigvalsh.md
 │   │
 │   ├── 📁 descomposiciones/
-│   │   ├── np.linalg.svd.md
-│   │   ├── np.linalg.qr.md
-│   │   ├── np.linalg.lu.md
-│   │   └── np.linalg.cholesky.md
+│   │   ├── ✅ np.linalg.svd.md
+│   │   ├── ✅ np.linalg.qr.md
+│   │   ├── ✅ np.linalg.lu.md          (⚠️ no existe en NumPy → scipy)
+│   │   └── ✅ np.linalg.cholesky.md
 │   │
 │   ├── 📁 sistemas_ecuaciones/
-│   │   ├── np.linalg.solve.md
-│   │   ├── np.linalg.tensorsolve.md
-│   │   └── np.linalg.lstsq.md
+│   │   ├── ✅ np.linalg.solve.md
+│   │   ├── ✅ np.linalg.tensorsolve.md
+│   │   └── ✅ np.linalg.lstsq.md
 │   │
 │   └── 📁 productos/
-│       ├── np.linalg.dot.md
-│       ├── np.linalg.multi_dot.md
-│       ├── np.linalg.matrix_power.md
-│       └── np.linalg.matrix_transpose.md
+│       ├── ✅ np.linalg.dot.md
+│       ├── ✅ np.linalg.multi_dot.md
+│       ├── ✅ np.linalg.matrix_power.md
+│       └── ✅ np.linalg.matrix_transpose.md
 │
 ├── 📁 np.random/
 │   │
@@ -415,8 +415,9 @@ NumPy/
 | `np/io/` | 8 | 8 | ✅ completo |
 | `np/polinomios/` | 6 | 6 | ✅ completo |
 | `np.ndarray/` (atributos+métodos) | 49 | 49 | ✅ completo (15 atrib + 34 métodos) |
-| **Total** | **178** | — | — |
-|  | | | **🎉 namespace `np/` + objeto `np.ndarray` COMPLETOS** |
+| `np.linalg/` | 22 | 22 | ✅ completo (7 subtemáticas) |
+| **Total** | **200** | — | — |
+|  | | | **🎉 `np/` + `np.ndarray` + `np.linalg` COMPLETOS** |
 
 ### Notas existentes
 
@@ -435,6 +436,7 @@ np/io/                    → COMPLETO (8): loadtxt, savetxt, genfromtxt, load, 
 np/polinomios/            → COMPLETO (6): poly1d, polyfit, polyval, polyder, polyint, roots
 np.ndarray/atributos/     → COMPLETO (15): shape, dtype, size, ndim, itemsize, nbytes, T, real, imag, flat, strides, base, ctypes, data, flags
 np.ndarray/metodos/       → COMPLETO (34): forma(6), seleccion(4), reducciones(14), transformacion(5), serializacion(5)
+np.linalg/                → COMPLETO (22): normas_condiciones(3), determinantes(2), inversas(2), eigen(4), descomposiciones(4), sistemas_ecuaciones(3), productos(4)
 ```
 
 ### Cambios de estructura aplicados
