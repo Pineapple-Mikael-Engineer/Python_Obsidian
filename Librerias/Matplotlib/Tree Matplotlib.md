@@ -37,26 +37,26 @@ Matplotlib/
 │   ├── ✅ concepto_anatomia_figura.md
 │   └── ✅ concepto_backend.md
 │
-├── 📁 pyplot/                         (1/7)
+├── 📁 pyplot/                         (7/7 ✅ completo)
 │   └── 📁 funciones/
 │       ├── ✅ plt.subplots.md
-│       ├── plt.figure.md
-│       ├── plt.savefig.md
-│       ├── plt.show.md
-│       ├── plt.close.md
-│       ├── plt.clf.md
-│       └── plt.colorbar.md
+│       ├── ✅ plt.figure.md
+│       ├── ✅ plt.savefig.md
+│       ├── ✅ plt.show.md
+│       ├── ✅ plt.close.md
+│       ├── ✅ plt.clf.md
+│       └── ✅ plt.colorbar.md
 │
-├── 📁 figure/                         (0/4)
-│   ├── Figure.md
+├── 📁 figure/                         (4/4 ✅ completo)
+│   ├── ✅ Figure.md
 │   └── 📁 metodos/
-│       ├── fig.suptitle.md
-│       ├── fig.tight_layout.md
-│       └── fig.add_subplot.md
+│       ├── ✅ fig.suptitle.md
+│       ├── ✅ fig.tight_layout.md
+│       └── ✅ fig.add_subplot.md
 │
-├── 📁 axes/                           (17/35)
+├── 📁 axes/                           (30/35)
 │   ├── ✅ arrays.md
-│   ├── Axes.md
+│   ├── ✅ Axes.md
 │   └── 📁 metodos/
 │       │
 │       ├── 📁 graficos/
@@ -68,10 +68,10 @@ Matplotlib/
 │       │   ├── ✅ ax.contour.md
 │       │   ├── ✅ ax.fill_between.md
 │       │   ├── ✅ ax.fill_betweenx.md
-│       │   ├── ax.boxplot.md
-│       │   ├── ax.contourf.md
-│       │   ├── ax.imshow.md
-│       │   └── ax.pie.md
+│       │   ├── ✅ ax.boxplot.md
+│       │   ├── ✅ ax.contourf.md
+│       │   ├── ✅ ax.imshow.md
+│       │   └── ✅ ax.pie.md
 │       │
 │       ├── 📁 formato/
 │       │   ├── ✅ ax.grid.md
@@ -82,33 +82,33 @@ Matplotlib/
 │       │   ├── ✅ ax.set_xticks.md
 │       │   ├── ✅ ax.set_yticks.md
 │       │   ├── ✅ ax.tick_params.md
-│       │   ├── ax.set_xlim.md
-│       │   ├── ax.set_ylim.md
-│       │   ├── ax.set_xscale.md
-│       │   ├── ax.set_yscale.md
-│       │   └── ax.set_facecolor.md
+│       │   ├── ✅ ax.set_xlim.md
+│       │   ├── ✅ ax.set_ylim.md
+│       │   ├── ✅ ax.set_xscale.md
+│       │   ├── ✅ ax.set_yscale.md
+│       │   └── ✅ ax.set_facecolor.md
 │       │
 │       ├── 📁 anotaciones/
-│       │   ├── ax.text.md
-│       │   └── ax.annotate.md
+│       │   ├── ✅ ax.text.md
+│       │   └── ✅ ax.annotate.md
 │       │
 │       └── 📁 spines/
-│           └── ax.spines.md
+│           └── ✅ ax.spines.md
 │
-├── 📁 config/                         (2/3)
+├── 📁 config/                         (3/3 ✅ completo)
 │   ├── ✅ rcParams.md
 │   ├── ✅ plt.style.use.md
-│   └── estilos.md
+│   └── ✅ estilos.md
 │
-├── 📁 gridspec/                       (1/2)
+├── 📁 gridspec/                       (2/2 ✅ completo)
 │   ├── ✅ GridSpec.md
-│   └── GridSpecFromSubplotSpec.md
+│   └── ✅ GridSpecFromSubplotSpec.md
 │
-├── 📁 ticker/                         (1/4)
+├── 📁 ticker/                         (4/4 ✅ completo)
 │   ├── ✅ Locators.md
-│   ├── Formatters.md
-│   ├── DateFormatter.md
-│   └── FuncFormatter.md
+│   ├── ✅ Formatters.md
+│   ├── ✅ DateFormatter.md
+│   └── ✅ FuncFormatter.md
 │
 ├── 📁 cm/                             (0/2)
 │   ├── Colormaps.md
@@ -133,9 +133,9 @@ Matplotlib/
 │   ├── Text.md
 │   └── Annotation.md
 │
-├── 📁 lines/                          (0/2)
-│   ├── Line2D.md
-│   └── marker.md
+├── 📁 lines/                          (2/2 ✅ completo)
+│   ├── ✅ Line2D.md
+│   └── ✅ marker.md
 │
 ├── 📁 animation/                      (0/1)
 │   └── FuncAnimation.md
@@ -159,38 +159,25 @@ Matplotlib/
 | Carpeta | Existentes | Plan | Estado |
 |---------|-----------|------|--------|
 | `conceptos_transversales/` | 5 | 5 | ✅ completo (modelo mental) |
-| `axes/` (métodos + arrays) | 17 | 35 | en progreso |
-| `config/` | 2 | 3 | en progreso |
-| `pyplot/` | 1 | 7 | en progreso |
-| `gridspec/` | 1 | 2 | en progreso |
-| `ticker/` | 1 | 4 | en progreso |
-| `figure/` · `cm/` · `patches/` · `collections/` · `image/` · `text/` · `lines/` · `animation/` · `backend/` · `toolkits/` | 0 | — | pendiente |
+| `pyplot/` | 7 | 7 | ✅ completo |
+| `figure/` | 4 | 4 | ✅ completo |
+| `config/` | 3 | 3 | ✅ completo |
+| `gridspec/` | 2 | 2 | ✅ completo |
+| `ticker/` | 4 | 4 | ✅ completo |
+| `lines/` | 2 | 2 | ✅ completo |
+| `axes/` (métodos + arrays) | 30 | 35 | en progreso (faltan algunos gráficos/anotaciones) |
+| `cm/` · `patches/` · `collections/` · `image/` · `text/` · `animation/` · `backend/` · `toolkits/` | 0 | ~18 | pendiente (primitivos/Artists) |
 | raíz (`introduccion.md`) | 1 | — | ✅ |
-| **Total** | **28** | ~75 | — |
-
-### Notas existentes (28)
-
-```text
-introduccion.md
-conceptos_transversales/ → figure_axes, artist, pyplot_vs_oo, anatomia_figura, backend
-pyplot/funciones/    → plt.subplots
-config/              → rcParams, plt.style.use
-axes/                → arrays
-axes/metodos/graficos/ → ax.plot, ax.scatter, ax.bar, ax.barh, ax.hist, ax.contour,
-                         ax.fill_between, ax.fill_betweenx
-axes/metodos/formato/  → ax.grid, ax.legend, ax.set_title, ax.set_xlabel, ax.set_ylabel,
-                         ax.set_xticks, ax.set_yticks, ax.tick_params
-gridspec/            → GridSpec
-ticker/              → Locators
-```
+| **Total** | **58** | ~75 | — |
 
 ### Cambios de sincronización aplicados
 
-- Conteo corregido: **23** notas reales (antes decía "26").
+- Conteo corregido: 23 → **58** notas reales tras los lotes de conceptos + relleno.
 - Eliminada `REPORTE_REFACTORIZACION.md` del árbol y de notas relacionadas (no existe en disco).
 - `plt.style.use.md` reubicada en el árbol a `config/` (donde está en disco), no en `pyplot/config/`.
-- Integrado el antiguo esqueleto pendiente (`<details>`) dentro del árbol, en sus carpetas, como hojas sin `✅`.
-- Añadidas marcas `✅` a las 23 notas existentes y sección "Estado actual".
+- Integrado el antiguo esqueleto pendiente (`<details>`) dentro del árbol, en sus carpetas.
+- Añadidas marcas `✅` a las 58 notas existentes y sección "Estado actual".
+- Pendiente: módulos de Artists primitivos (`patches/`, `cm/`, `collections/`, `image/`, `text/`, `animation/`, `backend/`, `toolkits/mplot3d/`).
 
 ### Próximos pasos sugeridos
 
