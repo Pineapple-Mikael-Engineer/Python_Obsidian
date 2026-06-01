@@ -26,53 +26,63 @@ draft: true
 ```text
 NumPy/
 │
-├── 📁 conceptos_transversales/
-│   ├── concepto_ndarray
-│   ├── concepto_broadcasting.md
-│   ├── concepto_vectorizacion.md
-│   ├── concepto_shape.md
-│   ├── concepto_dtype.md
-│   ├── concepto_views_vs_copias.md
-│   ├── concepto_indexing.md
-│   ├── concepto_contiguidad_memoria.md
-│   ├── concepto_ufuncs.md
-│   └── concepto_axis_parametro.md
+├── 📁 conceptos_transversales/        (10/10 ✅ completo)
+│   ├── ✅ concepto_ndarray.md
+│   ├── ✅ concepto_broadcasting.md
+│   ├── ✅ concepto_vectorizacion.md
+│   ├── ✅ concepto_shape.md
+│   ├── ✅ concepto_dtype.md
+│   ├── ✅ concepto_views_vs_copias.md
+│   ├── ✅ concepto_indexing.md
+│   ├── ✅ concepto_contiguidad_memoria.md
+│   ├── ✅ concepto_ufuncs.md
+│   └── ✅ concepto_axis_parametro.md
 │
 ├── 📁 np/
 │   │
-│   ├── 📁 creacion/
-│   │   ├── np.array.md
-│   │   ├── np.zeros.md
-│   │   ├── np.ones.md
+│   ├── 📁 creacion/                   (5/11 ✅)
+│   │   ├── ✅ np.array.md
+│   │   ├── ✅ np.zeros.md
+│   │   ├── ✅ np.ones.md
 │   │   ├── np.empty.md
-│   │   ├── np.arange.md
-│   │   ├── np.linspace.md
+│   │   ├── ✅ np.arange.md
+│   │   ├── ✅ np.linspace.md
 │   │   ├── np.logspace.md
 │   │   ├── np.eye.md
 │   │   ├── np.identity.md
 │   │   ├── np.full.md
 │   │   └── np.fromfunction.md
 │   │
-│   ├── 📁 manipulacion_forma/
-│   │   ├── np.reshape.md
-│   │   ├── np.ravel.md
-│   │   ├── np.transpose.md
-│   │   ├── np.moveaxis.md
-│   │   ├── np.swapaxes.md
-│   │   ├── np.concatenate.md
-│   │   ├── np.stack.md
-│   │   ├── np.vstack.md
-│   │   ├── np.hstack.md
-│   │   ├── np.dstack.md
-│   │   ├── np.column_stack.md
-│   │   ├── np.split.md
-│   │   ├── np.vsplit.md
-│   │   ├── np.hsplit.md
-│   │   ├── np.expand_dims.md
-│   │   ├── np.squeeze.md
-│   │   ├── np.tile.md
-│   │   ├── np.repeat.md
-│   │   └── np.roll.md
+│   ├── 📁 manipulacion_forma/         (19/19 ✅ completo · subdividida por conveniencia)
+│   │   │
+│   │   ├── 📁 cambio_forma/
+│   │   │   ├── ✅ np.reshape.md
+│   │   │   ├── ✅ np.ravel.md
+│   │   │   ├── ✅ np.squeeze.md
+│   │   │   └── ✅ np.expand_dims.md
+│   │   │
+│   │   ├── 📁 reordenar_ejes/
+│   │   │   ├── ✅ np.transpose.md
+│   │   │   ├── ✅ np.moveaxis.md
+│   │   │   └── ✅ np.swapaxes.md
+│   │   │
+│   │   ├── 📁 combinar/
+│   │   │   ├── ✅ np.concatenate.md
+│   │   │   ├── ✅ np.stack.md
+│   │   │   ├── ✅ np.vstack.md
+│   │   │   ├── ✅ np.hstack.md
+│   │   │   ├── ✅ np.dstack.md
+│   │   │   └── ✅ np.column_stack.md
+│   │   │
+│   │   ├── 📁 dividir/
+│   │   │   ├── ✅ np.split.md
+│   │   │   ├── ✅ np.vsplit.md
+│   │   │   └── ✅ np.hsplit.md
+│   │   │
+│   │   └── 📁 repetir_desplazar/
+│   │       ├── ✅ np.tile.md
+│   │       ├── ✅ np.repeat.md
+│   │       └── ✅ np.roll.md
 │   │
 │   ├── 📁 seleccion/
 │   │   ├── np.where.md
@@ -111,34 +121,46 @@ NumPy/
 │   │   ├── np.sign.md
 │   │   └── np.ceil.md
 │   │
-│   ├── 📁 reducciones/
-│   │   ├── np.sum.md
-│   │   ├── np.cumsum.md
-│   │   ├── np.nancumsum.md
-│   │   ├── np.prod.md
-│   │   ├── np.cumprod.md
-│   │   ├── np.nancumprod.md
-│   │   ├── np.diff.md
-│   │   ├── np.gradient.md
-│   │   ├── np.trapz.md
-│   │   ├── np.mean.md
-│   │   ├── np.median.md
-│   │   ├── np.average.md
-│   │   ├── np.std.md
-│   │   ├── np.var.md
-│   │   ├── np.min.md
-│   │   ├── np.max.md
-│   │   ├── np.ptp.md
-│   │   ├── np.argmin.md
-│   │   ├── np.argmax.md
-│   │   ├── np.nanmin.md
-│   │   ├── np.nanmax.md
-│   │   ├── np.nanargmin.md
-│   │   ├── np.nanargmax.md
-│   │   ├── np.nansum.md
-│   │   ├── np.nanmean.md
-│   │   ├── np.nanstd.md
-│   │   └── np.nanvar.md
+│   ├── 📁 reducciones/                (17/27 ✅ · subdividida por conveniencia)
+│   │   │
+│   │   ├── 📁 agregacion/
+│   │   │   ├── ✅ np.sum.md
+│   │   │   ├── ✅ np.prod.md
+│   │   │   ├── ✅ np.cumsum.md
+│   │   │   └── ✅ np.cumprod.md
+│   │   │
+│   │   ├── 📁 promedios/
+│   │   │   ├── ✅ np.mean.md
+│   │   │   ├── ✅ np.median.md
+│   │   │   ├── ✅ np.average.md
+│   │   │   ├── ✅ np.std.md
+│   │   │   └── ✅ np.var.md
+│   │   │
+│   │   ├── 📁 extremos/
+│   │   │   ├── ✅ np.min.md
+│   │   │   ├── ✅ np.max.md
+│   │   │   ├── ✅ np.ptp.md
+│   │   │   ├── ✅ np.argmin.md
+│   │   │   └── ✅ np.argmax.md
+│   │   │
+│   │   ├── 📁 diferencial/
+│   │   │   ├── ✅ np.diff.md
+│   │   │   ├── ✅ np.gradient.md
+│   │   │   └── ✅ np.trapz.md
+│   │   │
+│   │   └── 📁 nan_safe/                (pendiente · variantes que ignoran NaN)
+│   │       ├── np.nansum.md
+│   │       ├── np.nanprod.md
+│   │       ├── np.nancumsum.md
+│   │       ├── np.nancumprod.md
+│   │       ├── np.nanmean.md
+│   │       ├── np.nanmedian.md
+│   │       ├── np.nanstd.md
+│   │       ├── np.nanvar.md
+│   │       ├── np.nanmin.md
+│   │       ├── np.nanmax.md
+│   │       ├── np.nanargmin.md
+│   │       └── np.nanargmax.md
 │   │
 │   ├── 📁 estadisticas/
 │   │   ├── np.corrcoef.md
@@ -364,6 +386,44 @@ NumPy/
     ├── np.testing.assert_array_almost_equal.md
     └── np.testing.assert_string_equal.md
 ```
+
+---
+
+## 📊 Estado actual de implementación
+
+> Sincronizado con el disco. `✅` = nota creada · sin marca = esqueleto pendiente.
+> El resto del árbol es el **plan/roadmap** de la librería.
+
+| Carpeta | Existentes | Plan | Estado |
+|---------|-----------|------|--------|
+| `conceptos_transversales/` | 10 | 10 | ✅ núcleo completo |
+| `np/creacion/` | 5 | 11 | en progreso |
+| `np/manipulacion_forma/` | 19 | 19 | ✅ completo (subdividida) |
+| `np/reducciones/` | 17 | 27 | en progreso (subdividida; falta `nan_safe/`) |
+| **Total** | **51** | — | — |
+
+### Notas existentes
+
+```text
+conceptos_transversales/  → ndarray, broadcasting, vectorizacion, shape, dtype,
+                            views_vs_copias, indexing, contiguidad_memoria, ufuncs, axis_parametro
+np/creacion/              → np.array, np.zeros, np.ones, np.arange, np.linspace
+np/manipulacion_forma/    → COMPLETO (19): cambio_forma, reordenar_ejes, combinar, dividir, repetir_desplazar
+np/reducciones/
+    agregacion/           → np.sum, np.prod, np.cumsum, np.cumprod
+    promedios/            → np.mean, np.median, np.average, np.std, np.var
+    extremos/             → np.min, np.max, np.ptp, np.argmin, np.argmax
+    diferencial/          → np.diff, np.gradient, np.trapz
+```
+
+### Cambios de estructura aplicados
+
+- `manipulacion_forma/` se **subdividió** en `cambio_forma/`, `reordenar_ejes/`, `combinar/`,
+  `dividir/` y `repetir_desplazar/` (19 funciones en plano era difícil de navegar).
+- `reducciones/` se **subdividió** en `agregacion/`, `promedios/`, `extremos/`, `diferencial/`
+  y `nan_safe/` (27 funciones en plano). El bloque `nan_safe/` agrupa todas las variantes `nan*`
+  que ignoran NaN, pendientes de crear.
+- Corregido el wikilink `concepto_dtype_sistema` → `concepto_dtype` (canónico) en `concepto_ndarray`.
 
 ---
 

@@ -196,7 +196,7 @@ Para entender cualquier operacion en NumPy, preguntar:
 ## Relacion con otros conceptos
 
 - [[concepto_shape]]
-- [[concepto_dtype_sistema]]
+- [[concepto_dtype]]
 - [[concepto_contiguidad_memoria]]
 - [[concepto_broadcasting]]
 - [[concepto_vectorizacion]]
