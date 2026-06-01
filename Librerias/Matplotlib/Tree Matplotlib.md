@@ -19,7 +19,7 @@ draft: true
 | **Función de pyplot** | `pyplot/funciones/` | `pyplot/funciones/plt.subplots.md` |
 | **Clase / objeto** | `<modulo>/` | `lines/Line2D.md`, `figure/Figure.md` |
 | **Config** | `config/` | `config/rcParams.md` |
-| **Concepto transversal** | `conceptos_transversales/` (pendiente) | `concepto_figure_axes.md` |
+| **Concepto transversal** | `conceptos_transversales/` | `concepto_figure_axes.md` |
 
 ---
 
@@ -29,6 +29,13 @@ draft: true
 Matplotlib/
 │
 ├── ✅ introduccion.md
+│
+├── 📁 conceptos_transversales/        (5/5 ✅ · modelo mental)
+│   ├── ✅ concepto_figure_axes.md
+│   ├── ✅ concepto_artist.md
+│   ├── ✅ concepto_pyplot_vs_oo.md
+│   ├── ✅ concepto_anatomia_figura.md
+│   └── ✅ concepto_backend.md
 │
 ├── 📁 pyplot/                         (1/7)
 │   └── 📁 funciones/
@@ -151,6 +158,7 @@ Matplotlib/
 
 | Carpeta | Existentes | Plan | Estado |
 |---------|-----------|------|--------|
+| `conceptos_transversales/` | 5 | 5 | ✅ completo (modelo mental) |
 | `axes/` (métodos + arrays) | 17 | 35 | en progreso |
 | `config/` | 2 | 3 | en progreso |
 | `pyplot/` | 1 | 7 | en progreso |
@@ -158,12 +166,13 @@ Matplotlib/
 | `ticker/` | 1 | 4 | en progreso |
 | `figure/` · `cm/` · `patches/` · `collections/` · `image/` · `text/` · `lines/` · `animation/` · `backend/` · `toolkits/` | 0 | — | pendiente |
 | raíz (`introduccion.md`) | 1 | — | ✅ |
-| **Total** | **23** | ~70 | — |
+| **Total** | **28** | ~75 | — |
 
-### Notas existentes (23)
+### Notas existentes (28)
 
 ```text
 introduccion.md
+conceptos_transversales/ → figure_axes, artist, pyplot_vs_oo, anatomia_figura, backend
 pyplot/funciones/    → plt.subplots
 config/              → rcParams, plt.style.use
 axes/                → arrays
@@ -185,8 +194,9 @@ ticker/              → Locators
 
 ### Próximos pasos sugeridos
 
+- ✅ `conceptos_transversales/` creada (figure_axes, artist, pyplot_vs_oo, anatomia_figura, backend).
 - Crear las clases base que vertebran el modelo de objetos: `figure/Figure.md`, `axes/Axes.md`, `lines/Line2D.md`.
-- Considerar una carpeta `conceptos_transversales/` (modelo `Figure → Axes → Artist`, backends, el bucle de render) al estilo del vault NumPy.
+- Rellenar las hojas pendientes (pyplot, figure/metodos, axes/metodos restantes, ticker, patches…).
 
 ---
 
