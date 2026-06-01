@@ -54,7 +54,7 @@ Matplotlib/
 │       ├── ✅ fig.tight_layout.md
 │       └── ✅ fig.add_subplot.md
 │
-├── 📁 axes/                           (30/35)
+├── 📁 axes/                           (30/30 ✅ completo)
 │   ├── ✅ arrays.md
 │   ├── ✅ Axes.md
 │   └── 📁 metodos/
@@ -110,44 +110,44 @@ Matplotlib/
 │   ├── ✅ DateFormatter.md
 │   └── ✅ FuncFormatter.md
 │
-├── 📁 cm/                             (0/2)
-│   ├── Colormaps.md
-│   └── ListedColormap.md
+├── 📁 cm/                             (2/2 ✅ completo)
+│   ├── ✅ Colormaps.md
+│   └── ✅ ListedColormap.md
 │
-├── 📁 patches/                        (0/5)
-│   ├── Patch.md
-│   ├── Rectangle.md
-│   ├── Polygon.md
-│   ├── Circle.md
-│   └── Ellipse.md
+├── 📁 patches/                        (5/5 ✅ completo)
+│   ├── ✅ Patch.md
+│   ├── ✅ Rectangle.md
+│   ├── ✅ Polygon.md
+│   ├── ✅ Circle.md
+│   └── ✅ Ellipse.md
 │
-├── 📁 collections/                    (0/2)
-│   ├── PathCollection.md
-│   └── QuadContourSet.md
+├── 📁 collections/                    (2/2 ✅ completo)
+│   ├── ✅ PathCollection.md
+│   └── ✅ QuadContourSet.md
 │
-├── 📁 image/                          (0/2)
-│   ├── imread.md
-│   └── imsave.md
+├── 📁 image/                          (2/2 ✅ completo)
+│   ├── ✅ imread.md
+│   └── ✅ imsave.md
 │
-├── 📁 text/                           (0/2)
-│   ├── Text.md
-│   └── Annotation.md
+├── 📁 text/                           (2/2 ✅ completo)
+│   ├── ✅ Text.md
+│   └── ✅ Annotation.md
 │
 ├── 📁 lines/                          (2/2 ✅ completo)
 │   ├── ✅ Line2D.md
 │   └── ✅ marker.md
 │
-├── 📁 animation/                      (0/1)
-│   └── FuncAnimation.md
+├── 📁 animation/                      (1/1 ✅ completo)
+│   └── ✅ FuncAnimation.md
 │
-├── 📁 backend/                        (0/2)
-│   ├── backends.md
-│   └── cambiar_backend.md
+├── 📁 backend/                        (2/2 ✅ completo)
+│   ├── ✅ backends.md
+│   └── ✅ cambiar_backend.md
 │
 └── 📁 toolkits/
-    └── 📁 mplot3d/                    (0/2)
-        ├── plot_surface.md
-        └── axes3d.md
+    └── 📁 mplot3d/                    (2/2 ✅ completo)
+        ├── ✅ plot_surface.md
+        └── ✅ axes3d.md
 ```
 
 ---
@@ -165,10 +165,10 @@ Matplotlib/
 | `gridspec/` | 2 | 2 | ✅ completo |
 | `ticker/` | 4 | 4 | ✅ completo |
 | `lines/` | 2 | 2 | ✅ completo |
-| `axes/` (métodos + arrays) | 30 | 35 | en progreso (faltan algunos gráficos/anotaciones) |
-| `cm/` · `patches/` · `collections/` · `image/` · `text/` · `animation/` · `backend/` · `toolkits/` | 0 | ~18 | pendiente (primitivos/Artists) |
+| `axes/` (métodos + arrays) | 30 | 30 | ✅ completo |
+| `patches/` · `cm/` · `collections/` · `image/` · `text/` · `animation/` · `backend/` · `toolkits/mplot3d/` | 18 | 18 | ✅ completo (Artists primitivos) |
 | raíz (`introduccion.md`) | 1 | — | ✅ |
-| **Total** | **58** | ~75 | — |
+| **Total** | **76** | **76** | 🎉 roadmap completo |
 
 ### Cambios de sincronización aplicados
 
@@ -177,7 +177,7 @@ Matplotlib/
 - `plt.style.use.md` reubicada en el árbol a `config/` (donde está en disco), no en `pyplot/config/`.
 - Integrado el antiguo esqueleto pendiente (`<details>`) dentro del árbol, en sus carpetas.
 - Añadidas marcas `✅` a las 58 notas existentes y sección "Estado actual".
-- Pendiente: módulos de Artists primitivos (`patches/`, `cm/`, `collections/`, `image/`, `text/`, `animation/`, `backend/`, `toolkits/mplot3d/`).
+- ✅ Completados los módulos de Artists primitivos (`patches/`, `cm/`, `collections/`, `image/`, `text/`, `animation/`, `backend/`, `toolkits/mplot3d/`) — **roadmap del Tree al 100% (76 notas)**.
 
 ### Próximos pasos sugeridos
 
