@@ -308,47 +308,47 @@ NumPy/
 │       ├── ✅ np.linalg.matrix_power.md
 │       └── ✅ np.linalg.matrix_transpose.md
 │
-├── 📁 np.random/
+├── 📁 np.random/                      (28/28 ✅ completo · submódulo · API legacy)
 │   │
 │   ├── 📁 semilla_estado/
-│   │   ├── np.random.seed.md
-│   │   ├── np.random.get_state.md
-│   │   └── np.random.set_state.md
+│   │   ├── ✅ np.random.seed.md
+│   │   ├── ✅ np.random.get_state.md
+│   │   └── ✅ np.random.set_state.md
 │   │
 │   ├── 📁 uniformes/
-│   │   ├── np.random.rand.md
-│   │   ├── np.random.random.md
-│   │   ├── np.random.random_sample.md
-│   │   ├── np.random.ranf.md
-│   │   ├── np.random.sample.md
-│   │   └── np.random.uniform.md
+│   │   ├── ✅ np.random.rand.md
+│   │   ├── ✅ np.random.random.md
+│   │   ├── ✅ np.random.random_sample.md   (alias de random)
+│   │   ├── ✅ np.random.ranf.md            (alias de random)
+│   │   ├── ✅ np.random.sample.md          (alias de random)
+│   │   └── ✅ np.random.uniform.md
 │   │
 │   ├── 📁 normales/
-│   │   ├── np.random.randn.md
-│   │   ├── np.random.standard_normal.md
-│   │   └── np.random.normal.md
+│   │   ├── ✅ np.random.randn.md
+│   │   ├── ✅ np.random.standard_normal.md
+│   │   └── ✅ np.random.normal.md
 │   │
 │   ├── 📁 discretas/
-│   │   ├── np.random.randint.md
-│   │   ├── np.random.random_integers.md
-│   │   ├── np.random.binomial.md
-│   │   ├── np.random.poisson.md
-│   │   └── np.random.choice.md
+│   │   ├── ✅ np.random.randint.md
+│   │   ├── ✅ np.random.random_integers.md (⚠️ deprecada → randint)
+│   │   ├── ✅ np.random.binomial.md
+│   │   ├── ✅ np.random.poisson.md
+│   │   └── ✅ np.random.choice.md
 │   │
 │   ├── 📁 continuas_especiales/
-│   │   ├── np.random.exponential.md
-│   │   ├── np.random.gamma.md
-│   │   ├── np.random.beta.md
-│   │   ├── np.random.chisquare.md
-│   │   ├── np.random.f.md
-│   │   ├── np.random.t.md
-│   │   ├── np.random.laplace.md
-│   │   ├── np.random.logistic.md
-│   │   └── np.random.lognormal.md
+│   │   ├── ✅ np.random.exponential.md
+│   │   ├── ✅ np.random.gamma.md
+│   │   ├── ✅ np.random.beta.md
+│   │   ├── ✅ np.random.chisquare.md
+│   │   ├── ✅ np.random.f.md
+│   │   ├── ✅ np.random.t.md
+│   │   ├── ✅ np.random.laplace.md
+│   │   ├── ✅ np.random.logistic.md
+│   │   └── ✅ np.random.lognormal.md
 │   │
 │   └── 📁 permutaciones/
-│       ├── np.random.permutation.md
-│       └── np.random.shuffle.md
+│       ├── ✅ np.random.permutation.md
+│       └── ✅ np.random.shuffle.md
 │
 ├── 📁 np.fft/
 │   ├── np.fft.fft.md
@@ -416,8 +416,9 @@ NumPy/
 | `np/polinomios/` | 6 | 6 | ✅ completo |
 | `np.ndarray/` (atributos+métodos) | 49 | 49 | ✅ completo (15 atrib + 34 métodos) |
 | `np.linalg/` | 22 | 22 | ✅ completo (7 subtemáticas) |
-| **Total** | **200** | — | — |
-|  | | | **🎉 `np/` + `np.ndarray` + `np.linalg` COMPLETOS** |
+| `np.random/` | 28 | 28 | ✅ completo (6 subtemáticas, API legacy) |
+| **Total** | **228** | — | — |
+|  | | | **🎉 `np/` + `np.ndarray` + `np.linalg` + `np.random` COMPLETOS** |
 
 ### Notas existentes
 
@@ -437,6 +438,7 @@ np/polinomios/            → COMPLETO (6): poly1d, polyfit, polyval, polyder, p
 np.ndarray/atributos/     → COMPLETO (15): shape, dtype, size, ndim, itemsize, nbytes, T, real, imag, flat, strides, base, ctypes, data, flags
 np.ndarray/metodos/       → COMPLETO (34): forma(6), seleccion(4), reducciones(14), transformacion(5), serializacion(5)
 np.linalg/                → COMPLETO (22): normas_condiciones(3), determinantes(2), inversas(2), eigen(4), descomposiciones(4), sistemas_ecuaciones(3), productos(4)
+np.random/                → COMPLETO (28): semilla_estado(3), uniformes(6), normales(3), discretas(5), continuas_especiales(9), permutaciones(2)
 ```
 
 ### Cambios de estructura aplicados
