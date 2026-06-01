@@ -1,6 +1,7 @@
 ---
 title: Artist — Todo lo dibujable es un objeto
 aliases:
+  - Artist
   - artist
   - artists
   - modelo de objetos

@@ -30,17 +30,17 @@ Matplotlib/
 │
 ├── ✅ introduccion.md
 │
-├── 📁 conceptos_transversales/        (5/8 · modelo mental)
+├── 📁 conceptos_transversales/        (8/8 ✅ completo · modelo mental)
 │   ├── ✅ concepto_figure_axes.md
 │   ├── ✅ concepto_artist.md
 │   ├── ✅ concepto_pyplot_vs_oo.md
 │   ├── ✅ concepto_anatomia_figura.md
 │   ├── ✅ concepto_backend.md
-│   ├── concepto_color_mapping.md
-│   ├── concepto_property_cycle.md
-│   └── concepto_transforms.md
+│   ├── ✅ concepto_color_mapping.md
+│   ├── ✅ concepto_property_cycle.md
+│   └── ✅ concepto_transforms.md
 │
-├── 📁 pyplot/                         (7/8)
+├── 📁 pyplot/                         (8/8 ✅ completo)
 │   └── 📁 funciones/
 │       ├── ✅ plt.subplots.md
 │       ├── ✅ plt.figure.md
@@ -49,18 +49,18 @@ Matplotlib/
 │       ├── ✅ plt.close.md
 │       ├── ✅ plt.clf.md
 │       ├── ✅ plt.colorbar.md
-│       └── plt.subplot_mosaic.md
+│       └── ✅ plt.subplot_mosaic.md
 │
-├── 📁 figure/                         (4/6)
+├── 📁 figure/                         (6/6 ✅ completo)
 │   ├── ✅ Figure.md
 │   └── 📁 metodos/
 │       ├── ✅ fig.suptitle.md
 │       ├── ✅ fig.tight_layout.md
 │       ├── ✅ fig.add_subplot.md
-│       ├── fig.add_axes.md
-│       └── constrained_layout.md
+│       ├── ✅ fig.add_axes.md
+│       └── ✅ constrained_layout.md
 │
-├── 📁 axes/                           (32/33)
+├── 📁 axes/                           (33/33 ✅ completo)
 │   ├── ✅ arrays.md
 │   ├── ✅ Axes.md
 │   └── 📁 metodos/
@@ -104,7 +104,7 @@ Matplotlib/
 │       │   └── ✅ ax.spines.md
 │       │
 │       └── 📁 composicion/
-│           └── ax.inset_axes.md
+│           └── ✅ ax.inset_axes.md
 │
 ├── 📁 config/                         (3/3 ✅ completo)
 │   ├── ✅ rcParams.md
@@ -125,18 +125,18 @@ Matplotlib/
 │   ├── ✅ Colormaps.md
 │   └── ✅ ListedColormap.md
 │
-├── 📁 colors/                         (0/5 · normalización y mapeo de color)
-│   ├── Colorbar.md
-│   ├── Normalize.md
-│   ├── LogNorm.md
-│   ├── BoundaryNorm.md
-│   └── LinearSegmentedColormap.md
+├── 📁 colors/                         (5/5 ✅ completo · normalización y mapeo de color)
+│   ├── ✅ Colorbar.md
+│   ├── ✅ Normalize.md
+│   ├── ✅ LogNorm.md
+│   ├── ✅ BoundaryNorm.md
+│   └── ✅ LinearSegmentedColormap.md
 │
-├── 📁 legend/                         (0/4 · leyendas)
-│   ├── Legend.md
-│   ├── Personalizacion_Leyendas.md
-│   ├── Multiples_Leyendas.md
-│   └── handles_labels.md
+├── 📁 legend/                         (4/4 ✅ completo · leyendas)
+│   ├── ✅ Legend.md
+│   ├── ✅ Personalizacion_Leyendas.md
+│   ├── ✅ Multiples_Leyendas.md
+│   └── ✅ handles_labels.md
 │
 ├── 📁 patches/                        (5/5 ✅ completo)
 │   ├── ✅ Patch.md
@@ -145,21 +145,21 @@ Matplotlib/
 │   ├── ✅ Circle.md
 │   └── ✅ Ellipse.md
 │
-├── 📁 collections/                    (2/4)
+├── 📁 collections/                    (4/4 ✅ completo)
 │   ├── ✅ PathCollection.md
 │   ├── ✅ QuadContourSet.md
-│   ├── PatchCollection.md
-│   └── LineCollection.md
+│   ├── ✅ PatchCollection.md
+│   └── ✅ LineCollection.md
 │
 ├── 📁 image/                          (2/2 ✅ completo)
 │   ├── ✅ imread.md
 │   └── ✅ imsave.md
 │
-├── 📁 text/                           (2/4)
+├── 📁 text/                           (4/4 ✅ completo)
 │   ├── ✅ Text.md
 │   ├── ✅ Annotation.md
-│   ├── LaTeX_mathtext.md
-│   └── fontdict.md
+│   ├── ✅ LaTeX_mathtext.md
+│   └── ✅ fontdict.md
 │
 ├── 📁 lines/                          (4/4 ✅ completo · incl. referencias de estilo)
 │   ├── ✅ Line2D.md
@@ -175,14 +175,14 @@ Matplotlib/
 │   └── ✅ cambiar_backend.md
 │
 └── 📁 toolkits/
-    └── 📁 mplot3d/                    (2/7)
+    └── 📁 mplot3d/                    (7/7 ✅ completo)
         ├── ✅ plot_surface.md
         ├── ✅ axes3d.md
-        ├── plot_wireframe.md
-        ├── scatter3D.md
-        ├── contour3D.md
-        ├── bar3d.md
-        └── view_init.md
+        ├── ✅ plot_wireframe.md
+        ├── ✅ scatter3D.md
+        ├── ✅ contour3D.md
+        ├── ✅ bar3d.md
+        └── ✅ view_init.md
 ```
 
 ---
@@ -191,24 +191,22 @@ Matplotlib/
 
 > Sincronizado con el disco. `✅` = nota creada · sin marca = pendiente (roadmap).
 
-> **Base v1 (80 notas) completa.** Roadmap ampliado con los bloques 🅱️🅲️🅳️ (+25 pendientes).
+> **Base v1 (80) + expansión 🅱️🅲️🅳️ (25) completas.** Roadmap del Tree al 100%.
 
 | Carpeta | Existentes | Plan | Estado |
 |---------|-----------|------|--------|
-| `conceptos_transversales/` | 5 | 8 | +3 (color_mapping, property_cycle, transforms) |
-| `pyplot/` | 7 | 8 | +1 (subplot_mosaic) |
-| `figure/` | 4 | 6 | +2 (add_axes, constrained_layout) |
-| `config/` · `gridspec/` · `ticker/` | 9 | 9 | ✅ completo |
-| `lines/` (incl. referencias de estilo) | 4 | 4 | ✅ completo |
-| `axes/` (métodos + arrays) | 32 | 33 | +1 (composicion/ax.inset_axes) |
-| `colors/` 🆕 | 0 | 5 | pendiente (Colorbar, Normalize, LogNorm, BoundaryNorm, LinearSegmentedColormap) |
-| `legend/` 🆕 | 0 | 4 | pendiente (Legend, personalización, múltiples, handles) |
-| `collections/` | 2 | 4 | +2 (PatchCollection, LineCollection) |
-| `text/` | 2 | 4 | +2 (LaTeX_mathtext, fontdict) |
-| `toolkits/mplot3d/` | 2 | 7 | +5 (wireframe, scatter3D, contour3D, bar3d, view_init) |
-| `patches/` · `cm/` · `image/` · `animation/` · `backend/` | 16 | 16 | ✅ completo |
+| `conceptos_transversales/` | 8 | 8 | ✅ completo (modelo mental, +color_mapping/property_cycle/transforms) |
+| `pyplot/` | 8 | 8 | ✅ completo |
+| `figure/` | 6 | 6 | ✅ completo |
+| `axes/` (métodos + arrays) | 33 | 33 | ✅ completo |
+| `colors/` 🆕 | 5 | 5 | ✅ completo (Colorbar, Normalize, LogNorm, BoundaryNorm, LinearSegmentedColormap) |
+| `legend/` 🆕 | 4 | 4 | ✅ completo (Legend, personalización, múltiples, handles) |
+| `collections/` | 4 | 4 | ✅ completo |
+| `text/` | 4 | 4 | ✅ completo (+LaTeX_mathtext, fontdict) |
+| `toolkits/mplot3d/` | 7 | 7 | ✅ completo (+wireframe, scatter3D, contour3D, bar3d, view_init) |
+| `config/`·`gridspec/`·`ticker/`·`lines/`·`patches/`·`cm/`·`image/`·`animation/`·`backend/` | 25 | 25 | ✅ completo |
 | raíz (`introduccion.md`) | 1 | — | ✅ |
-| **Total** | **80** | **105** | base ✅ · expansión pendiente (25) |
+| **Total** | **105** | **105** | 🎉 roadmap completo |
 
 ### Cambios de sincronización aplicados
 
