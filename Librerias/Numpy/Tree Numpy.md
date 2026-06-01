@@ -187,23 +187,23 @@ NumPy/
 │   │   ├── ✅ np.setdiff1d.md
 │   │   └── ✅ np.setxor1d.md
 │   │
-│   ├── 📁 io/
-│   │   ├── np.loadtxt.md
-│   │   ├── np.savetxt.md
-│   │   ├── np.genfromtxt.md
-│   │   ├── np.load.md
-│   │   ├── np.save.md
-│   │   ├── np.savez.md
-│   │   ├── np.savez_compressed.md
-│   │   └── np.memmap.md
+│   ├── 📁 io/                         (8/8 ✅ completo)
+│   │   ├── ✅ np.loadtxt.md
+│   │   ├── ✅ np.savetxt.md
+│   │   ├── ✅ np.genfromtxt.md
+│   │   ├── ✅ np.load.md
+│   │   ├── ✅ np.save.md
+│   │   ├── ✅ np.savez.md
+│   │   ├── ✅ np.savez_compressed.md
+│   │   └── ✅ np.memmap.md
 │   │
-│   └── 📁 polinomios/
-│       ├── np.poly1d.md
-│       ├── np.polyfit.md
-│       ├── np.polyval.md
-│       ├── np.polyder.md
-│       ├── np.polyint.md
-│       └── np.roots.md
+│   └── 📁 polinomios/                 (6/6 ✅ completo)
+│       ├── ✅ np.poly1d.md
+│       ├── ✅ np.polyfit.md
+│       ├── ✅ np.polyval.md
+│       ├── ✅ np.polyder.md
+│       ├── ✅ np.polyint.md
+│       └── ✅ np.roots.md
 │
 ├── 📁 np.ndarray/
 │   │
@@ -412,7 +412,10 @@ NumPy/
 | `np/operaciones/` | 26 | 26 | ✅ completo (subdividida en 4 ufunc-grupos) |
 | `np/estadisticas/` | 8 | 8 | ✅ completo |
 | `np/conjuntos/` | 5 | 5 | ✅ completo |
-| **Total** | **115** | — | — |
+| `np/io/` | 8 | 8 | ✅ completo |
+| `np/polinomios/` | 6 | 6 | ✅ completo |
+| **Total** | **129** | — | — |
+|  | | | **🎉 namespace `np/` (funciones) COMPLETO** |
 
 ### Notas existentes
 
@@ -427,6 +430,8 @@ np/seleccion/             → COMPLETO (7): where, take, put, clip, choose, sele
 np/operaciones/           → COMPLETO (26): aritmeticas, trigonometricas, exponenciales_log, redondeo_signo
 np/estadisticas/          → COMPLETO (8): corrcoef, cov, histogram, histogram2d, histogramdd, bincount, digitize, percentile
 np/conjuntos/             → COMPLETO (5): unique, intersect1d, union1d, setdiff1d, setxor1d
+np/io/                    → COMPLETO (8): loadtxt, savetxt, genfromtxt, load, save, savez, savez_compressed, memmap
+np/polinomios/            → COMPLETO (6): poly1d, polyfit, polyval, polyder, polyint, roots
 ```
 
 ### Cambios de estructura aplicados
