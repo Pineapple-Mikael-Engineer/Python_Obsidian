@@ -170,22 +170,22 @@ NumPy/
 │   │       ├── ✅ np.nanargmin.md
 │   │       └── ✅ np.nanargmax.md
 │   │
-│   ├── 📁 estadisticas/
-│   │   ├── np.corrcoef.md
-│   │   ├── np.cov.md
-│   │   ├── np.histogram.md
-│   │   ├── np.histogram2d.md
-│   │   ├── np.histogramdd.md
-│   │   ├── np.bincount.md
-│   │   ├── np.digitize.md
-│   │   └── np.percentile.md
+│   ├── 📁 estadisticas/               (8/8 ✅ completo)
+│   │   ├── ✅ np.corrcoef.md
+│   │   ├── ✅ np.cov.md
+│   │   ├── ✅ np.histogram.md
+│   │   ├── ✅ np.histogram2d.md
+│   │   ├── ✅ np.histogramdd.md
+│   │   ├── ✅ np.bincount.md
+│   │   ├── ✅ np.digitize.md
+│   │   └── ✅ np.percentile.md
 │   │
-│   ├── 📁 conjuntos/
-│   │   ├── np.unique.md
-│   │   ├── np.intersect1d.md
-│   │   ├── np.union1d.md
-│   │   ├── np.setdiff1d.md
-│   │   └── np.setxor1d.md
+│   ├── 📁 conjuntos/                  (5/5 ✅ completo)
+│   │   ├── ✅ np.unique.md
+│   │   ├── ✅ np.intersect1d.md
+│   │   ├── ✅ np.union1d.md
+│   │   ├── ✅ np.setdiff1d.md
+│   │   └── ✅ np.setxor1d.md
 │   │
 │   ├── 📁 io/
 │   │   ├── np.loadtxt.md
@@ -410,7 +410,9 @@ NumPy/
 | `np/reducciones/` | 29 | 29 | ✅ completo (subdividida, incl. `nan_safe/`) |
 | `np/seleccion/` | 7 | 7 | ✅ completo |
 | `np/operaciones/` | 26 | 26 | ✅ completo (subdividida en 4 ufunc-grupos) |
-| **Total** | **102** | — | — |
+| `np/estadisticas/` | 8 | 8 | ✅ completo |
+| `np/conjuntos/` | 5 | 5 | ✅ completo |
+| **Total** | **115** | — | — |
 
 ### Notas existentes
 
@@ -423,6 +425,8 @@ np/manipulacion_forma/    → COMPLETO (19): cambio_forma, reordenar_ejes, combi
 np/reducciones/           → COMPLETO (29): agregacion, promedios, extremos, diferencial, nan_safe
 np/seleccion/             → COMPLETO (7): where, take, put, clip, choose, select, nonzero
 np/operaciones/           → COMPLETO (26): aritmeticas, trigonometricas, exponenciales_log, redondeo_signo
+np/estadisticas/          → COMPLETO (8): corrcoef, cov, histogram, histogram2d, histogramdd, bincount, digitize, percentile
+np/conjuntos/             → COMPLETO (5): unique, intersect1d, union1d, setdiff1d, setxor1d
 ```
 
 ### Cambios de estructura aplicados
