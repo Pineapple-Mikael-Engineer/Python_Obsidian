@@ -4,7 +4,7 @@ draft: false
 ---
 
 
-En Python, **cualquier valor puede ser evaluado en un contexto booleano** (como en una condición  [[01 Condicionales|`if` o `while`]]). Los valores que se evalúan como **`False`** se llaman **falsy**, y los que se evalúan como **`True`** se llaman **truthy**.
+En Python, **cualquier valor puede ser evaluado en un contexto booleano** (como en una condición  [[31 Condicionales/index | `if` o `while`]]). Los valores que se evalúan como **`False`** se llaman **falsy**, y los que se evalúan como **`True`** se llaman **truthy**.
 
 # `bool`: Una Subclase de `int`
 
@@ -84,7 +84,7 @@ for value in truthy_values:
 
 # Ejemplos Prácticos
 
-##  Uso en [[01 Condicionales|Condiciones]]
+##  Uso en [[31 Condicionales/index | Condiciones]]
 
 ```python
 # Verificar si una lista tiene elementos
@@ -136,7 +136,7 @@ print(bool([0]))      # True (lista no vacía)
 print(bool({0: False})) # True (diccionario no vacío)
 ```
 
-## Uso con [[Operadores de Variables|Operadores Lógicos]]
+## Uso con [[Operadores de Variables | Operadores Lógicos]]
 
 ```python
 # Short-circuit evaluation
@@ -200,10 +200,10 @@ if valor:
 
 # Casos de Borde
 > [!error] Importante
-> Leer esta parte con conocimiento de [[POO|POO]]
+> Leer esta parte con conocimiento de [[Python POO | POO]]
 
 
-**Cuidado con estos casos especiales con [[Clases y Objetos|Clases y Objetos]]**
+**Cuidado con estos casos especiales con [[Clases y Objetos | Clases y Objetos]]**
 ```python
 class MiClase:
     def __len__(self):

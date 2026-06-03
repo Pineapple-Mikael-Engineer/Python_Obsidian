@@ -140,7 +140,7 @@ print(a << 2)  # 40  (desplazamiento izquierda)
 
 ## Operador Ternario
 
-El operador ternario es una forma concisa de escribir expresiones [[01 Condicionales|condicionales]]:
+El operador ternario es una forma concisa de escribir expresiones [[31 Condicionales/index | condicionales]]:
 
 ```python
 a, b = 10, 20
