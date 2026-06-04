@@ -15,7 +15,7 @@ obj: pyplot
 tipo: funcion
 
 # --- Comportamiento ---
-retorna: (Figure, dict {nombre: Axes})
+retorna: (Figure, dict {nombre Axes})
 muta_estado: false
 
 draft: false
