@@ -3,7 +3,7 @@ title: Tree VisPy
 tags:
   - vispy
   - meta
-draft: true
+draft: false
 ---
 
 # 🌳 Tree VisPy
@@ -85,20 +85,20 @@ VisPy/
 ## 📊 Estado actual de implementacion
 
 > Rama **limpia** creada desde el commit de skills (`8e98b49`), sin notas de otras librerias.
-> **Roadmap: 0 / ~26 notas redactadas.** Sin marca = pendiente.
+> **Roadmap: ~26 / ~26 notas redactadas.**
 
 | Submodulo | Plan | Estado | Prioridad |
 |-----------|:----:|--------|-----------|
-| `conceptos_transversales/` | 4 | ⬜ pendiente | 🔴 primero (modelo mental) |
-| `vispy.app/` | 3 | ⬜ pendiente | 🔴 base de todo |
-| `vispy.scene/` (SceneCanvas, ViewBox) | 2 | ⬜ pendiente | 🔴 nucleo |
-| `vispy.scene/cameras/` | 3 | ⬜ pendiente | 🟠 alta |
-| `vispy.scene/visuals/2d/` | 4 | ⬜ pendiente | 🟠 alta |
-| `vispy.scene/visuals/3d/` | 3 | ⬜ pendiente | 🟡 media |
-| `vispy.gloo/` | 3 | ⬜ pendiente | 🟡 media |
-| `vispy.color/` | 3 | ⬜ pendiente | 🟡 media |
-| raiz (`introduccion.md`) | 1 | ⬜ pendiente | 🔴 entrada |
-| **Total** | **~26** | **0 creadas** | |
+| `conceptos_transversales/` | 4 | ✅ completo | 🔴 primero (modelo mental) |
+| `vispy.app/` | 3 | ✅ completo | 🔴 base de todo |
+| `vispy.scene/` (SceneCanvas, ViewBox) | 2 | ✅ completo | 🔴 nucleo |
+| `vispy.scene/cameras/` | 3 | ✅ completo | 🟠 alta |
+| `vispy.scene/visuals/2d/` | 4 | ✅ completo | 🟠 alta |
+| `vispy.scene/visuals/3d/` | 3 | ✅ completo | 🟡 media |
+| `vispy.gloo/` | 3 | ✅ completo | 🟡 media |
+| `vispy.color/` | 3 | ✅ completo | 🟡 media |
+| raiz (`introduccion.md`) | 1 | ✅ completo | 🔴 entrada |
+| **Total** | **~26** | **~26 creadas** | |
 
 ### Orden sugerido de relleno
 
