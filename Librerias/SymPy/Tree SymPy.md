@@ -36,7 +36,7 @@ su **nombre real** (`Symbol.md`, `Matrix.md`, `Interval.md`); métodos `Objeto.m
 ```tree
 SymPy/
 │
-├── introduccion.md
+├── ✅ introduccion.md
 │
 ├── 📁 conceptos_transversales/
 │   ├── ✅ concepto_simbolico_vs_numerico.md      # por que SymPy: exacto vs flotante
@@ -171,18 +171,18 @@ SymPy/
 │   └── ✅ sympy.gcd_entero.md                     # igcd, ilcm
 │
 ├── 📁 sympy.geometry/
-│   ├── Point.md
-│   ├── Line.md
-│   ├── Circle.md
-│   └── Polygon.md
+│   ├── ✅ Point.md
+│   ├── ✅ Line.md
+│   ├── ✅ Circle.md
+│   └── ✅ Polygon.md
 │
 ├── 📁 sympy.stats/
-│   ├── sympy.distribuciones.md                # Normal, Die, Bernoulli, Exponential…
-│   └── sympy.E_variance_P.md                  # E, variance, P, density
+│   ├── ✅ sympy.distribuciones.md                # Normal, Die, Bernoulli, Exponential…
+│   └── ✅ sympy.E_variance_P.md                  # E, variance, P, density
 │
 ├── 📁 sympy.physics.units/
-│   ├── sympy.unidades.md                      # Quantity, sistema de unidades
-│   └── sympy.convert_to.md
+│   ├── ✅ sympy.unidades.md                      # Quantity, sistema de unidades
+│   └── ✅ sympy.convert_to.md
 │
 └── 📁 sympy.printing/
     ├── ✅ sympy.pprint.md
@@ -196,7 +196,7 @@ SymPy/
 ## 📊 Estado actual de implementación
 
 > Rama **limpia** creada desde el commit de skills (`8e98b49`), sin notas de otras librerías.
-> **Roadmap: 90 / ~99 notas redactadas.** Sin marca = pendiente.
+> **Roadmap: 99 / ~99 notas redactadas. ✅ COMPLETO.** Sin marca = pendiente.
 
 | Submódulo | Plan | Estado | Prioridad |
 |-----------|:----:|--------|-----------|
@@ -212,12 +212,12 @@ SymPy/
 | `sympy.logic/` | 3 | ✅ **3/3 completo** | 🟢 baja |
 | `sympy.assumptions/` | 2 | ✅ **2/2 completo** | 🟡 media |
 | `sympy.ntheory/` | 4 | ✅ **4/4 completo** | 🟢 baja |
-| `sympy.geometry/` | 4 | ⬜ pendiente | 🟢 opcional |
-| `sympy.stats/` | 2 | ⬜ pendiente | 🟢 opcional |
-| `sympy.physics.units/` | 2 | ⬜ pendiente | 🟢 opcional |
+| `sympy.geometry/` | 4 | ✅ **4/4 completo** | 🟢 opcional |
+| `sympy.stats/` | 2 | ✅ **2/2 completo** | 🟢 opcional |
+| `sympy.physics.units/` | 2 | ✅ **2/2 completo** | 🟢 opcional |
 | `sympy.printing/` | 4 | ✅ **4/4 completo** | 🟡 media |
-| raíz (`introduccion.md`) | 1 | ⬜ pendiente | 🔴 entrada |
-| **Total** | **~99** | **90 creadas** | |
+| raíz (`introduccion.md`) | 1 | ✅ **1/1 completo** | 🔴 entrada |
+| **Total** | **~99** | **99 creadas ✅** | |
 
 ### Orden sugerido de relleno
 
