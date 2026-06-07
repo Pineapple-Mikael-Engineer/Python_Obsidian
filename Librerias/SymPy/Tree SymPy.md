@@ -122,19 +122,19 @@ SymPy/
 │       └── ✅ sympy.rsolve.md
 │
 ├── 📁 sympy.matrices/
-│   ├── Matrix.md
+│   ├── ✅ Matrix.md
 │   ├── 📁 creacion/
-│   │   ├── sympy.eye.md
-│   │   ├── sympy.zeros.md
-│   │   ├── sympy.ones.md
-│   │   └── sympy.diag.md
+│   │   ├── ✅ sympy.eye.md
+│   │   ├── ✅ sympy.zeros.md
+│   │   ├── ✅ sympy.ones.md
+│   │   └── ✅ sympy.diag.md
 │   └── 📁 operaciones/
-│       ├── Matrix.det.md
-│       ├── Matrix.inv.md
-│       ├── Matrix.rref.md
-│       ├── Matrix.eigenvals.md
-│       ├── Matrix.eigenvects.md
-│       └── Matrix.nullspace.md
+│       ├── ✅ Matrix.det.md
+│       ├── ✅ Matrix.inv.md
+│       ├── ✅ Matrix.rref.md
+│       ├── ✅ Matrix.eigenvals.md
+│       ├── ✅ Matrix.eigenvects.md
+│       └── ✅ Matrix.nullspace.md
 │
 ├── 📁 sympy.functions/
 │   ├── 📁 elementales/
@@ -196,7 +196,7 @@ SymPy/
 ## 📊 Estado actual de implementación
 
 > Rama **limpia** creada desde el commit de skills (`8e98b49`), sin notas de otras librerías.
-> **Roadmap: 53 / ~99 notas redactadas.** Sin marca = pendiente.
+> **Roadmap: 64 / ~99 notas redactadas.** Sin marca = pendiente.
 
 | Submódulo | Plan | Estado | Prioridad |
 |-----------|:----:|--------|-----------|
@@ -206,7 +206,7 @@ SymPy/
 | `sympy.polys/` | 11 | ✅ **11/11 completo** | 🟠 alta |
 | `sympy.calculus/` | 10 | ✅ **10/10 completo** | 🔴 núcleo de ingeniería |
 | `sympy.solvers/` | 8 | ✅ **8/8 completo** | 🔴 núcleo de ingeniería |
-| `sympy.matrices/` | 11 | ⬜ pendiente | 🟠 alta |
+| `sympy.matrices/` | 11 | ✅ **11/11 completo** | 🟠 alta |
 | `sympy.functions/` | 9 | ⬜ pendiente | 🟡 media |
 | `sympy.sets/` | 4 | ⬜ pendiente | 🟡 media |
 | `sympy.logic/` | 3 | ⬜ pendiente | 🟢 baja |
@@ -217,7 +217,7 @@ SymPy/
 | `sympy.physics.units/` | 2 | ⬜ pendiente | 🟢 opcional |
 | `sympy.printing/` | 4 | ⬜ pendiente | 🟡 media |
 | raíz (`introduccion.md`) | 1 | ⬜ pendiente | 🔴 entrada |
-| **Total** | **~99** | **53 creadas** | |
+| **Total** | **~99** | **64 creadas** | |
 
 ### Orden sugerido de relleno
 
