@@ -1,5 +1,5 @@
 ---
-title: 90 Herramientas Modernas
+title: Herramientas Modernas
 draft: false
 description: Utilidades del Python moderno para escribir clases — dataclasses, slots, new y Enum
 tags:

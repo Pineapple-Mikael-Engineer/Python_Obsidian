@@ -1,5 +1,5 @@
 ---
-title: 33 MRO y super() Cooperativo
+title: MRO y super() Cooperativo
 draft: false
 description: El orden de resolución de métodos (C3) y cómo super() coopera en herencia múltiple
 tags:

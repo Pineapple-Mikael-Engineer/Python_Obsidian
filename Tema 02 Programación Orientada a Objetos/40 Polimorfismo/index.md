@@ -1,5 +1,5 @@
 ---
-title: 40 Polimorfismo
+title: Polimorfismo
 draft: false
 description: Una misma interfaz, comportamientos distintos según el objeto
 tags:

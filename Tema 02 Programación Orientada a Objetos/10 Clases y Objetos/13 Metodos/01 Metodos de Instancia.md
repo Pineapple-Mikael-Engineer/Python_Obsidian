@@ -1,5 +1,5 @@
 ---
-title: Metodos de Instancia
+title: Métodos de Instancia
 tags:
   - python
   - teoria

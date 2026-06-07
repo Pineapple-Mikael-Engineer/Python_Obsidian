@@ -1,5 +1,5 @@
 ---
-title: 60 Abstraccion
+title: Abstracción
 draft: false
 description: Exponer qué hace un objeto y ocultar cómo — clases abstractas e interfaces
 tags:

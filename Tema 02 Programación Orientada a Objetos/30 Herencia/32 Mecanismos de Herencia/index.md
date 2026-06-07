@@ -1,5 +1,5 @@
 ---
-title: 32 Mecanismos de Herencia
+title: Mecanismos de Herencia
 draft: false
 description: Cómo una subclase reutiliza, reemplaza o amplía lo heredado
 tags:

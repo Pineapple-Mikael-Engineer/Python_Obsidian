@@ -1,5 +1,5 @@
 ---
-title: 00-Referencias
+title: Referencias
 draft: false
 tags:
   - Index

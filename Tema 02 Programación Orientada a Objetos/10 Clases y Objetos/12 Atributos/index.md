@@ -1,5 +1,5 @@
 ---
-title: 12 Atributos
+title: Atributos
 draft: false
 description: El estado del objeto — atributos de instancia frente a atributos de clase y su almacenamiento en __dict__
 tags:

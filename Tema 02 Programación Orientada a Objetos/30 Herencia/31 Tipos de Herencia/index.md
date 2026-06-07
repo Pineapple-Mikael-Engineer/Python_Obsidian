@@ -1,5 +1,5 @@
 ---
-title: 31 Tipos de Herencia
+title: Tipos de Herencia
 draft: false
 description: Clasificación de la herencia según el número y la disposición de las clases base
 tags:

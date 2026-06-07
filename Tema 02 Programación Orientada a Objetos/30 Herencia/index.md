@@ -1,5 +1,5 @@
 ---
-title: 30 Herencia
+title: Herencia
 draft: false
 description: Derivación de clases — reutilización y especialización
 tags:

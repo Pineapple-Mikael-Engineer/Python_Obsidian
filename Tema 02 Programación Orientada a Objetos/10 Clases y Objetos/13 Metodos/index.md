@@ -1,5 +1,5 @@
 ---
-title: 13 Metodos
+title: Métodos
 draft: false
 description: El comportamiento del objeto — métodos de instancia, de clase y estáticos según su primer parámetro
 tags:

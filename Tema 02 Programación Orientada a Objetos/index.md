@@ -1,5 +1,5 @@
 ---
-title: Tema 02 Programación Orientada a Objetos
+title: Programación Orientada a Objetos
 draft: false
 description: El paradigma de objetos en Python — clases, encapsulamiento, herencia, polimorfismo
 tags:
