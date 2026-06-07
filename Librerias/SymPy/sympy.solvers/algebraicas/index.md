@@ -12,10 +12,10 @@ Ecuaciones de una incognita.
 
 ## Notas
 
-- [[sympy.solve | sympy.solve]] — resolutor clasico de proposito general. *(pendiente)*
-- [[sympy.solveset | sympy.solveset]] — resolutor moderno (devuelve conjuntos). *(pendiente)*
-- [[sympy.roots | sympy.roots]] — raices con multiplicidad. *(pendiente)*
-- [[sympy.nsolve | sympy.nsolve]] — raiz numerica. *(pendiente)*
+- [[sympy.solve | sympy.solve]] — resolutor clasico de proposito general.
+- [[sympy.solveset | sympy.solveset]] — resolutor moderno (devuelve conjuntos).
+- [[sympy.roots | sympy.roots]] — raices con multiplicidad.
+- [[sympy.nsolve | sympy.nsolve]] — raiz numerica.
 
 ## Notas relacionadas
 

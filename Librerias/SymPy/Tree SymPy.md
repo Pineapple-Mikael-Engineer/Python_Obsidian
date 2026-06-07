@@ -109,17 +109,17 @@ SymPy/
 │
 ├── 📁 sympy.solvers/
 │   ├── 📁 algebraicas/
-│   │   ├── sympy.solve.md
-│   │   ├── sympy.solveset.md
-│   │   ├── sympy.roots.md
-│   │   └── sympy.nsolve.md
+│   │   ├── ✅ sympy.solve.md
+│   │   ├── ✅ sympy.solveset.md
+│   │   ├── ✅ sympy.roots.md
+│   │   └── ✅ sympy.nsolve.md
 │   ├── 📁 sistemas/
-│   │   ├── sympy.linsolve.md
-│   │   └── sympy.nonlinsolve.md
+│   │   ├── ✅ sympy.linsolve.md
+│   │   └── ✅ sympy.nonlinsolve.md
 │   ├── 📁 diferenciales/
-│   │   └── sympy.dsolve.md
+│   │   └── ✅ sympy.dsolve.md
 │   └── 📁 recurrencias/
-│       └── sympy.rsolve.md
+│       └── ✅ sympy.rsolve.md
 │
 ├── 📁 sympy.matrices/
 │   ├── Matrix.md
@@ -196,7 +196,7 @@ SymPy/
 ## 📊 Estado actual de implementación
 
 > Rama **limpia** creada desde el commit de skills (`8e98b49`), sin notas de otras librerías.
-> **Roadmap: 27 / ~99 notas redactadas.** Sin marca = pendiente.
+> **Roadmap: 35 / ~99 notas redactadas.** Sin marca = pendiente.
 
 | Submódulo | Plan | Estado | Prioridad |
 |-----------|:----:|--------|-----------|
@@ -205,7 +205,7 @@ SymPy/
 | `sympy.simplify/` | 7 | ⬜ pendiente | 🟠 alta |
 | `sympy.polys/` | 11 | ⬜ pendiente | 🟠 alta |
 | `sympy.calculus/` | 10 | ✅ **10/10 completo** | 🔴 núcleo de ingeniería |
-| `sympy.solvers/` | 8 | ⬜ pendiente | 🔴 núcleo de ingeniería |
+| `sympy.solvers/` | 8 | ✅ **8/8 completo** | 🔴 núcleo de ingeniería |
 | `sympy.matrices/` | 11 | ⬜ pendiente | 🟠 alta |
 | `sympy.functions/` | 9 | ⬜ pendiente | 🟡 media |
 | `sympy.sets/` | 4 | ⬜ pendiente | 🟡 media |
@@ -217,7 +217,7 @@ SymPy/
 | `sympy.physics.units/` | 2 | ⬜ pendiente | 🟢 opcional |
 | `sympy.printing/` | 4 | ⬜ pendiente | 🟡 media |
 | raíz (`introduccion.md`) | 1 | ⬜ pendiente | 🔴 entrada |
-| **Total** | **~99** | **27 creadas** | |
+| **Total** | **~99** | **35 creadas** | |
 
 ### Orden sugerido de relleno
 

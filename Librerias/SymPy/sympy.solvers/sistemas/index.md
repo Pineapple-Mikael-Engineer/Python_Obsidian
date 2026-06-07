@@ -12,8 +12,8 @@ Sistemas de ecuaciones.
 
 ## Notas
 
-- [[sympy.linsolve | sympy.linsolve]] — sistemas lineales. *(pendiente)*
-- [[sympy.nonlinsolve | sympy.nonlinsolve]] — sistemas no lineales. *(pendiente)*
+- [[sympy.linsolve | sympy.linsolve]] — sistemas lineales.
+- [[sympy.nonlinsolve | sympy.nonlinsolve]] — sistemas no lineales.
 
 ## Notas relacionadas
 

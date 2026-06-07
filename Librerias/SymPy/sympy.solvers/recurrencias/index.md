@@ -12,7 +12,7 @@ Relaciones de recurrencia.
 
 ## Notas
 
-- [[sympy.rsolve | sympy.rsolve]] — resolver recurrencias. *(pendiente)*
+- [[sympy.rsolve | sympy.rsolve]] — resolver recurrencias.
 
 ## Notas relacionadas
 

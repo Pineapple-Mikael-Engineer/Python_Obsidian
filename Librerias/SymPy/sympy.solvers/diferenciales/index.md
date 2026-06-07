@@ -12,7 +12,7 @@ Ecuaciones diferenciales.
 
 ## Notas
 
-- [[sympy.dsolve | sympy.dsolve]] — resolver EDOs. *(pendiente)*
+- [[sympy.dsolve | sympy.dsolve]] — resolver EDOs.
 
 ## Notas relacionadas
 
