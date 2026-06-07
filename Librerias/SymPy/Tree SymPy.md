@@ -65,15 +65,15 @@ SymPy/
 │
 ├── 📁 sympy.simplify/
 │   ├── 📁 general/
-│   │   ├── sympy.simplify.md
-│   │   ├── sympy.nsimplify.md
-│   │   └── sympy.cancel.md
+│   │   ├── ✅ sympy.simplify.md
+│   │   ├── ✅ sympy.nsimplify.md
+│   │   └── ✅ sympy.cancel.md
 │   ├── 📁 trig_y_radicales/
-│   │   ├── sympy.trigsimp.md
-│   │   ├── sympy.radsimp.md
-│   │   └── sympy.powsimp.md
+│   │   ├── ✅ sympy.trigsimp.md
+│   │   ├── ✅ sympy.radsimp.md
+│   │   └── ✅ sympy.powsimp.md
 │   └── 📁 reescritura/
-│       └── Expr.rewrite.md
+│       └── ✅ Expr.rewrite.md
 │
 ├── 📁 sympy.polys/
 │   ├── ✅ Poly.md
@@ -196,13 +196,13 @@ SymPy/
 ## 📊 Estado actual de implementación
 
 > Rama **limpia** creada desde el commit de skills (`8e98b49`), sin notas de otras librerías.
-> **Roadmap: 46 / ~99 notas redactadas.** Sin marca = pendiente.
+> **Roadmap: 53 / ~99 notas redactadas.** Sin marca = pendiente.
 
 | Submódulo | Plan | Estado | Prioridad |
 |-----------|:----:|--------|-----------|
 | `conceptos_transversales/` | 5 | ✅ **5/5 completo** | 🔴 primero (modelo mental) |
 | `sympy.core/` | 12 | ✅ **12/12 completo** | 🔴 base de todo |
-| `sympy.simplify/` | 7 | ⬜ pendiente | 🟠 alta |
+| `sympy.simplify/` | 7 | ✅ **7/7 completo** | 🟠 alta |
 | `sympy.polys/` | 11 | ✅ **11/11 completo** | 🟠 alta |
 | `sympy.calculus/` | 10 | ✅ **10/10 completo** | 🔴 núcleo de ingeniería |
 | `sympy.solvers/` | 8 | ✅ **8/8 completo** | 🔴 núcleo de ingeniería |
@@ -217,7 +217,7 @@ SymPy/
 | `sympy.physics.units/` | 2 | ⬜ pendiente | 🟢 opcional |
 | `sympy.printing/` | 4 | ⬜ pendiente | 🟡 media |
 | raíz (`introduccion.md`) | 1 | ⬜ pendiente | 🔴 entrada |
-| **Total** | **~99** | **46 creadas** | |
+| **Total** | **~99** | **53 creadas** | |
 
 ### Orden sugerido de relleno
 
