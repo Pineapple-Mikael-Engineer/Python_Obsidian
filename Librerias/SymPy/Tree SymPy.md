@@ -1,5 +1,8 @@
 ---
 title: Tree SymPy
+tags:
+  - sympy
+  - meta
 draft: true
 ---
 

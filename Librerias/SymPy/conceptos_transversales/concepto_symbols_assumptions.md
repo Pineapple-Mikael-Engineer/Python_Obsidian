@@ -9,6 +9,7 @@ tags:
   - concepto
   - fundamentos
 lib: sympy
+mod: sympy
 tipo: concepto
 requiere:
   - concepto_expr_arbol

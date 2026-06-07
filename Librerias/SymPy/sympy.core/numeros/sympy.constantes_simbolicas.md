@@ -9,6 +9,7 @@ tags:
   - concepto
   - core/numeros
 lib: sympy
+mod: sympy.core
 tipo: concepto
 requiere:
   - Integer
