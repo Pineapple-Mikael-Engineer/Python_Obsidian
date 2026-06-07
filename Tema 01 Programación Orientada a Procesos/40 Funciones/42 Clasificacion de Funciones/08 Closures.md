@@ -1,5 +1,6 @@
 ---
 title: Closures
+order: 8
 draft: false
 tags:
   - python

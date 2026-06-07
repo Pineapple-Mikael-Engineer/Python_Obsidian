@@ -1,5 +1,6 @@
 ---
 title: Bytes y Bytearray
+order: 4
 tags:
   - python
   - teoria

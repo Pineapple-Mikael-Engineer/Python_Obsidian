@@ -1,5 +1,6 @@
 ---
 title: Excepciones por Tipo
+order: 3
 draft: false
 tags:
   - python

@@ -1,5 +1,6 @@
 ---
 title: Estructuras de Control
+order: 30
 draft: false
 description: Control del flujo de ejecución — decisión, repetición e interrupción
 tags:

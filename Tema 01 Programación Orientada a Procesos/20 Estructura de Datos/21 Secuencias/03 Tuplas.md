@@ -1,5 +1,6 @@
 ---
 title: Tuplas
+order: 3
 tags:
   - python
   - teoria

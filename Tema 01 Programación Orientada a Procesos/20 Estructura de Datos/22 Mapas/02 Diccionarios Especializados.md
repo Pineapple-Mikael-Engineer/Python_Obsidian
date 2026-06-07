@@ -1,5 +1,6 @@
 ---
 title: Diccionarios Especializados
+order: 2
 draft: false
 tags: [python, teoria, diccionarios]
 ---

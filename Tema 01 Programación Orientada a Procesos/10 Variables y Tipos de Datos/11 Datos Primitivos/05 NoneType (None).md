@@ -1,5 +1,6 @@
 ---
 title: NoneType (None)
+order: 5
 draft: false
 tags: [python, teoria, nonetype]
 ---

@@ -1,5 +1,6 @@
 ---
 title: Datos Primitivos
+order: 11
 draft: false
 tags: [python, teoria, primitivos]
 ---

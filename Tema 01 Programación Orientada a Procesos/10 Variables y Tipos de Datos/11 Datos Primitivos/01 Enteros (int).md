@@ -1,5 +1,6 @@
 ---
 title: Enteros (int)
+order: 1
 draft: false
 tags: [python, teoria, numericos]
 ---

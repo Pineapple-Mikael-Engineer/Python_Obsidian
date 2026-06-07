@@ -1,5 +1,6 @@
 ---
 title: Variables Locales
+order: 1
 tags:
   - python
   - teoria

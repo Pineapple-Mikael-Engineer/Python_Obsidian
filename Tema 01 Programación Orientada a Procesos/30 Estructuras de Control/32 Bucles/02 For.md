@@ -1,5 +1,6 @@
 ---
 title: For
+order: 2
 draft: false
 tags: [python, teoria, bucles]
 ---

@@ -1,5 +1,6 @@
 ---
 title: Excepciones Built-in
+order: 51
 draft: false
 description: Excepciones predefinidas de Python, su jerarquía y categorías
 tags:

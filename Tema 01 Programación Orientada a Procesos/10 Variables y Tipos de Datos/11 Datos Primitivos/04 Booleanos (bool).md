@@ -1,5 +1,6 @@
 ---
 title: Booleanos (bool)
+order: 4
 draft: false
 tags: [python, teoria, booleanos]
 ---

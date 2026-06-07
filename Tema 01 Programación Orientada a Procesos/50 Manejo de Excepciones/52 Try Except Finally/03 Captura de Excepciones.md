@@ -1,5 +1,6 @@
 ---
 title: Captura de Excepciones
+order: 3
 draft: false
 tags: [python, teoria, excepciones]
 ---
