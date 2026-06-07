@@ -1,5 +1,5 @@
 ---
-title: 10 Clases y Objetos
+title: Clases y Objetos
 draft: false
 description: El molde y la instancia — definición de clases, atributos y métodos
 tags:

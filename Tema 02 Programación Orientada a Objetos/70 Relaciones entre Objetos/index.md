@@ -1,5 +1,5 @@
 ---
-title: 70 Relaciones entre Objetos
+title: Relaciones entre Objetos
 draft: false
 description: Cómo se vinculan los objetos — composición, agregación, asociación, dependencia y mixins
 tags:

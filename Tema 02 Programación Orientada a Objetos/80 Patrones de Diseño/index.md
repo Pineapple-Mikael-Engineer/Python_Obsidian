@@ -1,5 +1,5 @@
 ---
-title: 80 Patrones de Diseño
+title: Patrones de Diseño
 draft: false
 description: Soluciones reutilizables a problemas recurrentes de diseño orientado a objetos
 tags:

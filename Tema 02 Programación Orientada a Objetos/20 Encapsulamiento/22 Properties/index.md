@@ -1,5 +1,5 @@
 ---
-title: 22 Properties
+title: Properties
 draft: false
 description: Acceso de atributo respaldado por métodos sin cambiar la sintaxis
 tags:

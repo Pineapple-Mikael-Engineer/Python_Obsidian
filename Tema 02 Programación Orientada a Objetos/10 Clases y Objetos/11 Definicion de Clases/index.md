@@ -1,5 +1,5 @@
 ---
-title: 11 Definicion de Clases
+title: Definición de Clases
 draft: false
 description: Definir una clase es declarar un tipo nuevo — la sentencia class, la instanciación, self y __init__
 tags:

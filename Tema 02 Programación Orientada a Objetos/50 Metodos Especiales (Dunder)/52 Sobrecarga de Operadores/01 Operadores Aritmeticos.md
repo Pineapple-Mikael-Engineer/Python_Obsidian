@@ -1,5 +1,5 @@
 ---
-title: Operadores Aritmeticos
+title: Operadores Aritméticos
 tags:
   - python
   - teoria

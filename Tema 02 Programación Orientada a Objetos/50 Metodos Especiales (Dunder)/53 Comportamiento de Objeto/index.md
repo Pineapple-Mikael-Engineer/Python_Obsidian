@@ -1,5 +1,5 @@
 ---
-title: 53 Comportamiento de Objeto
+title: Comportamiento de Objeto
 draft: false
 description: Dunders que hacen que un objeto propio se comporte como un tipo nativo - contenedor, función y gestor de contexto
 tags:

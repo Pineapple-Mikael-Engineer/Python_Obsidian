@@ -1,5 +1,5 @@
 ---
-title: 52 Sobrecarga de Operadores
+title: Sobrecarga de Operadores
 draft: false
 description: Implementar los dunders de operadores para que un objeto propio responda a + - * == < y demás
 tags:
