@@ -1,5 +1,5 @@
 ---
-title: 01-Sets
+title: Sets
 draft: false
 tags:
   - python

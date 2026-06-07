@@ -1,5 +1,5 @@
 ---
-title: 33 Control de Flujo
+title: Control de Flujo
 draft: false
 tags: [python, teoria, control-de-flujo]
 ---

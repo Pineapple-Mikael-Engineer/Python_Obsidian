@@ -1,5 +1,5 @@
 ---
-title: 50 Manejo de Excepciones
+title: Manejo de Excepciones
 draft: false
 description: Errores controlados — jerarquía, captura y lanzamiento
 tags:

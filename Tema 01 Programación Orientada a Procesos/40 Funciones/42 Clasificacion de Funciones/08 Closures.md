@@ -1,5 +1,5 @@
 ---
-title: 08 Closures
+title: Closures
 draft: false
 tags:
   - python

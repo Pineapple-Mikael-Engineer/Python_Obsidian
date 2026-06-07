@@ -1,5 +1,5 @@
 ---
-title: 11 Datos Primitivos
+title: Datos Primitivos
 draft: false
 tags: [python, teoria, primitivos]
 ---

@@ -1,5 +1,5 @@
 ---
-title: 02 Flotantes (float)
+title: Flotantes (float)
 draft: false
 tags: [python, teoria, numericos]
 ---

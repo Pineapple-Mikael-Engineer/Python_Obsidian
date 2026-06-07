@@ -1,5 +1,5 @@
 ---
-title: 01 Funciones Built-in
+title: Funciones Built-in
 draft: false
 tags:
   - python

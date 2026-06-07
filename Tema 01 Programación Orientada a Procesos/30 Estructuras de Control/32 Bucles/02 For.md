@@ -1,5 +1,5 @@
 ---
-title: 02 For
+title: For
 draft: false
 tags: [python, teoria, bucles]
 ---

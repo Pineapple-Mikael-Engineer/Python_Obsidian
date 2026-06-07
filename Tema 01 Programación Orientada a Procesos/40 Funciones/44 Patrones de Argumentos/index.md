@@ -1,5 +1,5 @@
 ---
-title: 44 Patrones de Argumentos
+title: Patrones de Argumentos
 draft: false
 description: Cómo se pasan argumentos a una función — posición, nombre, defectos y aridad variable
 tags:

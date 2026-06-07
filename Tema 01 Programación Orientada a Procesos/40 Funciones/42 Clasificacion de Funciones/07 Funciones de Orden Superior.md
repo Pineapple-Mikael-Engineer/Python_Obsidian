@@ -1,5 +1,5 @@
 ---
-title: 07 Funciones de Orden Superior
+title: Funciones de Orden Superior
 draft: false
 tags:
   - python

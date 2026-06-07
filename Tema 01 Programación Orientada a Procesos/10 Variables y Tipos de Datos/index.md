@@ -1,5 +1,5 @@
 ---
-title: 10 Variables y Tipos de Datos
+title: Variables y Tipos de Datos
 draft: false
 description: Sistema de tipos de Python — variables, primitivos, mutabilidad y conversión
 tags:

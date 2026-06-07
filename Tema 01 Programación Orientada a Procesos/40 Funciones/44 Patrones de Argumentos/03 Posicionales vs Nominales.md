@@ -1,5 +1,5 @@
 ---
-title: 03 Posicionales vs Nominales
+title: Posicionales vs Nominales
 draft: false
 tags: [python, teoria, funciones]
 ---

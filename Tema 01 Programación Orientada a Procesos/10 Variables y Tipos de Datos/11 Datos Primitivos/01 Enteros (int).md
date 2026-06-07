@@ -1,5 +1,5 @@
 ---
-title: 01 Enteros (int)
+title: Enteros (int)
 draft: false
 tags: [python, teoria, numericos]
 ---

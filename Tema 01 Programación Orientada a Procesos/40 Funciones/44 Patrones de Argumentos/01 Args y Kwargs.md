@@ -1,5 +1,5 @@
 ---
-title: 01 Args y Kwargs
+title: Args y Kwargs
 draft: false
 tags: [python, teoria, funciones]
 ---

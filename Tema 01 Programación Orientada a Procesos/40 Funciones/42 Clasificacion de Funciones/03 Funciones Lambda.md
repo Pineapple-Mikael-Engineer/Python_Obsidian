@@ -1,5 +1,5 @@
 ---
-title: 03 Funciones Lambda
+title: Funciones Lambda
 draft: false
 tags:
   - python

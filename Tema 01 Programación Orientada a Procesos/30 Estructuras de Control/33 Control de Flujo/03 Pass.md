@@ -1,5 +1,5 @@
 ---
-title: 03 Pass
+title: Pass
 draft: false
 tags: [python, teoria, control-de-flujo]
 ---

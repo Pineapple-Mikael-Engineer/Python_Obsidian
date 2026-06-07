@@ -1,5 +1,5 @@
 ---
-title: 01 If-Elif-Else
+title: If-Elif-Else
 draft: false
 tags:
   - python

@@ -1,5 +1,5 @@
 ---
-title: Conversión Implícita (Coerción)
+title: Conversión Implícita
 draft: false
 tags:
   - python

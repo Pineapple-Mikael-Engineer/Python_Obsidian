@@ -1,5 +1,5 @@
 ---
-title: "02 Else y Finally"
+title: Else y Finally
 draft: false
 tags: [python, teoria, excepciones]
 ---

@@ -1,5 +1,5 @@
 ---
-title: 31 Condicionales
+title: Condicionales
 draft: false
 description: Toma de decisiones — ejecución selectiva según la evaluación de condiciones
 tags:

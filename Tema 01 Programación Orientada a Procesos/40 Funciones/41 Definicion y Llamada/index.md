@@ -1,5 +1,5 @@
 ---
-title: Definición y Llamada de Funciones
+title: Definición y Llamada
 tags:
   - python
   - teoria

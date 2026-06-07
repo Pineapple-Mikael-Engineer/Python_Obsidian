@@ -1,5 +1,5 @@
 ---
-title: 01 Break
+title: Break
 draft: false
 tags: [python, teoria, control-de-flujo]
 ---

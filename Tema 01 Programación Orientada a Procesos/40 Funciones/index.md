@@ -1,5 +1,5 @@
 ---
-title: 40 Funciones
+title: Funciones
 draft: false
 description: Abstracción y reutilización mediante funciones en Python
 tags:

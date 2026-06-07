@@ -1,5 +1,5 @@
 ---
-title: 05 Funciones Generadoras
+title: Funciones Generadoras
 draft: false
 tags:
   - python

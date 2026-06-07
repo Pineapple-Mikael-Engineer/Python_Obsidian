@@ -1,5 +1,5 @@
 ---
-title: 51 Excepciones Built-in
+title: Excepciones Built-in
 draft: false
 description: Excepciones predefinidas de Python, su jerarquía y categorías
 tags:

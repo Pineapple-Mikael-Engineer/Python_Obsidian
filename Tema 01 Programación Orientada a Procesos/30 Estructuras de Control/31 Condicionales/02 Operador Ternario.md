@@ -1,5 +1,5 @@
 ---
-title: 02 Operador Ternario
+title: Operador Ternario
 draft: false
 tags:
   - python
