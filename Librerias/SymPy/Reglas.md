@@ -34,15 +34,22 @@ conflicto, manda el estandar base. El **donde** vive cada nota lo define [[Tree 
 ## 2. Indice por carpeta (`index.md`) — OBLIGATORIO
 
 > [!regla]
-> **Cada directorio lleva su `index.md`** como nota madre. Es lo que falto en las otras
-> librerias; aqui no se omite.
+> **Cada directorio lleva su `index.md`** como **nota madre de pleno derecho** —tan importante
+> como una nota de API—, no un simple listado. Debe **aportar informacion nueva**: que es el
+> directorio, el modelo mental y **como se relacionan sus hijos** (cuando usar cada uno).
 
-El `index.md` de una carpeta:
-- Presenta en 1–2 frases que cubre el submodulo/tematica.
-- Lista su **contenido**: subcarpetas (enlazadas con ruta `[[sympy.core/simbolos/index | …]]`)
-  y notas hoja (enlazadas por basename `[[sympy.symbols | …]]`).
-- Marca como *(pendiente)* las notas aun no redactadas.
-- Cierra con `## Notas relacionadas`.
+El `index.md` de una carpeta NO se limita a repetir las descripciones de sus notas. Estructura:
+
+1. `# titulo` y un parrafo que explica **que es** este submodulo/tematica y **su papel** dentro
+   de SymPy (el porque, no solo el que).
+2. Un **ejemplo de codigo unificador** o la idea clave que hilvana las notas de la carpeta.
+3. `## Como se relacionan` (o `## Mapa ...`): una **tabla de decision/comparacion** que diga
+   *cuando usar cada hijo* y como se conectan entre si (p.ej. `solve` vs `solveset`, funcion vs
+   clase-sin-evaluar). Esta es la informacion nueva que justifica el index.
+4. `## Subtemas` / `## Notas`: la lista de hijos, pero anotando **su relacion**, no solo su
+   descripcion. Subcarpetas con ruta `[[sympy.core/simbolos/index | …]]`; notas hoja por basename
+   `[[sympy.symbols | …]]`. Marca *(pendiente)* solo las notas aun no escritas.
+5. `## Notas relacionadas` (padre, Tree, conceptos afines).
 
 Frontmatter de un `index.md`:
 
