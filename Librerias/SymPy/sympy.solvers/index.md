@@ -3,7 +3,7 @@ title: sympy.solvers — sympy.solvers
 tags:
   - sympy
   - indice
-draft: true
+draft: false
 ---
 
 # sympy.solvers

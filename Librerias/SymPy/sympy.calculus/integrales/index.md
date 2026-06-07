@@ -3,7 +3,7 @@ title: sympy.calculus/integrales — integrales
 tags:
   - sympy
   - indice
-draft: true
+draft: false
 ---
 
 # integrales

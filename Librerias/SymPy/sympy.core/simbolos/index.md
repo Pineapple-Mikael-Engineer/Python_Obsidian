@@ -3,7 +3,7 @@ title: sympy.core/simbolos — simbolos
 tags:
   - sympy
   - indice
-draft: true
+draft: false
 ---
 
 # simbolos

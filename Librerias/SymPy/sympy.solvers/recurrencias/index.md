@@ -3,7 +3,7 @@ title: sympy.solvers/recurrencias — recurrencias
 tags:
   - sympy
   - indice
-draft: true
+draft: false
 ---
 
 # recurrencias

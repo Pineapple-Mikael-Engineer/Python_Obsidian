@@ -3,7 +3,7 @@ title: sympy.core — sympy.core
 tags:
   - sympy
   - indice
-draft: true
+draft: false
 ---
 
 # sympy.core

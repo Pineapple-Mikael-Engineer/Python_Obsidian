@@ -3,7 +3,7 @@ title: conceptos_transversales — conceptos_transversales
 tags:
   - sympy
   - indice
-draft: true
+draft: false
 ---
 
 # conceptos_transversales

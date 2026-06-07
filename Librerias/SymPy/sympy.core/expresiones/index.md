@@ -3,7 +3,7 @@ title: sympy.core/expresiones — expresiones
 tags:
   - sympy
   - indice
-draft: true
+draft: false
 ---
 
 # expresiones

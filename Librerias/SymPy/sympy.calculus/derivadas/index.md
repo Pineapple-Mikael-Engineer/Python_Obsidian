@@ -3,7 +3,7 @@ title: sympy.calculus/derivadas — derivadas
 tags:
   - sympy
   - indice
-draft: true
+draft: false
 ---
 
 # derivadas

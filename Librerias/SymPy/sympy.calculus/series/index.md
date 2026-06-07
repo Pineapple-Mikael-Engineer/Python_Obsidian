@@ -3,7 +3,7 @@ title: sympy.calculus/series — series
 tags:
   - sympy
   - indice
-draft: true
+draft: false
 ---
 
 # series

@@ -3,7 +3,7 @@ title: sympy.calculus/limites — limites
 tags:
   - sympy
   - indice
-draft: true
+draft: false
 ---
 
 # limites

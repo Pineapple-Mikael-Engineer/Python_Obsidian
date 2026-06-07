@@ -3,7 +3,7 @@ title: sympy.solvers/diferenciales — diferenciales
 tags:
   - sympy
   - indice
-draft: true
+draft: false
 ---
 
 # diferenciales

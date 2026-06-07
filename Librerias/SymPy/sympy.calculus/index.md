@@ -3,7 +3,7 @@ title: sympy.calculus — sympy.calculus
 tags:
   - sympy
   - indice
-draft: true
+draft: false
 ---
 
 # sympy.calculus

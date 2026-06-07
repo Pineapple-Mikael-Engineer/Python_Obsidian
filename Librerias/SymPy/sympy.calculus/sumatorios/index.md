@@ -3,7 +3,7 @@ title: sympy.calculus/sumatorios — sumatorios
 tags:
   - sympy
   - indice
-draft: true
+draft: false
 ---
 
 # sumatorios

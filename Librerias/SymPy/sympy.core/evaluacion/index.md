@@ -3,7 +3,7 @@ title: sympy.core/evaluacion — evaluacion
 tags:
   - sympy
   - indice
-draft: true
+draft: false
 ---
 
 # evaluacion

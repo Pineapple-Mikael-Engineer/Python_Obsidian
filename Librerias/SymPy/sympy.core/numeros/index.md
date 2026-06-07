@@ -3,7 +3,7 @@ title: sympy.core/numeros — numeros
 tags:
   - sympy
   - indice
-draft: true
+draft: false
 ---
 
 # numeros

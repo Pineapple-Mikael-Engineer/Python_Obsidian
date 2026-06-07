@@ -3,7 +3,7 @@ title: sympy.solvers/algebraicas — algebraicas
 tags:
   - sympy
   - indice
-draft: true
+draft: false
 ---
 
 # algebraicas

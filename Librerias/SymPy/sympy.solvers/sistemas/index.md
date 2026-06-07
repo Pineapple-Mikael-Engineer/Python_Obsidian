@@ -3,7 +3,7 @@ title: sympy.solvers/sistemas — sistemas
 tags:
   - sympy
   - indice
-draft: true
+draft: false
 ---
 
 # sistemas
