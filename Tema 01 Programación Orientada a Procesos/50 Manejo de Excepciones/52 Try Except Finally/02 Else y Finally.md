@@ -1,5 +1,6 @@
 ---
 title: Else y Finally
+order: 2
 draft: false
 tags: [python, teoria, excepciones]
 ---

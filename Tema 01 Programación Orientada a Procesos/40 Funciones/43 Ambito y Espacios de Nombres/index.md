@@ -1,5 +1,6 @@
 ---
 title: Ámbito y Espacios de Nombres
+order: 43
 tags:
   - python
   - teoria

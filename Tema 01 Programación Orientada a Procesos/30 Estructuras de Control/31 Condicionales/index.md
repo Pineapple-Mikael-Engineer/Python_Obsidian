@@ -1,5 +1,6 @@
 ---
 title: Condicionales
+order: 31
 draft: false
 description: Toma de decisiones — ejecución selectiva según la evaluación de condiciones
 tags:

@@ -1,5 +1,6 @@
 ---
 title: Sintaxis Try Except
+order: 1
 draft: false
 tags: [python, teoria, excepciones]
 ---

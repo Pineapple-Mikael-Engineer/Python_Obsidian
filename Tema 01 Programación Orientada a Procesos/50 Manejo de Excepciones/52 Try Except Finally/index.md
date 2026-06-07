@@ -1,5 +1,6 @@
 ---
 title: "Try Except Finally"
+order: 52
 draft: false
 tags: [python, teoria, excepciones]
 ---

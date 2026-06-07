@@ -1,5 +1,6 @@
 ---
 title: Funciones
+order: 40
 draft: false
 description: Abstracción y reutilización mediante funciones en Python
 tags:

@@ -1,5 +1,6 @@
 ---
 title: Funciones de Orden Superior
+order: 7
 draft: false
 tags:
   - python

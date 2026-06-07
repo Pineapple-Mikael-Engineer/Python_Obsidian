@@ -1,5 +1,6 @@
 ---
 title: Jerarquía de Excepciones
+order: 1
 draft: false
 tags:
   - python

@@ -1,5 +1,6 @@
 ---
 title: Secuencias
+order: 21
 tags:
   - python
   - teoria

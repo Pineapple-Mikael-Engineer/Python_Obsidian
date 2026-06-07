@@ -1,5 +1,6 @@
 ---
 title: Funciones Lambda
+order: 3
 draft: false
 tags:
   - python

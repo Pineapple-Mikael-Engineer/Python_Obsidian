@@ -1,5 +1,6 @@
 ---
 title: Comprensiones
+order: 3
 draft: false
 tags: [python, teoria, bucles]
 ---

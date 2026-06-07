@@ -1,5 +1,6 @@
 ---
 title: Variables Globales
+order: 2
 tags:
   - python
   - teoria

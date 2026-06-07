@@ -1,5 +1,6 @@
 ---
 title: While
+order: 1
 draft: false
 tags: [python, teoria, bucles]
 ---

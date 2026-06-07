@@ -1,5 +1,6 @@
 ---
 title: Copia (shallow vs deep)
+order: 3
 tags:
   - python
   - teoria

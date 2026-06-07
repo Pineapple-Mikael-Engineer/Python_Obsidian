@@ -1,5 +1,6 @@
 ---
 title: Decoradores
+order: 6
 draft: false
 tags:
   - python

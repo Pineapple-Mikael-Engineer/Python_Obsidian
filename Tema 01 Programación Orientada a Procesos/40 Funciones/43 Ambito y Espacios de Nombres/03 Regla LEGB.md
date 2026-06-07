@@ -1,5 +1,6 @@
 ---
 title: Regla LEGB
+order: 3
 tags:
   - python
   - teoria
