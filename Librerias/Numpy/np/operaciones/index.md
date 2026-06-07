@@ -8,58 +8,24 @@ draft: false
 
 # np/operaciones — ufuncs element-wise
 
-`operaciones/` agrupa las 26 [[concepto_ufuncs|ufuncs]] (universal functions) de NumPy que operan **element-wise** sobre arrays. Todas comparten la misma interfaz: reciben uno o dos arrays y devuelven un array del mismo shape (o broadcastado).
+`operaciones/` agrupa las [[concepto_ufuncs|ufuncs]] (universal functions) de NumPy que operan **elemento a elemento** sobre arrays de cualquier shape. Son funciones compiladas en C — no bucles Python — y comparten una interfaz uniforme que las distingue de cualquier funcion de Python puro.
 
-## Por que ufuncs
+## Que hace a una ufunc diferente
 
-- **Broadcasting automatico**: alinean shapes sin copiar datos.
-- **Parametros uniformes**: `out=`, `where=`, `dtype=`, `casting=` disponibles en todas.
-- **Vectorizacion**: evitan bucles Python; la operacion se ejecuta en C.
+Cualquier operacion aritmetica o matematica que se escribe con operadores Python (`+`, `-`, `*`, `/`, `**`, `%`) tiene su ufunc equivalente (`np.add`, `np.subtract`, etc.). La diferencia no es el resultado — es la interfaz:
+
+- **`out=`** — escribe el resultado directamente en un buffer preasignado, sin crear un array nuevo. Critico en bucles de calculo iterativo o animacion donde cada allocation importa.
+- **`where=`** — aplica la operacion solo donde una mascara booleana es `True`. Los demas elementos del array `out` quedan intactos.
+- **Broadcasting automatico** — alinean shapes sin copiar datos, identico al comportamiento de los operadores.
 
 ## Subcarpetas
 
-| Subcarpeta | Cantidad | Contenido |
-|---|---|---|
-| [[Librerias/Numpy/np/operaciones/aritmeticas/index\|aritmeticas/]] | 6 | add, subtract, multiply, divide, power, mod |
-| [[Librerias/Numpy/np/operaciones/trigonometricas/index\|trigonometricas/]] | 9 | sin, cos, tan, arcsin, arccos, arctan, sinh, cosh, tanh |
-| [[Librerias/Numpy/np/operaciones/exponenciales_log/index\|exponenciales_log/]] | 7 | exp, expm1, log, log2, log10, sqrt, square |
-| [[Librerias/Numpy/np/operaciones/redondeo_signo/index\|redondeo_signo/]] | 4 | abs, fabs, sign, ceil |
-
-## Patron unificador
-
-Todas las ufuncs siguen el mismo patron: array de entrada → operacion elemento a elemento → array de salida con el mismo shape (o broadcastado):
-
-```python
-import numpy as np
-
-a = np.array([1.0, 4.0, 9.0])
-b = np.array([2.0, 2.0, 2.0])
-
-# Todas operan igual — array → array element-wise
-np.add(a, b)        # [3.  6.  11.]
-np.multiply(a, b)   # [2.  8.  18.]
-np.sqrt(a)          # [1.  2.  3.]
-np.sin(a)           # sin de cada elemento en radianes
-```
-
-### Broadcasting entre subcarpetas
-
-```python
-M = np.ones((3, 4))
-v = np.array([1, 2, 3, 4])   # shape (4,)
-
-# Cualquier ufunc acepta broadcasting
-np.add(M, v)         # suma v a cada fila → shape (3, 4)
-np.multiply(M, v)    # multiplica v a cada fila → shape (3, 4)
-np.power(M, v)       # eleva cada elemento de M a la potencia correspondiente
-```
-
-### Parametro `out` compartido
-
-```python
-resultado = np.empty(4)
-np.add(M[0], v, out=resultado)   # escribe en buffer preasignado, sin copias
-```
+| Subcarpeta | Funciones |
+|---|---|
+| [[Librerias/Numpy/np/operaciones/aritmeticas/index\|aritmeticas/]] | `add`, `subtract`, `multiply`, `divide`, `power`, `mod` — las 6 operaciones basicas como ufuncs |
+| [[Librerias/Numpy/np/operaciones/trigonometricas/index\|trigonometricas/]] | `sin`, `cos`, `tan`, `arcsin`, `arccos`, `arctan`, `sinh`, `cosh`, `tanh` — trabajan en radianes |
+| [[Librerias/Numpy/np/operaciones/exponenciales_log/index\|exponenciales_log/]] | `exp`, `expm1`, `log`, `log2`, `log10`, `sqrt`, `square` — incluye variantes numericamente estables |
+| [[Librerias/Numpy/np/operaciones/redondeo_signo/index\|redondeo_signo/]] | `abs`, `fabs`, `sign`, `ceil` — valor absoluto, signo y redondeo hacia arriba |
 
 ## Notas relacionadas
 

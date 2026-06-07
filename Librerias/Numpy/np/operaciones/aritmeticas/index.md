@@ -8,61 +8,21 @@ draft: false
 
 # np/operaciones/aritmeticas — operaciones aritmeticas basicas (ufuncs)
 
-Las 6 operaciones aritmeticas fundamentales implementadas como [[concepto_ufuncs|ufuncs]]. Son los equivalentes funcionales de los operadores `+ - * / ** %`, pero exponen los parametros `out=`, `where=` y `dtype=` que los operadores no ofrecen.
+Las 6 operaciones aritmeticas fundamentales como [[concepto_ufuncs|ufuncs]]. Son los equivalentes funcionales de los operadores `+ - * / ** %`, con una ventaja clave: exponen `out=` para reusar buffers (critico en bucles de animacion o calculo iterativo), `where=` para aplicacion condicional, y `casting=` para control de tipos. En codigo normal se usan los operadores; las ufuncs aparecen cuando se necesitan esos parametros extra.
 
-## Tabla comparativa: operador vs ufunc
+## Funciones de este grupo
 
 | Operador | ufunc | Descripcion |
 |---|---|---|
-| `a + b` | [[np.add]] | suma elemento a elemento |
+| `a + b` | [[np.add]] | suma elemento a elemento; con `out=resultado` escribe directamente en el array de salida sin crear uno nuevo |
 | `a - b` | [[np.subtract]] | resta elemento a elemento |
-| `a * b` | [[np.multiply]] | multiplicacion elemento a elemento |
-| `a / b` | [[np.divide]] | division verdadera elemento a elemento |
-| `a ** b` | [[np.power]] | potenciacion elemento a elemento |
-| `a % b` | [[np.mod]] | modulo (resto) elemento a elemento |
-
-## Cuando usar la ufunc en vez del operador
-
-```python
-import numpy as np
-
-a = np.array([1.0, 2.0, 3.0])
-b = np.array([4.0, 5.0, 6.0])
-
-# Operador: forma concisa para codigo normal
-resultado = a + b
-
-# ufunc: necesario cuando se requiere out= o where=
-buffer = np.zeros(3)
-np.add(a, b, out=buffer)              # escribe en buffer existente, sin copias
-
-mascara = np.array([True, False, True])
-np.multiply(a, b, where=mascara, out=buffer)   # solo opera donde mascara es True
-```
-
-## Broadcasting
-
-Todas soportan [[concepto_broadcasting|broadcasting]] identico al de sus operadores:
-
-```python
-M = np.ones((3, 4))
-v = np.array([1, 2, 3, 4])   # shape (4,)
-
-np.add(M, v)       # suma v a cada fila → (3, 4)
-np.multiply(M, v)  # multiplica v a cada fila → (3, 4)
-```
-
-## Notas de este grupo
-
-- [[np.add]]
-- [[np.subtract]]
-- [[np.multiply]]
-- [[np.divide]]
-- [[np.power]]
-- [[np.mod]]
+| `a * b` | [[np.multiply]] | multiplicacion elemento a elemento — **no** producto matricial; para eso usar `@` o `np.matmul` |
+| `a / b` | [[np.divide]] | division real, siempre devuelve float; para division entera usar `np.floor_divide` o `//` |
+| `a ** b` | [[np.power]] | potencia elemento a elemento; `x2` puede ser un array (cada elemento elevado a su propio exponente) |
+| `a % b` | [[np.mod]] | modulo (resto de la division); el signo del resultado sigue el signo del divisor — comportamiento de Python, diferente a C |
 
 ## Notas relacionadas
 
 - [[concepto_ufuncs]]
 - [[concepto_broadcasting]]
-- [[Librerias/Numpy/np/operaciones/index|np/operaciones — ufuncs element-wise]]
+- [[Librerias/Numpy/np/operaciones/index\|np/operaciones — ufuncs element-wise]]

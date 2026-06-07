@@ -8,7 +8,9 @@ draft: false
 
 # np.random — generacion de numeros aleatorios (API legacy)
 
-`np.random` es la API legacy de NumPy para generacion de numeros aleatorios; se llama directamente como `np.random.funcion()`. Desde NumPy 1.17 existe la API moderna `numpy.random.Generator` (via `np.random.default_rng()`), que es preferible para codigo nuevo porque permite varios generadores independientes. Esta carpeta documenta la API legacy, que sigue siendo muy usada.
+`numpy.random` es el submodulo de generacion de numeros pseudoaleatorios de NumPy. "Pseudoaleatorio" significa que los numeros son deterministas pero tienen las propiedades estadisticas de numeros aleatorios reales: fijando la semilla (`np.random.seed(n)`) se obtiene exactamente la misma secuencia en cualquier maquina y en cualquier momento — esencial para reproducibilidad en ciencia e investigacion.
+
+Este directorio documenta la **API legacy**: la interfaz funcional directa donde se llama `np.random.normal(...)` sin instanciar ningun objeto. Desde NumPy 1.17 existe la API moderna basada en `Generator`: `rng = np.random.default_rng(seed); rng.normal(...)`. La API moderna permite multiples generadores independientes, no comparte estado global y es mas rapida. Para codigo nuevo, preferir `default_rng`. La API legacy sigue siendo ampliamente usada y es la que aparece en la mayoria de tutoriales y libros.
 
 Agrupa **28 funciones** en 6 subcarpetas.
 
@@ -26,8 +28,8 @@ Agrupa **28 funciones** en 6 subcarpetas.
 ## API moderna (recomendada para codigo nuevo)
 
 ```python
-rng = np.random.default_rng(seed=42)   # Generator independiente
+rng = np.random.default_rng(seed=42)   # Generator independiente, sin estado global
 rng.normal(0, 1, size=(3, 3))
 ```
 
-Ventaja sobre la API legacy: multiples generadores independientes, sin estado global compartido.
+Ventaja clave sobre la API legacy: cada `rng` encapsula su propio estado — multiples generadores pueden coexistir sin interferirse, y ninguna libreria externa puede perturbar la secuencia.

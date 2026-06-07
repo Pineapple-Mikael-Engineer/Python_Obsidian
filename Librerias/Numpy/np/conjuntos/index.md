@@ -1,58 +1,21 @@
 ---
-title: np/conjuntos — operaciones de conjuntos sobre arrays 1D
+title: np/conjuntos — operaciones de teoria de conjuntos
 tags:
   - numpy
   - indice
 draft: false
 ---
 
-# np/conjuntos — operaciones de conjuntos sobre arrays 1D
+# np/conjuntos — operaciones de teoria de conjuntos
 
-`conjuntos/` agrupa las funciones que tratan arrays 1D como conjuntos matematicos. Las operaciones son las clasicas de teoria de conjuntos (union, interseccion, diferencia, diferencia simetrica) mas la obtencion de elementos unicos. A diferencia de los `set` de Python, estas funciones retornan `ndarray` ordenados y soportan tipos numericos de forma eficiente.
+Este grupo trata los elementos de un array 1D como miembros de un conjunto matematico: sin orden relevante, sin duplicados logicos. Las cinco funciones cubren las operaciones clasicas de teoria de conjuntos y devuelven siempre `ndarray` ordenados.
 
-## Comparacion con sets de Python
-
-| Operacion | Python nativo | NumPy |
-|-----------|--------------|-------|
-| Elementos unicos | `set(a)` | [[np.unique]] |
-| Interseccion | `a & b` | [[np.intersect1d]] |
-| Union | `a \| b` | [[np.union1d]] |
-| Diferencia (a - b) | `a - b` | [[np.setdiff1d]] |
-| Diferencia simetrica | `a ^ b` | [[np.setxor1d]] |
-| Tipo de retorno | `set` (desordenado) | `ndarray` (ordenado) |
-| Broadcasting | No | Si (sobre arrays) |
-
-## Tabla de decision
-
-| Necesito… | Funcion |
-|-----------|---------|
-| Elementos sin repeticion de un array | [[np.unique]] |
-| Elementos que estan en ambos arrays | [[np.intersect1d]] |
-| Todos los elementos de ambos arrays sin repetir | [[np.union1d]] |
-| Elementos de A que no estan en B | [[np.setdiff1d]] |
-| Elementos que estan en uno solo de los dos arrays | [[np.setxor1d]] |
-
-## Ejemplo
-
-```python
-import numpy as np
-
-a = np.array([1, 2, 2, 3, 4])
-b = np.array([2, 3, 3, 5])
-
-np.unique(a)            # [1, 2, 3, 4]
-np.intersect1d(a, b)    # [2, 3]
-np.union1d(a, b)        # [1, 2, 3, 4, 5]
-np.setdiff1d(a, b)      # [1, 4]
-np.setxor1d(a, b)       # [1, 4, 5]
-```
-
-> Todas las funciones trabajan sobre los valores unicos internamente, por lo que duplicados en la entrada no afectan el resultado de las operaciones de conjunto.
+Son mas rapidas que los `set` de Python para grandes volumenes numericos porque internamente ordenan los datos con algoritmos O(n log n) sobre arrays contiguos en memoria — sin la sobrecarga de crear objetos Python por elemento. La contrapartida: solo funcionan sobre arrays 1D con tipos comparables.
 
 ## Notas de la carpeta
 
-- [[np.unique]] — elementos unicos ordenados (con opciones para indices e inverso)
-- [[np.intersect1d]] — interseccion de dos arrays
-- [[np.union1d]] — union de dos arrays
-- [[np.setdiff1d]] — diferencia de conjuntos (elementos de a que no estan en b)
-- [[np.setxor1d]] — diferencia simetrica (elementos en uno pero no en ambos)
+- [[np.unique]] — devuelve los elementos unicos de `a` ordenados de menor a mayor. Con `return_index=True`, `return_inverse=True` o `return_counts=True` devuelve informacion adicional que permite reconstruir el array original o contar frecuencias.
+- [[np.intersect1d]] — elementos que estan en ambos arrays simultaneamente. Equivale a `set(a) & set(b)` pero devuelve ndarray ordenado. Maneja duplicados en la entrada de forma transparente.
+- [[np.union1d]] — todos los elementos que aparecen en al menos uno de los dos arrays, sin duplicados. Equivale a `set(a) | set(b)`. El resultado siempre esta ordenado.
+- [[np.setdiff1d]] — elementos que estan en `a` pero no en `b`. Equivale a `set(a) - set(b)`. El orden de los argumentos importa: `setdiff1d(a, b)` es distinto de `setdiff1d(b, a)`.
+- [[np.setxor1d]] — elementos que estan en exactamente uno de los dos arrays, pero no en ambos. Equivale a `set(a) ^ set(b)`. Util para detectar diferencias simetricas entre dos conjuntos de datos.

@@ -1,59 +1,24 @@
 ---
-title: np/estadisticas — funciones de analisis estadistico avanzado
+title: np/estadisticas — analisis estadistico avanzado
 tags:
   - numpy
   - indice
 draft: false
 ---
 
-# np/estadisticas — funciones de analisis estadistico avanzado
+# np/estadisticas — analisis estadistico avanzado
 
-`estadisticas/` agrupa funciones de analisis estadistico que van mas alla de las reducciones basicas (`sum`, `mean`, `std`, `var`) que viven en [[Numpy/np/reducciones/index|reducciones]]. Aqui encontraras correlacion, covarianza, histogramas en 1D/2D/ND, percentiles y herramientas de discretizacion.
+Este grupo cubre el analisis estadistico que va mas alla de los estadisticos de resumen simples. Las funciones de [[Numpy/np/reducciones/index|reducciones]] (suma, media, desviacion estandar) colapsan un array a un solo numero. Las funciones de `estadisticas/` describen la **distribucion** de los datos o la **relacion entre variables**: el resultado es siempre una estructura — una matriz, un par de arrays (conteos + bordes), un vector de cuantiles.
 
-## Tabla de decision
-
-| Necesito… | Funcion |
-|-----------|---------|
-| Coeficiente de correlacion de Pearson entre variables | [[np.corrcoef]] |
-| Matriz de covarianza entre variables | [[np.cov]] |
-| Distribucion de frecuencias de un array 1D | [[np.histogram]] |
-| Histograma bidimensional (densidad 2D) | [[np.histogram2d]] |
-| Histograma N-dimensional | [[np.histogramdd]] |
-| Conteo de enteros no negativos | [[np.bincount]] |
-| Asignar cada valor a un intervalo (bin) | [[np.digitize]] |
-| Percentil o cuantil de un array | [[np.percentile]] |
-
-## Ejemplo: correlacion e histograma
-
-```python
-import numpy as np
-
-# Correlacion entre dos variables
-x = np.array([1, 2, 3, 4, 5])
-y = np.array([2, 4, 5, 4, 5])
-np.corrcoef(x, y)      # matriz 2x2, [0,1] es la correlacion cruzada
-
-# Histograma 1D
-datos = np.random.randn(1000)
-conteos, bordes = np.histogram(datos, bins=20)
-# conteos: frecuencias por intervalo
-# bordes: los 21 limites de los 20 bins
-
-# Percentil
-np.percentile(datos, [25, 50, 75])   # Q1, mediana, Q3
-```
-
-## Relacion con reducciones
-
-Las funciones de `reducciones/` como `np.mean`, `np.std` y `np.var` calculan estadisticos de resumen directamente sobre un array. Las funciones de `estadisticas/` analizan la **distribucion** o la **relacion entre variables**: necesitas mas de un numero para describir el resultado (matrices, arrays de conteos, bordes de bins).
+El grupo se divide en dos ejes: relaciones entre variables (correlacion, covarianza) y distribucion de frecuencias (histogramas, bincount, digitize, percentiles).
 
 ## Notas de la carpeta
 
-- [[np.corrcoef]] — coeficientes de correlacion de Pearson
-- [[np.cov]] — matriz de covarianza
-- [[np.histogram]] — histograma 1D (conteos y bordes de bins)
-- [[np.histogram2d]] — histograma bidimensional
-- [[np.histogramdd]] — histograma N-dimensional
-- [[np.bincount]] — conteo de ocurrencias de enteros no negativos
-- [[np.digitize]] — asignacion de valores a intervalos
-- [[np.percentile]] — percentiles y cuantiles
+- [[np.corrcoef]] — matriz de correlacion de Pearson entre las filas de la entrada. Cada elemento (i,j) es la correlacion lineal normalizada entre las variables i y j, con valores en [-1, 1]. Rapida forma de detectar relaciones lineales entre multiples variables simultaneamente.
+- [[np.cov]] — matriz de covarianza. Similar a `corrcoef` pero sin normalizar: los elementos diagonales son las varianzas de cada variable. Sensible a la escala de los datos; si las unidades son heterogeneas, preferir `corrcoef`.
+- [[np.histogram]] — distribucion de frecuencias de un array 1D: cuenta cuantos valores caen en cada intervalo (bin). Devuelve el par `(conteos, bordes_de_bins)`. No dibuja nada; para visualizar, pasar el resultado a Matplotlib.
+- [[np.histogram2d]] — histograma 2D de dos variables simultaneas. Devuelve una matriz de conteos y los bordes de ambos ejes. Base para generar mapas de calor o densidades conjuntas.
+- [[np.histogramdd]] — generalizacion N-dimensional de `histogram`. El argumento `sample` tiene forma `(N, D)` donde D es la dimension. Util para analisis de datos multivariados.
+- [[np.bincount]] — cuenta cuantas veces aparece cada entero no negativo en `x`. Mas rapido que `histogram` para datos enteros discretos porque no necesita definir bins: el indice del resultado es el valor contado.
+- [[np.digitize]] — asigna cada valor de `x` al bin al que pertenece y devuelve el indice de ese bin. No cuenta; complementa a `histogram` cuando se necesita saber a que intervalo pertenece cada dato individual.
+- [[np.percentile]] — calcula el percentil `q` del array: el valor por debajo del cual cae el `q%` de los datos. `q=50` es la mediana. Soporta multiples percentiles en una sola llamada pasando una lista a `q`.

@@ -8,7 +8,7 @@ draft: false
 
 # np.linalg — inversas
 
-Funciones para invertir matrices. La eleccion depende de si la matriz es cuadrada y no singular, o si puede ser rectangular o singular.
+La inversa de una matriz A es la matriz A^{-1} tal que A A^{-1} = I. Existe solo si A es cuadrada y no singular (det != 0). En la practica, calcular la inversa explicita es a menudo innecesario y numericamente inferior a resolver el sistema directamente con `np.linalg.solve`.
 
 ## Funciones
 
@@ -16,6 +16,12 @@ Funciones para invertir matrices. La eleccion depende de si la matriz es cuadrad
 |---|---|---|
 | [[np.linalg.inv]] | Inversa exacta A^-1 | Matriz cuadrada y no singular |
 | [[np.linalg.pinv]] | Pseudoinversa de Moore-Penrose A^+ | Funciona con rectangulares y singulares |
+
+## Descripcion de cada funcion
+
+**`np.linalg.inv(a)`** — inversa de una matriz cuadrada no singular. Si la matriz es singular o casi singular, lanza `LinAlgError` o devuelve resultados con gran error numerico. Regla: si el objetivo es resolver Ax=b, usar `solve(A, b)` en vez de `inv(A) @ b` — es mas rapido y numericamente mas estable.
+
+**`np.linalg.pinv(a, rcond)`** — pseudoinversa de Moore-Penrose. Funciona con matrices rectangulares (no cuadradas) y singulares. Usa SVD internamente: los valores singulares menores que `rcond` se tratan como cero. Es la generalizacion de la inversa para el caso general.
 
 ## Regla de decision
 
@@ -27,7 +33,7 @@ Funciones para invertir matrices. La eleccion depende de si la matriz es cuadrad
 
 | Caso | Funcion |
 |---|---|
-| Matriz cuadrada, det ≠ 0 | [[np.linalg.inv]] |
+| Matriz cuadrada, det != 0 | [[np.linalg.inv]] |
 | Matriz rectangular (mas filas que columnas) | [[np.linalg.pinv]] |
 | Matriz singular o casi singular | [[np.linalg.pinv]] |
 | Resolver `Ax = b` (no solo invertir) | [[np.linalg.solve]] — preferido sobre `inv` |

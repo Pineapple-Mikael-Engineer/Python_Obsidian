@@ -8,7 +8,7 @@ draft: false
 
 # np.linalg — determinantes
 
-Funciones para calcular el determinante de una matriz cuadrada. La eleccion entre las dos depende del tamano de la matriz y de la precision numerica requerida.
+El determinante es un escalar que caracteriza si una matriz cuadrada es invertible (det != 0) y como transforma volumenes. En la practica, el determinante directo rara vez se necesita; lo que se necesita es saber si el sistema tiene solucion unica, y para eso el rango es mas util.
 
 ## Funciones
 
@@ -17,14 +17,20 @@ Funciones para calcular el determinante de una matriz cuadrada. La eleccion entr
 | [[np.linalg.det]] | Determinante directo (valor escalar) | Puede sufrir overflow/underflow en matrices grandes |
 | [[np.linalg.slogdet]] | Signo + logaritmo del determinante | Numericamente estable para cualquier tamano |
 
+## Descripcion de cada funcion
+
+**`np.linalg.det(a)`** — determinante exacto. Para matrices grandes puede sufrir overflow o underflow porque el calculo implica productos de muchos numeros. Usar con precaucion para matrices de dimension > 20.
+
+**`np.linalg.slogdet(a)`** — devuelve el signo y el logaritmo del valor absoluto del determinante: `(sign, logabsdet)`. Numericamente estable para matrices grandes porque trabaja en escala logaritmica. Para verificar si la matriz es singular: `sign == 0`.
+
 ## Cuando usar cada una
 
 | Situacion | Funcion recomendada |
 |---|---|
-| Matrices pequenas (< 10×10), valor exacto necesario | [[np.linalg.det]] |
+| Matrices pequenas (< 10x10), valor exacto necesario | [[np.linalg.det]] |
 | Matrices grandes o valores extremadamente pequenos/grandes | [[np.linalg.slogdet]] |
 | Calculos de probabilidad (log-verosimilitud, log-det de covarianzas) | [[np.linalg.slogdet]] |
-| Solo necesito saber si det ≠ 0 (invertibilidad) | [[np.linalg.det]] o `matrix_rank` |
+| Solo necesito saber si det != 0 (invertibilidad) | [[np.linalg.det]] o `matrix_rank` |
 
 ## Relacion entre ambas
 

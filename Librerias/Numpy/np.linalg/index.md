@@ -8,7 +8,9 @@ draft: false
 
 # np.linalg — algebra lineal
 
-`np.linalg` es el submodulo de algebra lineal de NumPy. Agrupa **22 funciones** en 7 subcarpetas y cubre las operaciones matriciales fundamentales: resolver sistemas lineales, descomponer matrices, calcular autovalores, normas y determinantes.
+`numpy.linalg` es el submodulo de algebra lineal de NumPy. Resuelve los problemas centrales del algebra lineal numerica: sistemas de ecuaciones, descomposicion de matrices, autovalores, normas e inversas. Internamente usa LAPACK (la biblioteca de referencia en Fortran para algebra lineal numerica), por lo que su rendimiento es comparable a MATLAB.
+
+La diferencia con `scipy.linalg`: NumPy tiene el conjunto esencial; SciPy lo extiende (descomposicion LU, funciones de matrices, solucion de Sylvester, etc.). Para trabajo serio en algebra lineal numerica, SciPy es mas completo; NumPy es suficiente para la mayoria de casos en ciencia de datos y machine learning.
 
 ## Subcarpetas
 
@@ -24,7 +26,7 @@ draft: false
 
 ## Tabla de decision por caso de uso
 
-| Necesito... | Subcarpeta / funcion |
+| Necesito... | Funcion |
 |---|---|
 | Resolver `Ax = b` (sistema cuadrado) | [[np.linalg.solve]] |
 | Resolver sistema sobredeterminado | [[np.linalg.lstsq]] |
@@ -44,7 +46,7 @@ draft: false
 
 ## NumPy vs scipy.linalg
 
-`np.linalg` cubre el conjunto **basico** de algebra lineal. `scipy.linalg` lo extiende con:
+`np.linalg` cubre el conjunto basico de algebra lineal. `scipy.linalg` lo extiende con:
 
 - Factorizacion LU (`scipy.linalg.lu`) — no existe en `np.linalg`
 - Funciones de matrices especiales: `expm`, `logm`, `sqrtm`

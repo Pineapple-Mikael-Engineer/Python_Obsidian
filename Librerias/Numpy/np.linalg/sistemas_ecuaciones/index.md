@@ -8,7 +8,7 @@ draft: false
 
 # np.linalg — sistemas de ecuaciones
 
-Funciones para resolver `Ax = b`. La eleccion depende de la forma de `A` y de si el sistema tiene solucion exacta o aproximada.
+Resolver Ax = b es el problema fundamental del algebra lineal aplicada. Las tres funciones de este directorio cubren los tres casos principales: sistema cuadrado exacto, sistema tensorial, y sistema sobredeterminado (minimos cuadrados).
 
 ## Funciones
 
@@ -17,6 +17,14 @@ Funciones para resolver `Ax = b`. La eleccion depende de la forma de `A` y de si
 | [[np.linalg.solve]] | Exacto: `Ax = b` | Cuadrada (M×M) y no singular |
 | [[np.linalg.tensorsolve]] | Tensorial: `A x = b` con indices multiples | Forma compatible para contraccion tensorial |
 | [[np.linalg.lstsq]] | Minimos cuadrados: `min \|\|Ax - b\|\|` | Cualquier forma (M×N), incluido sobredeterminado |
+
+## Descripcion de cada funcion
+
+**`np.linalg.solve(a, b)`** — resuelve Ax = b cuando A es cuadrada y no singular. Usa factorizacion LU internamente. Es mas rapido y numericamente mas estable que `inv(A) @ b`. Acepta multiples vectores `b` simultaneamente (b puede ser una matriz).
+
+**`np.linalg.lstsq(a, b, rcond)`** — resuelve Ax ≈ b en el sentido de minimos cuadrados: encuentra x que minimiza ||Ax - b||. Funciona con sistemas sobredeterminados (mas ecuaciones que incognitas) y subdeterminados. Usa SVD internamente. Devuelve (solucion, residuales, rango, valores singulares).
+
+**`np.linalg.tensorsolve(a, b, axes)`** — generaliza `solve` a tensores de orden superior: resuelve la ecuacion tensorial sum_j A[...,j] x[j] = b. Para la mayoria de casos `solve` es suficiente.
 
 ## Regla de decision
 

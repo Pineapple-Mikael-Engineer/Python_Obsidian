@@ -8,7 +8,22 @@ draft: false
 
 # np/reducciones/nan_safe — variantes nan* que ignoran NaN
 
-Las 12 funciones de esta subcarpeta son equivalentes a sus contrapartes normales pero con `skipnan=True` implicito: detectan y excluyen los NaN antes de calcular. Tienen un coste adicional respecto a la version base (un recorrido extra para localizar los NaN), pero evitan que un solo NaN contamine todo el resultado.
+Las 12 funciones de esta subcarpeta son gemelas exactas de sus contrapartes normales, con una sola diferencia: ignoran los valores NaN en vez de propagarlos. Sin ellas, un solo NaN en el array contamina el resultado completo:
+
+```python
+import numpy as np
+a = np.array([1.0, 2.0, np.nan, 4.0])
+
+np.sum(a)     # nan  — un NaN contamina el resultado
+np.nansum(a)  # 7.0  — el NaN se descarta, se suma el resto
+
+np.mean(a)    # nan
+np.nanmean(a) # 2.333...
+```
+
+El coste de usar estas variantes: internamente deben localizar y enmascarar los NaN antes de calcular, lo que implica un recorrido adicional sobre el array. Si se sabe con certeza que los datos no tienen NaN, usar las versiones normales es mas eficiente.
+
+Caso extremo: si **todos** los elementos del eje son NaN, las variantes `nanmin`, `nanmax`, `nanargmin` y `nanargmax` lanzan `ValueError`. Las variantes de suma y promedio devuelven 0 o NaN segun la funcion.
 
 ## Tabla normal vs nan-safe
 
@@ -27,18 +42,5 @@ Las 12 funciones de esta subcarpeta son equivalentes a sus contrapartes normales
 | [[np.argmin]] | [[np.nanargmin]] | extremos |
 | [[np.argmax]] | [[np.nanargmax]] | extremos |
 
-## Comportamiento clave
-
-```python
-import numpy as np
-a = np.array([1.0, 2.0, np.nan, 4.0])
-
-np.sum(a)     # nan    — un NaN contamina el resultado
-np.nansum(a)  # 7.0    — ignora el NaN
-
-np.mean(a)    # nan
-np.nanmean(a) # 2.333...
-```
-
-> [!warning] Si todos los elementos son NaN
-> `np.nanmin`, `np.nanmax`, `np.nanargmin` y `np.nanargmax` lanzan `ValueError` si el slice esta compuesto enteramente por NaN. Las variantes de suma/promedio devuelven 0 o NaN segun la funcion.
+> [!warning] Slice completamente NaN
+> `np.nanmin`, `np.nanmax`, `np.nanargmin` y `np.nanargmax` lanzan `ValueError` si el slice evaluado esta compuesto enteramente por NaN. Las variantes de suma y promedio devuelven 0 o NaN segun la funcion.
