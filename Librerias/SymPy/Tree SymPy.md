@@ -92,20 +92,20 @@ SymPy/
 │
 ├── 📁 sympy.calculus/
 │   ├── 📁 derivadas/
-│   │   ├── sympy.diff.md
-│   │   └── Derivative.md
+│   │   ├── ✅ sympy.diff.md
+│   │   └── ✅ Derivative.md
 │   ├── 📁 integrales/
-│   │   ├── sympy.integrate.md
-│   │   └── Integral.md
+│   │   ├── ✅ sympy.integrate.md
+│   │   └── ✅ Integral.md
 │   ├── 📁 limites/
-│   │   ├── sympy.limit.md
-│   │   └── Limit.md
+│   │   ├── ✅ sympy.limit.md
+│   │   └── ✅ Limit.md
 │   ├── 📁 series/
-│   │   ├── sympy.series.md
-│   │   └── sympy.fourier_series.md
+│   │   ├── ✅ sympy.series.md
+│   │   └── ✅ sympy.fourier_series.md
 │   └── 📁 sumatorios/
-│       ├── Sum.md
-│       └── Product.md
+│       ├── ✅ Sum.md
+│       └── ✅ Product.md
 │
 ├── 📁 sympy.solvers/
 │   ├── 📁 algebraicas/
@@ -196,7 +196,7 @@ SymPy/
 ## 📊 Estado actual de implementación
 
 > Rama **limpia** creada desde el commit de skills (`8e98b49`), sin notas de otras librerías.
-> **Roadmap: 17 / ~99 notas redactadas.** Sin marca = pendiente.
+> **Roadmap: 27 / ~99 notas redactadas.** Sin marca = pendiente.
 
 | Submódulo | Plan | Estado | Prioridad |
 |-----------|:----:|--------|-----------|
@@ -204,7 +204,7 @@ SymPy/
 | `sympy.core/` | 12 | ✅ **12/12 completo** | 🔴 base de todo |
 | `sympy.simplify/` | 7 | ⬜ pendiente | 🟠 alta |
 | `sympy.polys/` | 11 | ⬜ pendiente | 🟠 alta |
-| `sympy.calculus/` | 10 | ⬜ pendiente | 🔴 núcleo de ingeniería |
+| `sympy.calculus/` | 10 | ✅ **10/10 completo** | 🔴 núcleo de ingeniería |
 | `sympy.solvers/` | 8 | ⬜ pendiente | 🔴 núcleo de ingeniería |
 | `sympy.matrices/` | 11 | ⬜ pendiente | 🟠 alta |
 | `sympy.functions/` | 9 | ⬜ pendiente | 🟡 media |
@@ -217,7 +217,7 @@ SymPy/
 | `sympy.physics.units/` | 2 | ⬜ pendiente | 🟢 opcional |
 | `sympy.printing/` | 4 | ⬜ pendiente | 🟡 media |
 | raíz (`introduccion.md`) | 1 | ⬜ pendiente | 🔴 entrada |
-| **Total** | **~99** | **17 creadas** | |
+| **Total** | **~99** | **27 creadas** | |
 
 ### Orden sugerido de relleno
 

@@ -12,8 +12,8 @@ Integracion definida e indefinida.
 
 ## Notas
 
-- [[sympy.integrate | sympy.integrate]] — integrar. *(pendiente)*
-- [[Integral | Integral]] — integral sin evaluar. *(pendiente)*
+- [[sympy.integrate | sympy.integrate]] — integrar.
+- [[Integral | Integral]] — integral sin evaluar.
 
 ## Notas relacionadas
 

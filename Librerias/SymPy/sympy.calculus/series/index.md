@@ -12,8 +12,8 @@ Desarrollos en serie.
 
 ## Notas
 
-- [[sympy.series | sympy.series]] — serie de Taylor/Laurent. *(pendiente)*
-- [[sympy.fourier_series | sympy.fourier_series]] — serie de Fourier. *(pendiente)*
+- [[sympy.series | sympy.series]] — serie de Taylor/Laurent.
+- [[sympy.fourier_series | sympy.fourier_series]] — serie de Fourier.
 
 ## Notas relacionadas
 

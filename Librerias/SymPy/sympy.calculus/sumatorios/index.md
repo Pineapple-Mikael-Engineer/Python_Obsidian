@@ -12,8 +12,8 @@ Sumas y productos simbolicos.
 
 ## Notas
 
-- [[Sum | Sum]] — sumatorio simbolico. *(pendiente)*
-- [[Product | Product]] — productorio simbolico. *(pendiente)*
+- [[Sum | Sum]] — sumatorio simbolico.
+- [[Product | Product]] — productorio simbolico.
 
 ## Notas relacionadas
 

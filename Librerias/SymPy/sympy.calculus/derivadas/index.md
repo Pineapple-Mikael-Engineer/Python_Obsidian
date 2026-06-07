@@ -12,8 +12,8 @@ Diferenciacion simbolica.
 
 ## Notas
 
-- [[sympy.diff | sympy.diff]] — derivar. *(pendiente)*
-- [[Derivative | Derivative]] — derivada sin evaluar. *(pendiente)*
+- [[sympy.diff | sympy.diff]] — derivar.
+- [[Derivative | Derivative]] — derivada sin evaluar.
 
 ## Notas relacionadas
 

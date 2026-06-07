@@ -12,8 +12,8 @@ Calculo de limites.
 
 ## Notas
 
-- [[sympy.limit | sympy.limit]] — limite. *(pendiente)*
-- [[Limit | Limit]] — limite sin evaluar. *(pendiente)*
+- [[sympy.limit | sympy.limit]] — limite.
+- [[Limit | Limit]] — limite sin evaluar.
 
 ## Notas relacionadas
 
