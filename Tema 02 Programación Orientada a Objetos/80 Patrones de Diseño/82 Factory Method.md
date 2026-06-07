@@ -1,5 +1,6 @@
 ---
 title: Factory Method
+order: 82
 tags:
   - python
   - teoria

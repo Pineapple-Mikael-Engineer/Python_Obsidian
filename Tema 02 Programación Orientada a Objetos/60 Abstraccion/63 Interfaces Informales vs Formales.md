@@ -1,5 +1,6 @@
 ---
 title: Interfaces Informales vs Formales
+order: 63
 tags:
   - python
   - teoria
@@ -14,12 +15,12 @@ aliases:
 # Interfaces Informales vs Formales
 
 > [!definicion]
-> Una **interfaz** es el conjunto de métodos que un objeto debe ofrecer para usarse en cierto contexto. Python admite dos formas de expresarla. La **informal** es una mera convención (*duck typing*): el objeto sirve si **tiene** los métodos, sin declaración ni verificación. La **formal** la impone una clase [[01 Clases Abstractas (ABC) | ABC]] con [[02 abstractmethod | @abstractmethod]]: el contrato se declara explícitamente y su incumplimiento **falla pronto**, al instanciar.
+> Una **interfaz** es el conjunto de métodos que un objeto debe ofrecer para usarse en cierto contexto. Python admite dos formas de expresarla. La **informal** es una mera convención (*duck typing*): el objeto sirve si **tiene** los métodos, sin declaración ni verificación. La **formal** la impone una clase [[61 Clases Abstractas (ABC) | ABC]] con [[62 abstractmethod | @abstractmethod]]: el contrato se declara explícitamente y su incumplimiento **falla pronto**, al instanciar.
 
 ## Interfaz informal (duck typing)
 
 > [!info]
-> No existe declaración de interfaz: cualquier objeto con los métodos esperados es válido. El fallo, si falta un método, es un `AttributeError` **en el momento de usarlo**, no antes. Es flexible y sin acoplamiento por herencia, pero no documenta ni garantiza el contrato. Es la base del [[01 Duck Typing | duck typing]].
+> No existe declaración de interfaz: cualquier objeto con los métodos esperados es válido. El fallo, si falta un método, es un `AttributeError` **en el momento de usarlo**, no antes. Es flexible y sin acoplamiento por herencia, pero no documenta ni garantiza el contrato. Es la base del [[41 Duck Typing | duck typing]].
 
 ```python
 class Pato:
@@ -98,4 +99,4 @@ Marcando el protocolo con `@runtime_checkable` se habilita `isinstance` (solo co
 
 ## Relación con otras notas
 
-La interfaz formal se apoya en [[01 Clases Abstractas (ABC) | ABC]] y [[02 abstractmethod | @abstractmethod]]; la informal es la cara estructural del [[01 Duck Typing | duck typing]]. Todas habilitan el [[40 Polimorfismo/index | polimorfismo]]: distintas implementaciones de un mismo contrato se tratan de forma uniforme.
+La interfaz formal se apoya en [[61 Clases Abstractas (ABC) | ABC]] y [[62 abstractmethod | @abstractmethod]]; la informal es la cara estructural del [[41 Duck Typing | duck typing]]. Todas habilitan el [[40 Polimorfismo/index | polimorfismo]]: distintas implementaciones de un mismo contrato se tratan de forma uniforme.

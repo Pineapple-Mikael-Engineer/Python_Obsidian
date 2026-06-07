@@ -1,5 +1,6 @@
 ---
 title: Métodos
+order: 13
 draft: false
 description: El comportamiento del objeto — métodos de instancia, de clase y estáticos según su primer parámetro
 tags:

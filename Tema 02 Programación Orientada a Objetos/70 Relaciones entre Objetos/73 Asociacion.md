@@ -1,5 +1,6 @@
 ---
 title: Asociación
+order: 73
 tags:
   - python
   - teoria
@@ -74,9 +75,9 @@ m.pacientes[0].nombre                   # "Ana"
 
 | Relación | Vínculo | Fuerza |
 | -------- | ------- | ------ |
-| [[01 Composicion \| Composición]] | "tiene un" exclusivo, la parte muere con el todo | más fuerte |
-| [[02 Agregacion \| Agregación]] | "tiene un" compartido, la parte sobrevive al todo | fuerte |
+| [[71 Composicion \| Composición]] | "tiene un" exclusivo, la parte muere con el todo | más fuerte |
+| [[72 Agregacion \| Agregación]] | "tiene un" compartido, la parte sobrevive al todo | fuerte |
 | Asociación | "usa un", objetos que se conocen y colaboran | media |
-| [[04 Dependencia \| Dependencia]] | "depende de", uso puntual (parámetro, retorno) | más débil |
+| [[74 Dependencia \| Dependencia]] | "depende de", uso puntual (parámetro, retorno) | más débil |
 
 La asociación se distingue de la **agregación** en que **no expresa "parte de"** (solo "se conoce con"), y de la **dependencia** en que el vínculo es **persistente** (se guarda como atributo) en vez de existir solo durante una llamada concreta.

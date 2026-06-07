@@ -1,5 +1,6 @@
 ---
 title: El parámetro self
+order: 3
 tags:
   - python
   - teoria

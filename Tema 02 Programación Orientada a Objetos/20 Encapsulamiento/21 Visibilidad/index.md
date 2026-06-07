@@ -1,5 +1,6 @@
 ---
 title: Visibilidad
+order: 21
 draft: false
 description: Los tres niveles convencionales de acceso a atributos en Python
 tags:

@@ -1,5 +1,6 @@
 ---
 title: Singleton
+order: 81
 tags:
   - python
   - teoria

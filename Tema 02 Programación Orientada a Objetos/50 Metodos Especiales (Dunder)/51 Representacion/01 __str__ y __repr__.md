@@ -1,5 +1,6 @@
 ---
 title: __str__ y __repr__
+order: 1
 tags:
   - python
   - teoria

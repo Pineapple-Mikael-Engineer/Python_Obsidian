@@ -1,5 +1,6 @@
 ---
 title: MRO (Method Resolution Order)
+order: 1
 tags:
   - python
   - teoria

@@ -1,5 +1,6 @@
 ---
 title: Instanciación
+order: 2
 tags:
   - python
   - teoria
@@ -40,7 +41,7 @@ obj = Clase.__new__(Clase, a, b)
 Clase.__init__(obj, a, b)
 ```
 
-El detalle de este mecanismo —cuándo redefinir cada uno y por qué `__new__` es el constructor real— se trata en [[03 __new__ vs __init__ | __new__ vs __init__]]. Para el uso cotidiano basta con definir [[04 Constructor __init__ | `__init__`]].
+El detalle de este mecanismo —cuándo redefinir cada uno y por qué `__new__` es el constructor real— se trata en [[93 __new__ vs __init__ | __new__ vs __init__]]. Para el uso cotidiano basta con definir [[04 Constructor __init__ | `__init__`]].
 
 ## Cada instancia es independiente
 

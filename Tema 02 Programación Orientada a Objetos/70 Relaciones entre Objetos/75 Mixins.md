@@ -1,5 +1,6 @@
 ---
 title: Mixins
+order: 75
 tags:
   - python
   - teoria
@@ -91,4 +92,4 @@ RepoLog().guardar()    # imprime "log: guardando" -> "ok"
 > - **Mixin** — la base **no es** una entidad: solo **inyecta una capacidad** transversal vía herencia múltiple, sin estado.
 > - **Composición ("tiene un")** — si la capacidad necesita **estado propio** o configuración, conviene **contener** un colaborador en `self` antes que mezclar una clase. La composición evita la fragilidad del MRO.
 >
-> Regla práctica: un mixin debe ser **sin estado, ortogonal y opcional**. En cuanto pide guardar datos propios o crece, replantear hacia [[01 Composicion | composición]].
+> Regla práctica: un mixin debe ser **sin estado, ortogonal y opcional**. En cuanto pide guardar datos propios o crece, replantear hacia [[71 Composicion | composición]].

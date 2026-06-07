@@ -1,5 +1,6 @@
 ---
 title: Composición
+order: 71
 tags:
   - python
   - teoria
@@ -45,7 +46,7 @@ c = Coche(2000)
 del c               # se va el Coche... y con él la única referencia a su Motor
 ```
 
-Como la parte se crea dentro y no se expone para ser reutilizada, ningún otro objeto la conserva viva. Esto es lo opuesto a la [[02 Agregacion | agregación]], donde la parte sobrevive al todo.
+Como la parte se crea dentro y no se expone para ser reutilizada, ningún otro objeto la conserva viva. Esto es lo opuesto a la [[72 Agregacion | agregación]], donde la parte sobrevive al todo.
 
 ## Composición vs Agregación
 
@@ -81,4 +82,4 @@ class Coche:
         return self.motor.arrancar()   # delegación, no herencia
 ```
 
-Cambiar la implementación del `Motor` no obliga a tocar la jerarquía del `Coche`, y se puede sustituir la parte sin reescribir el todo. Este criterio se desarrolla en [[06 Composicion vs Herencia | Composición vs Herencia]] y contrasta con la [[30 Herencia/index | herencia]] ("es un").
+Cambiar la implementación del `Motor` no obliga a tocar la jerarquía del `Coche`, y se puede sustituir la parte sin reescribir el todo. Este criterio se desarrolla en [[76 Composicion vs Herencia | Composición vs Herencia]] y contrasta con la [[30 Herencia/index | herencia]] ("es un").

@@ -1,5 +1,6 @@
 ---
 title: abstractmethod
+order: 62
 tags:
   - python
   - teoria
@@ -14,7 +15,7 @@ aliases:
 # abstractmethod
 
 > [!definicion]
-> El decorador `@abstractmethod` marca un método como de **implementación obligatoria**: declara el contrato pero (normalmente) no aporta cuerpo. Una subclase es **concreta** —e instanciable— solo si implementa **todos** los métodos abstractos heredados. Mientras quede alguno sin implementar, la clase permanece abstracta. Solo tiene efecto dentro de una clase cuya metaclase sea `ABCMeta` (es decir, que herede de [[01 Clases Abstractas (ABC) | ABC]]).
+> El decorador `@abstractmethod` marca un método como de **implementación obligatoria**: declara el contrato pero (normalmente) no aporta cuerpo. Una subclase es **concreta** —e instanciable— solo si implementa **todos** los métodos abstractos heredados. Mientras quede alguno sin implementar, la clase permanece abstracta. Solo tiene efecto dentro de una clase cuya metaclase sea `ABCMeta` (es decir, que herede de [[61 Clases Abstractas (ABC) | ABC]]).
 
 ```python
 from abc import ABC, abstractmethod
@@ -100,4 +101,4 @@ class Hija(Base):
 
 ## Relación con otras notas
 
-`@abstractmethod` es el mecanismo que convierte una clase [[01 Clases Abstractas (ABC) | ABC]] en un contrato exigible. Esta imposición explícita distingue la interfaz **formal** de la informal por *duck typing*; ver [[03 Interfaces Informales vs Formales | Interfaces Informales vs Formales]].
+`@abstractmethod` es el mecanismo que convierte una clase [[61 Clases Abstractas (ABC) | ABC]] en un contrato exigible. Esta imposición explícita distingue la interfaz **formal** de la informal por *duck typing*; ver [[63 Interfaces Informales vs Formales | Interfaces Informales vs Formales]].

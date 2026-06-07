@@ -1,5 +1,6 @@
 ---
 title: Properties
+order: 22
 draft: false
 description: Acceso de atributo respaldado por métodos sin cambiar la sintaxis
 tags:

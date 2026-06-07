@@ -1,5 +1,6 @@
 ---
 title: Clases Abstractas (ABC)
+order: 61
 tags:
   - python
   - teoria
@@ -35,7 +36,7 @@ Circulo(2).area()     # 12.5664
 Circulo(2).describir()  # "Figura de área 12.5664"  -> usa el método concreto heredado
 ```
 
-`Figura` fija *qué* debe ofrecer toda figura (`area`) sin decidir *cómo*; cada subclase aporta la implementación. La obligación se delega al decorador [[02 abstractmethod | @abstractmethod]].
+`Figura` fija *qué* debe ofrecer toda figura (`area`) sin decidir *cómo*; cada subclase aporta la implementación. La obligación se delega al decorador [[62 abstractmethod | @abstractmethod]].
 
 ## Dos formas de declararla
 
@@ -85,4 +86,4 @@ isinstance(MiLista(), Figura) # True
 
 ## Relación con otras notas
 
-El contrato se expresa con [[02 abstractmethod | @abstractmethod]]; sin ningún método abstracto, una clase que herede de `ABC` se instancia con normalidad (deja de ser abstracta en la práctica). Las ABC son la versión **formal** de una interfaz, frente al *duck typing*; el contraste se desarrolla en [[03 Interfaces Informales vs Formales | Interfaces Informales vs Formales]].
+El contrato se expresa con [[62 abstractmethod | @abstractmethod]]; sin ningún método abstracto, una clase que herede de `ABC` se instancia con normalidad (deja de ser abstracta en la práctica). Las ABC son la versión **formal** de una interfaz, frente al *duck typing*; el contraste se desarrolla en [[63 Interfaces Informales vs Formales | Interfaces Informales vs Formales]].

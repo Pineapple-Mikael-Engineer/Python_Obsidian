@@ -1,5 +1,6 @@
 ---
 title: __slots__
+order: 92
 tags:
   - python
   - teoria
@@ -74,7 +75,7 @@ sys.getsizeof(ConDict(1, 2).__dict__)   # ~104 bytes SOLO el dict
 
 `__slots__ = ()` (tupla vacía) no añade atributos pero **sigue eliminando** el `__dict__`: útil en clases puramente de comportamiento o mixins sin estado, para que no acepten atributos accidentales.
 
-Un dataclass genera sus slots automáticamente con `@dataclass(slots=True)` (Python 3.10+), evitando escribir a mano la tupla y mantenerla sincronizada con los campos (ver [[01 Dataclasses | Dataclasses]]).
+Un dataclass genera sus slots automáticamente con `@dataclass(slots=True)` (Python 3.10+), evitando escribir a mano la tupla y mantenerla sincronizada con los campos (ver [[91 Dataclasses | Dataclasses]]).
 
 > [!regla]
 > Activar `__slots__` solo cuando el perfilado muestre que las instancias dominan la memoria del programa. En clases ordinarias, el coste en flexibilidad y la fragilidad ante la herencia no compensan el ahorro.

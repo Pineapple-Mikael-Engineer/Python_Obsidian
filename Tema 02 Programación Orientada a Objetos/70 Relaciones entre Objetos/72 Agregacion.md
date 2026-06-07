@@ -1,5 +1,6 @@
 ---
 title: Agregación
+order: 72
 tags:
   - python
   - teoria
@@ -43,7 +44,7 @@ del u               # cierra la Universidad...
 ana.nombre          # "Ana"  -> el Profesor sigue vivo
 ```
 
-Esto es exactamente lo contrario al ciclo de vida ligado de la [[01 Composicion | composición]], donde la parte muere con el todo.
+Esto es exactamente lo contrario al ciclo de vida ligado de la [[71 Composicion | composición]], donde la parte muere con el todo.
 
 ## Partes compartidas
 
@@ -84,4 +85,4 @@ class Universidad:
         self.profesores = profesores
 ```
 
-La agregación es **más débil** que la composición pero sigue expresando "parte de"; cuando la relación ni siquiera es de contención sino de mero uso, se trata de una [[03 Asociacion | asociación]]. Para elegir entre contener y heredar, ver [[06 Composicion vs Herencia | Composición vs Herencia]].
+La agregación es **más débil** que la composición pero sigue expresando "parte de"; cuando la relación ni siquiera es de contención sino de mero uso, se trata de una [[73 Asociacion | asociación]]. Para elegir entre contener y heredar, ver [[76 Composicion vs Herencia | Composición vs Herencia]].

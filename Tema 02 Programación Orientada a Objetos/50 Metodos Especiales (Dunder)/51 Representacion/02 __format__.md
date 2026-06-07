@@ -1,5 +1,6 @@
 ---
 title: __format__
+order: 2
 tags:
   - python
   - teoria

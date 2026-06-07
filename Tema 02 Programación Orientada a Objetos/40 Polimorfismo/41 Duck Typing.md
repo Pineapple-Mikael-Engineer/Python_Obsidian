@@ -1,5 +1,6 @@
 ---
 title: Duck Typing
+order: 41
 tags:
   - python
   - teoria
@@ -42,7 +43,7 @@ volcar(io.StringIO("en memoria"))   # "en memoria"  -> buffer de texto
 # también: respuestas HTTP, sockets, pipes... ninguno comparte clase base
 ```
 
-`open(...)` y `StringIO` no derivan de un mismo tipo orientado a `read`, pero ambos cumplen el protocolo de lectura, así que son intercambiables para `volcar`. Esto contrasta con el [[02 Polimorfismo de Subtipos | polimorfismo de subtipos]], que sí exige una clase base compartida.
+`open(...)` y `StringIO` no derivan de un mismo tipo orientado a `read`, pero ambos cumplen el protocolo de lectura, así que son intercambiables para `volcar`. Esto contrasta con el [[42 Polimorfismo de Subtipos | polimorfismo de subtipos]], que sí exige una clase base compartida.
 
 ## EAFP frente a comprobar el tipo
 

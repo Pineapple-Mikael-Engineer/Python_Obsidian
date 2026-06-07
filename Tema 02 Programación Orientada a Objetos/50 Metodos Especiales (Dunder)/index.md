@@ -1,5 +1,6 @@
 ---
 title: Métodos Especiales (Dunder)
+order: 50
 draft: false
 description: Los métodos __x__ que integran un objeto con la sintaxis del lenguaje
 tags:

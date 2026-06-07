@@ -1,5 +1,6 @@
 ---
 title: Operadores de Comparación
+order: 2
 tags:
   - python
   - teoria

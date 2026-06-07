@@ -1,5 +1,6 @@
 ---
 title: Programación Orientada a Objetos
+order: 0
 draft: false
 description: El paradigma de objetos en Python — clases, encapsulamiento, herencia, polimorfismo
 tags:

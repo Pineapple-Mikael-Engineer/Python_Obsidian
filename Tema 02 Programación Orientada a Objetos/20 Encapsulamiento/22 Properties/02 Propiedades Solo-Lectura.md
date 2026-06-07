@@ -1,5 +1,6 @@
 ---
 title: Propiedades Solo-Lectura
+order: 2
 tags:
   - python
   - teoria

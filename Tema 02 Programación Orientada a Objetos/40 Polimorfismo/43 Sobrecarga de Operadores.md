@@ -1,5 +1,6 @@
 ---
 title: Sobrecarga de Operadores
+order: 43
 tags:
   - python
   - teoria
@@ -65,7 +66,7 @@ Definir `__lt__` basta para que `sorted` y `min`/`max` operen sobre el tipo: los
 ## Polimorfismo ad-hoc, no de subtipos
 
 > [!info]
-> La sobrecarga de operadores es polimorfismo **ad-hoc**: el comportamiento del símbolo se selecciona por el **tipo concreto** de los operandos, no por despacho dinámico sobre una jerarquía. Difiere así del [[02 Polimorfismo de Subtipos | polimorfismo de subtipos]], donde una base común y la sobrescritura determinan la versión ejecutada.
+> La sobrecarga de operadores es polimorfismo **ad-hoc**: el comportamiento del símbolo se selecciona por el **tipo concreto** de los operandos, no por despacho dinámico sobre una jerarquía. Difiere así del [[42 Polimorfismo de Subtipos | polimorfismo de subtipos]], donde una base común y la sobrescritura determinan la versión ejecutada.
 
 > [!warning]
 > Implementar un operador no obliga a implementar sus relacionados: definir `__eq__` no genera `__ne__` coherente automáticamente en todos los casos, y `__lt__` por sí solo no provee `<=`, `>`, `>=`. Para el conjunto completo de comparaciones a partir de unas pocas se usa `functools.total_ordering`. Sobrecargar operadores solo cuando la semántica sea **natural** para el tipo; forzarla degrada la legibilidad.

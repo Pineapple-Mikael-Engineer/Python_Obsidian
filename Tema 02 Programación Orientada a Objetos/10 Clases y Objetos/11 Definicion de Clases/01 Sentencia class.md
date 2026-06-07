@@ -1,5 +1,6 @@
 ---
 title: Sentencia class
+order: 1
 tags:
   - python
   - teoria
