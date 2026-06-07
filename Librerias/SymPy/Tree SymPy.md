@@ -138,16 +138,16 @@ SymPy/
 │
 ├── 📁 sympy.functions/
 │   ├── 📁 elementales/
-│   │   ├── sympy.sqrt.md
-│   │   ├── sympy.exp_log.md                   # exp, log
-│   │   ├── sympy.trigonometricas.md           # sin, cos, tan, asin…
-│   │   ├── sympy.hiperbolicas.md              # sinh, cosh, tanh
-│   │   └── Abs.md
+│   │   ├── ✅ sympy.sqrt.md
+│   │   ├── ✅ sympy.exp_log.md                   # exp, log
+│   │   ├── ✅ sympy.trigonometricas.md           # sin, cos, tan, asin…
+│   │   ├── ✅ sympy.hiperbolicas.md              # sinh, cosh, tanh
+│   │   └── ✅ Abs.md
 │   └── 📁 especiales/
-│       ├── sympy.gamma.md
-│       ├── sympy.factorial_binomial.md
-│       ├── Piecewise.md
-│       └── sympy.Heaviside_DiracDelta.md
+│       ├── ✅ sympy.gamma.md
+│       ├── ✅ sympy.factorial_binomial.md
+│       ├── ✅ Piecewise.md
+│       └── ✅ sympy.Heaviside_DiracDelta.md
 │
 ├── 📁 sympy.sets/
 │   ├── Interval.md
@@ -196,7 +196,7 @@ SymPy/
 ## 📊 Estado actual de implementación
 
 > Rama **limpia** creada desde el commit de skills (`8e98b49`), sin notas de otras librerías.
-> **Roadmap: 64 / ~99 notas redactadas.** Sin marca = pendiente.
+> **Roadmap: 73 / ~99 notas redactadas.** Sin marca = pendiente.
 
 | Submódulo | Plan | Estado | Prioridad |
 |-----------|:----:|--------|-----------|
@@ -207,7 +207,7 @@ SymPy/
 | `sympy.calculus/` | 10 | ✅ **10/10 completo** | 🔴 núcleo de ingeniería |
 | `sympy.solvers/` | 8 | ✅ **8/8 completo** | 🔴 núcleo de ingeniería |
 | `sympy.matrices/` | 11 | ✅ **11/11 completo** | 🟠 alta |
-| `sympy.functions/` | 9 | ⬜ pendiente | 🟡 media |
+| `sympy.functions/` | 9 | ✅ **9/9 completo** | 🟡 media |
 | `sympy.sets/` | 4 | ⬜ pendiente | 🟡 media |
 | `sympy.logic/` | 3 | ⬜ pendiente | 🟢 baja |
 | `sympy.assumptions/` | 2 | ⬜ pendiente | 🟡 media |
@@ -217,7 +217,7 @@ SymPy/
 | `sympy.physics.units/` | 2 | ⬜ pendiente | 🟢 opcional |
 | `sympy.printing/` | 4 | ⬜ pendiente | 🟡 media |
 | raíz (`introduccion.md`) | 1 | ⬜ pendiente | 🔴 entrada |
-| **Total** | **~99** | **64 creadas** | |
+| **Total** | **~99** | **73 creadas** | |
 
 ### Orden sugerido de relleno
 
