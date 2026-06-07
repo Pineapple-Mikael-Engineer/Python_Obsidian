@@ -156,19 +156,19 @@ SymPy/
 │   └── ✅ sympy.operaciones_conjuntos.md         # Union, Intersection, Complement
 │
 ├── 📁 sympy.logic/
-│   ├── sympy.operadores_logicos.md            # And, Or, Not, Implies, Equivalent
-│   ├── sympy.satisfiable.md
-│   └── sympy.simplify_logic.md
+│   ├── ✅ sympy.operadores_logicos.md            # And, Or, Not, Implies, Equivalent
+│   ├── ✅ sympy.satisfiable.md
+│   └── ✅ sympy.simplify_logic.md
 │
 ├── 📁 sympy.assumptions/
 │   ├── ✅ sympy.supuestos_simbolos.md            # Symbol(real=True, positive=True…)
 │   └── ✅ sympy.ask.md                           # ask(), predicados Q
 │
 ├── 📁 sympy.ntheory/
-│   ├── sympy.isprime.md
-│   ├── sympy.factorint.md
-│   ├── sympy.primerange.md
-│   └── sympy.gcd_entero.md                     # igcd, ilcm
+│   ├── ✅ sympy.isprime.md
+│   ├── ✅ sympy.factorint.md
+│   ├── ✅ sympy.primerange.md
+│   └── ✅ sympy.gcd_entero.md                     # igcd, ilcm
 │
 ├── 📁 sympy.geometry/
 │   ├── Point.md
@@ -185,10 +185,10 @@ SymPy/
 │   └── sympy.convert_to.md
 │
 └── 📁 sympy.printing/
-    ├── sympy.pprint.md
-    ├── sympy.latex.md
-    ├── sympy.init_printing.md
-    └── sympy.ccode_pycode.md                  # generacion de codigo C/Python
+    ├── ✅ sympy.pprint.md
+    ├── ✅ sympy.latex.md
+    ├── ✅ sympy.init_printing.md
+    └── ✅ sympy.ccode_pycode.md                  # generacion de codigo C/Python
 ```
 
 ---
@@ -196,7 +196,7 @@ SymPy/
 ## 📊 Estado actual de implementación
 
 > Rama **limpia** creada desde el commit de skills (`8e98b49`), sin notas de otras librerías.
-> **Roadmap: 79 / ~99 notas redactadas.** Sin marca = pendiente.
+> **Roadmap: 90 / ~99 notas redactadas.** Sin marca = pendiente.
 
 | Submódulo | Plan | Estado | Prioridad |
 |-----------|:----:|--------|-----------|
@@ -209,15 +209,15 @@ SymPy/
 | `sympy.matrices/` | 11 | ✅ **11/11 completo** | 🟠 alta |
 | `sympy.functions/` | 9 | ✅ **9/9 completo** | 🟡 media |
 | `sympy.sets/` | 4 | ✅ **4/4 completo** | 🟡 media |
-| `sympy.logic/` | 3 | ⬜ pendiente | 🟢 baja |
+| `sympy.logic/` | 3 | ✅ **3/3 completo** | 🟢 baja |
 | `sympy.assumptions/` | 2 | ✅ **2/2 completo** | 🟡 media |
-| `sympy.ntheory/` | 4 | ⬜ pendiente | 🟢 baja |
+| `sympy.ntheory/` | 4 | ✅ **4/4 completo** | 🟢 baja |
 | `sympy.geometry/` | 4 | ⬜ pendiente | 🟢 opcional |
 | `sympy.stats/` | 2 | ⬜ pendiente | 🟢 opcional |
 | `sympy.physics.units/` | 2 | ⬜ pendiente | 🟢 opcional |
-| `sympy.printing/` | 4 | ⬜ pendiente | 🟡 media |
+| `sympy.printing/` | 4 | ✅ **4/4 completo** | 🟡 media |
 | raíz (`introduccion.md`) | 1 | ⬜ pendiente | 🔴 entrada |
-| **Total** | **~99** | **79 creadas** | |
+| **Total** | **~99** | **90 creadas** | |
 
 ### Orden sugerido de relleno
 
