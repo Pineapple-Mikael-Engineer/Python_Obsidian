@@ -47,21 +47,21 @@ SymPy/
 │
 ├── 📁 sympy.core/
 │   ├── 📁 simbolos/
-│   │   ├── sympy.symbols.md
-│   │   ├── Symbol.md
-│   │   └── sympy.sympify.md                   # str/num -> Expr (S())
+│   │   ├── ✅ sympy.symbols.md
+│   │   ├── ✅ Symbol.md
+│   │   └── ✅ sympy.sympify.md                   # str/num -> Expr (S())
 │   ├── 📁 numeros/
-│   │   ├── Rational.md
-│   │   ├── Integer.md
-│   │   ├── Float.md
-│   │   └── sympy.constantes_simbolicas.md     # pi, E, oo, I, nan, S
+│   │   ├── ✅ Rational.md
+│   │   ├── ✅ Integer.md
+│   │   ├── ✅ Float.md
+│   │   └── ✅ sympy.constantes_simbolicas.md     # pi, E, oo, I, nan, S
 │   ├── 📁 expresiones/
-│   │   ├── Expr.md
-│   │   ├── sympy.srepr.md
-│   │   └── Expr.subs.md
+│   │   ├── ✅ Expr.md
+│   │   ├── ✅ sympy.srepr.md
+│   │   └── ✅ Expr.subs.md
 │   └── 📁 evaluacion/
-│       ├── Expr.evalf.md                      # evaluacion numerica de precision arbitraria
-│       └── sympy.lambdify.md                  # Expr -> funcion numpy/python
+│       ├── ✅ Expr.evalf.md                      # evaluacion numerica de precision arbitraria
+│       └── ✅ sympy.lambdify.md                  # Expr -> funcion numpy/python
 │
 ├── 📁 sympy.simplify/
 │   ├── 📁 general/
@@ -196,12 +196,12 @@ SymPy/
 ## 📊 Estado actual de implementación
 
 > Rama **limpia** creada desde el commit de skills (`8e98b49`), sin notas de otras librerías.
-> **Roadmap: 5 / ~99 notas redactadas.** Sin marca = pendiente.
+> **Roadmap: 17 / ~99 notas redactadas.** Sin marca = pendiente.
 
 | Submódulo | Plan | Estado | Prioridad |
 |-----------|:----:|--------|-----------|
 | `conceptos_transversales/` | 5 | ✅ **5/5 completo** | 🔴 primero (modelo mental) |
-| `sympy.core/` | 12 | ⬜ pendiente | 🔴 base de todo |
+| `sympy.core/` | 12 | ✅ **12/12 completo** | 🔴 base de todo |
 | `sympy.simplify/` | 7 | ⬜ pendiente | 🟠 alta |
 | `sympy.polys/` | 11 | ⬜ pendiente | 🟠 alta |
 | `sympy.calculus/` | 10 | ⬜ pendiente | 🔴 núcleo de ingeniería |
@@ -217,7 +217,7 @@ SymPy/
 | `sympy.physics.units/` | 2 | ⬜ pendiente | 🟢 opcional |
 | `sympy.printing/` | 4 | ⬜ pendiente | 🟡 media |
 | raíz (`introduccion.md`) | 1 | ⬜ pendiente | 🔴 entrada |
-| **Total** | **~99** | **5 creadas** | |
+| **Total** | **~99** | **17 creadas** | |
 
 ### Orden sugerido de relleno
 

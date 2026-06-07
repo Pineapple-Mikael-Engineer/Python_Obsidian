@@ -12,8 +12,8 @@ El puente del mundo simbolico al numerico.
 
 ## Notas
 
-- [[Expr.evalf | Expr.evalf]] — evaluacion numerica de precision arbitraria. *(pendiente)*
-- [[sympy.lambdify | sympy.lambdify]] — Expr → funcion NumPy/Python. *(pendiente)*
+- [[Expr.evalf | Expr.evalf]] — evaluacion numerica de precision arbitraria.
+- [[sympy.lambdify | sympy.lambdify]] — Expr → funcion NumPy/Python.
 
 ## Notas relacionadas
 

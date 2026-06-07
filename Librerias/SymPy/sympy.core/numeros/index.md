@@ -12,10 +12,10 @@ Los tipos numericos exactos y las constantes simbolicas.
 
 ## Notas
 
-- [[Rational | Rational]] — fracciones exactas. *(pendiente)*
-- [[Integer | Integer]] — enteros exactos. *(pendiente)*
-- [[Float | Float]] — flotante de precision arbitraria. *(pendiente)*
-- [[sympy.constantes_simbolicas | sympy.constantes_simbolicas]] — `pi`, `E`, `oo`, `I`, `nan`, `S`. *(pendiente)*
+- [[Rational | Rational]] — fracciones exactas.
+- [[Integer | Integer]] — enteros exactos.
+- [[Float | Float]] — flotante de precision arbitraria.
+- [[sympy.constantes_simbolicas | sympy.constantes_simbolicas]] — `pi`, `E`, `oo`, `I`, `nan`, `S`.
 
 ## Notas relacionadas
 
