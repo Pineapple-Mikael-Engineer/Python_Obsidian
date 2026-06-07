@@ -1,5 +1,5 @@
 ---
-title: 02 Excepciones Comunes
+title: Excepciones Comunes
 draft: false
 tags:
   - python

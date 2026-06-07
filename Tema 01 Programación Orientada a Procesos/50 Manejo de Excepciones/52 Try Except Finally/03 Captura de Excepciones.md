@@ -1,5 +1,5 @@
 ---
-title: "03 Captura de Excepciones"
+title: Captura de Excepciones
 draft: false
 tags: [python, teoria, excepciones]
 ---

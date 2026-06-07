@@ -1,5 +1,5 @@
 ---
-title: 42 Clasificacion de Funciones
+title: Clasificación de Funciones
 draft: false
 description: Taxonomía de funciones en Python según origen, estructura y comportamiento
 tags:

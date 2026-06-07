@@ -1,5 +1,5 @@
 ---
-title: 04 Operador Morsa (walrus)
+title: Operador Morsa (walrus)
 draft: false
 tags:
   - python

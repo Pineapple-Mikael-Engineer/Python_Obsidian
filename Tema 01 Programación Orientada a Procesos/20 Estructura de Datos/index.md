@@ -1,5 +1,5 @@
 ---
-title: 20 Estructura de Datos
+title: Estructura de Datos
 draft: false
 description: Colecciones nativas de Python — secuencias, mapas y conjuntos
 tags:

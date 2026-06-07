@@ -1,5 +1,5 @@
 ---
-title: 02 Diccionarios Especializados
+title: Diccionarios Especializados
 draft: false
 tags: [python, teoria, diccionarios]
 ---

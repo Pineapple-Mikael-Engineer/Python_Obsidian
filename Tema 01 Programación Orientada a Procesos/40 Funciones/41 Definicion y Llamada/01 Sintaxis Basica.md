@@ -1,5 +1,5 @@
 ---
-title: Sintaxis Básica de Funciones
+title: Sintaxis Básica
 tags:
   - python
   - teoria

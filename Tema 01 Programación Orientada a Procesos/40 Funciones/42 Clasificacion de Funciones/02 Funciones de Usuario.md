@@ -1,5 +1,5 @@
 ---
-title: 02 Funciones de Usuario
+title: Funciones de Usuario
 draft: false
 tags:
   - python

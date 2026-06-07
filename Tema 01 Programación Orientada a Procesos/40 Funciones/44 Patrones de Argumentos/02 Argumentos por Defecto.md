@@ -1,5 +1,5 @@
 ---
-title: 02 Argumentos por Defecto
+title: Argumentos por Defecto
 draft: false
 tags: [python, teoria, funciones]
 ---

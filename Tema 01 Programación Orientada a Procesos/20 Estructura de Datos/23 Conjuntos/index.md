@@ -1,5 +1,5 @@
 ---
-title: 23-Conjuntos
+title: Conjuntos
 draft: false
 description: Colecciones de elementos únicos y hashables — set y frozenset
 tags:

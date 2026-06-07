@@ -1,5 +1,5 @@
 ---
-title: "01 Sintaxis Try Except"
+title: Sintaxis Try Except
 draft: false
 tags: [python, teoria, excepciones]
 ---

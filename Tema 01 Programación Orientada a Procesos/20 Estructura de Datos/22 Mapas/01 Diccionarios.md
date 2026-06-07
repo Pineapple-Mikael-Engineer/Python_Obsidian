@@ -1,5 +1,5 @@
 ---
-title: 01 Diccionarios
+title: Diccionarios
 draft: false
 tags:
   - python

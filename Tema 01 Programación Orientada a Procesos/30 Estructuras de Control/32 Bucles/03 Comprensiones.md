@@ -1,5 +1,5 @@
 ---
-title: 03 Comprensiones
+title: Comprensiones
 draft: false
 tags: [python, teoria, bucles]
 ---

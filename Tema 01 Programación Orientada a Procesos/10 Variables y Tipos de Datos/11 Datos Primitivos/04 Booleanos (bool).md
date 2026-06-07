@@ -1,5 +1,5 @@
 ---
-title: 04 Booleanos (bool)
+title: Booleanos (bool)
 draft: false
 tags: [python, teoria, booleanos]
 ---

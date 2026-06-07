@@ -1,5 +1,5 @@
 ---
-title: Conversión Explícita (Casting)
+title: Conversión Explícita
 draft: false
 tags:
   - python

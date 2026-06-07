@@ -1,5 +1,5 @@
 ---
-title: 03 Complejos (complex)
+title: Complejos (complex)
 draft: false
 tags: [python, teoria, numericos]
 ---

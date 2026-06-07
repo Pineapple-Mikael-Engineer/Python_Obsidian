@@ -1,5 +1,5 @@
 ---
-title: "Capitulo 1: Programación Orientada a Procesos"
+title: Programación Orientada a Procesos
 draft: false
 tags:
   - Index

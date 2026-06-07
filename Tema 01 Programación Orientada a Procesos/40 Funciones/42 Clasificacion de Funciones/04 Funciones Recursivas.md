@@ -1,5 +1,5 @@
 ---
-title: 04 Funciones Recursivas
+title: Funciones Recursivas
 draft: false
 tags:
   - python

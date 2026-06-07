@@ -1,5 +1,5 @@
 ---
-title: 05 NoneType (None)
+title: NoneType (None)
 draft: false
 tags: [python, teoria, nonetype]
 ---

@@ -1,5 +1,5 @@
 ---
-title: 02 Continue
+title: Continue
 draft: false
 tags: [python, teoria, control-de-flujo]
 ---
