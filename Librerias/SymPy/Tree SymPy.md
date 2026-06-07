@@ -20,6 +20,10 @@ draft: true
 | **Función de submódulo** | `sympy.<sub>/<tematica>/` | `sympy.solve.md`, `sympy.diff.md` |
 | **Clase / objeto** | `sympy.<sub>/` o su temática | `Symbol.md`, `Matrix.md`, `Poly.md` |
 | **Método de objeto** | junto a su clase | `Matrix.det.md`, `Expr.subs.md` |
+| **Índice de carpeta** | `index.md` en **cada** directorio | nota madre/hub que lista su contenido |
+
+> Cada carpeta del árbol lleva su `index.md` (hub de navegación). No se listan en el bloque
+> de abajo para no saturarlo; ver [[Reglas]] §2. `sync_tree.py` los ignora en el conteo de cobertura.
 
 Naming API-style: funciones top-level como `sympy.<funcion>.md` (`sympy.integrate.md`); clases con
 su **nombre real** (`Symbol.md`, `Matrix.md`, `Interval.md`); métodos `Objeto.metodo.md`
