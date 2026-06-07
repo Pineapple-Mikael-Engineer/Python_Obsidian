@@ -1,5 +1,6 @@
 ---
 title: Patrones de Diseño
+order: 80
 draft: false
 description: Soluciones reutilizables a problemas recurrentes de diseño orientado a objetos
 tags:
@@ -17,18 +18,18 @@ Python, por ser dinámico y tener funciones de primera clase, a menudo **simplif
 
 ## Subtemas
 
-- [[01 Singleton | Singleton]] — garantizar una **única instancia** global de una clase.
-- [[02 Factory Method | Factory Method]] — delegar la **creación** de objetos a un método, desacoplando del tipo concreto.
-- [[03 Strategy | Strategy]] — encapsular **algoritmos intercambiables** y seleccionarlos en tiempo de ejecución.
-- [[04 Observer | Observer]] — notificar automáticamente a múltiples objetos cuando **cambia el estado** de otro.
+- [[81 Singleton | Singleton]] — garantizar una **única instancia** global de una clase.
+- [[82 Factory Method | Factory Method]] — delegar la **creación** de objetos a un método, desacoplando del tipo concreto.
+- [[83 Strategy | Strategy]] — encapsular **algoritmos intercambiables** y seleccionarlos en tiempo de ejecución.
+- [[84 Observer | Observer]] — notificar automáticamente a múltiples objetos cuando **cambia el estado** de otro.
 
 ## Clasificación
 
 | Patrón | Tipo | Problema que resuelve | Subtema |
 | ------ | ---- | --------------------- | ------- |
-| Singleton | Creacional | Una sola instancia compartida | [[01 Singleton \| Singleton]] |
-| Factory Method | Creacional | Crear sin acoplar al tipo concreto | [[02 Factory Method \| Factory Method]] |
-| Strategy | De comportamiento | Intercambiar algoritmos | [[03 Strategy \| Strategy]] |
-| Observer | De comportamiento | Propagar cambios de estado | [[04 Observer \| Observer]] |
+| Singleton | Creacional | Una sola instancia compartida | [[81 Singleton \| Singleton]] |
+| Factory Method | Creacional | Crear sin acoplar al tipo concreto | [[82 Factory Method \| Factory Method]] |
+| Strategy | De comportamiento | Intercambiar algoritmos | [[83 Strategy \| Strategy]] |
+| Observer | De comportamiento | Propagar cambios de estado | [[84 Observer \| Observer]] |
 
 Estos patrones se construyen sobre los pilares del tema: la [[30 Herencia/index | herencia]] y el [[40 Polimorfismo/index | polimorfismo]] para variar comportamiento, y la [[70 Relaciones entre Objetos/index | composición]] para vincular objetos colaboradores.

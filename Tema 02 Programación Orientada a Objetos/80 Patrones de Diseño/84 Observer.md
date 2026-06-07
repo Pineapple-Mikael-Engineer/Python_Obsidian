@@ -1,5 +1,6 @@
 ---
 title: Observer
+order: 84
 tags:
   - python
   - teoria
@@ -40,7 +41,7 @@ class Temperatura:                                  # sujeto
 ## Observadores por duck typing
 
 > [!regla]
-> El sujeto solo exige que cada observador exponga un método `actualizar` (el nombre acordado). Gracias al [[01 Duck Typing]] **no hace falta una clase base común**: cualquier objeto con ese método sirve como observador.
+> El sujeto solo exige que cada observador exponga un método `actualizar` (el nombre acordado). Gracias al [[41 Duck Typing]] **no hace falta una clase base común**: cualquier objeto con ese método sirve como observador.
 
 ```python
 class DisplayDigital:

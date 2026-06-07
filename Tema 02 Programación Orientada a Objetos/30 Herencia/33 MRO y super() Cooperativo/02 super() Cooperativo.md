@@ -1,5 +1,6 @@
 ---
 title: super() Cooperativo
+order: 2
 tags:
   - python
   - teoria
@@ -82,5 +83,5 @@ class Servicio(ConLog, ConCacheRoto):
 # pero como ConCacheRoto no delega, Base.__init__ no se invoca a través suyo.
 ```
 
-Esta es la diferencia clave con [[01 super() y Constructor del Padre | super() en constructor]]: en herencia simple basta llamar al padre, pero en una cadena cooperativa **toda** clase debe delegar, porque "el padre" lo decide el MRO completo y no la relación directa. El orden exacto que recorre `super()` es el [[01 MRO (Method Resolution Order) | MRO]], y este patrón es el que sostiene los [[05 Mixins | Mixins]].
+Esta es la diferencia clave con [[01 super() y Constructor del Padre | super() en constructor]]: en herencia simple basta llamar al padre, pero en una cadena cooperativa **toda** clase debe delegar, porque "el padre" lo decide el MRO completo y no la relación directa. El orden exacto que recorre `super()` es el [[01 MRO (Method Resolution Order) | MRO]], y este patrón es el que sostiene los [[75 Mixins | Mixins]].
 </content>

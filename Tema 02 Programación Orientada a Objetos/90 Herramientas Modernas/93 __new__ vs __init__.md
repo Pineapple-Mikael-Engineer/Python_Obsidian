@@ -1,5 +1,6 @@
 ---
 title: __new__ vs __init__
+order: 93
 tags:
   - python
   - teoria

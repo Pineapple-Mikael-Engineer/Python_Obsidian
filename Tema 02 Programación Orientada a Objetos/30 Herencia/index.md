@@ -1,5 +1,6 @@
 ---
 title: Herencia
+order: 30
 draft: false
 description: Derivación de clases — reutilización y especialización
 tags:

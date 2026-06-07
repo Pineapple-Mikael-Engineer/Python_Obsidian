@@ -1,5 +1,6 @@
 ---
 title: Constructor __init__
+order: 4
 tags:
   - python
   - teoria
@@ -28,7 +29,7 @@ c.titular, c.saldo                 # ('Ana', 100)
 
 ## Inicializa, no construye
 
-Cuando se ejecuta `Clase(args)`, primero `__new__` **crea** el objeto vacío y solo después `__init__` lo **inicializa**. Por eso `self` ya existe dentro de `__init__`: el método recibe un objeto ya construido y se limita a poblar sus atributos. La separación de roles se detalla en [[03 __new__ vs __init__ | __new__ vs __init__]].
+Cuando se ejecuta `Clase(args)`, primero `__new__` **crea** el objeto vacío y solo después `__init__` lo **inicializa**. Por eso `self` ya existe dentro de `__init__`: el método recibe un objeto ya construido y se limita a poblar sus atributos. La separación de roles se detalla en [[93 __new__ vs __init__ | __new__ vs __init__]].
 
 ## No debe devolver nada
 

@@ -1,5 +1,6 @@
 ---
 title: Invocable (__call__)
+order: 2
 tags:
   - python
   - teoria

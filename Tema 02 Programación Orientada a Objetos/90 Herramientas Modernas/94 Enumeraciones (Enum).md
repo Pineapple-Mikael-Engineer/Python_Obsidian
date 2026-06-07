@@ -1,5 +1,6 @@
 ---
 title: Enumeraciones (Enum)
+order: 94
 tags:
   - python
   - teoria
@@ -111,4 +112,4 @@ Planeta.TIERRA.gravedad()   # 9.81...
 ## Ventaja sobre constantes sueltas
 
 > [!regla]
-> Frente a `ROJO = 1; VERDE = 2` a nivel de módulo, una `Enum` aporta: **agrupación** bajo un tipo común (`Color`), **legibilidad** en *repr* y mensajes (`<Color.ROJO: 1>` en vez de `1`), **seguridad** (el conjunto es cerrado: `Color(99)` lanza `ValueError`, mientras un entero suelto admitiría cualquier valor), e **iteración/búsqueda** integradas. Para un agregado de datos con identidad por valor la herramienta es [[01 Dataclasses | el dataclass]]; para un conjunto cerrado de constantes nombradas, la `Enum`.
+> Frente a `ROJO = 1; VERDE = 2` a nivel de módulo, una `Enum` aporta: **agrupación** bajo un tipo común (`Color`), **legibilidad** en *repr* y mensajes (`<Color.ROJO: 1>` en vez de `1`), **seguridad** (el conjunto es cerrado: `Color(99)` lanza `ValueError`, mientras un entero suelto admitiría cualquier valor), e **iteración/búsqueda** integradas. Para un agregado de datos con identidad por valor la herramienta es [[91 Dataclasses | el dataclass]]; para un conjunto cerrado de constantes nombradas, la `Enum`.

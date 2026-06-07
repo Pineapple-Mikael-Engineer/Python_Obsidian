@@ -1,5 +1,6 @@
 ---
 title: Métodos Estáticos (staticmethod)
+order: 3
 tags:
   - python
   - teoria

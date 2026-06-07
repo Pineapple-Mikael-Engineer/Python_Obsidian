@@ -1,5 +1,6 @@
 ---
 title: Composición vs Herencia
+order: 76
 tags:
   - python
   - teoria
@@ -73,4 +74,4 @@ class Coche:
 >
 > La versión compuesta **oculta** la lista, ofrece **solo** las operaciones de pila y permite cambiar el almacenamiento (un `deque`) sin alterar la interfaz pública.
 
-La composición se concreta en las relaciones de [[01 Composicion | composición]] y [[02 Agregacion | agregación]]; la alternativa heredada es la [[30 Herencia/index | herencia]]. Cuando lo que se quiere es **inyectar una capacidad transversal sin estado**, ni una ni otra: un [[05 Mixins | mixin]].
+La composición se concreta en las relaciones de [[71 Composicion | composición]] y [[72 Agregacion | agregación]]; la alternativa heredada es la [[30 Herencia/index | herencia]]. Cuando lo que se quiere es **inyectar una capacidad transversal sin estado**, ni una ni otra: un [[75 Mixins | mixin]].

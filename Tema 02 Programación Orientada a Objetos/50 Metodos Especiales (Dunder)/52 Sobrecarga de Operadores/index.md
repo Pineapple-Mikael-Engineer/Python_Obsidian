@@ -1,5 +1,6 @@
 ---
 title: Sobrecarga de Operadores
+order: 52
 draft: false
 description: Implementar los dunders de operadores para que un objeto propio responda a + - * == < y demás
 tags:
@@ -56,4 +57,4 @@ Dinero(100) == Dinero(100)                    # True
 > [!regla]
 > Un dunder de operador devuelve `NotImplemented` (no lo lanza) cuando no sabe operar con el otro tipo. Python interpreta ese valor como "delega": prueba el método reflejado del otro operando, y si tampoco, lanza `TypeError`. Devolver `NotImplemented` es lo que mantiene la sobrecarga **cooperativa** entre tipos.
 
-La sobrecarga es la cara de los dunders que conecta con el [[40 Polimorfismo/index | polimorfismo]]: un mismo `+` actúa distinto según la clase, y el caso extremo —un operador con varias firmas según el tipo del otro operando— se trata en [[03 Sobrecarga de Operadores | sobrecarga dentro de polimorfismo]].
+La sobrecarga es la cara de los dunders que conecta con el [[40 Polimorfismo/index | polimorfismo]]: un mismo `+` actúa distinto según la clase, y el caso extremo —un operador con varias firmas según el tipo del otro operando— se trata en [[43 Sobrecarga de Operadores | sobrecarga dentro de polimorfismo]].

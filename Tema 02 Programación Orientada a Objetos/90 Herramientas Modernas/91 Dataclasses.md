@@ -1,5 +1,6 @@
 ---
 title: Dataclasses
+order: 91
 tags:
   - python
   - teoria
@@ -58,7 +59,7 @@ El dataclass elimina ese *boilerplate*. La generación de `__repr__` y `__eq__` 
 | `repr=True` (defecto) | genera `__repr__` |
 | `frozen=True` | instancias **inmutables**; asignar atributos lanza `FrozenInstanceError`. Al ser inmutable, genera `__hash__` → la instancia es **hashable** (usable en `set`/`dict`) |
 | `order=True` | genera `__lt__`, `__le__`, `__gt__`, `__ge__` comparando la tupla de campos en orden |
-| `slots=True` (3.10+) | genera `__slots__` con los campos (ver [[02 __slots__ \| __slots__]]) |
+| `slots=True` (3.10+) | genera `__slots__` con los campos (ver [[92 __slots__ \| __slots__]]) |
 
 ```python
 @dataclass(frozen=True, order=True)
@@ -113,4 +114,4 @@ Rect(3, 4).area         # 12
 ## Cuándo NO usar dataclass
 
 > [!regla]
-> `@dataclass` encaja cuando la clase es esencialmente un **agregado de datos** con identidad por valor. **No** aporta —y estorba— cuando: la clase es sobre todo **comportamiento** (muchos métodos, pocos campos); la igualdad debe ser por **identidad** y no por campos (entidades con estado mutable); el `__init__` necesita lógica compleja que no cabe en `field`/`__post_init__`; o se requiere control fino de invariantes. Para conjuntos cerrados de constantes nombradas, la herramienta es [[04 Enumeraciones (Enum) \| Enum]], no un dataclass.
+> `@dataclass` encaja cuando la clase es esencialmente un **agregado de datos** con identidad por valor. **No** aporta —y estorba— cuando: la clase es sobre todo **comportamiento** (muchos métodos, pocos campos); la igualdad debe ser por **identidad** y no por campos (entidades con estado mutable); el `__init__` necesita lógica compleja que no cabe en `field`/`__post_init__`; o se requiere control fino de invariantes. Para conjuntos cerrados de constantes nombradas, la herramienta es [[94 Enumeraciones (Enum) \| Enum]], no un dataclass.

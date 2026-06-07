@@ -1,5 +1,6 @@
 ---
 title: Polimorfismo de Subtipos
+order: 42
 tags:
   - python
   - teoria
@@ -67,4 +68,4 @@ A diferencia de C++ o Java, en Python **todos** los métodos son virtuales por d
 > [!regla]
 > **Principio de sustitución de Liskov (LSP):** una instancia de subclase debe poder usarse en todo punto donde se espere la clase base **sin alterar la corrección** del programa. El polimorfismo de subtipos es seguro solo si las subclases respetan el contrato del tipo base: misma firma efectiva, precondiciones no más estrictas, postcondiciones no más débiles.
 
-Una subclase que sobrescribe `area` devolviendo un tipo incompatible, o que exige condiciones que la base no imponía, viola el LSP y rompe el código cliente que la trata polimórficamente. El polimorfismo de subtipos requiere herencia y contrato compartido; cuando solo importa la interfaz y no el linaje, aplica el [[01 Duck Typing | duck typing]].
+Una subclase que sobrescribe `area` devolviendo un tipo incompatible, o que exige condiciones que la base no imponía, viola el LSP y rompe el código cliente que la trata polimórficamente. El polimorfismo de subtipos requiere herencia y contrato compartido; cuando solo importa la interfaz y no el linaje, aplica el [[41 Duck Typing | duck typing]].

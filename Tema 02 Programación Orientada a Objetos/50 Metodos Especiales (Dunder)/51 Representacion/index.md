@@ -1,5 +1,6 @@
 ---
 title: Representación
+order: 51
 draft: false
 description: Cómo se muestra un objeto a humanos y a desarrolladores con __str__, __repr__ y __format__
 tags:

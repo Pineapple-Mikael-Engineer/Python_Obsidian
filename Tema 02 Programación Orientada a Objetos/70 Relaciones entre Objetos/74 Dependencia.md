@@ -1,5 +1,6 @@
 ---
 title: Dependencia
+order: 74
 tags:
   - python
   - teoria
@@ -54,7 +55,7 @@ class Factura:
 ## Posición en el espectro de acoplamiento
 
 > [!info]
-> La dependencia ocupa el **extremo débil** del espectro de [[70 Relaciones entre Objetos/index | relaciones entre objetos]]. Frente a la [[01 Composicion | composición]] (la parte vive y muere con el todo) o la [[03 Asociacion | asociación]] (referencia persistente entre objetos), aquí **no hay vínculo permanente**: el objeto usado ni se almacena ni perdura.
+> La dependencia ocupa el **extremo débil** del espectro de [[70 Relaciones entre Objetos/index | relaciones entre objetos]]. Frente a la [[71 Composicion | composición]] (la parte vive y muere con el todo) o la [[73 Asociacion | asociación]] (referencia persistente entre objetos), aquí **no hay vínculo permanente**: el objeto usado ni se almacena ni perdura.
 
 | Relación | Vínculo | Persistencia |
 | -------- | ------- | ------------ |
@@ -82,4 +83,4 @@ def test_servicio():
     Servicio(fake).generar_reporte(fake)
 ```
 
-Cuando la dependencia se inyecta y **se almacena** en `self`, la relación deja de ser puntual y se desplaza hacia la [[03 Asociacion | asociación]]: la frontera entre ambas es el **almacenamiento**.
+Cuando la dependencia se inyecta y **se almacena** en `self`, la relación deja de ser puntual y se desplaza hacia la [[73 Asociacion | asociación]]: la frontera entre ambas es el **almacenamiento**.

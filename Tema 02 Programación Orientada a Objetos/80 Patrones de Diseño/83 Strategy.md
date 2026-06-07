@@ -1,5 +1,6 @@
 ---
 title: Strategy
+order: 83
 tags:
   - python
   - teoria

@@ -1,5 +1,6 @@
 ---
 title: Context Managers (__enter__, __exit__)
+order: 3
 tags:
   - python
   - teoria

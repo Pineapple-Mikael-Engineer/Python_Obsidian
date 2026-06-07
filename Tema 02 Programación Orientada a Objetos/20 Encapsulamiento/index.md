@@ -1,5 +1,6 @@
 ---
 title: Encapsulamiento
+order: 20
 draft: false
 description: Protección del estado tras una interfaz controlada
 tags:

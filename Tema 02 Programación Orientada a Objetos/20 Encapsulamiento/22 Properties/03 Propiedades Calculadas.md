@@ -1,5 +1,6 @@
 ---
 title: Propiedades Calculadas
+order: 3
 tags:
   - python
   - teoria

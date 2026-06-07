@@ -1,5 +1,6 @@
 ---
 title: Polimorfismo
+order: 40
 draft: false
 description: Una misma interfaz, comportamientos distintos según el objeto
 tags:
@@ -25,16 +26,16 @@ En Python el polimorfismo no exige una jerarquía de herencia común: basta con 
 
 ## Subtemas
 
-- [[01 Duck Typing | Duck Typing]] — *"si camina como un pato y grazna como un pato, es un pato"*: la compatibilidad se juzga por comportamiento, no por tipo.
-- [[02 Polimorfismo de Subtipos | Polimorfismo de Subtipos]] — el polimorfismo clásico vía herencia y [[32 Mecanismos de Herencia/index | sobrescritura]] de métodos.
-- [[03 Sobrecarga de Operadores | Sobrecarga de Operadores]] — dar significado a `+`, `==`, `<`… para objetos propios mediante [[50 Metodos Especiales (Dunder)/index | métodos especiales]].
+- [[41 Duck Typing | Duck Typing]] — *"si camina como un pato y grazna como un pato, es un pato"*: la compatibilidad se juzga por comportamiento, no por tipo.
+- [[42 Polimorfismo de Subtipos | Polimorfismo de Subtipos]] — el polimorfismo clásico vía herencia y [[32 Mecanismos de Herencia/index | sobrescritura]] de métodos.
+- [[43 Sobrecarga de Operadores | Sobrecarga de Operadores]] — dar significado a `+`, `==`, `<`… para objetos propios mediante [[50 Metodos Especiales (Dunder)/index | métodos especiales]].
 
 ## Formas de polimorfismo en Python
 
 | Forma | Mecanismo | Subtema |
 | ----- | --------- | ------- |
-| *Duck typing* | Interfaz compartida, sin herencia | [[01 Duck Typing \| Duck Typing]] |
-| De subtipos | Herencia + sobrescritura | [[02 Polimorfismo de Subtipos \| Polimorfismo de Subtipos]] |
-| De operadores | Métodos dunder (`__add__`, `__eq__`…) | [[03 Sobrecarga de Operadores \| Sobrecarga de Operadores]] |
+| *Duck typing* | Interfaz compartida, sin herencia | [[41 Duck Typing \| Duck Typing]] |
+| De subtipos | Herencia + sobrescritura | [[42 Polimorfismo de Subtipos \| Polimorfismo de Subtipos]] |
+| De operadores | Métodos dunder (`__add__`, `__eq__`…) | [[43 Sobrecarga de Operadores \| Sobrecarga de Operadores]] |
 
 Python **no** ofrece *overloading* por firma (varias funciones con el mismo nombre y distintos parámetros) como C++/Java; ese papel lo cubren los argumentos por defecto, `*args`/`**kwargs` y `functools.singledispatch`.

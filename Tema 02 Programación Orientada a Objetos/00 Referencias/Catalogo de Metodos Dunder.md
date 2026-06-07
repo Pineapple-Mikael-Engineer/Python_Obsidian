@@ -1,5 +1,6 @@
 ---
 title: Catálogo de Métodos Dunder
+order: 1
 tags:
   - python
   - referencia

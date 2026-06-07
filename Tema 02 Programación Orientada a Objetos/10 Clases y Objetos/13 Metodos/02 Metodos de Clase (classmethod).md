@@ -1,5 +1,6 @@
 ---
 title: Métodos de Clase (classmethod)
+order: 2
 tags:
   - python
   - teoria

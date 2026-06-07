@@ -1,5 +1,6 @@
 ---
 title: Relaciones entre Objetos
+order: 70
 draft: false
 description: Cómo se vinculan los objetos — composición, agregación, asociación, dependencia y mixins
 tags:
@@ -22,21 +23,21 @@ class Coche:
 
 ## Subtemas
 
-- [[01 Composicion | Composición]] — el todo posee a la parte; ciclo de vida ligado (*"tiene un"* fuerte).
-- [[02 Agregacion | Agregación]] — el todo agrupa partes que existen de forma independiente (*"tiene un"* débil).
-- [[03 Asociacion | Asociación]] — objetos que se conocen y colaboran sin contención (*"usa un"*).
-- [[04 Dependencia | Dependencia]] — un objeto usa a otro de forma puntual (parámetro, retorno) (*"depende de"*).
-- [[05 Mixins | Mixins]] — clases que aportan comportamiento reutilizable vía [[31 Tipos de Herencia/index | herencia múltiple]].
-- [[06 Composicion vs Herencia | Composición vs Herencia]] — cuándo preferir contener a heredar.
+- [[71 Composicion | Composición]] — el todo posee a la parte; ciclo de vida ligado (*"tiene un"* fuerte).
+- [[72 Agregacion | Agregación]] — el todo agrupa partes que existen de forma independiente (*"tiene un"* débil).
+- [[73 Asociacion | Asociación]] — objetos que se conocen y colaboran sin contención (*"usa un"*).
+- [[74 Dependencia | Dependencia]] — un objeto usa a otro de forma puntual (parámetro, retorno) (*"depende de"*).
+- [[75 Mixins | Mixins]] — clases que aportan comportamiento reutilizable vía [[31 Tipos de Herencia/index | herencia múltiple]].
+- [[76 Composicion vs Herencia | Composición vs Herencia]] — cuándo preferir contener a heredar.
 
 ## Espectro de acoplamiento
 
 | Relación | Semántica | Fuerza / ciclo de vida | Subtema |
 | -------- | --------- | ---------------------- | ------- |
-| Composición | "tiene un" (parte exclusiva) | Fuerte: la parte muere con el todo | [[01 Composicion \| Composición]] |
-| Agregación | "tiene un" (parte compartida) | Débil: la parte sobrevive al todo | [[02 Agregacion \| Agregación]] |
-| Asociación | "usa un" | Los objetos se referencian | [[03 Asociacion \| Asociación]] |
-| Dependencia | "depende de" | Puntual: solo durante una operación | [[04 Dependencia \| Dependencia]] |
+| Composición | "tiene un" (parte exclusiva) | Fuerte: la parte muere con el todo | [[71 Composicion \| Composición]] |
+| Agregación | "tiene un" (parte compartida) | Débil: la parte sobrevive al todo | [[72 Agregacion \| Agregación]] |
+| Asociación | "usa un" | Los objetos se referencian | [[73 Asociacion \| Asociación]] |
+| Dependencia | "depende de" | Puntual: solo durante una operación | [[74 Dependencia \| Dependencia]] |
 
 ```mermaid
 flowchart LR
@@ -47,4 +48,4 @@ flowchart LR
     Ser[Servicio]:::o -. dependencia .-> Log[Logger]:::o
 ```
 
-La regla de diseño *"composición sobre herencia"* —desarrollada en [[06 Composicion vs Herencia | Composición vs Herencia]]— recomienda estas relaciones frente a la [[30 Herencia/index | herencia]] cuando no hay una verdadera relación de subtipo.
+La regla de diseño *"composición sobre herencia"* —desarrollada en [[76 Composicion vs Herencia | Composición vs Herencia]]— recomienda estas relaciones frente a la [[30 Herencia/index | herencia]] cuando no hay una verdadera relación de subtipo.
