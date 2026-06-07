@@ -8,17 +8,17 @@ draft: true
 
 # sympy.calculus
 
-Cálculo simbólico: derivadas, integrales, límites, series y sumatorios.
+Calculo simbolico: derivadas, integrales, limites, series y sumatorios.
 
-## Submódulos
+## Submodulos
 
-- [[sympy.calculus/derivadas/index | derivadas]] — Diferenciación simbólica.
-- [[sympy.calculus/integrales/index | integrales]] — Integración definida e indefinida.
-- [[sympy.calculus/limites/index | límites]] — Cálculo de límites.
+- [[sympy.calculus/derivadas/index | derivadas]] — Diferenciacion simbolica.
+- [[sympy.calculus/integrales/index | integrales]] — Integracion definida e indefinida.
+- [[sympy.calculus/limites/index | limites]] — Calculo de limites.
 - [[sympy.calculus/series/index | series]] — Desarrollos en serie.
-- [[sympy.calculus/sumatorios/index | sumatorios]] — Sumas y productos simbólicos.
+- [[sympy.calculus/sumatorios/index | sumatorios]] — Sumas y productos simbolicos.
 
 ## Notas relacionadas
 
-- [[index | SymPy]]
+- [[SymPy/index | SymPy]]
 - [[Tree SymPy]]

@@ -8,7 +8,7 @@ draft: true
 
 # sympy.logic
 
-Lógica booleana simbólica.
+Logica booleana simbolica.
 
 ## Notas
 
@@ -18,5 +18,5 @@ Lógica booleana simbólica.
 
 ## Notas relacionadas
 
-- [[index | SymPy]]
+- [[SymPy/index | SymPy]]
 - [[Tree SymPy]]

@@ -8,12 +8,12 @@ draft: true
 
 # sumatorios
 
-Sumas y productos simbólicos.
+Sumas y productos simbolicos.
 
 ## Notas
 
-- [[Sum | Sum]] — sumatorio simbólico. *(pendiente)*
-- [[Product | Product]] — productorio simbólico. *(pendiente)*
+- [[Sum | Sum]] — sumatorio simbolico. *(pendiente)*
+- [[Product | Product]] — productorio simbolico. *(pendiente)*
 
 ## Notas relacionadas
 

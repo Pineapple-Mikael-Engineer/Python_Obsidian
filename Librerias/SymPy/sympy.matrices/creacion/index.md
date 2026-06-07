@@ -1,12 +1,12 @@
 ---
-title: sympy.matrices/creacion — creación
+title: sympy.matrices/creacion — creacion
 tags:
   - sympy
   - indice
 draft: true
 ---
 
-# creación
+# creacion
 
 Constructores de matrices comunes.
 

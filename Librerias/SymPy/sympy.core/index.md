@@ -8,16 +8,16 @@ draft: true
 
 # sympy.core
 
-El núcleo: cómo se construyen y representan las expresiones (símbolos, números exactos, `Expr`, evaluación).
+El nucleo: como se construyen y representan las expresiones (simbolos, numeros exactos, `Expr`, evaluacion).
 
-## Submódulos
+## Submodulos
 
-- [[sympy.core/simbolos/index | símbolos]] — Creación de incógnitas simbólicas y conversión de objetos a `Expr`.
-- [[sympy.core/numeros/index | números]] — Los tipos numéricos exactos y las constantes simbólicas.
-- [[sympy.core/expresiones/index | expresiones]] — La clase base `Expr`, su representación interna y la sustitución.
-- [[sympy.core/evaluacion/index | evaluación]] — El puente del mundo simbólico al numérico.
+- [[sympy.core/simbolos/index | simbolos]] — Creacion de incognitas simbolicas y conversion de objetos a `Expr`.
+- [[sympy.core/numeros/index | numeros]] — Los tipos numericos exactos y las constantes simbolicas.
+- [[sympy.core/expresiones/index | expresiones]] — La clase base `Expr`, su representacion interna y la sustitucion.
+- [[sympy.core/evaluacion/index | evaluacion]] — El puente del mundo simbolico al numerico.
 
 ## Notas relacionadas
 
-- [[index | SymPy]]
+- [[SymPy/index | SymPy]]
 - [[Tree SymPy]]

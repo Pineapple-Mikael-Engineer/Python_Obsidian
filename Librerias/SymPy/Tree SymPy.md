@@ -39,11 +39,11 @@ SymPy/
 ├── introduccion.md
 │
 ├── 📁 conceptos_transversales/
-│   ├── concepto_simbolico_vs_numerico.md      # por que SymPy: exacto vs flotante
-│   ├── concepto_expr_arbol.md                 # Expr, .func/.args, srepr, inmutabilidad
-│   ├── concepto_symbols_assumptions.md        # Symbol + supuestos (real, positive…)
-│   ├── concepto_evalf_lambdify.md             # de simbolico a numerico (subs/evalf/lambdify)
-│   └── concepto_simplificacion_automatica.md  # auto-simplify, Rational vs float
+│   ├── ✅ concepto_simbolico_vs_numerico.md      # por que SymPy: exacto vs flotante
+│   ├── ✅ concepto_expr_arbol.md                 # Expr, .func/.args, srepr, inmutabilidad
+│   ├── ✅ concepto_symbols_assumptions.md        # Symbol + supuestos (real, positive…)
+│   ├── ✅ concepto_evalf_lambdify.md             # de simbolico a numerico (subs/evalf/lambdify)
+│   └── ✅ concepto_simplificacion_automatica.md  # auto-simplify, Rational vs float
 │
 ├── 📁 sympy.core/
 │   ├── 📁 simbolos/
@@ -196,11 +196,11 @@ SymPy/
 ## 📊 Estado actual de implementación
 
 > Rama **limpia** creada desde el commit de skills (`8e98b49`), sin notas de otras librerías.
-> **Roadmap: 0 / ~99 notas redactadas.** Sin marca = pendiente.
+> **Roadmap: 5 / ~99 notas redactadas.** Sin marca = pendiente.
 
 | Submódulo | Plan | Estado | Prioridad |
 |-----------|:----:|--------|-----------|
-| `conceptos_transversales/` | 5 | ⬜ pendiente | 🔴 primero (modelo mental) |
+| `conceptos_transversales/` | 5 | ✅ **5/5 completo** | 🔴 primero (modelo mental) |
 | `sympy.core/` | 12 | ⬜ pendiente | 🔴 base de todo |
 | `sympy.simplify/` | 7 | ⬜ pendiente | 🟠 alta |
 | `sympy.polys/` | 11 | ⬜ pendiente | 🟠 alta |
@@ -217,7 +217,7 @@ SymPy/
 | `sympy.physics.units/` | 2 | ⬜ pendiente | 🟢 opcional |
 | `sympy.printing/` | 4 | ⬜ pendiente | 🟡 media |
 | raíz (`introduccion.md`) | 1 | ⬜ pendiente | 🔴 entrada |
-| **Total** | **~99** | **0 creadas** | |
+| **Total** | **~99** | **5 creadas** | |
 
 ### Orden sugerido de relleno
 

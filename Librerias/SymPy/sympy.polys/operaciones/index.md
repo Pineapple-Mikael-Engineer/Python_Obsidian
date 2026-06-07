@@ -8,15 +8,15 @@ draft: true
 
 # operaciones
 
-Operaciones aritméticas y de raíces sobre polinomios.
+Operaciones aritmeticas y de raices sobre polinomios.
 
 ## Notas
 
-- [[sympy.gcd | sympy.gcd]] — máximo común divisor. *(pendiente)*
-- [[sympy.lcm | sympy.lcm]] — mínimo común múltiplo. *(pendiente)*
-- [[sympy.div | sympy.div]] — división con resto. *(pendiente)*
+- [[sympy.gcd | sympy.gcd]] — maximo comun divisor. *(pendiente)*
+- [[sympy.lcm | sympy.lcm]] — minimo comun multiplo. *(pendiente)*
+- [[sympy.div | sympy.div]] — division con resto. *(pendiente)*
 - [[sympy.degree | sympy.degree]] — grado. *(pendiente)*
-- [[sympy.real_roots | sympy.real_roots]] — raíces reales exactas. *(pendiente)*
+- [[sympy.real_roots | sympy.real_roots]] — raices reales exactas. *(pendiente)*
 
 ## Notas relacionadas
 

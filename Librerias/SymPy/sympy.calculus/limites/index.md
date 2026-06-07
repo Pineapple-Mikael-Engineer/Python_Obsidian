@@ -1,19 +1,19 @@
 ---
-title: sympy.calculus/limites — límites
+title: sympy.calculus/limites — limites
 tags:
   - sympy
   - indice
 draft: true
 ---
 
-# límites
+# limites
 
-Cálculo de límites.
+Calculo de limites.
 
 ## Notas
 
-- [[sympy.limit | sympy.limit]] — límite. *(pendiente)*
-- [[Limit | Limit]] — límite sin evaluar. *(pendiente)*
+- [[sympy.limit | sympy.limit]] — limite. *(pendiente)*
+- [[Limit | Limit]] — limite sin evaluar. *(pendiente)*
 
 ## Notas relacionadas
 

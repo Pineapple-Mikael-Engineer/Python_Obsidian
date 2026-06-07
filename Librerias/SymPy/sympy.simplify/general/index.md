@@ -8,12 +8,12 @@ draft: true
 
 # general
 
-Simplificación de propósito general.
+Simplificacion de proposito general.
 
 ## Notas
 
-- [[sympy.simplify | sympy.simplify]] — heurística general. *(pendiente)*
-- [[sympy.nsimplify | sympy.nsimplify]] — de flotante a forma simbólica. *(pendiente)*
+- [[sympy.simplify | sympy.simplify]] — heuristica general. *(pendiente)*
+- [[sympy.nsimplify | sympy.nsimplify]] — de flotante a forma simbolica. *(pendiente)*
 - [[sympy.cancel | sympy.cancel]] — cancelar factores comunes en racionales. *(pendiente)*
 
 ## Notas relacionadas

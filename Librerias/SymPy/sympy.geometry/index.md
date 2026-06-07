@@ -8,16 +8,16 @@ draft: true
 
 # sympy.geometry
 
-Geometría analítica simbólica.
+Geometria analitica simbolica.
 
 ## Notas
 
 - [[Point | Point]] — punto. *(pendiente)*
 - [[Line | Line]] — recta. *(pendiente)*
 - [[Circle | Circle]] — circunferencia. *(pendiente)*
-- [[Polygon | Polygon]] — polígono. *(pendiente)*
+- [[Polygon | Polygon]] — poligono. *(pendiente)*
 
 ## Notas relacionadas
 
-- [[index | SymPy]]
+- [[SymPy/index | SymPy]]
 - [[Tree SymPy]]

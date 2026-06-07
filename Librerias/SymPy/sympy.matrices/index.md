@@ -8,18 +8,18 @@ draft: true
 
 # sympy.matrices
 
-Álgebra lineal simbólica con la clase `Matrix`.
+Algebra lineal simbolica con la clase `Matrix`.
 
-## Submódulos
+## Submodulos
 
-- [[sympy.matrices/creacion/index | creación]] — Constructores de matrices comunes.
-- [[sympy.matrices/operaciones/index | operaciones]] — Operaciones de álgebra lineal.
+- [[sympy.matrices/creacion/index | creacion]] — Constructores de matrices comunes.
+- [[sympy.matrices/operaciones/index | operaciones]] — Operaciones de algebra lineal.
 
 ## Notas
 
-- [[Matrix | Matrix]] — matriz simbólica densa. *(pendiente)*
+- [[Matrix | Matrix]] — matriz simbolica densa. *(pendiente)*
 
 ## Notas relacionadas
 
-- [[index | SymPy]]
+- [[SymPy/index | SymPy]]
 - [[Tree SymPy]]

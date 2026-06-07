@@ -8,7 +8,7 @@ draft: true
 
 # sympy.assumptions
 
-El sistema de supuestos sobre símbolos y consultas.
+El sistema de supuestos sobre simbolos y consultas.
 
 ## Notas
 
@@ -17,5 +17,5 @@ El sistema de supuestos sobre símbolos y consultas.
 
 ## Notas relacionadas
 
-- [[index | SymPy]]
+- [[SymPy/index | SymPy]]
 - [[Tree SymPy]]

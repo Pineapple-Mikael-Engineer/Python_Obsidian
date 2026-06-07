@@ -8,16 +8,16 @@ draft: true
 
 # sympy.printing
 
-Render y generación de código a partir de expresiones.
+Render y generacion de codigo a partir de expresiones.
 
 ## Notas
 
-- [[sympy.pprint | sympy.pprint]] — impresión ASCII/Unicode. *(pendiente)*
+- [[sympy.pprint | sympy.pprint]] — impresion ASCII/Unicode. *(pendiente)*
 - [[sympy.latex | sympy.latex]] — exportar a LaTeX. *(pendiente)*
 - [[sympy.init_printing | sympy.init_printing]] — activar render bonito. *(pendiente)*
-- [[sympy.ccode_pycode | sympy.ccode_pycode]] — generar código C/Python. *(pendiente)*
+- [[sympy.ccode_pycode | sympy.ccode_pycode]] — generar codigo C/Python. *(pendiente)*
 
 ## Notas relacionadas
 
-- [[index | SymPy]]
+- [[SymPy/index | SymPy]]
 - [[Tree SymPy]]

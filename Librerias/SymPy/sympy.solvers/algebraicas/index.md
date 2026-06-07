@@ -8,14 +8,14 @@ draft: true
 
 # algebraicas
 
-Ecuaciones de una incógnita.
+Ecuaciones de una incognita.
 
 ## Notas
 
-- [[sympy.solve | sympy.solve]] — resolutor clásico de propósito general. *(pendiente)*
+- [[sympy.solve | sympy.solve]] — resolutor clasico de proposito general. *(pendiente)*
 - [[sympy.solveset | sympy.solveset]] — resolutor moderno (devuelve conjuntos). *(pendiente)*
-- [[sympy.roots | sympy.roots]] — raíces con multiplicidad. *(pendiente)*
-- [[sympy.nsolve | sympy.nsolve]] — raíz numérica. *(pendiente)*
+- [[sympy.roots | sympy.roots]] — raices con multiplicidad. *(pendiente)*
+- [[sympy.nsolve | sympy.nsolve]] — raiz numerica. *(pendiente)*
 
 ## Notas relacionadas
 

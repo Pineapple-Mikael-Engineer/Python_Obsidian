@@ -8,7 +8,7 @@ draft: true
 
 # sympy.physics.units
 
-Magnitudes y unidades físicas.
+Magnitudes y unidades fisicas.
 
 ## Notas
 
@@ -17,5 +17,5 @@ Magnitudes y unidades físicas.
 
 ## Notas relacionadas
 
-- [[index | SymPy]]
+- [[SymPy/index | SymPy]]
 - [[Tree SymPy]]

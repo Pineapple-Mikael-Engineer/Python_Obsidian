@@ -12,7 +12,7 @@ Funciones elementales.
 
 ## Notas
 
-- [[sympy.sqrt | sympy.sqrt]] — raíz cuadrada exacta. *(pendiente)*
+- [[sympy.sqrt | sympy.sqrt]] — raiz cuadrada exacta. *(pendiente)*
 - [[sympy.exp_log | sympy.exp_log]] — `exp` y `log`. *(pendiente)*
 - [[sympy.trigonometricas | sympy.trigonometricas]] — `sin`, `cos`, `tan`, inversas. *(pendiente)*
 - [[sympy.hiperbolicas | sympy.hiperbolicas]] — `sinh`, `cosh`, `tanh`. *(pendiente)*

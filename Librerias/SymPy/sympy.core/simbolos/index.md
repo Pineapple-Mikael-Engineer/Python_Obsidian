@@ -1,19 +1,19 @@
 ---
-title: sympy.core/simbolos — símbolos
+title: sympy.core/simbolos — simbolos
 tags:
   - sympy
   - indice
 draft: true
 ---
 
-# símbolos
+# simbolos
 
-Creación de incógnitas simbólicas y conversión de objetos a `Expr`.
+Creacion de incognitas simbolicas y conversion de objetos a `Expr`.
 
 ## Notas
 
-- [[sympy.symbols | sympy.symbols]] — crear uno o varios símbolos. *(pendiente)*
-- [[Symbol | Symbol]] — la clase del símbolo y sus supuestos. *(pendiente)*
+- [[sympy.symbols | sympy.symbols]] — crear uno o varios simbolos. *(pendiente)*
+- [[Symbol | Symbol]] — la clase del simbolo y sus supuestos. *(pendiente)*
 - [[sympy.sympify | sympy.sympify]] — str/num → Expr (`S()`). *(pendiente)*
 
 ## Notas relacionadas

@@ -8,7 +8,7 @@ draft: true
 
 # operaciones
 
-Operaciones de álgebra lineal.
+Operaciones de algebra lineal.
 
 ## Notas
 
@@ -17,7 +17,7 @@ Operaciones de álgebra lineal.
 - [[Matrix.rref | Matrix.rref]] — forma escalonada reducida. *(pendiente)*
 - [[Matrix.eigenvals | Matrix.eigenvals]] — autovalores. *(pendiente)*
 - [[Matrix.eigenvects | Matrix.eigenvects]] — autovectores. *(pendiente)*
-- [[Matrix.nullspace | Matrix.nullspace]] — núcleo. *(pendiente)*
+- [[Matrix.nullspace | Matrix.nullspace]] — nucleo. *(pendiente)*
 
 ## Notas relacionadas
 

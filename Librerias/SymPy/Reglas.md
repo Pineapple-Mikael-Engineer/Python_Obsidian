@@ -6,49 +6,49 @@ tags:
   - reglas
 ---
 
-# 📐 Reglas de redacción — SymPy
+# 📐 Reglas de redaccion — SymPy
 
-Convenciones específicas para documentar **SymPy** (matemática simbólica) en el vault.
-Especializan el [[Estandarizan Directorio Librerias | estándar base de librerías]]; ante
-conflicto, manda el estándar base. El **dónde** vive cada nota lo define [[Tree SymPy]].
+Convenciones especificas para documentar **SymPy** (matematica simbolica) en el vault.
+Especializan el [[Estandarizan Directorio Librerias | estandar base de librerias]]; ante
+conflicto, manda el estandar base. El **donde** vive cada nota lo define [[Tree SymPy]].
 
 ---
 
 ## 1. Naming de archivos (API-style)
 
-| Tipo de nota | Patrón | Ejemplo |
+| Tipo de nota | Patron | Ejemplo |
 |--------------|--------|---------|
-| Función top-level | `sympy.<funcion>.md` | `sympy.solve.md`, `sympy.integrate.md` |
+| Funcion top-level | `sympy.<funcion>.md` | `sympy.solve.md`, `sympy.integrate.md` |
 | Clase / objeto | `<NombreReal>.md` | `Symbol.md`, `Matrix.md`, `Interval.md`, `Poly.md` |
-| Método de objeto | `<Objeto>.<metodo>.md` | `Matrix.det.md`, `Expr.subs.md` |
+| Metodo de objeto | `<Objeto>.<metodo>.md` | `Matrix.det.md`, `Expr.subs.md` |
 | Concepto transversal | `concepto_<tema>.md` | `concepto_expr_arbol.md` |
-| Agrupación de afines | `sympy.<tema>.md` | `sympy.trigonometricas.md` (sin, cos…) |
-| **Índice de carpeta** | `index.md` | uno por **cada** directorio |
+| Agrupacion de afines | `sympy.<tema>.md` | `sympy.trigonometricas.md` (sin, cos…) |
+| **Indice de carpeta** | `index.md` | uno por **cada** directorio |
 
-- **Sin tildes ni signos** en nombres de archivo (`sympy.factorint.md`, no con tilde). El título sí lleva tildes.
+- **Sin tildes** en nombres de archivo y **tambien en titulo y cuerpo** (solo se conserva la ñ), igual que SciPy/NumPy. El nombre de archivo evita ademas espacios y signos.
 - El nombre del archivo = exactamente lo que se wikilinkea (`[[sympy.solve]]`).
-- Clases con su **nombre real** de la API, respetando mayúsculas (`Matrix`, `FiniteSet`, `Rational`).
+- Clases con su **nombre real** de la API, respetando mayusculas (`Matrix`, `FiniteSet`, `Rational`).
 
 ---
 
-## 2. Índice por carpeta (`index.md`) — OBLIGATORIO
+## 2. Indice por carpeta (`index.md`) — OBLIGATORIO
 
 > [!regla]
-> **Cada directorio lleva su `index.md`** como nota madre. Es lo que faltó en las otras
-> librerías; aquí no se omite.
+> **Cada directorio lleva su `index.md`** como nota madre. Es lo que falto en las otras
+> librerias; aqui no se omite.
 
 El `index.md` de una carpeta:
-- Presenta en 1–2 frases qué cubre el submódulo/temática.
+- Presenta en 1–2 frases que cubre el submodulo/tematica.
 - Lista su **contenido**: subcarpetas (enlazadas con ruta `[[sympy.core/simbolos/index | …]]`)
   y notas hoja (enlazadas por basename `[[sympy.symbols | …]]`).
-- Marca como *(pendiente)* las notas aún no redactadas.
+- Marca como *(pendiente)* las notas aun no redactadas.
 - Cierra con `## Notas relacionadas`.
 
 Frontmatter de un `index.md`:
 
 ```yaml
 ---
-title: <ruta corta> — <descripción breve>
+title: <ruta corta> — <descripcion breve>
 tags:
   - sympy
   - indice
@@ -56,7 +56,7 @@ draft: true
 ---
 ```
 
-> `index.md` es un **hub de navegación**, no una nota de API: no lleva `lib/tipo/retorna`,
+> `index.md` es un **hub de navegacion**, no una nota de API: no lleva `lib/tipo/retorna`,
 > y `sync_tree.py` lo ignora en su conteo de cobertura.
 
 ---
@@ -73,9 +73,9 @@ tags:
   - sympy
   - api/funcion          # api/funcion | api/clase | api/metodo | api/objeto
   - solvers/algebraicas  # dominio funcional = rama del Tree
-# --- Clasificación ---
+# --- Clasificacion ---
 lib: sympy
-mod: sympy.solvers       # submódulo (o sympy para top-level)
+mod: sympy.solvers       # submodulo (o sympy para top-level)
 tipo: funcion
 # --- Comportamiento ---
 retorna: list | dict | FiniteSet
@@ -88,26 +88,26 @@ draft: false
 ```
 
 - `tipo`: `funcion | clase | metodo | objeto | concepto`.
-- `retorna`: el tipo simbólico de salida (`Expr`, `list`, `dict`, `FiniteSet`, `Matrix`…).
-- Máximo **3–5 tags**; nunca `python`, `simbolico` ni el path repetido (regla del estándar base).
+- `retorna`: el tipo simbolico de salida (`Expr`, `list`, `dict`, `FiniteSet`, `Matrix`…).
+- Maximo **3–5 tags**; nunca `python`, `simbolico` ni el path repetido (regla del estandar base).
 
 ---
 
 ## 4. Estructura de una nota de API (orden de capas)
 
-Mismo molde que las notas de SciPy (lo más consultado arriba):
+Mismo molde que las notas de SciPy (lo mas consultado arriba):
 
-1. `# title` y un párrafo de **qué hace y cuándo usarla**.
-2. **Firma** en bloque de código (`sympy.solve(f, *symbols, dict=False, ...)`).
+1. `# title` y un parrafo de **que hace y cuando usarla**.
+2. **Firma** en bloque de codigo (`sympy.solve(f, *symbols, dict=False, ...)`).
 3. **Valor de retorno** (tabla tipo/forma/significado).
-4. **Formas básicas de llamada** (tabla objetivo → llamada).
-5. **Parámetros en detalle** con ejemplos ejecutables (salida en comentarios).
-6. **Casos de uso** reales de ingeniería/matemática.
-7. **Errores comunes** (tabla error → causa → solución) y **Limitaciones**.
+4. **Formas basicas de llamada** (tabla objetivo → llamada).
+5. **Parametros en detalle** con ejemplos ejecutables (salida en comentarios).
+6. **Casos de uso** reales de ingenieria/matematica.
+7. **Errores comunes** (tabla error → causa → solucion) y **Limitaciones**.
 8. `## Notas relacionadas` con los wikilinks.
 
 > [!ejemplo]
-> Todo código debe ser **ejecutable** y mostrar la salida exacta como comentario:
+> Todo codigo debe ser **ejecutable** y mostrar la salida exacta como comentario:
 > ```python
 > from sympy import symbols, solve
 > x = symbols("x")
@@ -116,29 +116,29 @@ Mismo molde que las notas de SciPy (lo más consultado arriba):
 
 ---
 
-## 5. Notación y criterio SymPy
+## 5. Notacion y criterio SymPy
 
-> [!info] Exactitud simbólica
+> [!info] Exactitud simbolica
 > SymPy es **exacto**, no flotante: `Rational(1, 3)` ≠ `0.333…`. Distinguir siempre el mundo
-> simbólico del numérico. El puente a NumPy/SciPy es `lambdify`; `evalf()` da precisión arbitraria.
+> simbolico del numerico. El puente a NumPy/SciPy es `lambdify`; `evalf()` da precision arbitraria.
 
-- Crear símbolos siempre con `symbols(...)` y nombrar los **supuestos** relevantes
+- Crear simbolos siempre con `symbols(...)` y nombrar los **supuestos** relevantes
   (`symbols("x", real=True, positive=True)`) cuando cambien el resultado.
 - Preferir y señalar **`solveset`** como alternativa moderna a `solve` donde aplique.
 - Construir ecuaciones con `Eq(lhs, rhs)`; recordar que una `Expr` suelta se asume `= 0`.
-- Mostrar la **auto-simplificación** cuando sorprenda (`x + x → 2*x` sin pedirlo).
+- Mostrar la **auto-simplificacion** cuando sorprenda (`x + x → 2*x` sin pedirlo).
 - En notas con salida "bonita", mencionar `pprint` / `init_printing` / `latex` para el render.
 
 ---
 
-## 6. Wikilinks (resumen del estándar base)
+## 6. Wikilinks (resumen del estandar base)
 
-- 1–2 apariciones por nota, en la **primera mención significativa**; en párrafos, no en tablas.
-- ❌ Nunca en headers, código, frontmatter ni títulos.
+- 1–2 apariciones por nota, en la **primera mencion significativa**; en parrafos, no en tablas.
+- ❌ Nunca en headers, codigo, frontmatter ni titulos.
 - A nota hoja: por basename `[[sympy.diff]]`. A `index` de carpeta: con ruta
   `[[sympy.calculus/derivadas/index | derivadas]]` (el basename `index` colisiona).
-- Sección final **obligatoria** `## Notas relacionadas`.
-- Enlaces a notas de NumPy/SciPy (otra rama) son válidos como referencia.
+- Seccion final **obligatoria** `## Notas relacionadas`.
+- Enlaces a notas de NumPy/SciPy (otra rama) son validos como referencia.
 
 ---
 
@@ -146,8 +146,8 @@ Mismo molde que las notas de SciPy (lo más consultado arriba):
 
 1. Diseñar/actualizar [[Tree SymPy]] (roadmap).
 2. `conceptos_transversales/` + `introduccion.md` a mano (modelo mental).
-3. Rellenar submódulos con subagentes (`nota-libreria`) + revisión.
-4. Mantener cada `index.md` al día con su contenido.
+3. Rellenar submodulos con subagentes (`nota-libreria`) + revision.
+4. Mantener cada `index.md` al dia con su contenido.
 5. `python3 .claude/skills/tree-libreria/sync_tree.py Librerias/SymPy` → marcar ✅ en el Tree.
 
 ---

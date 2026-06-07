@@ -12,10 +12,10 @@ Funciones especiales y definidas a trozos.
 
 ## Notas
 
-- [[sympy.gamma | sympy.gamma]] — función gamma. *(pendiente)*
+- [[sympy.gamma | sympy.gamma]] — funcion gamma. *(pendiente)*
 - [[sympy.factorial_binomial | sympy.factorial_binomial]] — factorial y binomial. *(pendiente)*
-- [[Piecewise | Piecewise]] — función a trozos. *(pendiente)*
-- [[sympy.Heaviside_DiracDelta | sympy.Heaviside_DiracDelta]] — escalón e impulso. *(pendiente)*
+- [[Piecewise | Piecewise]] — funcion a trozos. *(pendiente)*
+- [[sympy.Heaviside_DiracDelta | sympy.Heaviside_DiracDelta]] — escalon e impulso. *(pendiente)*
 
 ## Notas relacionadas
 

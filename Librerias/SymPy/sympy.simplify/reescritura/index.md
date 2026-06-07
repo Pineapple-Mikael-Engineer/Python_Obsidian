@@ -8,7 +8,7 @@ draft: true
 
 # reescritura
 
-Reexpresar en términos de otras funciones.
+Reexpresar en terminos de otras funciones.
 
 ## Notas
 

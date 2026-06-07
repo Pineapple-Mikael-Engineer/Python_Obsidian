@@ -1,19 +1,19 @@
 ---
-title: sympy.core/evaluacion — evaluación
+title: sympy.core/evaluacion — evaluacion
 tags:
   - sympy
   - indice
 draft: true
 ---
 
-# evaluación
+# evaluacion
 
-El puente del mundo simbólico al numérico.
+El puente del mundo simbolico al numerico.
 
 ## Notas
 
-- [[Expr.evalf | Expr.evalf]] — evaluación numérica de precisión arbitraria. *(pendiente)*
-- [[sympy.lambdify | sympy.lambdify]] — Expr → función NumPy/Python. *(pendiente)*
+- [[Expr.evalf | Expr.evalf]] — evaluacion numerica de precision arbitraria. *(pendiente)*
+- [[sympy.lambdify | sympy.lambdify]] — Expr → funcion NumPy/Python. *(pendiente)*
 
 ## Notas relacionadas
 

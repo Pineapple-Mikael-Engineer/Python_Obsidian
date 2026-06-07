@@ -8,7 +8,7 @@ draft: true
 
 # expandir / factorizar
 
-Las transformaciones polinómicas más usadas.
+Las transformaciones polinomicas mas usadas.
 
 ## Notas
 
@@ -16,7 +16,7 @@ Las transformaciones polinómicas más usadas.
 - [[sympy.factor | sympy.factor]] — factorizar. *(pendiente)*
 - [[sympy.collect | sympy.collect]] — agrupar por potencias de una variable. *(pendiente)*
 - [[sympy.apart | sympy.apart]] — fracciones parciales. *(pendiente)*
-- [[sympy.together | sympy.together]] — unir en una sola fracción. *(pendiente)*
+- [[sympy.together | sympy.together]] — unir en una sola fraccion. *(pendiente)*
 
 ## Notas relacionadas
 

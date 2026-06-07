@@ -1,5 +1,5 @@
 ---
-title: SymPy — matemática simbólica
+title: SymPy — matematica simbolica
 tags:
   - sympy
   - indice
@@ -8,30 +8,30 @@ draft: true
 
 # SymPy
 
-Librería de **matemática simbólica** de Python: opera sobre `Expr` (árboles de expresión exactos), no sobre flotantes. Este es el índice raíz del módulo.
+Libreria de **matematica simbolica** de Python: opera sobre `Expr` (arboles de expresion exactos), no sobre flotantes. Este es el indice raiz del modulo.
 
-## Submódulos
+## Submodulos
 
-- [[conceptos_transversales/index | conceptos_transversales]] — Las ideas que gobiernan toda la librería; conviene leerlas antes de tocar cualquier submódulo.
-- [[sympy.core/index | sympy.core]] — El núcleo: cómo se construyen y representan las expresiones (símbolos, números exactos, `Expr`, evaluación).
-- [[sympy.simplify/index | sympy.simplify]] — Reescribir una expresión en una forma equivalente más simple.
+- [[conceptos_transversales/index | conceptos_transversales]] — Las ideas que gobiernan toda la libreria; conviene leerlas antes de tocar cualquier submodulo.
+- [[sympy.core/index | sympy.core]] — El nucleo: como se construyen y representan las expresiones (simbolos, numeros exactos, `Expr`, evaluacion).
+- [[sympy.simplify/index | sympy.simplify]] — Reescribir una expresion en una forma equivalente mas simple.
 - [[sympy.polys/index | sympy.polys]] — Polinomios: expandir, factorizar y operar con ellos.
-- [[sympy.calculus/index | sympy.calculus]] — Cálculo simbólico: derivadas, integrales, límites, series y sumatorios.
+- [[sympy.calculus/index | sympy.calculus]] — Calculo simbolico: derivadas, integrales, limites, series y sumatorios.
 - [[sympy.solvers/index | sympy.solvers]] — Resolver ecuaciones, sistemas, EDOs y recurrencias.
-- [[sympy.matrices/index | sympy.matrices]] — Álgebra lineal simbólica con la clase `Matrix`.
-- [[sympy.functions/index | sympy.functions]] — Funciones matemáticas simbólicas.
-- [[sympy.sets/index | sympy.sets]] — Conjuntos simbólicos: intervalos, finitos, predefinidos y sus operaciones.
-- [[sympy.logic/index | sympy.logic]] — Lógica booleana simbólica.
-- [[sympy.assumptions/index | sympy.assumptions]] — El sistema de supuestos sobre símbolos y consultas.
-- [[sympy.ntheory/index | sympy.ntheory]] — Teoría de números.
-- [[sympy.geometry/index | sympy.geometry]] — Geometría analítica simbólica.
-- [[sympy.stats/index | sympy.stats]] — Probabilidad simbólica.
-- [[sympy.physics.units/index | sympy.physics.units]] — Magnitudes y unidades físicas.
-- [[sympy.printing/index | sympy.printing]] — Render y generación de código a partir de expresiones.
+- [[sympy.matrices/index | sympy.matrices]] — Algebra lineal simbolica con la clase `Matrix`.
+- [[sympy.functions/index | sympy.functions]] — Funciones matematicas simbolicas.
+- [[sympy.sets/index | sympy.sets]] — Conjuntos simbolicos: intervalos, finitos, predefinidos y sus operaciones.
+- [[sympy.logic/index | sympy.logic]] — Logica booleana simbolica.
+- [[sympy.assumptions/index | sympy.assumptions]] — El sistema de supuestos sobre simbolos y consultas.
+- [[sympy.ntheory/index | sympy.ntheory]] — Teoria de numeros.
+- [[sympy.geometry/index | sympy.geometry]] — Geometria analitica simbolica.
+- [[sympy.stats/index | sympy.stats]] — Probabilidad simbolica.
+- [[sympy.physics.units/index | sympy.physics.units]] — Magnitudes y unidades fisicas.
+- [[sympy.printing/index | sympy.printing]] — Render y generacion de codigo a partir de expresiones.
 
 ## Notas
 
-- [[introduccion | introduccion]] — qué es SymPy y cómo navegar el módulo. *(pendiente)*
+- [[introduccion | introduccion]] — que es SymPy y como navegar el modulo. *(pendiente)*
 
 ## Notas relacionadas
 

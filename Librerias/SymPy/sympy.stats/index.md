@@ -8,7 +8,7 @@ draft: true
 
 # sympy.stats
 
-Probabilidad simbólica.
+Probabilidad simbolica.
 
 ## Notas
 
@@ -17,5 +17,5 @@ Probabilidad simbólica.
 
 ## Notas relacionadas
 
-- [[index | SymPy]]
+- [[SymPy/index | SymPy]]
 - [[Tree SymPy]]

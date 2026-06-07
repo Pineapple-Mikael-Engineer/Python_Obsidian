@@ -12,7 +12,7 @@ Simplificaciones especializadas.
 
 ## Notas
 
-- [[sympy.trigsimp | sympy.trigsimp]] — identidades trigonométricas. *(pendiente)*
+- [[sympy.trigsimp | sympy.trigsimp]] — identidades trigonometricas. *(pendiente)*
 - [[sympy.radsimp | sympy.radsimp]] — racionalizar/denestar radicales. *(pendiente)*
 - [[sympy.powsimp | sympy.powsimp]] — combinar potencias. *(pendiente)*
 

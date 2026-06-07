@@ -8,7 +8,7 @@ draft: true
 
 # integrales
 
-Integración definida e indefinida.
+Integracion definida e indefinida.
 
 ## Notas
 

@@ -8,14 +8,14 @@ draft: true
 
 # sympy.functions
 
-Funciones matemáticas simbólicas.
+Funciones matematicas simbolicas.
 
-## Submódulos
+## Submodulos
 
 - [[sympy.functions/elementales/index | elementales]] — Funciones elementales.
 - [[sympy.functions/especiales/index | especiales]] — Funciones especiales y definidas a trozos.
 
 ## Notas relacionadas
 
-- [[index | SymPy]]
+- [[SymPy/index | SymPy]]
 - [[Tree SymPy]]

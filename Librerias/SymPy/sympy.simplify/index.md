@@ -8,15 +8,15 @@ draft: true
 
 # sympy.simplify
 
-Reescribir una expresión en una forma equivalente más simple.
+Reescribir una expresion en una forma equivalente mas simple.
 
-## Submódulos
+## Submodulos
 
-- [[sympy.simplify/general/index | general]] — Simplificación de propósito general.
+- [[sympy.simplify/general/index | general]] — Simplificacion de proposito general.
 - [[sympy.simplify/trig_y_radicales/index | trig y radicales]] — Simplificaciones especializadas.
-- [[sympy.simplify/reescritura/index | reescritura]] — Reexpresar en términos de otras funciones.
+- [[sympy.simplify/reescritura/index | reescritura]] — Reexpresar en terminos de otras funciones.
 
 ## Notas relacionadas
 
-- [[index | SymPy]]
+- [[SymPy/index | SymPy]]
 - [[Tree SymPy]]

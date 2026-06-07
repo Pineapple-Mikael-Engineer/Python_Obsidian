@@ -10,16 +10,16 @@ draft: true
 
 Polinomios: expandir, factorizar y operar con ellos.
 
-## Submódulos
+## Submodulos
 
-- [[sympy.polys/expandir_factorizar/index | expandir / factorizar]] — Las transformaciones polinómicas más usadas.
-- [[sympy.polys/operaciones/index | operaciones]] — Operaciones aritméticas y de raíces sobre polinomios.
+- [[sympy.polys/expandir_factorizar/index | expandir / factorizar]] — Las transformaciones polinomicas mas usadas.
+- [[sympy.polys/operaciones/index | operaciones]] — Operaciones aritmeticas y de raices sobre polinomios.
 
 ## Notas
 
-- [[Poly | Poly]] — representación densa de polinomios. *(pendiente)*
+- [[Poly | Poly]] — representacion densa de polinomios. *(pendiente)*
 
 ## Notas relacionadas
 
-- [[index | SymPy]]
+- [[SymPy/index | SymPy]]
 - [[Tree SymPy]]

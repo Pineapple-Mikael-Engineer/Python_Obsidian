@@ -1,20 +1,20 @@
 ---
-title: sympy.core/numeros — números
+title: sympy.core/numeros — numeros
 tags:
   - sympy
   - indice
 draft: true
 ---
 
-# números
+# numeros
 
-Los tipos numéricos exactos y las constantes simbólicas.
+Los tipos numericos exactos y las constantes simbolicas.
 
 ## Notas
 
 - [[Rational | Rational]] — fracciones exactas. *(pendiente)*
 - [[Integer | Integer]] — enteros exactos. *(pendiente)*
-- [[Float | Float]] — flotante de precisión arbitraria. *(pendiente)*
+- [[Float | Float]] — flotante de precision arbitraria. *(pendiente)*
 - [[sympy.constantes_simbolicas | sympy.constantes_simbolicas]] — `pi`, `E`, `oo`, `I`, `nan`, `S`. *(pendiente)*
 
 ## Notas relacionadas

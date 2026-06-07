@@ -8,7 +8,7 @@ draft: true
 
 # derivadas
 
-Diferenciación simbólica.
+Diferenciacion simbolica.
 
 ## Notas
 

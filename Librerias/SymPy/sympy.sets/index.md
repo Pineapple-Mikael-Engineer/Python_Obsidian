@@ -8,7 +8,7 @@ draft: true
 
 # sympy.sets
 
-Conjuntos simbólicos: intervalos, finitos, predefinidos y sus operaciones.
+Conjuntos simbolicos: intervalos, finitos, predefinidos y sus operaciones.
 
 ## Notas
 
@@ -19,5 +19,5 @@ Conjuntos simbólicos: intervalos, finitos, predefinidos y sus operaciones.
 
 ## Notas relacionadas
 
-- [[index | SymPy]]
+- [[SymPy/index | SymPy]]
 - [[Tree SymPy]]
