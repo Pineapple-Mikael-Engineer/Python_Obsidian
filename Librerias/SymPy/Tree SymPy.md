@@ -150,10 +150,10 @@ SymPy/
 │       └── ✅ sympy.Heaviside_DiracDelta.md
 │
 ├── 📁 sympy.sets/
-│   ├── Interval.md
-│   ├── FiniteSet.md
-│   ├── sympy.conjuntos_predefinidos.md        # S.Reals, S.Naturals, S.Integers
-│   └── sympy.operaciones_conjuntos.md         # Union, Intersection, Complement
+│   ├── ✅ Interval.md
+│   ├── ✅ FiniteSet.md
+│   ├── ✅ sympy.conjuntos_predefinidos.md        # S.Reals, S.Naturals, S.Integers
+│   └── ✅ sympy.operaciones_conjuntos.md         # Union, Intersection, Complement
 │
 ├── 📁 sympy.logic/
 │   ├── sympy.operadores_logicos.md            # And, Or, Not, Implies, Equivalent
@@ -161,8 +161,8 @@ SymPy/
 │   └── sympy.simplify_logic.md
 │
 ├── 📁 sympy.assumptions/
-│   ├── sympy.supuestos_simbolos.md            # Symbol(real=True, positive=True…)
-│   └── sympy.ask.md                           # ask(), predicados Q
+│   ├── ✅ sympy.supuestos_simbolos.md            # Symbol(real=True, positive=True…)
+│   └── ✅ sympy.ask.md                           # ask(), predicados Q
 │
 ├── 📁 sympy.ntheory/
 │   ├── sympy.isprime.md
@@ -196,7 +196,7 @@ SymPy/
 ## 📊 Estado actual de implementación
 
 > Rama **limpia** creada desde el commit de skills (`8e98b49`), sin notas de otras librerías.
-> **Roadmap: 73 / ~99 notas redactadas.** Sin marca = pendiente.
+> **Roadmap: 79 / ~99 notas redactadas.** Sin marca = pendiente.
 
 | Submódulo | Plan | Estado | Prioridad |
 |-----------|:----:|--------|-----------|
@@ -208,16 +208,16 @@ SymPy/
 | `sympy.solvers/` | 8 | ✅ **8/8 completo** | 🔴 núcleo de ingeniería |
 | `sympy.matrices/` | 11 | ✅ **11/11 completo** | 🟠 alta |
 | `sympy.functions/` | 9 | ✅ **9/9 completo** | 🟡 media |
-| `sympy.sets/` | 4 | ⬜ pendiente | 🟡 media |
+| `sympy.sets/` | 4 | ✅ **4/4 completo** | 🟡 media |
 | `sympy.logic/` | 3 | ⬜ pendiente | 🟢 baja |
-| `sympy.assumptions/` | 2 | ⬜ pendiente | 🟡 media |
+| `sympy.assumptions/` | 2 | ✅ **2/2 completo** | 🟡 media |
 | `sympy.ntheory/` | 4 | ⬜ pendiente | 🟢 baja |
 | `sympy.geometry/` | 4 | ⬜ pendiente | 🟢 opcional |
 | `sympy.stats/` | 2 | ⬜ pendiente | 🟢 opcional |
 | `sympy.physics.units/` | 2 | ⬜ pendiente | 🟢 opcional |
 | `sympy.printing/` | 4 | ⬜ pendiente | 🟡 media |
 | raíz (`introduccion.md`) | 1 | ⬜ pendiente | 🔴 entrada |
-| **Total** | **~99** | **73 creadas** | |
+| **Total** | **~99** | **79 creadas** | |
 
 ### Orden sugerido de relleno
 
