@@ -17,6 +17,16 @@ Esta carpeta contiene las cuatro notas que forman ese modelo mental. No son nota
 (eso esta en `vispy.app/`, `vispy.scene/`, `vispy.gloo/`) — son los **conceptos estructurales**
 que conectan todas las notas de API entre si.
 
+## El modelo de objetos de VisPy
+
+Aqui esta el cambio de chip respecto a NumPy/SciPy: alli todo era **funciones sobre `ndarray`**;
+en VisPy todo es **orientado a objetos** — clases que se instancian y se conectan entre si. El
+patron dominante no es llamar funciones sueltas sino **composicion**: el scene graph es un arbol
+de nodos donde agregas cada visual indicando su sitio con `parent=view.scene`, y el render recorre
+ese arbol. La **herencia** aparece de forma puntual cuando subclaseas `Canvas` para tu propia
+ventana o creas un `Visual` propio. Para el mapa completo de clases y su jerarquia de herencia,
+ve [[VisPy/index | VisPy]].
+
 ## Como se relacionan los 4 conceptos
 
 ```

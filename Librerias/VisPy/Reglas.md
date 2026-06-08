@@ -174,7 +174,7 @@ Lo mas consultado arriba:
 ## 7. Flujo de trabajo
 
 1. Disenar/actualizar [[Tree VisPy]] (roadmap).
-2. `conceptos_transversales/` + `introduccion.md` a mano (modelo mental del event loop y scene graph).
+2. `conceptos_transversales/` + `index.md` (raiz) a mano (modelo mental del event loop y scene graph).
 3. Rellenar submodulos con subagentes (`nota-libreria`) + revision.
 4. Mantener cada `index.md` al dia con su contenido (nota madre rica, draft: false).
 5. `python3 .claude/skills/tree-libreria/sync_tree.py Librerias/VisPy` → marcar ✅ en el Tree.
