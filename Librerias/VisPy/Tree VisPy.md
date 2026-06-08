@@ -3,7 +3,7 @@ title: Tree VisPy
 tags:
   - vispy
   - meta
-draft: false
+draft: true
 ---
 
 # 🌳 Tree VisPy
@@ -38,7 +38,7 @@ draft: false
 ```tree
 VisPy/
 │
-├── introduccion.md                           # que es VisPy, backends, flujo minimo
+├── index.md                           # que es VisPy, backends, flujo minimo
 │
 ├── 📁 conceptos_transversales/
 │   ├── concepto_canvas_app.md               # Canvas, backend, event loop, on_draw
@@ -97,12 +97,12 @@ VisPy/
 | `vispy.scene/visuals/3d/` | 3 | ✅ completo | 🟡 media |
 | `vispy.gloo/` | 3 | ✅ completo | 🟡 media |
 | `vispy.color/` | 3 | ✅ completo | 🟡 media |
-| raiz (`introduccion.md`) | 1 | ✅ completo | 🔴 entrada |
+| raiz (`index.md`) | 1 | ✅ completo | 🔴 entrada |
 | **Total** | **~26** | **~26 creadas** | |
 
 ### Orden sugerido de relleno
 
-1. **`conceptos_transversales`** + `introduccion.md` — el modelo mental: canvas, scene graph, event loop.
+1. **`conceptos_transversales`** + `index.md` — el modelo mental: canvas, scene graph, event loop.
 2. **`vispy.app`** — `Canvas`, `Timer`, `vispy.use`: el ciclo de vida de cualquier app.
 3. **`vispy.scene`** — `SceneCanvas` + `ViewBox` + `cameras`: el 90 % de los casos de uso.
 4. **`vispy.scene/visuals/2d`** — los visuals mas usados: `Line`, `Markers`, `Image`, `Text`.

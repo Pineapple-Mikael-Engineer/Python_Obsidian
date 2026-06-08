@@ -100,6 +100,41 @@ Este ejemplo usa los tres elementos clave del modulo: [[Program]] (shaders compi
 | Imagen o campo 2D (textura) | [[Texture2D]] como `uniform sampler2D` |
 | Patron repetido en superficie (mapa de normales, detalle) | [[Texture2D]] con `wrapping='repeat'` |
 
+## Clases que aporta
+
+Todos los objetos de gloo viven en **memoria GPU** y comparten la misma base, `GLObject`. La API se arma por **composicion**: un `Program` se enlaza con buffers y texturas.
+
+| Clase | Hereda de | Rol |
+|-------|-----------|-----|
+| `GLObject` | — (base de todo) | Base de todo objeto GPU. Gestiona el recurso en la tarjeta: `.id`, activar/desactivar el objeto |
+| [[Program]] | `GLObject` | Shader GLSL compilado y enlazado: `program['uniform']=...`, `.bind()`, `.draw('triangles')` |
+| `DataBuffer` | `GLObject` (via `Buffer`) | Base intermedia de los buffers de datos; no se usa directamente |
+| [[VertexBuffer]] | `DataBuffer` | Datos por vertice en GPU (posicion, color, UV…): `.set_data()` |
+| `IndexBuffer` | `DataBuffer` | Indices de vertices en GPU para dibujado indexado: `.set_data()` |
+| `BaseTexture` | `GLObject` | Base de las texturas; no se usa directamente |
+| [[Texture2D]] | `BaseTexture` | Textura 2D en GPU (imagen, campo 2D): `.set_data()`, `interpolation`, `wrapping` |
+| `Texture3D` | `BaseTexture` | Textura 3D en GPU (volumen): `.set_data()`, `interpolation`, `wrapping` |
+
+`GLObject`, `DataBuffer`, `Buffer` y `BaseTexture` son clases base internas (no tienen nota propia): existen para compartir codigo entre las clases que si usas a diario.
+
+## Herencia y metodos compartidos
+
+```
+GLObject  (base GPU: .id, activar/desactivar)
+   |
+   ├── Program ─────────────────────→ program['x']=..  .bind()  .draw('triangles')
+   |
+   ├── Buffer → DataBuffer
+   |              ├── VertexBuffer ──→ .set_data()   (datos por vertice)
+   |              └── IndexBuffer  ──→ .set_data()   (indices)
+   |
+   └── BaseTexture
+          ├── Texture2D ────────────→ .set_data()  interpolation  wrapping
+          └── Texture3D ────────────→ .set_data()  interpolation  wrapping
+```
+
+`.set_data()` es el metodo compartido por **buffers y texturas**: la forma de subir o actualizar datos en GPU es la misma idea en `VertexBuffer`, `IndexBuffer`, `Texture2D` y `Texture3D`. Todos, ademas, heredan de `GLObject` la gestion del recurso en la tarjeta (`.id`, activar/desactivar).
+
 ## Conceptos previos recomendados
 
 Antes de usar gloo conviene entender el pipeline GPU: que hace el vertex shader

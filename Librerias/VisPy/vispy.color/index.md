@@ -74,6 +74,28 @@ color unico ────────→ Color.rgba ─────────�
 
 `ColorArray.colors[i]` devuelve un `Color` individual, por lo que ambas clases son interoperables.
 
+## Clases que aporta
+
+| Clase | Hereda de | Rol |
+|-------|-----------|-----|
+| [[ColorArray]] | — (clase raiz) | Array de N colores. Atributos `.rgba`, `.rgb`, `.hex`; indexable `ca[i]` |
+| [[Color]] | `ColorArray` | Un color individual (= un `ColorArray` de longitud 1). `.rgba`, `.hex`, `.alpha`, metodos `.lighter()`, `.darker()` |
+| [[vispy.get_colormap]] | — | Mapea valores en 0–1 a colores con `.map(valores)`. Nota: `Colormap` es la clase; `get_colormap(nombre)` es la funcion que devuelve una instancia por nombre |
+
+## Herencia y metodos compartidos
+
+```
+ColorArray  (raiz: array de N colores)        metodos heredados por Color:
+   |          .rgba  .rgb  .hex  ca[i]   ──────→ .rgba  .hex
+   |
+   └── Color  (= ColorArray de longitud 1)
+                  + propios: .alpha  .lighter()  .darker()
+
+Colormap  (jerarquia aparte)  ──→ .map(valores)   |  get_colormap(nombre) es funcion
+```
+
+`Color` **hereda de `ColorArray`**: reusa `.rgba` y `.hex` sin reimplementarlos (un color es un array de longitud 1) y solo agrega lo propio de un color unico (`.alpha`, `.lighter()`, `.darker()`). `Colormap` es independiente y no comparte metodos con las dos anteriores.
+
 ## Notas
 
 - [[Color]] — color individual: RGBA, hex, nombre CSS

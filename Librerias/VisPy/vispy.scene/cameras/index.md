@@ -12,6 +12,45 @@ Las camaras de VisPy determinan **dos cosas a la vez**: como el usuario **intera
 
 La camara no es solo una configuracion de proyeccion: define el modelo de interaccion completo. Elegir la camara correcta desde el inicio evita tener que reescribir la logica de navegacion.
 
+## Clases que aporta
+
+Todas las camaras son nodos del scene graph: heredan (directa o indirectamente) de
+`Node`, asi que viven dentro del `ViewBox` como cualquier otro nodo.
+
+| Clase | Hereda de | Rol |
+|-------|-----------|-----|
+| `BaseCamera` | `Node` | Base de TODAS las camaras; define `.set_range()`, `.reset()`, `.link()`, `.interactive`, `.center` |
+| [[PanZoomCamera]] | `BaseCamera` | Camara 2D: pan + zoom en el plano |
+| `PerspectiveCamera` | `BaseCamera` | Base de las camaras 3D; aporta `.fov` (campo de vision) |
+| [[TurntableCamera]] | `PerspectiveCamera` | 3D de orbita; `.elevation`, `.azimuth`, `.distance` |
+| [[FlyCamera]] | `PerspectiveCamera` | 3D de movimiento libre tipo FPS (WASD) |
+| [[ArcballCamera]] | `PerspectiveCamera` | 3D arcball; rotacion tipo bola virtual |
+
+`BaseCamera` y `PerspectiveCamera` no tienen nota propia: son clases base que no se
+instancian directamente, pero entender de ellas explica que metodos comparten las demas.
+
+## Herencia y metodos compartidos
+
+```
+Node
+└── BaseCamera ──► .set_range()  .reset()  .link()  .interactive  .center
+    ├── PanZoomCamera                  (2D: pan + zoom)
+    └── PerspectiveCamera ──► .fov
+         ├── TurntableCamera ──► .elevation .azimuth .distance   (3D orbita)
+         ├── FlyCamera                                           (3D libre, WASD)
+         └── ArcballCamera                                       (3D arcball)
+```
+
+Por que importa:
+
+- Como TODAS heredan de `BaseCamera`, `view.camera.set_range(...)`, `.reset()` y
+  `.link(otra_camara)` funcionan igual sin importar cual camara este activa. Por eso
+  esos metodos aparecen en los ejemplos de abajo independientes del tipo.
+- Las 3D (`Turntable`, `Fly`, `Arcball`) heredan de `PerspectiveCamera`, asi que todas
+  comparten `.fov`; ponerlo en `0` da proyeccion ortografica.
+- Como cada camara es un `Node`, tiene `.parent` y `.transform` como cualquier visual;
+  esa es la base de `.link()` para sincronizar dos vistas.
+
 ## Asignar una camara a un ViewBox
 
 ```python
@@ -65,9 +104,10 @@ No es necesario recrear los visuals al cambiar la camara; el scene graph se mant
 
 ## Notas
 
-- [[PanZoomCamera]] — camara 2D con pan y zoom
-- [[TurntableCamera]] — camara 3D de orbita
-- [[FlyCamera]] — camara 3D de movimiento libre tipo FPS
+- [[PanZoomCamera]] — camara 2D con pan y zoom; hereda de `BaseCamera`
+- [[TurntableCamera]] — camara 3D de orbita; hereda de `PerspectiveCamera`
+- [[FlyCamera]] — camara 3D de movimiento libre tipo FPS; hereda de `PerspectiveCamera`
+- [[ArcballCamera]] — camara 3D arcball; hereda de `PerspectiveCamera`
 
 ## Notas relacionadas
 

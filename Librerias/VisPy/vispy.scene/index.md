@@ -54,6 +54,45 @@ SceneCanvas
 Los nodos forman un arbol: las transformaciones del padre se propagan a los hijos.
 `view.scene` es el padre logico de todos los visuals en ese viewport.
 
+## Clases que aporta
+
+| Clase | Hereda de | Rol |
+|-------|-----------|-----|
+| [[SceneCanvas]] | `vispy.app.Canvas` | Ventana + scene graph integrado; aporta `.scene` (Node raiz) y `.central_widget` |
+| [[Node]] | (raiz del grafo) | Nodo base del scene graph; todo lo que vive en la escena es un Node |
+| `Widget` | `Node` | Nodo con area rectangular y layout; base de los contenedores visuales |
+| [[ViewBox]] | `Widget` ← `Node` | Viewport con su propia `.camera`, su `.scene` interna y clipping |
+| `Grid` | `Widget` ← `Node` | Distribuye sub-viewports en celdas; `.add_view(row, col)` para subplots |
+
+## Herencia y metodos compartidos
+
+`SceneCanvas` **ES un** `vispy.app.Canvas` (herencia directa). Por eso comparte toda
+la API de ventana de [[vispy.app/index\|vispy.app]] sin que VisPy la reimplemente:
+
+```
+vispy.app.Canvas ──► .show() .update() .close() .size .events .connect()
+│                     on_draw on_resize on_mouse_* on_key_*
+└── SceneCanvas ────► .scene (Node raiz)  .central_widget
+```
+
+Esto importa: cualquier evento que conozcas de un `Canvas` normal (`on_draw`,
+`on_mouse_move`, `on_key_press`…) funciona igual en un `SceneCanvas`; lo unico que
+agrega es el scene graph (`.scene`, `.central_widget`).
+
+El resto de las clases cuelgan de `Node`, la raiz del grafo:
+
+```
+Node ──► .parent .children .transform .transforms .visible
+├── Widget
+│   ├── ViewBox ──► .camera  .scene   (viewport + clipping)
+│   └── Grid ─────► .add_view(row,col)
+```
+
+Como `ViewBox` y `Grid` son `Node` (via `Widget`), tienen `.transform`, `.parent` y
+`.visible` igual que cualquier visual: se posicionan, se anidan y se ocultan con la
+misma API que un `Markers` o un `Line`. Las camaras tambien son `Node` — ver
+[[vispy.scene/cameras/index\|cameras]].
+
 ## Como se relacionan
 
 | Pregunta | Componente |
@@ -82,8 +121,9 @@ v2.camera = 'turntable'
 
 ## Notas
 
-- [[SceneCanvas]] — canvas con scene graph integrado; `.scene`, `.central_widget`
-- [[ViewBox]] — viewport + camara + clipping; patron `add_view()`
+- [[SceneCanvas]] — canvas con scene graph integrado; hereda de `vispy.app.Canvas`; `.scene`, `.central_widget`
+- [[Node]] — nodo base del scene graph; `.parent`, `.children`, `.transform`, `.visible`
+- [[ViewBox]] — viewport + camara + clipping; hereda de `Widget` ← `Node`; patron `add_view()`
 - [[vispy.scene/cameras/index|cameras]] — PanZoomCamera, TurntableCamera, FlyCamera
 - [[vispy.scene/visuals/index|visuals]] — visuals 2D y 3D de alto nivel
 
