@@ -69,24 +69,24 @@ Los nodos forman un arbol: las transformaciones del padre se propagan a los hijo
 `SceneCanvas` **ES un** `vispy.app.Canvas` (herencia directa). Por eso comparte toda
 la API de ventana de [[vispy.app/index\|vispy.app]] sin que VisPy la reimplemente:
 
-```
-vispy.app.Canvas ──► .show() .update() .close() .size .events .connect()
-│                     on_draw on_resize on_mouse_* on_key_*
-└── SceneCanvas ────► .scene (Node raiz)  .central_widget
+```mermaid
+classDiagram
+    Canvas <|-- SceneCanvas
+    Node <|-- Widget
+    Widget <|-- ViewBox
+    Widget <|-- Grid
+    class Canvas { +show() +update() +size +on_draw() +on_resize() +connect() }
+    class SceneCanvas { +scene +central_widget }
+    class Node { +parent +children +transform +visible }
+    class ViewBox { +camera }
+    class Grid { +add_view() }
 ```
 
 Esto importa: cualquier evento que conozcas de un `Canvas` normal (`on_draw`,
 `on_mouse_move`, `on_key_press`…) funciona igual en un `SceneCanvas`; lo unico que
 agrega es el scene graph (`.scene`, `.central_widget`).
 
-El resto de las clases cuelgan de `Node`, la raiz del grafo:
-
-```
-Node ──► .parent .children .transform .transforms .visible
-├── Widget
-│   ├── ViewBox ──► .camera  .scene   (viewport + clipping)
-│   └── Grid ─────► .add_view(row,col)
-```
+El resto de las clases cuelgan de `Node`, la raiz del grafo (ver el diagrama de arriba).
 
 Como `ViewBox` y `Grid` son `Node` (via `Widget`), tienen `.transform`, `.parent` y
 `.visible` igual que cualquier visual: se posicionan, se anidan y se ocultan con la

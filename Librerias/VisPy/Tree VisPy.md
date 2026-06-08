@@ -52,9 +52,12 @@ VisPy/
 │   └── vispy.use.md                         # seleccionar backend: pyqt5, pyglet, glfw, jupyter…
 │
 ├── 📁 vispy.scene/
-│   ├── SceneCanvas.md                       # canvas con scene graph integrado; .scene, .central_widget
-│   ├── ViewBox.md                           # viewport + camara + clipping; add_subplot pattern
+│   ├── SceneCanvas.md                       # canvas con scene graph integrado; hereda de app.Canvas
+│   ├── ViewBox.md                           # viewport + camara + clipping; hereda de Widget <- Node
+│   ├── Node.md                              # clase base del scene graph; .parent .transform .visible
+│   ├── Visual.md                            # clase base que dibuja en GPU; VisualNode = Node + Visual
 │   ├── 📁 cameras/
+│   │   ├── BaseCamera.md                    # clase base de las camaras; .set_range .reset .link
 │   │   ├── PanZoomCamera.md                 # 2D: pan con drag, zoom con rueda
 │   │   ├── TurntableCamera.md               # 3D: orbitar alrededor de un centro
 │   │   └── FlyCamera.md                     # 3D: movimiento libre tipo FPS (WASD)

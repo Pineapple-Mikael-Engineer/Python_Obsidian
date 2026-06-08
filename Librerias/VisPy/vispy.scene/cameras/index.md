@@ -19,9 +19,9 @@ Todas las camaras son nodos del scene graph: heredan (directa o indirectamente) 
 
 | Clase | Hereda de | Rol |
 |-------|-----------|-----|
-| `BaseCamera` | `Node` | Base de TODAS las camaras; define `.set_range()`, `.reset()`, `.link()`, `.interactive`, `.center` |
-| [[PanZoomCamera]] | `BaseCamera` | Camara 2D: pan + zoom en el plano |
-| `PerspectiveCamera` | `BaseCamera` | Base de las camaras 3D; aporta `.fov` (campo de vision) |
+| [[BaseCamera]] | `Node` | Base de TODAS las camaras; define `.set_range()`, `.reset()`, `.link()`, `.interactive`, `.center` |
+| [[PanZoomCamera]] | [[BaseCamera]] | Camara 2D: pan + zoom en el plano |
+| `PerspectiveCamera` | [[BaseCamera]] | Base de las camaras 3D; aporta `.fov` (campo de vision) |
 | [[TurntableCamera]] | `PerspectiveCamera` | 3D de orbita; `.elevation`, `.azimuth`, `.distance` |
 | [[FlyCamera]] | `PerspectiveCamera` | 3D de movimiento libre tipo FPS (WASD) |
 | [[ArcballCamera]] | `PerspectiveCamera` | 3D arcball; rotacion tipo bola virtual |
@@ -31,14 +31,16 @@ instancian directamente, pero entender de ellas explica que metodos comparten la
 
 ## Herencia y metodos compartidos
 
-```
-Node
-└── BaseCamera ──► .set_range()  .reset()  .link()  .interactive  .center
-    ├── PanZoomCamera                  (2D: pan + zoom)
-    └── PerspectiveCamera ──► .fov
-         ├── TurntableCamera ──► .elevation .azimuth .distance   (3D orbita)
-         ├── FlyCamera                                           (3D libre, WASD)
-         └── ArcballCamera                                       (3D arcball)
+```mermaid
+classDiagram
+    Node <|-- BaseCamera
+    BaseCamera <|-- PanZoomCamera
+    BaseCamera <|-- PerspectiveCamera
+    PerspectiveCamera <|-- TurntableCamera
+    PerspectiveCamera <|-- FlyCamera
+    PerspectiveCamera <|-- ArcballCamera
+    class BaseCamera { +set_range() +reset() +link() +interactive +center }
+    class PerspectiveCamera { +fov }
 ```
 
 Por que importa:

@@ -46,7 +46,7 @@ app.run()
 
 Cada `scene.visuals.X` es un **VisualNode**: una combinacion de DOS bases que se fusionan
 en una sola clase mediante `create_visual_node`. Por eso un `scene.visuals.Line` tiene a la
-vez `.parent`/`.transform` (de Node) Y `.set_data()` (de Visual).
+vez `.parent`/`.transform` (de [[Node]]) Y `.set_data()` (de [[Visual]]).
 
 - Lado **Node** → el visual vive en el scene graph: `.parent`, `.children`, `.transform`,
   `.transforms`, `.visible`.
@@ -55,16 +55,20 @@ vez `.parent`/`.transform` (de Node) Y `.set_data()` (de Visual).
 
 La jerarquia del lado dibujo (los `Visual` base) es:
 
-```
-BaseVisual
-└── Visual
-     ├── LineVisual        → scene.visuals.Line
-     ├── MarkersVisual     → scene.visuals.Markers
-     ├── ImageVisual       → scene.visuals.Image
-     ├── TextVisual        → scene.visuals.Text
-     ├── MeshVisual        → scene.visuals.Mesh
-     ├── VolumeVisual      → scene.visuals.Volume
-     └── CompoundVisual    → (varios visuals combinados; ej. SurfacePlot, Axis)
+```mermaid
+classDiagram
+    BaseVisual <|-- Visual
+    Visual <|-- LineVisual
+    Visual <|-- MarkersVisual
+    Visual <|-- ImageVisual
+    Visual <|-- TextVisual
+    Visual <|-- MeshVisual
+    Visual <|-- VolumeVisual
+    Visual <|-- CompoundVisual
+    Node <|-- VisualNode
+    Visual <|-- VisualNode
+    class Visual { +set_data() +transform +attach() +draw() }
+    class Node { +parent +children +visible }
 ```
 
 En `scene.visuals`, cada uno de esos `Visual` base se envuelve junto con `Node` para

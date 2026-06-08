@@ -87,14 +87,30 @@ Nota clave: `vispy.scene.SceneCanvas` **hereda de `Canvas`**. La version de alto
 
 ## Herencia y metodos compartidos
 
-```
-Canvas  (raiz)                    metodos heredados por SceneCanvas:
-  |                                 .show()  .update()  .close()  .size
-  └── SceneCanvas (vispy.scene) ──→ on_draw / on_resize / on_mouse_* / on_key_*
-                                    .events  .connect()
-
-Timer   (raiz, independiente)  ──→ .start()  .stop()  .connect()
-                                    interval  .elapsed
+```mermaid
+classDiagram
+    Canvas <|-- SceneCanvas
+    class Canvas {
+      +show()
+      +update()
+      +close()
+      +size
+      +on_draw()
+      +on_resize()
+      +on_mouse_press()
+      +on_key_press()
+      +connect()
+    }
+    class SceneCanvas {
+      +scene
+      +central_widget
+    }
+    class Timer {
+      +start()
+      +stop()
+      +connect()
+      +interval
+    }
 ```
 
 `SceneCanvas` no reimplementa el ciclo de vida de la ventana: lo **hereda** de `Canvas`. Por eso lo que aprendas de `Canvas` (mostrar, redibujar, conectar eventos, leer `.size`) aplica igual en `SceneCanvas`. `Timer` es una jerarquia aparte y no comparte metodos con `Canvas`.

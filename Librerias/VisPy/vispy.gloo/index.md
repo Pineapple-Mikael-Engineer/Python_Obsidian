@@ -119,18 +119,20 @@ Todos los objetos de gloo viven en **memoria GPU** y comparten la misma base, `G
 
 ## Herencia y metodos compartidos
 
-```
-GLObject  (base GPU: .id, activar/desactivar)
-   |
-   ├── Program ─────────────────────→ program['x']=..  .bind()  .draw('triangles')
-   |
-   ├── Buffer → DataBuffer
-   |              ├── VertexBuffer ──→ .set_data()   (datos por vertice)
-   |              └── IndexBuffer  ──→ .set_data()   (indices)
-   |
-   └── BaseTexture
-          ├── Texture2D ────────────→ .set_data()  interpolation  wrapping
-          └── Texture3D ────────────→ .set_data()  interpolation  wrapping
+```mermaid
+classDiagram
+    GLObject <|-- Program
+    GLObject <|-- DataBuffer
+    GLObject <|-- BaseTexture
+    DataBuffer <|-- VertexBuffer
+    DataBuffer <|-- IndexBuffer
+    BaseTexture <|-- Texture2D
+    BaseTexture <|-- Texture3D
+    class GLObject { +id +activate() }
+    class Program { +bind() +draw() }
+    class VertexBuffer { +set_data() }
+    class IndexBuffer { +set_data() }
+    class Texture2D { +set_data() +interpolation +wrapping }
 ```
 
 `.set_data()` es el metodo compartido por **buffers y texturas**: la forma de subir o actualizar datos en GPU es la misma idea en `VertexBuffer`, `IndexBuffer`, `Texture2D` y `Texture3D`. Todos, ademas, heredan de `GLObject` la gestion del recurso en la tarjeta (`.id`, activar/desactivar).
