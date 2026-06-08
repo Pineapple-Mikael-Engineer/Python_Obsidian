@@ -56,6 +56,20 @@ app.run()
 > `import vispy; vispy.use('pyqt5')`.
 > Sin esto el ejemplo puede fallar si el backend por defecto no esta instalado.
 
+## Clases que aporta
+
+Cada clase es un **VisualNode** (Node + Visual): hereda lo del scene graph (`.parent`,
+`.transform`, `.visible`) y lo del dibujo en GPU (`.set_data`, `.update`). La columna
+`set_data recibe` resume los args clave de cada una.
+
+| Clase | Hereda de | set_data recibe |
+|-------|-----------|-----------------|
+| [[Mesh]] | Node + Visual (VisualNode) | `vertices` `(N,3)`, `faces` `(M,3)`, `vertex_colors`, `color`, `shading` |
+| [[Volume]] | Node + Visual (VisualNode) | `vol` (array 3D `(D,H,W)` float32), `clim`, `cmap`, `method` |
+| [[Surface]] | Node + Visual (VisualNode) | `z` `(rows,cols)`, `x`, `y`, `colors`, `shading` |
+
+Todas comparten `.set_data()`, `.transform` y se montan con `parent=view.scene`.
+
 ## Como se relacionan
 
 Los tres visuals representan formas distintas de dato 3D. La eleccion depende del tipo

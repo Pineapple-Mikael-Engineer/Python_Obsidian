@@ -74,6 +74,47 @@ Flujo de ejecucion:
 > [!tip] `Canvas` vs `SceneCanvas`
 > `Canvas` (este modulo) es **low-level**: el dibujado es manual con `gloo`. Para la mayoria de los casos usa `SceneCanvas` de `vispy.scene`, que tiene el scene graph integrado y solo requiere agregar visuals.
 
+## Clases que aporta
+
+| Clase | Hereda de | Rol |
+|-------|-----------|-----|
+| [[Canvas]] | — (clase raiz) | Ventana OpenGL nativa. Metodos `.show()`, `.update()`, `.close()`, atributo `.size`; eventos `on_draw`/`on_resize`/`on_mouse_*`/`on_key_*`; `.events` y `.connect()` para registrar callbacks |
+| [[Timer]] | — (clase raiz) | Temporizador de ticks no-bloqueantes. Metodos `.start()`, `.stop()`, `.connect()`; atributos `interval` y `.elapsed` |
+
+`vispy.use()` no es una clase sino una **funcion**: fija el backend de ventana antes de crear cualquier Canvas o importar `vispy.scene`. Ver [[vispy.use]].
+
+Nota clave: `vispy.scene.SceneCanvas` **hereda de `Canvas`**. La version de alto nivel ES un Canvas, por lo que comparte todos sus metodos y eventos; solo agrega el scene graph encima.
+
+## Herencia y metodos compartidos
+
+```mermaid
+classDiagram
+    Canvas <|-- SceneCanvas
+    class Canvas {
+      +show()
+      +update()
+      +close()
+      +size
+      +on_draw()
+      +on_resize()
+      +on_mouse_press()
+      +on_key_press()
+      +connect()
+    }
+    class SceneCanvas {
+      +scene
+      +central_widget
+    }
+    class Timer {
+      +start()
+      +stop()
+      +connect()
+      +interval
+    }
+```
+
+`SceneCanvas` no reimplementa el ciclo de vida de la ventana: lo **hereda** de `Canvas`. Por eso lo que aprendas de `Canvas` (mostrar, redibujar, conectar eventos, leer `.size`) aplica igual en `SceneCanvas`. `Timer` es una jerarquia aparte y no comparte metodos con `Canvas`.
+
 ### Tabla de backends
 
 | Backend | Instalar con | Recomendado para |

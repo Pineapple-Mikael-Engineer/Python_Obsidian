@@ -59,6 +59,21 @@ app.run()
 Todos los visuals comparten el mismo [[ViewBox]]: sus coordenadas viven en el mismo espacio
 de datos y responden juntos al pan/zoom de la camara `panzoom`.
 
+## Clases que aporta
+
+Cada clase es un **VisualNode** (Node + Visual): hereda lo del scene graph (`.parent`,
+`.transform`, `.visible`) y lo del dibujo en GPU (`.set_data`, `.update`). La columna
+`set_data recibe` resume los args clave de cada una.
+
+| Clase | Hereda de | set_data recibe |
+|-------|-----------|-----------------|
+| [[Line]] | Node + Visual (VisualNode) | `pos`, `color`, `width`, `connect` |
+| [[Markers]] | Node + Visual (VisualNode) | `pos`, `face_color`, `edge_color`, `size`, `symbol` |
+| [[Image]] | Node + Visual (VisualNode) | `data` (array `(H,W)` o `(H,W,3/4)`), `cmap`, `clim` |
+| [[Text]] | Node + Visual (VisualNode) | `text`, `pos`, `color`, `font_size`, `anchor_x`, `anchor_y` |
+
+Todas comparten `.set_data()`, `.transform` y se montan con `parent=view.scene`.
+
 ## Como se relacionan
 
 Tabla de decision: que visual usar segun el tipo de dato.

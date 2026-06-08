@@ -42,6 +42,56 @@ app.run()
 > Los visuals DEBEN tener `parent=view.scene` para aparecer en el viewport correcto.
 > Usar `.add()` directamente en el ViewBox no funciona para visuals.
 
+## La clase base: Visual + Node
+
+Cada `scene.visuals.X` es un **VisualNode**: una combinacion de DOS bases que se fusionan
+en una sola clase mediante `create_visual_node`. Por eso un `scene.visuals.Line` tiene a la
+vez `.parent`/`.transform` (de [[Node]]) Y `.set_data()` (de [[Visual]]).
+
+- Lado **Node** → el visual vive en el scene graph: `.parent`, `.children`, `.transform`,
+  `.transforms`, `.visible`.
+- Lado **Visual** → el visual sabe dibujarse en GPU: `.set_data(...)`, `.attach()`,
+  `.draw()`, `.update()`, los shaders internos.
+
+La jerarquia del lado dibujo (los `Visual` base) es:
+
+```mermaid
+classDiagram
+    BaseVisual <|-- Visual
+    Visual <|-- LineVisual
+    Visual <|-- MarkersVisual
+    Visual <|-- ImageVisual
+    Visual <|-- TextVisual
+    Visual <|-- MeshVisual
+    Visual <|-- VolumeVisual
+    Visual <|-- CompoundVisual
+    Node <|-- VisualNode
+    Visual <|-- VisualNode
+    class Visual { +set_data() +transform +attach() +draw() }
+    class Node { +parent +children +visible }
+```
+
+En `scene.visuals`, cada uno de esos `Visual` base se envuelve junto con `Node` para
+producir el `VisualNode` que realmente se usa. Asi un mismo objeto se posiciona en el
+arbol (Node) y se renderiza en GPU (Visual) sin escribir shaders.
+
+## Metodos que comparten todos los visuals
+
+Como todo `scene.visuals.X` hereda de Node + Visual, comparten esta interfaz comun
+(cada visual ademas anade sus propios args en `.set_data`):
+
+| Metodo/atributo | Viene de | Que hace |
+|-----------------|----------|----------|
+| `.set_data(...)` | Visual | Actualizar los datos SIN recrear el objeto; cada visual acepta args distintos |
+| `.transform` | Visual | Posicionar, escalar o rotar el visual en el espacio |
+| `.update()` | Visual | Marcar el visual como sucio para forzar redibujado |
+| `.attach(filter)` | Visual | Adjuntar un filtro/efecto al pipeline GPU del visual |
+| `.parent` | Node | Donde vive en el arbol; siempre `parent=view.scene` |
+| `.children` | Node | Visuals hijos colgados de este nodo |
+| `.transforms` | Node | Cadena de transforms acumulada por el scene graph |
+| `.visible` | Node | Mostrar u ocultar el visual sin destruirlo |
+| `.order` | Node | Orden de dibujado relativo entre hermanos |
+
 ## Como se relacionan
 
 | Tipo de dato | Visual recomendado | Camara |
