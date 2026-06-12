@@ -174,4 +174,3 @@ canvas                                 # mostrar inline en el notebook
 - [[concepto_scene_graph]] — el scene graph que `SceneCanvas` gestiona internamente
 - [[concepto_gloo_pipeline]] — como usar `gloo` dentro de `on_draw`
 - [[concepto_cameras_transforms]] — camaras que se conectan al canvas via `ViewBox`
-- [[Tree VisPy]]

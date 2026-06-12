@@ -100,4 +100,3 @@ density(X0)(t)    # sqrt(2)*exp(-t**2/2)/(2*sqrt(pi))
 
 - [[sympy.E_variance_P]]
 - [[sympy.stats/index | sympy.stats]]
-- [[Tree SymPy]]

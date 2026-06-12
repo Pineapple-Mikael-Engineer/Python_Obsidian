@@ -73,4 +73,3 @@ La cadena habitual es `imread → (operar con NumPy) → imshow`, o bien `array 
 - [[ax.imshow]] — pintar el array como imagen
 - [[concepto_artist]] — la herencia común (`set_alpha`, `set_zorder`, `set_visible`)
 - [[Colormaps]] — colorear arrays 2D escalares
-- [[Tree Matplotlib]] — mapa completo del vault

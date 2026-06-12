@@ -167,4 +167,3 @@ view.camera.reset()
 - [[PanZoomCamera]] — alternativa 2D
 - [[FlyCamera]] — alternativa 3D de movimiento libre
 - [[vispy.scene/cameras/index\|cameras]] — tabla de decision entre camaras
-- [[Tree VisPy]]

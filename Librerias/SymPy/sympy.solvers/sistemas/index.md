@@ -48,4 +48,3 @@ Relacion con los algebraicos: [[sympy.solve]] tambien resuelve sistemas y devuel
 ## Notas relacionadas
 
 - [[sympy.solvers/index | sympy.solvers]]
-- [[Tree SymPy]]

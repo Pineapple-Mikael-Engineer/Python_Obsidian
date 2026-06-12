@@ -42,4 +42,3 @@ Los tres devuelven una `Expr` nueva, pero responden a preguntas distintas. Hay q
 ## Notas relacionadas
 
 - [[sympy.simplify/index | sympy.simplify]]
-- [[Tree SymPy]]

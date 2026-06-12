@@ -51,5 +51,4 @@ La division conceptual es simple: `Matrix` es el **objeto** (como se guarda y se
 ## Notas relacionadas
 
 - [[SymPy/index | SymPy]]
-- [[Tree SymPy]]
 - [[concepto_expr_arbol]]

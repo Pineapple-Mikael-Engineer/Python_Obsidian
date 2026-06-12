@@ -66,4 +66,3 @@ Tabla de decision rapida:
 ## Notas relacionadas
 
 - [[SymPy/index | SymPy]]
-- [[Tree SymPy]]

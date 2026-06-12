@@ -43,4 +43,3 @@ Regla de decision: `evalf` en bucle sobre miles de puntos es **lentisimo** (eval
 - [[sympy.core/index | sympy.core]]
 - [[concepto_evalf_lambdify]]
 - [[Float]]
-- [[Tree SymPy]]

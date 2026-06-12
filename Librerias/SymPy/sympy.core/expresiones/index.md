@@ -45,4 +45,3 @@ Relacion en una frase: `Expr` es el objeto, `srepr` lo mira por dentro (util par
 - [[sympy.core/index | sympy.core]]
 - [[concepto_expr_arbol]]
 - [[Expr.evalf]]
-- [[Tree SymPy]]

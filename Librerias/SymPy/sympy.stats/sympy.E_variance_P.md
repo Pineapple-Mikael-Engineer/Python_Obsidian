@@ -169,4 +169,3 @@ integrate(f, (t, -oo, oo))   # 1  -> confirma que es una densidad valida
 
 - [[sympy.distribuciones]]
 - [[sympy.stats/index | sympy.stats]]
-- [[Tree SymPy]]

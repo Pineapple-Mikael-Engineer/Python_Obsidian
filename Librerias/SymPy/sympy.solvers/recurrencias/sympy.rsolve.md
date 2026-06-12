@@ -176,4 +176,3 @@ rsolve(eq, y(n), {y(0): 1})       # factorial(n)
 - [[sympy.dsolve]]
 - [[Sum]]
 - [[sympy.solvers/recurrencias/index | recurrencias]]
-- [[Tree SymPy]]

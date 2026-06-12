@@ -82,4 +82,3 @@ La diferencia es de **propósito**: `Text` coloca una cadena; `Annotation` la co
 - [[ax.text]] — crear un `Text`
 - [[ax.annotate]] — crear una `Annotation`
 - [[concepto_artist]] — la herencia común (`set_alpha`, `set_zorder`, `set_visible`)
-- [[Tree Matplotlib]] — mapa completo del vault

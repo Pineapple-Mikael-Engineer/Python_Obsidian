@@ -141,4 +141,3 @@ Para datos ordenados donde el orden importa (señales, funciones, evolución tem
 - [[Matplotlib/axes/metodos/formato/index|formato]] — dar formato al gráfico una vez dibujados los datos
 - [[ax.legend]] — convertir los `label=` de cada método en una leyenda
 - [[Colores_Nombres]] · [[marker]] · [[Estilos_Linea]] — códigos de color, marcador y línea
-- [[Tree Matplotlib]] — mapa completo del vault

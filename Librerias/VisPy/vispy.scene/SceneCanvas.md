@@ -163,4 +163,3 @@ def on_timer(event):
 - [[ViewBox]] — viewport que vive dentro del `central_widget`
 - [[vispy.scene/cameras/index\|cameras]] — camaras que se asignan al ViewBox
 - [[Canvas]] — alternativa de bajo nivel para uso con `gloo`
-- [[Tree VisPy]]

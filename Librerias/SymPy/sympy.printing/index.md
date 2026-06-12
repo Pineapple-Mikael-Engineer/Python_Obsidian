@@ -80,4 +80,3 @@ Arbol de decision:
 ## Notas relacionadas
 
 - [[SymPy/index | SymPy]]
-- [[Tree SymPy]]

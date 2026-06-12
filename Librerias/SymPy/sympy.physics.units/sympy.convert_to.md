@@ -157,4 +157,3 @@ float(c_si.args[0])                 # 299792458.0
 
 - [[sympy.unidades]]
 - [[sympy.physics.units/index | sympy.physics.units]]
-- [[Tree SymPy]]

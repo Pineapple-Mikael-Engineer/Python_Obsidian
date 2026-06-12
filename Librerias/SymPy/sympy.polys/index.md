@@ -53,5 +53,4 @@ velocidad o el acceso a coeficientes lo justifique.
 ## Notas relacionadas
 
 - [[SymPy/index | SymPy]]
-- [[Tree SymPy]]
 - [[sympy.simplify/general/index | simplify]]

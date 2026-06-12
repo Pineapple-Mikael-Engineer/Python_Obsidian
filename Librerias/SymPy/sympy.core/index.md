@@ -44,6 +44,5 @@ El hilo conductor: `simbolos` + `numeros` son las **piezas**, `expresiones` es l
 ## Notas relacionadas
 
 - [[SymPy/index | SymPy]]
-- [[Tree SymPy]]
 - [[concepto_simbolico_vs_numerico]]
 - [[concepto_expr_arbol]]

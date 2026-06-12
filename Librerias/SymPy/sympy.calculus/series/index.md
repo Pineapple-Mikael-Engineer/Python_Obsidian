@@ -41,4 +41,3 @@ Regla practica: si quieres una aproximacion **alrededor de un punto** (o lineali
 ## Notas relacionadas
 
 - [[sympy.calculus/index | sympy.calculus]]
-- [[Tree SymPy]]

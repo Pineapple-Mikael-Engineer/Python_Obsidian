@@ -113,4 +113,3 @@ de dato de origen, no de la apariencia final deseada.
 - [[vispy.scene/visuals/2d/index|visuals 2D]] — visuals planos: Line, Markers, Image, Text
 - [[TurntableCamera]] — camara orbital; la mas usada con visuals 3D
 - [[ViewBox]] — contenedor de visuals y camaras
-- [[Tree VisPy]] — roadmap completo del vault VisPy

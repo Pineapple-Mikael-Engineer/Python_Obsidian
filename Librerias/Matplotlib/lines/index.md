@@ -87,4 +87,3 @@ Cada propiedad se lee con `get_<prop>()` y se escribe con `set_<prop>(valor)`; e
 - [[ax.plot]] — el método que crea las `Line2D`
 - [[concepto_artist]] — la herencia común (`set_alpha`, `set_zorder`, `set_visible`)
 - [[ax.legend]] — usar el `label` de cada línea
-- [[Tree Matplotlib]] — mapa completo del vault

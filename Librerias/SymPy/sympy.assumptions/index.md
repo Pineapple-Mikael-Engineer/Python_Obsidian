@@ -67,4 +67,3 @@ Regla rapida: si la propiedad rige **todo el problema**, usala como supuesto est
 
 - [[concepto_symbols_assumptions]]
 - [[SymPy/index | SymPy]]
-- [[Tree SymPy]]

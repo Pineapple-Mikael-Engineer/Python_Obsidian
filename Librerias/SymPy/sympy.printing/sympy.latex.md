@@ -125,4 +125,3 @@ latex(2 * x * y, mul_symbol='dot')    # '2 x \\cdot y'
 - [[sympy.init_printing]]
 - [[sympy.ccode_pycode]]
 - [[sympy.printing/index | sympy.printing]]
-- [[Tree SymPy]]

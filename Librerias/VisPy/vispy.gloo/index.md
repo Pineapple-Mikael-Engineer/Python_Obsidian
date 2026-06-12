@@ -154,4 +154,3 @@ de atributo a `varying` y de `varying` al color final. Todo esto esta en
 
 - [[Canvas]] — ventana de la app; provee el `on_draw` donde se llama `program.draw()`
 - [[concepto_gloo_pipeline]] — modelo mental del pipeline vertex → rasterizacion → fragment
-- [[Tree VisPy]] — mapa completo del vault VisPy

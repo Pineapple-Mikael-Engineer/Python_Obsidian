@@ -142,4 +142,3 @@ solveset(x**2 - 1 < 0, x, domain=S.Reals)  # Interval.open(-1, 1)
 - [[sympy.conjuntos_predefinidos]]
 - [[sympy.operaciones_conjuntos]]
 - [[sympy.sets/index | sympy.sets]]
-- [[Tree SymPy]]

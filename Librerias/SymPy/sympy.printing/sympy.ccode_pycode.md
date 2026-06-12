@@ -138,4 +138,3 @@ pycode(expr)   # 'x**2/3'
 - [[sympy.latex]]
 - [[sympy.pprint]]
 - [[sympy.printing/index | sympy.printing]]
-- [[Tree SymPy]]

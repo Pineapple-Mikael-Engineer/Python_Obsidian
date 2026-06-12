@@ -57,4 +57,3 @@ Arbol de decision — "¿que tengo que resolver?":
 ## Notas relacionadas
 
 - [[SymPy/index | SymPy]]
-- [[Tree SymPy]]

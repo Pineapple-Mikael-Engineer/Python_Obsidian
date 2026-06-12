@@ -101,4 +101,3 @@ quantity_simplify(expr)          # newton   (equivale a 1 N)
 
 - [[sympy.convert_to]]
 - [[sympy.physics.units/index | sympy.physics.units]]
-- [[Tree SymPy]]

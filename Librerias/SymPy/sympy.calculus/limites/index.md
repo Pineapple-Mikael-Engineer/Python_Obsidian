@@ -44,4 +44,3 @@ La equivalencia es exacta: `limit(f, x, x0, dir)` es `Limit(f, x, x0, dir).doit(
 ## Notas relacionadas
 
 - [[sympy.calculus/index | sympy.calculus]]
-- [[Tree SymPy]]

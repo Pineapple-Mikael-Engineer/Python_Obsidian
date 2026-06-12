@@ -147,4 +147,3 @@ Si ninguno esta instalado lanza `RuntimeError: No backend available`.
 
 - [[Canvas]] — primera clase que usa el backend; hay que llamar `vispy.use` antes de instanciarla
 - [[Timer]] — tambien depende del backend seleccionado
-- [[Tree VisPy]]

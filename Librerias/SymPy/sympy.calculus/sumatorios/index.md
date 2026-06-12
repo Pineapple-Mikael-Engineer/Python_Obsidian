@@ -41,4 +41,3 @@ Son analogos: `Product` es a la multiplicacion lo que `Sum` a la suma, con la mi
 ## Notas relacionadas
 
 - [[sympy.calculus/index | sympy.calculus]]
-- [[Tree SymPy]]

@@ -80,7 +80,3 @@ El event loop (`app.run()`) es comun a ambos caminos. Sin el, la ventana no resp
 - [[concepto_scene_graph]] — grafo de nodos, `ViewBox`, visuals, cascada de transformaciones
 - [[concepto_cameras_transforms]] — `PanZoomCamera`, `TurntableCamera`, `FlyCamera`, `STTransform`
 - [[concepto_gloo_pipeline]] — `Program`, `VertexBuffer`, shaders GLSL, modos de dibujo
-
-## Notas relacionadas
-
-- [[Tree VisPy]] — roadmap y estructura completa del vault de VisPy

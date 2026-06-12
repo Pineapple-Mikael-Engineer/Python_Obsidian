@@ -98,4 +98,3 @@ flowchart LR
 
 - [[concepto_simbolico_vs_numerico]] — la frontera exacto vs flotante
 - [[concepto_expr_arbol]] — que es una `Expr`
-- [[Tree SymPy]] — roadmap y estructura completa del vault

@@ -118,4 +118,3 @@ pprint(x**2 + 1)
 - [[sympy.pprint]]
 - [[sympy.latex]]
 - [[sympy.printing/index | sympy.printing]]
-- [[Tree SymPy]]

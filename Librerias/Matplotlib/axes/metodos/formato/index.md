@@ -149,4 +149,3 @@ El mínimo imprescindible para que un gráfico se entienda solo: qué representa
 - [[Matplotlib/axes/index|axes]] — el objeto `Axes` completo
 - [[Matplotlib/ticker/index|ticker]] — formateadores y localizadores avanzados de ticks
 - [[Personalizacion_Leyendas]] — opciones detalladas de `legend`
-- [[Tree Matplotlib]] — mapa completo del vault

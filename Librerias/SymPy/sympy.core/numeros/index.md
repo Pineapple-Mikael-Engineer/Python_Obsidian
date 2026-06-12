@@ -46,4 +46,3 @@ Relacion clave: `Integer` y `Rational` viven en el mundo **exacto** y se contagi
 - [[sympy.core/index | sympy.core]]
 - [[concepto_simbolico_vs_numerico]]
 - [[concepto_evalf_lambdify]]
-- [[Tree SymPy]]

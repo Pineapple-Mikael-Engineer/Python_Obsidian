@@ -79,4 +79,3 @@ La idea que unifica todo: **se construye una estructura en memoria y el [[concep
 - [[Matplotlib/index\|Matplotlib]] — el índice raíz con el flujo básico
 - [[Matplotlib/pyplot/funciones/index\|pyplot]] — las funciones `plt.*` que materializan estos conceptos
 - [[Matplotlib/axes/index\|axes]] — los métodos del `Axes`, el objeto central
-- [[Tree Matplotlib]] — mapa completo del vault

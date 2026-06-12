@@ -98,4 +98,3 @@ view_a.camera.link(view_b.camera)
 - [[TurntableCamera]] — camara 3D de orbita
 - [[FlyCamera]] — camara 3D de movimiento libre
 - [[vispy.scene/cameras/index\|cameras]] — tabla de decision entre camaras
-- [[Tree VisPy]]

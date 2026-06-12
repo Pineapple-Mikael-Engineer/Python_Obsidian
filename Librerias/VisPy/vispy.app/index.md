@@ -133,5 +133,4 @@ classDiagram
 
 ## Notas relacionadas
 
-- [[Tree VisPy]] — mapa completo del vault VisPy
 - [[SceneCanvas]] — alternativa de alto nivel (vispy.scene); la mas usada en la practica

@@ -69,4 +69,3 @@ La salida puede ser una **ventana interactiva** (`plt.show()` con backend de pan
 - [[concepto_artist]] — por qué animar es mutar Artists, no redibujar todo
 - [[concepto_backend]] — dónde se renderiza: ventana vs archivo
 - [[Matplotlib/index\|Matplotlib]] — el índice raíz
-- [[Tree Matplotlib]] — mapa completo del vault

@@ -43,4 +43,3 @@ No son pares inversos ni se solapan: cada uno cubre **un tipo de expresion disti
 ## Notas relacionadas
 
 - [[sympy.simplify/index | sympy.simplify]]
-- [[Tree SymPy]]

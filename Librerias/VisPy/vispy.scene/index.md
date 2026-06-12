@@ -132,4 +132,3 @@ v2.camera = 'turntable'
 
 - [[concepto_scene_graph]]
 - [[concepto_cameras_transforms]]
-- [[Tree VisPy]]

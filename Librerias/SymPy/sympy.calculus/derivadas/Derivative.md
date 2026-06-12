@@ -119,4 +119,3 @@ expr.doit()     # -sin(x)
 - [[sympy.diff]]
 - [[Expr.subs]]
 - [[sympy.calculus/derivadas/index | derivadas]]
-- [[Tree SymPy]]

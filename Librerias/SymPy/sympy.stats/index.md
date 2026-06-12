@@ -56,4 +56,3 @@ Tabla de decision por objetivo:
 ## Notas relacionadas
 
 - [[SymPy/index | SymPy]]
-- [[Tree SymPy]]

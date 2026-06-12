@@ -43,4 +43,3 @@ Relacion en una frase: `symbols` es la fabrica, `Symbol` es el producto, y `symp
 - [[sympy.core/index | sympy.core]]
 - [[concepto_symbols_assumptions]]
 - [[concepto_simbolico_vs_numerico]]
-- [[Tree SymPy]]

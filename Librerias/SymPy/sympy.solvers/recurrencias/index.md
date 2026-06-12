@@ -51,4 +51,3 @@ Claves para acertar:
 ## Notas relacionadas
 
 - [[sympy.solvers/index | sympy.solvers]]
-- [[Tree SymPy]]

@@ -52,5 +52,4 @@ Estas funciones se complementan con las de [[sympy.polys/index | sympy.polys]] (
 ## Notas relacionadas
 
 - [[SymPy/index | SymPy]]
-- [[Tree SymPy]]
 - [[concepto_simplificacion_automatica]]

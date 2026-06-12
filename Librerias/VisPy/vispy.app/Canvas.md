@@ -171,4 +171,3 @@ Los eventos se conectan con `@canvas.connect` (el nombre de la funcion define a 
 - [[Timer]] — temporizador para animaciones; se usa junto a `canvas.update()` para animar
 - [[vispy.use]] — seleccionar backend antes de crear cualquier Canvas
 - [[SceneCanvas]] — alternativa de alto nivel con scene graph integrado
-- [[Tree VisPy]]

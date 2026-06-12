@@ -104,6 +104,5 @@ classDiagram
 
 ## Notas relacionadas
 
-- [[Tree VisPy]] — estructura completa del vault VisPy
 - [[Markers]] — visual donde `face_color` acepta array `(N, 4)` de `vispy.color`
 - [[Image]] — acepta `cmap` como string; internamente usa el mismo sistema de colormaps

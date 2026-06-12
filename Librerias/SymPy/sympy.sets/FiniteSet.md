@@ -137,4 +137,3 @@ for s in sols:
 - [[sympy.conjuntos_predefinidos]]
 - [[sympy.operaciones_conjuntos]]
 - [[sympy.sets/index | sympy.sets]]
-- [[Tree SymPy]]

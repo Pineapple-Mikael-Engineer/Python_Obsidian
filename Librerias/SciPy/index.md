@@ -123,4 +123,3 @@ Si vienes de cero, arranca por los [[SciPy/conceptos_transversales/index\|concep
 - [[SciPy/conceptos_transversales/index\|conceptos transversales]]
 - [[concepto_relacion_numpy]]
 - [[concepto_import_submodulos]]
-- [[Tree SciPy]]

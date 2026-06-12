@@ -53,4 +53,3 @@ Arbol de decision:
 ## Notas relacionadas
 
 - [[sympy.solvers/index | sympy.solvers]]
-- [[Tree SymPy]]

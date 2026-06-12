@@ -83,4 +83,3 @@ flowchart TD
 - [[concepto_property_cycle]] — los colores por defecto viven en `rcParams['axes.prop_cycle']`
 - [[concepto_artist]] — los defaults definen el estado inicial de cada Artist
 - [[Matplotlib/index\|Matplotlib]] — el índice raíz
-- [[Tree Matplotlib]] — mapa completo del vault

@@ -115,4 +115,3 @@ No es necesario recrear los visuals al cambiar la camara; el scene graph se mant
 
 - [[ViewBox]] — contenedor que aloja la camara
 - [[SceneCanvas]] — el canvas padre del ViewBox
-- [[Tree VisPy]]

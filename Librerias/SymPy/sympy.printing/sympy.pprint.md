@@ -119,4 +119,3 @@ pprint(sqrt(x + 1), use_unicode=False)
 - [[sympy.latex]]
 - [[sympy.init_printing]]
 - [[sympy.printing/index | sympy.printing]]
-- [[Tree SymPy]]

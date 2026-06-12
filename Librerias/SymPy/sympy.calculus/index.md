@@ -44,4 +44,3 @@ Las cinco operaciones se encadenan en el flujo analitico habitual: se **deriva**
 ## Notas relacionadas
 
 - [[SymPy/index | SymPy]]
-- [[Tree SymPy]]

@@ -64,4 +64,3 @@ Arbol de decision:
 ## Notas relacionadas
 
 - [[sympy.matrices/index | sympy.matrices]]
-- [[Tree SymPy]]

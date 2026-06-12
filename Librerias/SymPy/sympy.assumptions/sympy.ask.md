@@ -151,4 +151,3 @@ Vease [[sympy.supuestos_simbolos]] para la via estatica.
 - [[sympy.supuestos_simbolos]]
 - [[concepto_symbols_assumptions]]
 - [[sympy.assumptions/index | sympy.assumptions]]
-- [[Tree SymPy]]

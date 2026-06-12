@@ -108,4 +108,3 @@ S.Reals.is_subset(S.Complexes)      # True
 - [[FiniteSet]]
 - [[sympy.operaciones_conjuntos]]
 - [[sympy.sets/index | sympy.sets]]
-- [[Tree SymPy]]

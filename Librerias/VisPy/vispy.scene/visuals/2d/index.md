@@ -111,4 +111,3 @@ timer = app.Timer(interval=1/60, connect=on_timer, start=True)
 
 - [[ViewBox]]
 - [[SceneCanvas]]
-- [[Tree VisPy]]

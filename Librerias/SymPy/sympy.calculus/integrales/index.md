@@ -44,4 +44,3 @@ Indefinida (simbolo `x`) y definida (tupla `(x, a, b)`) conviven en ambas formas
 ## Notas relacionadas
 
 - [[sympy.calculus/index | sympy.calculus]]
-- [[Tree SymPy]]

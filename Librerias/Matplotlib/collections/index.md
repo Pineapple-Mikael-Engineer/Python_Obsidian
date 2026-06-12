@@ -82,4 +82,3 @@ El patrón se repite en las cuatro: guardan un **array escalar** (uno por elemen
 - [[concepto_artist]] — la herencia común (`set_alpha`, `set_zorder`, `set_visible`)
 - [[Normalize]] — el mapeo valor → [0,1] que precede al colormap
 - [[ax.scatter]] · [[ax.contour]] — los métodos que devuelven colecciones
-- [[Tree Matplotlib]] — mapa completo del vault

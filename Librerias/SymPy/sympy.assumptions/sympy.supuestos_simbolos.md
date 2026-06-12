@@ -127,4 +127,3 @@ Para la consulta dinamica vease [[sympy.ask]].
 - [[concepto_symbols_assumptions]]
 - [[sympy.ask]]
 - [[sympy.assumptions/index | sympy.assumptions]]
-- [[Tree SymPy]]

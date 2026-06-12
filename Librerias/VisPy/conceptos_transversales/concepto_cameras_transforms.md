@@ -222,4 +222,3 @@ app.run()
 - [[concepto_scene_graph]] — el ViewBox que contiene la camara
 - [[concepto_canvas_app]] — el event loop que procesa los eventos de mouse/teclado
 - [[concepto_gloo_pipeline]] — nivel inferior donde no hay camaras automaticas
-- [[Tree VisPy]]

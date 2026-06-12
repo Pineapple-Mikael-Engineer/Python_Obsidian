@@ -209,4 +209,3 @@ app.run()
 - [[concepto_canvas_app]] — el event loop que ejecuta el scene graph
 - [[concepto_cameras_transforms]] — las camaras que viven dentro del ViewBox
 - [[concepto_gloo_pipeline]] — el nivel inferior que `scene` usa internamente
-- [[Tree VisPy]]

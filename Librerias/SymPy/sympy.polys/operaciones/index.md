@@ -59,4 +59,3 @@ Como elegir:
 ## Notas relacionadas
 
 - [[sympy.polys/index | sympy.polys]]
-- [[Tree SymPy]]

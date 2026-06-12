@@ -61,4 +61,3 @@ flowchart TD
 
 - [[CoolProp.PropsSI]] — el primer paso para la mayoría de cálculos
 - [[AbstractState]] — la vía eficiente y para mezclas
-- [[Tree CoolProp]] — mapa completo del vault

@@ -100,4 +100,3 @@ Todo Artist desciende de la clase base `Artist` y comparte atributos como `.set_
 
 - [[plt.subplots]] — el punto de entrada habitual (`fig, ax = ...`)
 - [[ax.plot]] — el gráfico más usado
-- [[Tree Matplotlib]] — mapa completo del vault

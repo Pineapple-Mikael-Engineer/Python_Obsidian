@@ -120,4 +120,3 @@ S.Reals - FiniteSet(0)   # Complement(Reals, {0})
 - [[FiniteSet]]
 - [[sympy.conjuntos_predefinidos]]
 - [[sympy.sets/index | sympy.sets]]
-- [[Tree SymPy]]

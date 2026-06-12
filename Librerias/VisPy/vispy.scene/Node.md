@@ -113,4 +113,3 @@ Las transformaciones se **acumulan** de padres a hijos: la posicion final de los
 - [[ViewBox]] — Node concreto: viewport con camara y visuals (via `Widget`)
 - [[BaseCamera]] — raiz de las camaras, tambien un Node
 - [[Visual]] — combinado con Node da los `scene.visuals.*` (`VisualNode`)
-- [[Tree VisPy]]

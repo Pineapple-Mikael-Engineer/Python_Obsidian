@@ -317,4 +317,3 @@ app.run()
 - [[concepto_canvas_app]] — el `app.Canvas` que provee el contexto OpenGL para `gloo`
 - [[concepto_scene_graph]] — la API de alto nivel que usa `gloo` internamente
 - [[concepto_cameras_transforms]] — en `gloo` las proyecciones son matrices de uniforms manuales
-- [[Tree VisPy]]

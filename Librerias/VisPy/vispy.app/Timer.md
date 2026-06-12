@@ -162,4 +162,3 @@ Nunca uses `time.sleep` dentro de un callback de VisPy: congela la ventana y blo
 
 - [[Canvas]] — la ventana que se redibuja con `canvas.update()`; Timer la alimenta
 - [[vispy.use]] — debe llamarse antes de crear Timer o Canvas
-- [[Tree VisPy]]

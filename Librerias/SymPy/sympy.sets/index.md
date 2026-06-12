@@ -73,4 +73,3 @@ Arbol de decision para elegir el tipo:
 ## Notas relacionadas
 
 - [[SymPy/index | SymPy]]
-- [[Tree SymPy]]

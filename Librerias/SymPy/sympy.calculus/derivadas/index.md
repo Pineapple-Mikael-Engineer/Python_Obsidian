@@ -41,4 +41,3 @@ Hay un puente entre ambas: cuando `diff` **no sabe** derivar (p. ej. una `Functi
 ## Notas relacionadas
 
 - [[sympy.calculus/index | sympy.calculus]]
-- [[Tree SymPy]]

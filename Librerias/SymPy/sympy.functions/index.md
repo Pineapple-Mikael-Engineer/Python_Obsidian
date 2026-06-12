@@ -52,6 +52,5 @@ La frontera es la frecuencia de uso: las `elementales` aparecen en casi cualquie
 ## Notas relacionadas
 
 - [[SymPy/index | SymPy]]
-- [[Tree SymPy]]
 - [[concepto_symbols_assumptions]]
 - [[sympy.simplify/trig_y_radicales/index | trig_y_radicales]]

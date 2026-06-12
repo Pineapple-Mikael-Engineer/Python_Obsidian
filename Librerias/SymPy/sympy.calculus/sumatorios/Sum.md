@@ -118,4 +118,3 @@ s.limits     # ((i, 1, n),)
 - [[Product]]
 - [[sympy.calculus/sumatorios/index | sumatorios]]
 - [[Rational]]
-- [[Tree SymPy]]

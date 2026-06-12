@@ -50,4 +50,3 @@ El modelo mental es: un **comodin lento y no canonico**, una **operacion especif
 ## Notas relacionadas
 
 - [[sympy.simplify/index | sympy.simplify]]
-- [[Tree SymPy]]

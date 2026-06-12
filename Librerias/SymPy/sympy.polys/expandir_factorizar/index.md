@@ -55,4 +55,3 @@ El modelo mental es **pares inversos** mas un reordenador suelto:
 ## Notas relacionadas
 
 - [[sympy.polys/index | sympy.polys]]
-- [[Tree SymPy]]

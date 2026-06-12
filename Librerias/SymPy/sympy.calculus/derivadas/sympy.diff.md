@@ -155,4 +155,3 @@ f = x**2 * y + y**3
 - [[Derivative]]
 - [[Expr.subs]]
 - [[sympy.calculus/derivadas/index | derivadas]]
-- [[Tree SymPy]]

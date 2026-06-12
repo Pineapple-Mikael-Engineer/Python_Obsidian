@@ -82,4 +82,3 @@ Las propiedades de estilo (`facecolor`/`fc`, `edgecolor`/`ec`, `linewidth`/`lw`,
 - [[ax.add_patch]] — registrar la forma en el Axes
 - [[concepto_artist]] — la herencia común (`set_alpha`, `set_zorder`, `set_visible`)
 - [[PatchCollection]] — para muchas formas iguales, más eficiente que añadir cientos sueltas
-- [[Tree Matplotlib]] — mapa completo del vault

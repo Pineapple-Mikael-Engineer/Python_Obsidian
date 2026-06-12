@@ -58,4 +58,3 @@ Arbol de decision:
 
 - [[sympy.logic/index | sympy.logic]]
 - [[SymPy/index | SymPy]]
-- [[Tree SymPy]]

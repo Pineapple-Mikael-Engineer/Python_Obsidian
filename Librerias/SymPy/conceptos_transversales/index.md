@@ -45,4 +45,3 @@ Es tambien el ciclo de un problema real: decides quedarte en simbolico (1), cons
 ## Notas relacionadas
 
 - [[SymPy/index | SymPy]]
-- [[Tree SymPy]]
