@@ -85,4 +85,4 @@ Aplican una funcion escalar a una matriz **como operador algebraico**, no entrad
 ## Notas relacionadas
 
 - [[concepto_relacion_numpy]] — por que y cuando preferir scipy.linalg sobre numpy.linalg
-- [[introduccion]]
+- [[SciPy/index|SciPy]]

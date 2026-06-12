@@ -81,7 +81,7 @@ if res.success:                            # 3. revisa el diagnostico antes de l
 ## Notas relacionadas
 
 - [[index\|SciPy (landing de la libreria)]]
-- [[introduccion]]
+- [[SciPy/index|SciPy]]
 - [[concepto_relacion_numpy]]
 - [[concepto_import_submodulos]]
 - [[concepto_objetos_resultado]]
