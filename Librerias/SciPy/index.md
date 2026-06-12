@@ -1,5 +1,6 @@
 ---
 title: SciPy — algoritmos cientificos sobre NumPy
+aliases: [SciPy, introduccion, mapa de scipy, scipy overview]
 tags: [scipy, indice]
 draft: false
 ---
@@ -65,6 +66,17 @@ SciPy **no reemplaza a NumPy: lo extiende**. NumPy busca ser ligero y universal 
 
 La division de trabajo, resumida: si necesitas **crear, dar forma, indexar o hacer una operacion elemento a elemento**, eso es NumPy. Si necesitas un **algoritmo numerico no trivial** (minimizar, resolver una EDO, ajustar una curva, un test estadistico, una FFT), eso es SciPy. El caso especial es `linalg`: ambas librerias lo tienen, pero `scipy.linalg` es un **superset** sobre LAPACK y es el recomendado para codigo numerico serio. El detalle completo de esta frontera vive en [[concepto_relacion_numpy]].
 
+## Las 4 ideas que gobiernan todo
+
+Antes de tocar cualquier submodulo conviene leer los conceptos transversales: se aplican en casi todas las rutinas.
+
+| Concepto | Idea clave |
+|----------|-----------|
+| [[concepto_relacion_numpy\|Relacion NumPy-SciPy]] | el `ndarray` entra y sale de casi todo; `scipy.linalg` es superset de `numpy.linalg` |
+| [[concepto_import_submodulos\|Import de submodulos]] | `import scipy` no basta: hay que importar `scipy.optimize`, etc. |
+| [[concepto_objetos_resultado\|Objetos resultado]] | muchas rutinas devuelven un Bunch (`OptimizeResult`…); revisa `.success` antes de `.x` |
+| [[concepto_callbacks_vectorizados\|Callbacks y vectorizacion]] | pasas una funcion que SciPy llama N veces: vectorizala; cuidado con la firma `f(t,y)` vs `f(y,t)` |
+
 ## Mapa de submodulos
 
 Cada submodulo es un territorio independiente con su propia carpeta de notas y su propio index. No se autoimportan: hay que pedir cada uno explicitamente (`from scipy import optimize`), como explica [[concepto_import_submodulos]].
@@ -86,7 +98,7 @@ Cada submodulo es un territorio independiente con su propia carpeta de notas y s
 
 ## Por donde empezar
 
-Si vienes de cero, arranca por los [[SciPy/conceptos_transversales/index\|conceptos transversales]]: el modelo mental que se repite en casi todas las rutinas (como se importa, que dato circula, que devuelve, como escribir el callback). Luego salta al submodulo que necesites con esta tabla.
+Si vienes de cero, arranca por los [[SciPy/conceptos_transversales/index\|conceptos transversales]]: el modelo mental que se repite en casi todas las rutinas (como se importa, que dato circula, que devuelve, como escribir el callback). Distingue ademas las rutinas **legacy** de las **modernas**: notas como `fsolve`, `interp1d` u `odeint` llevan un aviso y apuntan a su reemplazo recomendado. Luego salta al submodulo que necesites con esta tabla.
 
 | Si buscas... | Ve a |
 |--------------|------|
@@ -108,9 +120,7 @@ Si vienes de cero, arranca por los [[SciPy/conceptos_transversales/index\|concep
 
 ## Notas relacionadas
 
-- [[introduccion]]
 - [[SciPy/conceptos_transversales/index\|conceptos transversales]]
 - [[concepto_relacion_numpy]]
 - [[concepto_import_submodulos]]
-</content>
-</invoke>
+- [[Tree SciPy]]
