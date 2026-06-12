@@ -1,5 +1,6 @@
 ---
 title: Matplotlib — visualización con el modelo Figure / Axes / Artists
+aliases: [Matplotlib, introduccion, flujo basico]
 tags: [matplotlib, indice]
 draft: false
 ---
@@ -56,13 +57,34 @@ Todo Artist desciende de la clase base `Artist` y comparte atributos como `.set_
 | **pyplot / estilo MATLAB** (`plt.plot`, `plt.title`) | implícita: actúa sobre el "axes actual" | scripts rápidos de un solo gráfico |
 
 > [!tip] Regla de oro
-> Crea `fig, ax = plt.subplots()` y trabaja siempre sobre `ax`. La interfaz `plt.*` solo conviene para un vistazo rápido.
+> Crea `fig, ax = plt.subplots()` y trabaja siempre sobre `ax`. La interfaz `plt.*` solo conviene para un vistazo rápido. Mezclar ambas (`plt.xlabel` después de `ax.plot`) es la fuente nº1 de confusión.
+
+## Sintaxis base recurrente
+
+| Acción | Código | Parámetros útiles |
+|--------|--------|-------------------|
+| Línea | `ax.plot(x, y, label="...", marker="o")` | `color`, `linewidth`, `linestyle`, `alpha` |
+| Dispersión | `ax.scatter(x, y, c=z, s=20)` | `c` (color), `s` (tamaño), `cmap` |
+| Título / ejes | `ax.set_title("...")` · `ax.set_xlabel("...")` | `fontsize`, `fontweight`, `pad` |
+| Leyenda | `ax.legend(loc="best")` | `frameon`, `ncol`, `bbox_to_anchor` |
+| Cuadrícula | `ax.grid(True, alpha=0.3)` | `axis` (`'x'`, `'y'`, `'both'`) |
+| Límites | `ax.set_xlim(0, 10)` · `ax.set_ylim(...)` | — |
+| Escala | `ax.set_xscale("log")` | `'linear'`, `'log'`, `'symlog'` |
+| Guardar | `fig.savefig("f.png", dpi=150)` | `bbox_inches="tight"`, `transparent` |
+
+## Buenas prácticas
+
+1. **API orientada a objetos siempre**: `fig, ax = plt.subplots()` y luego `ax.*`.
+2. **Definir `label` al graficar** (`ax.plot(x, y, label="serie")`) para que `ax.legend()` sea automático.
+3. **`figsize`** para controlar proporciones: `plt.subplots(figsize=(10, 4))` (ancho × alto en pulgadas).
+4. **`grid(True, alpha=0.3)`** en análisis exploratorio para leer valores.
+5. **Cerrar figuras en bucles** (`plt.close(fig)`) tras `savefig` para evitar fugas de memoria.
 
 ## Cómo navegar el vault
 
 | Quiero… | Ir a |
 |---------|------|
-| El flujo básico y el modelo mental | [[Matplotlib/conceptos_transversales/index\|conceptos_transversales]] |
+| Los conceptos base (Figure/Axes/Artist, OO vs pyplot) | [[Matplotlib/conceptos_transversales/index\|conceptos_transversales]] |
 | Funciones `plt.*` (crear figuras, mostrar, guardar) | [[Matplotlib/pyplot/funciones/index\|pyplot]] |
 | Métodos del `Axes` (graficar, formato, anotar) | [[Matplotlib/axes/index\|axes]] |
 | El objeto `Figure` (layout global, guardar) | [[Matplotlib/figure/index\|figure]] |
@@ -76,6 +98,6 @@ Todo Artist desciende de la clase base `Artist` y comparte atributos como `.set_
 
 ## Notas relacionadas
 
-- [[introduccion]] — el flujo básico de pyplot paso a paso
 - [[plt.subplots]] — el punto de entrada habitual (`fig, ax = ...`)
+- [[ax.plot]] — el gráfico más usado
 - [[Tree Matplotlib]] — mapa completo del vault
