@@ -229,5 +229,5 @@ Matplotlib/
 
 ## Notas relacionadas
 
-- [[introduccion]]
+- [[Matplotlib/index|Matplotlib]]
 - [[Estandarizan Directorio Librerias]]
