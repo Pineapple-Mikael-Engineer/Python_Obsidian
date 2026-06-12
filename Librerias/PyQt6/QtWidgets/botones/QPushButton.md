@@ -50,20 +50,41 @@ boton.clicked.connect(self.guardar)          # lo habitual
 boton.toggled.connect(lambda on: print(on))  # solo si setCheckable(True)
 ```
 
-## Constructor y metodos clave
+## Propiedades
+
+En Qt los "atributos" son **propiedades**: no se leen como `boton.text` sino con su getter/setter (`boton.text()` / `boton.setText(...)`). Las mas usadas (la mayoria heredadas de [[QAbstractButton]] y [[QWidget]]):
+
+| Propiedad | Tipo | Leer \| escribir | Controla |
+|-----------|------|------------------|----------|
+| `text` | `str` | `text()` \| `setText(str)` | el texto visible del boton |
+| `icon` | `QIcon` | `icon()` \| `setIcon(QIcon)` | icono a la izquierda del texto |
+| `checkable` | `bool` | `isCheckable()` \| `setCheckable(bool)` | si el boton mantiene estado pulsado |
+| `checked` | `bool` | `isChecked()` \| `setChecked(bool)` | estado actual (solo si es checkable) |
+| `default` | `bool` | `isDefault()` \| `setDefault(bool)` | si responde a Enter dentro de un dialogo |
+| `flat` | `bool` | `isFlat()` \| `setFlat(bool)` | dibujo sin relieve (plano) |
+| `enabled` | `bool` | `isEnabled()` \| `setEnabled(bool)` | habilitado o en gris (de [[QWidget]]) |
+
+## Constructor y metodos
 
 ```python
-QPushButton(text: str = "", parent: QWidget | None = None)
+QPushButton(parent: QWidget | None = None)
+QPushButton(text: str, parent: QWidget | None = None)
+QPushButton(icon: QIcon, text: str, parent: QWidget | None = None)
 ```
 
-| Metodo | Que hace |
-|--------|----------|
-| `setText(str)` / `text()` | texto del boton (heredado de QAbstractButton) |
-| `setIcon(QIcon)` | icono a la izquierda del texto |
-| `setCheckable(bool)` | convierte el boton en conmutador (mantiene estado pulsado) |
-| `setEnabled(bool)` | habilita o deshabilita (heredado de QWidget) |
-| `setDefault(bool)` | boton por defecto del dialogo (responde a Enter) |
-| `setMenu(QMenu)` | adjunta un menu desplegable al boton |
+Tres sobrecargas; la habitual es `QPushButton("Texto")`. El `parent` es opcional: el layout lo asigna al hacer `addWidget`.
+
+| Firma | Devuelve | Que hace |
+|-------|----------|----------|
+| `setText(text: str)` | `None` | fija el texto del boton |
+| `text()` | `str` | el texto actual |
+| `setIcon(icon: QIcon)` | `None` | pone un icono a la izquierda del texto |
+| `setCheckable(checkable: bool)` | `None` | convierte el boton en conmutador (mantiene estado) |
+| `isChecked()` | `bool` | `True` si esta pulsado (util solo si es checkable) |
+| `setDefault(on: bool)` | `None` | marca el boton por defecto del dialogo (responde a Enter) |
+| `setMenu(menu: QMenu)` | `None` | adjunta un menu desplegable que se abre al pulsar |
+| `click()` | `None` | simula un clic por codigo (emite `clicked`) |
+| `animateClick()` | `None` | clic visual animado, util en demos o atajos |
 
 ## Casos de uso
 

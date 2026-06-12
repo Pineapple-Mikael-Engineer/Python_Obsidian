@@ -103,15 +103,26 @@ draft: false
 
 1. `# titulo` + parrafo de **que es y cuando usarla**.
 2. `## Importacion` — `from PyQt6.QtWidgets import QPushButton`.
-3. `## Herencia` — de quien hereda y, por tanto, **que metodos/senales hereda** (la idea
-   central de Qt). Un mini `classDiagram` o una linea de cadena: `QObject -> QWidget ->
-   QAbstractButton -> QPushButton`.
-4. `## Senales` — tabla de senales que emite (`| Senal | Cuando se emite | Argumentos |`).
-5. `## Constructor / metodos clave` — los mas usados, con tipos.
-6. `## Casos de uso` — ejemplos ejecutables y progresivos.
-7. `## Personalizar (subclasear)` — si aplica: que metodos sobreescribir.
-8. `## Errores comunes` — tabla error -> causa -> solucion.
-9. `## Notas relacionadas`.
+3. `## Herencia` — `classDiagram` de la cadena + una linea de "lo que no define lo hereda"
+   (de donde vienen sus metodos/senales). La idea central de Qt.
+4. `## Senales` — tabla `| Senal | Cuando se emite | Argumentos |`. Omitir si no emite ninguna.
+5. `## Propiedades` — los **atributos importantes**. En Qt son propiedades (getter/setter, no
+   atributo directo): tabla `| Propiedad | Tipo | Leer \| escribir | Controla |`. Incluir las
+   heredadas mas usadas. Omitir solo si la clase no tiene propiedades relevantes.
+6. `## Constructor y metodos` — **con firmas completas**:
+   - el/los **constructores** (todas las sobrecargas utiles) en un bloque ```python, con
+     **tipos de argumentos y valores por defecto**.
+   - tabla `| Firma | Devuelve | Que hace |` de los metodos relevantes, anotando el **tipo de
+     cada argumento y el return** (ej. `setText(text: str)` -> `None`; `text()` -> `str`).
+     Documentar firmas y returns "cuando haga falta": no inflar getters triviales, si.
+7. `## Casos de uso` — ejemplos ejecutables y progresivos.
+8. `## Personalizar (subclasear)` — si aplica: que metodos sobreescribir.
+9. `## Errores comunes` — tabla error -> causa -> solucion.
+10. `## Notas relacionadas`.
+
+> La profundidad se adapta a la clase: una clase central (`QWidget`, `QMainWindow`) llevara
+> tablas extensas de propiedades/metodos; una trivial, solo lo esencial. Pero **firmas con
+> tipos/return y la seccion de Propiedades son el listón** para toda nota de clase.
 
 > [!ejemplo]
 > Todo codigo debe ser ejecutable. Patron minimo de una app:
