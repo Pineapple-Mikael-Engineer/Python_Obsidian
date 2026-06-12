@@ -50,10 +50,11 @@ PyQt6/
 │
 ├── 📁 QtCore/                             # base NO visual; raiz de la comunicacion
 │   ├── QObject.md                        # la clase raiz: parent/child, senales, propiedades, eventos
+│   ├── pyqtProperty.md                   # @pyqtProperty: definir una propiedad Qt (DECORADOR)
 │   ├── 📁 senales/
-│   │   ├── pyqtSignal.md                 # declarar una senal propia
+│   │   ├── pyqtSignal.md                 # declarar una senal propia (factory, atributo de clase)
 │   │   ├── connect.md                    # conectar senal -> slot (y disconnect)
-│   │   ├── pyqtSlot.md                   # decorar un metodo como slot
+│   │   ├── pyqtSlot.md                   # @pyqtSlot: marcar un metodo como slot (DECORADOR)
 │   │   └── emit.md                       # emitir una senal
 │   ├── 📁 temporizadores/
 │   │   ├── QTimer.md
