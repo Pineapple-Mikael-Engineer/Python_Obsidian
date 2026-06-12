@@ -127,8 +127,9 @@ canvas = vapp.Canvas(size=(800, 600))
 
 Si no se llama a `vispy.use()`, VisPy prueba en orden:
 
-```
-pyqt5 → pyqt6 → pyside2 → pyside6 → pyglet → glfw → sdl2
+```mermaid
+flowchart LR
+    A["pyqt5"] --> B["pyqt6"] --> C["pyside2"] --> D["pyside6"] --> E["pyglet"] --> F["glfw"] --> G["sdl2"]
 ```
 
 Si ninguno esta instalado lanza `RuntimeError: No backend available`.
