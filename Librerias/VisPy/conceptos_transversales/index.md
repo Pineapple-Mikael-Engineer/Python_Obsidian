@@ -29,39 +29,32 @@ ve [[VisPy/index | VisPy]].
 
 ## Como se relacionan los 4 conceptos
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│                      app.run()                              │
-│           (event loop — bloquea, procesa eventos)           │
-│                           │                                 │
-│          ┌────────────────┴──────────────────┐              │
-│          │                                   │              │
-│    app.Canvas                         scene.SceneCanvas     │
-│    (bajo nivel)                       (alto nivel)          │
-│          │                                   │              │
-│    on_draw() manual                   scene graph           │
-│          │                     ┌─────────────┴──────────┐   │
-│    vispy.gloo                  │                        │   │
-│    (shaders GLSL)           ViewBox                  ViewBox │
-│          │                     │                        │   │
-│    Program                  Camera                  Camera  │
-│    VertexBuffer             (PanZoom /              (Turntable│
-│    Texture2D                Turntable /              / Fly)  │
-│                             Fly)                            │
-│                                │                            │
-│                          visuals hijos                      │
-│                     (Line, Markers, Image…)                  │
-└─────────────────────────────────────────────────────────────┘
+```mermaid
+flowchart TD
+    R["app.run() - event loop, bloquea y procesa eventos"]
+    R --> LL["app.Canvas - bajo nivel"]
+    R --> HL["scene.SceneCanvas - alto nivel"]
+    LL --> OD["on_draw() manual"]
+    OD --> GLOO["vispy.gloo: Program / VertexBuffer / Texture2D (shaders GLSL)"]
+    HL --> SG["scene graph"]
+    SG --> VB1["ViewBox + Camera"]
+    SG --> VB2["ViewBox + Camera"]
+    VB1 --> VIS["visuals hijos: Line, Markers, Image..."]
+    VB2 --> VIS
 ```
 
 **Flujo de ejecucion minimo** (los dos caminos posibles):
 
-```
-# Camino A: scene (alto nivel)
-SceneCanvas → central_widget.add_view() → view.camera = ... → visual(parent=view.scene) → app.run()
-
-# Camino B: gloo (bajo nivel)
-Canvas → Program(vert, frag) → bind(VertexBuffer) → on_draw: program.draw() → app.run()
+```mermaid
+flowchart LR
+    subgraph CaminoA ["Camino A: scene, alto nivel"]
+        direction LR
+        A1["SceneCanvas"] --> A2["central_widget.add_view()"] --> A3["view.camera = ..."] --> A4["visual(parent=view.scene)"] --> A5["app.run()"]
+    end
+    subgraph CaminoB ["Camino B: gloo, bajo nivel"]
+        direction LR
+        B1["Canvas"] --> B2["Program(vert, frag)"] --> B3["bind(VertexBuffer)"] --> B4["on_draw: program.draw()"] --> B5["app.run()"]
+    end
 ```
 
 El event loop (`app.run()`) es comun a ambos caminos. Sin el, la ventana no responde.

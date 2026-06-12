@@ -44,16 +44,17 @@ app.run()
 
 ### Jerarquia de nodos
 
-```
-SceneCanvas
-├── .scene          ← nodo raiz del grafo (Node)
-└── .central_widget ← widget de layout (Widget)
-    └── add_view() → ViewBox
-        ├── .camera         ← define proyeccion + interaccion
-        └── .scene          ← nodo padre de todos los visuals
-            ├── Line(parent=view.scene)
-            ├── Markers(parent=view.scene)
-            └── ...
+```mermaid
+flowchart TD
+    SC["SceneCanvas"]
+    SC --> SCN[".scene - nodo raiz del grafo (Node)"]
+    SC --> CW[".central_widget - widget de layout (Widget)"]
+    CW -->|"add_view()"| VBX["ViewBox"]
+    VBX --> CAM[".camera - proyeccion + interaccion"]
+    VBX --> VSC[".scene - nodo padre de los visuals"]
+    VSC --> L["Line(parent=view.scene)"]
+    VSC --> M["Markers(parent=view.scene)"]
+    VSC --> E["..."]
 ```
 
 Cada `Visual` es un nodo. Al pasar `parent=view.scene` se inserta como hijo del nodo raiz

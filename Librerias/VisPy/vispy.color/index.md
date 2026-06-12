@@ -64,12 +64,14 @@ Las tres herramientas convergen en el mismo formato de salida: un array `(N, 4)`
 
 ### Relacion entre los tres tipos
 
-```
-datos escalares ──→ get_colormap.map() ──→ array (N,4)  ──→ visual
-                                                              ↑
-colores explicitos ──→ ColorArray.rgba ────────────────────→ |
-                                                              |
-color unico ────────→ Color.rgba ──────────────────────────→ |
+```mermaid
+flowchart LR
+    DE["datos escalares"] -->|"get_colormap.map()"| ARR["array (N,4) RGBA"]
+    CE["colores explicitos"] --> CA["ColorArray.rgba"]
+    CU["color unico"] --> CO["Color.rgba"]
+    ARR --> VIS["visual"]
+    CA --> VIS
+    CO --> VIS
 ```
 
 `ColorArray.colors[i]` devuelve un `Color` individual, por lo que ambas clases son interoperables.
@@ -84,14 +86,12 @@ color unico ────────→ Color.rgba ─────────�
 
 ## Herencia y metodos compartidos
 
-```
-ColorArray  (raiz: array de N colores)        metodos heredados por Color:
-   |          .rgba  .rgb  .hex  ca[i]   ──────→ .rgba  .hex
-   |
-   └── Color  (= ColorArray de longitud 1)
-                  + propios: .alpha  .lighter()  .darker()
-
-Colormap  (jerarquia aparte)  ──→ .map(valores)   |  get_colormap(nombre) es funcion
+```mermaid
+classDiagram
+    ColorArray <|-- Color
+    class ColorArray { +rgba +rgb +hex }
+    class Color { +alpha +lighter() +darker() }
+    class Colormap { +map() }
 ```
 
 `Color` **hereda de `ColorArray`**: reusa `.rgba` y `.hex` sin reimplementarlos (un color es un array de longitud 1) y solo agrega lo propio de un color unico (`.alpha`, `.lighter()`, `.darker()`). `Colormap` es independiente y no comparte metodos con las dos anteriores.

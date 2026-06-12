@@ -41,14 +41,15 @@ app.run()
 
 ## Arquitectura interna
 
-```
-SceneCanvas
-└── central_widget  (Widget raiz)
-    └── ViewBox     (viewport + camara + clip)
-        └── view.scene  (nodo raiz de visuals)
-            ├── Markers(parent=view.scene)
-            ├── Line(parent=view.scene)
-            └── Image(parent=view.scene)
+```mermaid
+flowchart TD
+    SC["SceneCanvas"]
+    SC --> CW["central_widget (Widget raiz)"]
+    CW --> VBX["ViewBox - viewport + camara + clip"]
+    VBX --> VSC["view.scene - nodo raiz de visuals"]
+    VSC --> M["Markers(parent=view.scene)"]
+    VSC --> L["Line(parent=view.scene)"]
+    VSC --> I["Image(parent=view.scene)"]
 ```
 
 Los nodos forman un arbol: las transformaciones del padre se propagan a los hijos.

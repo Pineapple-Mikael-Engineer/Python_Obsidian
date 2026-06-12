@@ -64,28 +64,15 @@ app.run()
 
 ### Arquitectura del pipeline
 
-```
-Python / NumPy
-    │
-    │  array float32
-    ▼
-VertexBuffer  ──────────────────────────────┐
-    │                                       │
-    │  attribute binding                    │
-    ▼                                       ▼
-Vertex Shader (GLSL)              Uniform (valor constante
-    │  por cada vertice)           por draw call: color, matriz...)
-    │
-    │  gl_Position
-    ▼
-Rasterizacion (GPU — automatica)
-    │
-    │  interpolacion de varyings
-    ▼
-Fragment Shader (GLSL)
-    │  gl_FragColor por pixel
-    ▼
-Framebuffer → pantalla
+```mermaid
+flowchart TD
+    NP["Python / NumPy - array float32"]
+    NP --> VB["VertexBuffer"]
+    VB -->|"attribute binding"| VS["Vertex Shader (GLSL) - por cada vertice"]
+    U["Uniform - constante por draw call: color, matriz..."] --> VS
+    VS -->|"gl_Position"| RA["Rasterizacion (GPU, automatica)"]
+    RA -->|"interpolacion de varyings"| FS["Fragment Shader (GLSL) - gl_FragColor por pixel"]
+    FS --> FB["Framebuffer -> pantalla"]
 ```
 
 ### `Program`: compilar shaders y asignar datos
