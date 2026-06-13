@@ -56,12 +56,12 @@ classDiagram
 ```
 
 Como `QStatusBar` **ES un [[QWidget]]**, lo que no define lo hereda: mostrarse, habilitarse y la
-geometria vienen de `QWidget`; conectar senales y el `parent` vienen de `QObject`. Lo suyo es
+geometria vienen de `QWidget`; conectar señales y el `parent` vienen de `QObject`. Lo suyo es
 gestionar los **mensajes temporales** y los widgets de estado, temporales o permanentes.
 
-## Senales
+## Señales
 
-| Senal | Cuando se emite | Argumentos |
+| Señal | Cuando se emite | Argumentos |
 |-------|-----------------|------------|
 | `messageChanged` | cada vez que cambia el mensaje temporal (al ponerlo o al expirar) | `texto: str` (el mensaje nuevo; vacio `""` cuando se borra) |
 
@@ -94,9 +94,9 @@ Existe constructor, pero lo idiomatico es **no instanciarla a mano** sino obtene
 | `showMessage(texto: str, timeout: int = 0)` | `None` | muestra un mensaje temporal; `timeout` en ms, `0` = permanente hasta el siguiente |
 | `clearMessage()` | `None` | borra el mensaje temporal actual |
 | `currentMessage()` | `str` | el mensaje temporal que se muestra ahora (o `""`) |
-| `addWidget(w: QWidget)` | `None` | anade un widget alineado a la **izquierda** (lo tapan los mensajes temporales) |
-| `addPermanentWidget(w: QWidget)` | `None` | anade un widget a la **derecha**, que los mensajes temporales **no** tapan |
-| `removeWidget(w: QWidget)` | `None` | quita un widget anadido previamente |
+| `addWidget(w: QWidget)` | `None` | añade un widget alineado a la **izquierda** (lo tapan los mensajes temporales) |
+| `addPermanentWidget(w: QWidget)` | `None` | añade un widget a la **derecha**, que los mensajes temporales **no** tapan |
+| `removeWidget(w: QWidget)` | `None` | quita un widget añadido previamente |
 
 ## Casos de uso
 

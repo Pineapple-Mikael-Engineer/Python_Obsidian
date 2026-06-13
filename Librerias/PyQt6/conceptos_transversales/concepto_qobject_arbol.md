@@ -11,7 +11,7 @@ draft: false
 
 # QObject y el arbol de objetos — quien gestiona la memoria
 
-`QObject` es la clase base de casi todo en Qt: de ella heredan los widgets, los modelos, los hilos y muchas mas. Aporta cuatro capacidades centrales: el **arbol parent/child**, las **senales y slots** (solo un `QObject` puede tener senales), las **propiedades** y los **eventos**. La idea que mas conviene interiorizar es la primera: los `QObject` se organizan en un arbol donde cada objeto tiene un **parent** y cero o mas **hijos**, y ese parent **gestiona la memoria**. Cuando un `QObject` se destruye, destruye automaticamente a todos sus hijos; no hay que liberarlos a mano.
+`QObject` es la clase base de casi todo en Qt: de ella heredan los widgets, los modelos, los hilos y muchas mas. Aporta cuatro capacidades centrales: el **arbol parent/child**, las **señales y slots** (solo un `QObject` puede tener señales), las **propiedades** y los **eventos**. La idea que mas conviene interiorizar es la primera: los `QObject` se organizan en un arbol donde cada objeto tiene un **parent** y cero o mas **hijos**, y ese parent **gestiona la memoria**. Cuando un `QObject` se destruye, destruye automaticamente a todos sus hijos; no hay que liberarlos a mano.
 
 ## Por que existe
 
@@ -132,6 +132,6 @@ La regla practica: **mantener vivo todo `QObject` que quieras usar luego**, ya s
 
 ## Notas relacionadas
 
-- [[concepto_signals_slots]] — solo los `QObject` pueden tener senales
+- [[concepto_signals_slots]] — solo los `QObject` pueden tener señales
 - [[concepto_herencia_widgets]] — subclasear `QWidget`/`QObject` para personalizar
 - [[QObject]] — la clase base: `setParent`, `parent`, `children`, `findChild`

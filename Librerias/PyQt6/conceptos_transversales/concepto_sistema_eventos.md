@@ -14,7 +14,7 @@ Un **evento** es la entrada de bajo nivel que el sistema operativo envia a un wi
 
 ## Por que existe
 
-Por debajo de las senales de alto nivel (un `clicked` comodo), Qt necesita un canal crudo para todo lo que el sistema le manda: pixel a pixel del raton, cada tecla, cada repintado. No todo tiene una senal. El sistema de eventos da acceso a ese nivel: permite controlar el comportamiento exacto del widget (dibujar a mano, validar teclas, vetar el cierre) sobreescribiendo el manejador justo.
+Por debajo de las señales de alto nivel (un `clicked` comodo), Qt necesita un canal crudo para todo lo que el sistema le manda: pixel a pixel del raton, cada tecla, cada repintado. No todo tiene una señal. El sistema de eventos da acceso a ese nivel: permite controlar el comportamiento exacto del widget (dibujar a mano, validar teclas, vetar el cierre) sobreescribiendo el manejador justo.
 
 ## Como funciona
 
@@ -74,11 +74,11 @@ class Vigilante(QObject):
 # uso: algun_widget.installEventFilter(Vigilante(parent))
 ```
 
-## Senales vs eventos
+## Señales vs eventos
 
 Es la distincion clave del modelo de Qt, y se confunden a menudo:
 
-| | **Eventos** | **Senales** |
+| | **Eventos** | **Señales** |
 |--|-------------|-------------|
 | Nivel | bajo (entrada cruda) | alto (notificacion semantica) |
 | Direccion | SO -> widget | widget -> tu codigo |
@@ -86,14 +86,14 @@ Es la distincion clave del modelo de Qt, y se confunden a menudo:
 | Ejemplo | `mousePressEvent`, `keyPressEvent` | `clicked`, `valueChanged` |
 | Cuando | necesitas control fino del widget | te basta reaccionar a "algo paso" |
 
-En la practica, una senal de alto nivel como `clicked` se genera **a partir de** los eventos de bajo nivel (`mousePressEvent` + `mouseReleaseEvent`) que Qt ya proceso por ti.
+En la practica, una señal de alto nivel como `clicked` se genera **a partir de** los eventos de bajo nivel (`mousePressEvent` + `mouseReleaseEvent`) que Qt ya proceso por ti.
 
 ## Errores comunes
 
 | Error | Causa | Solucion |
 |-------|-------|----------|
 | El widget pierde su comportamiento normal al sobreescribir | olvidaste llamar a `super().<manejador>(e)` | llama al base cuando quieras conservar la conducta heredada |
-| Intentas `mi_widget.mousePressEvent.connect(...)` | confundes evento con senal: los eventos no se conectan | sobreescribe el manejador, o usa una senal real como `clicked` |
+| Intentas `mi_widget.mousePressEvent.connect(...)` | confundes evento con señal: los eventos no se conectan | sobreescribe el manejador, o usa una señal real como `clicked` |
 | El `eventFilter` no filtra o da error | no devuelves un `bool` (`True`/`False`) | retorna siempre `bool`: `True` consume, `False` deja pasar |
 | Mezclas tipos al comparar | usas `QEvent.MouseButtonPress` sin scope | en Qt6 los enums tienen scope: `QEvent.Type.MouseButtonPress` |
 

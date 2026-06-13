@@ -34,11 +34,11 @@ classDiagram
 
 Lo que `QLabel` **no** define lo hereda: mostrarse, habilitarse o el tooltip vienen de [[QWidget]]; el marco/borde viene de `QFrame`. Lo suyo es mostrar contenido: `setText`, `setPixmap`, `setAlignment`.
 
-## Senales
+## Señales
 
-Apenas emite senales (es un widget pasivo). La unica util aparece cuando el texto es HTML con enlaces:
+Apenas emite señales (es un widget pasivo). La unica util aparece cuando el texto es HTML con enlaces:
 
-| Senal | Cuando se emite | Argumentos |
+| Señal | Cuando se emite | Argumentos |
 |-------|-----------------|------------|
 | `linkActivated` | al pulsar un enlace `<a href="...">` del texto HTML | `url: str` (el destino del enlace) |
 

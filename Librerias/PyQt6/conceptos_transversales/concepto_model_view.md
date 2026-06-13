@@ -39,7 +39,7 @@ flowchart LR
 
 ## Vista + Widget (atajo) vs Vista + Modelo
 
-Qt ofrece un **atajo (convenience)**: `QListWidget`, `QTableWidget` y `QTreeWidget` juntan modelo y vista en una sola clase (son **item-based**: cargas los datos item a item con `setItem`, `addItem`...). No hay modelo separado, asi que son mas simples para datos **pequenos y estaticos**.
+Qt ofrece un **atajo (convenience)**: `QListWidget`, `QTableWidget` y `QTreeWidget` juntan modelo y vista en una sola clase (son **item-based**: cargas los datos item a item con `setItem`, `addItem`...). No hay modelo separado, asi que son mas simples para datos **pequeños y estaticos**.
 
 | Necesitas... | Usa |
 |--------------|-----|
@@ -50,7 +50,7 @@ Regla practica: empieza con **Widget** si solo vas a volcar un punado de filas; 
 
 ## Como funciona
 
-**Atajo: `QTableWidget` (item-based, datos pequenos).** Cargas las celdas a mano:
+**Atajo: `QTableWidget` (item-based, datos pequeños).** Cargas las celdas a mano:
 
 ```python
 from PyQt6.QtWidgets import QApplication, QTableWidget, QTableWidgetItem
@@ -102,7 +102,7 @@ vista.show()
 sys.exit(app.exec())
 ```
 
-La vista llama a `rowCount`/`columnCount` para saber su tamano y a `data(index, role)` por cada celda visible, pasando el **role** (`DisplayRole` = texto a mostrar, hay otros para color, alineacion, tooltip...). Conectar es siempre `vista.setModel(modelo)`.
+La vista llama a `rowCount`/`columnCount` para saber su tamaño y a `data(index, role)` por cada celda visible, pasando el **role** (`DisplayRole` = texto a mostrar, hay otros para color, alineacion, tooltip...). Conectar es siempre `vista.setModel(modelo)`.
 
 ## Errores comunes
 

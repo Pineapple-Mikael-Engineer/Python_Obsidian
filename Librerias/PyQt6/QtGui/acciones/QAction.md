@@ -23,7 +23,7 @@ draft: false
 
 # QAction — comando reutilizable para menus y toolbars
 
-Una `QAction` es un **comando reutilizable**: lo defines UNA sola vez (texto, icono, atajo) y lo anades a la vez a un menu Y a una barra de herramientas; pulsarlo en cualquiera de los dos emite la senal `triggered`, y cambiar su estado (`enabled`, `checked`) se refleja en **todas** sus apariciones. Es la pieza que evita duplicar logica entre el menu y la toolbar: una accion, muchos sitios donde aparece. En Qt6 vive en `QtGui` (en Qt5 estaba en `QtWidgets`).
+Una `QAction` es un **comando reutilizable**: lo defines UNA sola vez (texto, icono, atajo) y lo añades a la vez a un menu Y a una barra de herramientas; pulsarlo en cualquiera de los dos emite la señal `triggered`, y cambiar su estado (`enabled`, `checked`) se refleja en **todas** sus apariciones. Es la pieza que evita duplicar logica entre el menu y la toolbar: una accion, muchos sitios donde aparece. En Qt6 vive en `QtGui` (en Qt5 estaba en `QtWidgets`).
 
 ## Importacion
 
@@ -40,11 +40,11 @@ classDiagram
     class QAction { +setText() +setIcon() +setShortcut() +setCheckable() +triggered +toggled }
 ```
 
-`QAction` **no es un `QWidget`**: es un `QObject`. No se muestra por si sola; son el menu y la toolbar quienes la dibujan. De `QObject` hereda el `parent` (que gestiona su memoria) y el `connect` para enganchar sus senales a slots.
+`QAction` **no es un `QWidget`**: es un `QObject`. No se muestra por si sola; son el menu y la toolbar quienes la dibujan. De `QObject` hereda el `parent` (que gestiona su memoria) y el `connect` para enganchar sus señales a slots.
 
-## Senales
+## Señales
 
-| Senal | Cuando se emite | Argumentos |
+| Señal | Cuando se emite | Argumentos |
 |-------|-----------------|------------|
 | `triggered` | al ejecutar la accion (clic en menu/toolbar o atajo) | `checked: bool` (estado, solo util si es checkable) |
 | `toggled` | cuando cambia el estado de una accion checkable | `checked: bool` |

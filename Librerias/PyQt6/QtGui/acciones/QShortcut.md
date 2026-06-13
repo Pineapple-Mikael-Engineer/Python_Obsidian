@@ -22,7 +22,7 @@ draft: false
 
 # QShortcut — atajo de teclado suelto, sin menu
 
-`QShortcut` es un **atajo de teclado standalone**: una combinacion de teclas asociada a un widget que, al pulsarse, emite la senal `activated`. A diferencia del atajo de una [[QAction]], no necesita un menu ni una toolbar detras; es para atajos sueltos que no tienen un elemento visible. En Qt6 vive en `QtGui`.
+`QShortcut` es un **atajo de teclado standalone**: una combinacion de teclas asociada a un widget que, al pulsarse, emite la señal `activated`. A diferencia del atajo de una [[QAction]], no necesita un menu ni una toolbar detras; es para atajos sueltos que no tienen un elemento visible. En Qt6 vive en `QtGui`.
 
 ## Importacion
 
@@ -41,9 +41,9 @@ classDiagram
 
 `QShortcut` es un `QObject`: no se muestra. Se asocia a un `parent` (el widget en cuyo contexto el atajo esta activo) y emite `activated` cuando se pulsan sus teclas.
 
-## Senales
+## Señales
 
-| Senal | Cuando se emite | Argumentos |
+| Señal | Cuando se emite | Argumentos |
 |-------|-----------------|------------|
 | `activated` | al pulsar la combinacion de teclas del atajo | — |
 | `activatedAmbiguously` | cuando varias acciones comparten el mismo atajo y no se puede decidir | — |

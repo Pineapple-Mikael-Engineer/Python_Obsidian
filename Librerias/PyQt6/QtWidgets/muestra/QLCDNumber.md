@@ -34,9 +34,9 @@ classDiagram
 
 Lo que `QLCDNumber` **no** define lo hereda: mostrarse, habilitarse o el tooltip vienen de [[QWidget]]; el marco/borde viene de `QFrame`. Lo suyo es mostrar el numero: `display`, `setDigitCount`, `setSegmentStyle`.
 
-## Senales
+## Señales
 
-No emite senales propias relevantes: es un widget de salida pasivo (solo muestra el numero que le das).
+No emite señales propias relevantes: es un widget de salida pasivo (solo muestra el numero que le das).
 
 ## Propiedades
 

@@ -1,6 +1,6 @@
 ---
-title: senales y slots — el mecanismo de comunicacion de Qt
-aliases: [signals slots, senales y slots, connect, pyqtSignal]
+title: señales y slots — el mecanismo de comunicacion de Qt
+aliases: [signals slots, señales y slots, connect, pyqtSignal]
 tags: [pyqt6, concepto, core]
 lib: pyqt6
 mod: QtCore
@@ -9,22 +9,22 @@ requiere: [concepto_qobject_arbol]
 draft: false
 ---
 
-# senales y slots — el mecanismo de comunicacion de Qt
+# señales y slots — el mecanismo de comunicacion de Qt
 
-Una **senal** es un aviso que un objeto emite cuando le pasa algo (un boton fue pulsado, un slider cambio de valor). Un **slot** es cualquier funcion o metodo que responde a esa senal. El metodo `.connect()` une ambos: cuando la senal se emite, el slot se ejecuta. Es el sistema nervioso de Qt y la razon por la que casi todo hereda de `QObject` (solo los `QObject` pueden tener senales). Su virtud es el **desacoplamiento**: el que emite no sabe ni le importa quien escucha.
+Una **señal** es un aviso que un objeto emite cuando le pasa algo (un boton fue pulsado, un slider cambio de valor). Un **slot** es cualquier funcion o metodo que responde a esa señal. El metodo `.connect()` une ambos: cuando la señal se emite, el slot se ejecuta. Es el sistema nervioso de Qt y la razon por la que casi todo hereda de `QObject` (solo los `QObject` pueden tener señales). Su virtud es el **desacoplamiento**: el que emite no sabe ni le importa quien escucha.
 
 ## Por que existe
 
-Sin senales, tendrias que sondear el estado o cablear callbacks a mano, acoplando cada widget a su reaccion. Con senales, el `QPushButton` solo anuncia "me pulsaron" (`clicked`) y cualquiera puede suscribirse sin que el boton lo sepa.
+Sin señales, tendrias que sondear el estado o cablear callbacks a mano, acoplando cada widget a su reaccion. Con señales, el `QPushButton` solo anuncia "me pulsaron" (`clicked`) y cualquiera puede suscribirse sin que el boton lo sepa.
 
 ```python
-# Sin senales (acoplado, tedioso): el boton tendria que conocer la funcion destino.
-# Con senales (desacoplado): el boton solo emite; tu decides quien escucha.
+# Sin señales (acoplado, tedioso): el boton tendria que conocer la funcion destino.
+# Con señales (desacoplado): el boton solo emite; tu decides quien escucha.
 boton.clicked.connect(self.guardar)     # un escuchador
 boton.clicked.connect(self.cerrar)      # otro mas; el boton ni se entera
 ```
 
-## Conectar una senal a un slot
+## Conectar una señal a un slot
 
 ```python
 from PyQt6.QtWidgets import QApplication, QPushButton, QSlider
@@ -36,15 +36,15 @@ boton = QPushButton("Pulsame")
 boton.clicked.connect(lambda: print("clic"))     # slot sin datos
 
 slider = QSlider()
-slider.valueChanged.connect(print)               # la senal LLEVA datos: el valor nuevo
+slider.valueChanged.connect(print)               # la señal LLEVA datos: el valor nuevo
 slider.valueChanged.connect(lambda v: print(f"valor = {v}"))
 ```
 
-La senal `clicked` no envia datos; `valueChanged` envia un `int` (el valor). El slot recibe exactamente los argumentos que la senal emite.
+La señal `clicked` no envia datos; `valueChanged` envia un `int` (el valor). El slot recibe exactamente los argumentos que la señal emite.
 
 ```mermaid
 flowchart LR
-    E["objeto emisor (QPushButton)"] -->|"al pulsarse"| S(["senal: clicked"])
+    E["objeto emisor (QPushButton)"] -->|"al pulsarse"| S(["señal: clicked"])
     S -->|".connect(slot)"| SL(["slot: tu funcion / metodo"])
     SL --> R["se ejecuta la respuesta"]
 
@@ -55,15 +55,15 @@ flowchart LR
     class S,SL hoja;
 ```
 
-## Definir una senal propia
+## Definir una señal propia
 
-Las senales propias se declaran con [[pyqtSignal]] como **atributo de clase** (no en `__init__`) y se disparan con `.emit()`:
+Las señales propias se declaran con [[pyqtSignal]] como **atributo de clase** (no en `__init__`) y se disparan con `.emit()`:
 
 ```python
 from PyQt6.QtCore import QObject, pyqtSignal
 
 class Termometro(QObject):
-    temperatura_cambiada = pyqtSignal(float)     # senal que lleva un float
+    temperatura_cambiada = pyqtSignal(float)     # señal que lleva un float
 
     def medir(self, t):
         self.temperatura_cambiada.emit(t)        # emitir -> dispara los slots conectados
@@ -91,12 +91,12 @@ class Panel(QObject):
 | Error | Causa | Solucion |
 |-------|-------|----------|
 | `boton.clicked.connect(self.f())` no funciona | conectaste el **resultado** de llamar a `f`, no la funcion | quita los parentesis: `connect(self.f)` |
-| La senal propia no dispara nada | la declaraste en `__init__` en vez de como atributo de clase | declarala a nivel de clase: `mi_senal = pyqtSignal(...)` |
+| La señal propia no dispara nada | la declaraste en `__init__` en vez de como atributo de clase | declarala a nivel de clase: `mi_senal = pyqtSignal(...)` |
 | `TypeError` al emitir | los tipos de `emit(...)` no coinciden con `pyqtSignal(...)` | usa los mismos tipos en la declaracion y en `emit` |
-| El slot recibe argumentos de mas | la senal lleva datos y tu slot no los espera | acepta el argumento o usa un `lambda` que lo ignore |
+| El slot recibe argumentos de mas | la señal lleva datos y tu slot no los espera | acepta el argumento o usa un `lambda` que lo ignore |
 
 ## Notas relacionadas
 
-- [[concepto_qobject_arbol]] — solo los `QObject` pueden tener senales
-- [[pyqtSignal]] — declarar una senal propia
+- [[concepto_qobject_arbol]] — solo los `QObject` pueden tener señales
+- [[pyqtSignal]] — declarar una señal propia
 - [[pyqtSlot]] — marcar un metodo como slot con sus tipos

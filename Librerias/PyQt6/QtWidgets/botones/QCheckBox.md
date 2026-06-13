@@ -23,7 +23,7 @@ draft: false
 
 # QCheckBox — casilla de verificacion marcada/desmarcada
 
-`QCheckBox` es una **casilla de verificacion**: un boton que muestra una marca y un texto al lado, y alterna entre marcada y desmarcada al pulsarse. A diferencia de [[QAbstractButton]] generico, **ya es checkable por defecto** (no hace falta `setCheckable(True)`), porque su razon de ser es mantener un estado on/off independiente. Opcionalmente admite un **tercer estado** (parcial) para arboles de opciones. Su texto, icono y la senal `clicked` los hereda de la base; lo suyo es el estado y la senal `stateChanged`.
+`QCheckBox` es una **casilla de verificacion**: un boton que muestra una marca y un texto al lado, y alterna entre marcada y desmarcada al pulsarse. A diferencia de [[QAbstractButton]] generico, **ya es checkable por defecto** (no hace falta `setCheckable(True)`), porque su razon de ser es mantener un estado on/off independiente. Opcionalmente admite un **tercer estado** (parcial) para arboles de opciones. Su texto, icono y la señal `clicked` los hereda de la base; lo suyo es el estado y la señal `stateChanged`.
 
 ## Importacion
 
@@ -44,11 +44,11 @@ classDiagram
     class QCheckBox { +setTristate() +checkState() +stateChanged }
 ```
 
-Lo que `QCheckBox` **no** define lo hereda: el texto, el icono y las senales `clicked`/`toggled` vienen de [[QAbstractButton]]; mostrarse, habilitarse o el tooltip vienen de [[QWidget]]; el `parent` y `connect` vienen de `QObject`. Lo propio es el tri-estado (`setTristate`, `checkState`) y la senal `stateChanged`.
+Lo que `QCheckBox` **no** define lo hereda: el texto, el icono y las señales `clicked`/`toggled` vienen de [[QAbstractButton]]; mostrarse, habilitarse o el tooltip vienen de [[QWidget]]; el `parent` y `connect` vienen de `QObject`. Lo propio es el tri-estado (`setTristate`, `checkState`) y la señal `stateChanged`.
 
-## Senales
+## Señales
 
-| Senal | Cuando se emite | Argumentos |
+| Señal | Cuando se emite | Argumentos |
 |-------|-----------------|------------|
 | `stateChanged` | cuando cambia el estado de la casilla | `state: int` (0=unchecked, 2=checked; con tri-estado 1=partial) |
 | `toggled` | cuando cambia entre marcada y desmarcada | `checked: bool` |
@@ -128,6 +128,6 @@ sys.exit(app.exec())
 
 ## Notas relacionadas
 
-- [[QAbstractButton]] — la base que aporta texto, icono y las senales `clicked`/`toggled`
+- [[QAbstractButton]] — la base que aporta texto, icono y las señales `clicked`/`toggled`
 - [[QRadioButton]] — para una opcion exclusiva en vez de un on/off independiente
 - [[concepto_signals_slots]] — como conectar `toggled` o `stateChanged` a un slot

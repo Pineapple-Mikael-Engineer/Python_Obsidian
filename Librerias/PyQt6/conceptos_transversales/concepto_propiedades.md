@@ -107,7 +107,7 @@ El mismo patron sirve para propiedades nativas: `QPropertyAnimation(widget, b"ge
 | `text` | `text()` \| `setText(str)` | el texto mostrado |
 | `enabled` | `isEnabled()` \| `setEnabled(bool)` | si responde a la interaccion |
 | `visible` | `isVisible()` \| `setVisible(bool)` | si se muestra en pantalla |
-| `geometry` | `geometry()` \| `setGeometry(QRect)` | posicion y tamano |
+| `geometry` | `geometry()` \| `setGeometry(QRect)` | posicion y tamaño |
 | `toolTip` | `toolTip()` \| `setToolTip(str)` | el texto de ayuda al pasar el raton |
 | `styleSheet` | `styleSheet()` \| `setStyleSheet(str)` | el QSS aplicado al widget |
 

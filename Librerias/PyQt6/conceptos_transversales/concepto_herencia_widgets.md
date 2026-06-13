@@ -11,11 +11,11 @@ draft: false
 
 # subclasear para personalizar — el patron clave de Qt
 
-La forma natural de crear algo propio en Qt no es configurar un objeto desde fuera, sino **subclasear** una clase existente y **sobreescribir sus metodos**. Quieres un widget que se dibuje a tu manera: heredas de `QWidget` y reescribes `paintEvent`. Quieres tu ventana principal: heredas de `QMainWindow` y montas todo en `__init__`. Qt esta disenado para que extiendas su comportamiento redefiniendo los metodos que el framework ya llama por ti. Regla inquebrantable: en `__init__` de cualquier subclase **debes** llamar a `super().__init__(parent)`, porque ahi es donde Qt inicializa el objeto C++ subyacente.
+La forma natural de crear algo propio en Qt no es configurar un objeto desde fuera, sino **subclasear** una clase existente y **sobreescribir sus metodos**. Quieres un widget que se dibuje a tu manera: heredas de `QWidget` y reescribes `paintEvent`. Quieres tu ventana principal: heredas de `QMainWindow` y montas todo en `__init__`. Qt esta diseñado para que extiendas su comportamiento redefiniendo los metodos que el framework ya llama por ti. Regla inquebrantable: en `__init__` de cualquier subclase **debes** llamar a `super().__init__(parent)`, porque ahi es donde Qt inicializa el objeto C++ subyacente.
 
 ## Por que existe
 
-Muchos comportamientos de Qt son "ganchos" (hooks): el framework decide *cuando* repintar, *cuando* hubo un clic o *que* tamano preferido tiene un widget, y para saber *como* responder llama a metodos virtuales de tu clase. No los invocas tu; los invoca el event loop. Subclasear y sobreescribir esos metodos es la unica via para inyectar tu logica en ese flujo. Es el mismo principio que el arbol de objetos o las senales: extiendes `QObject` y sus descendientes en lugar de pelearte con ellos desde fuera.
+Muchos comportamientos de Qt son "ganchos" (hooks): el framework decide *cuando* repintar, *cuando* hubo un clic o *que* tamaño preferido tiene un widget, y para saber *como* responder llama a metodos virtuales de tu clase. No los invocas tu; los invoca el event loop. Subclasear y sobreescribir esos metodos es la unica via para inyectar tu logica en ese flujo. Es el mismo principio que el arbol de objetos o las señales: extiendes `QObject` y sus descendientes en lugar de pelearte con ellos desde fuera.
 
 ```python
 # No "configuras" un widget para que se dibuje distinto:
@@ -32,10 +32,10 @@ Subclaseas, llamas a `super().__init__(parent)` y sobreescribes los metodos que 
 | Metodo | Cuando lo llama Qt | Para que se sobreescribe |
 |--------|--------------------|--------------------------|
 | `paintEvent(self, event)` | cada vez que el widget debe redibujarse | dibujar con `QPainter` |
-| `sizeHint(self)` | al calcular el layout | declarar el tamano preferido (`QSize`) |
+| `sizeHint(self)` | al calcular el layout | declarar el tamaño preferido (`QSize`) |
 | `mousePressEvent(self, event)` | al pulsar el raton sobre el widget | reaccionar al clic |
 | `mouseMoveEvent(self, event)` | al mover el raton sobre el widget | arrastrar, seguir el cursor |
-| `resizeEvent(self, event)` | al cambiar de tamano el widget | recolocar contenido segun el nuevo tamano |
+| `resizeEvent(self, event)` | al cambiar de tamaño el widget | recolocar contenido segun el nuevo tamaño |
 
 ### Subclasear la ventana principal
 
@@ -60,7 +60,7 @@ sys.exit(app.exec())
 
 ### Ejemplo: un widget que se dibuja a si mismo
 
-Aqui esta el corazon del patron. `CirculoWidget` hereda de `QWidget`, declara su tamano preferido con `sizeHint` y se dibuja en `paintEvent` usando `QPainter` y `QBrush`.
+Aqui esta el corazon del patron. `CirculoWidget` hereda de `QWidget`, declara su tamaño preferido con `sizeHint` y se dibuja en `paintEvent` usando `QPainter` y `QBrush`.
 
 ```python
 from PyQt6.QtWidgets import QApplication, QWidget
@@ -73,7 +73,7 @@ class CirculoWidget(QWidget):
         super().__init__(parent)            # imprescindible
 
     def sizeHint(self):
-        return QSize(160, 160)              # tamano preferido del widget
+        return QSize(160, 160)              # tamaño preferido del widget
 
     def paintEvent(self, event):
         painter = QPainter(self)
@@ -118,11 +118,11 @@ classDiagram
 | `RuntimeError` o crash al crear la subclase | olvidaste `super().__init__(parent)` en `__init__` | llamalo siempre, y lo primero, en cada subclase de `QObject`/`QWidget` |
 | El dibujo no aparece o parpadea | pintas fuera de `paintEvent` (creas `QPainter(self)` en otro metodo) | dibuja **solo** dentro de `paintEvent` |
 | El widget no se redibuja tras cambiar un dato | no avisaste a Qt de que hay que repintar | llama a `self.update()` (nunca a `paintEvent()` a mano) |
-| El layout ignora tu tamano | no sobreescribiste `sizeHint` (o devuelve algo invalido) | devuelve un `QSize` valido en `sizeHint` |
+| El layout ignora tu tamaño | no sobreescribiste `sizeHint` (o devuelve algo invalido) | devuelve un `QSize` valido en `sizeHint` |
 | Los eventos de raton no llegan | sobreescribiste un metodo con la firma equivocada | respeta la firma exacta, ej. `mousePressEvent(self, event)` |
 
 ## Notas relacionadas
 
 - [[widget_personalizado]] — la receta detallada de un widget propio
 - [[concepto_qobject_arbol]] — `super().__init__(parent)` inicializa el objeto y fija el parent
-- [[concepto_signals_slots]] — la otra via de extension: comunicar objetos con senales
+- [[concepto_signals_slots]] — la otra via de extension: comunicar objetos con señales

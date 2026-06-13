@@ -29,7 +29,7 @@ def nombre(self, valor):
 ```
 
 - `type`: el tipo de la propiedad (`int`, `float`, `str`, `bool`, una clase Qt...). Determina como la trata el meta-objeto.
-- El **getter** decorado con `@pyqtProperty(type)` es lo que registra la propiedad; el **setter** se anade luego con `@<nombre>.setter`. Sin setter, la propiedad queda de solo lectura.
+- El **getter** decorado con `@pyqtProperty(type)` es lo que registra la propiedad; el **setter** se añade luego con `@<nombre>.setter`. Sin setter, la propiedad queda de solo lectura.
 
 ## Como se usa
 

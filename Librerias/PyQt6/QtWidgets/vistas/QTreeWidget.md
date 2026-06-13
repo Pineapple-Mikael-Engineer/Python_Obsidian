@@ -23,7 +23,7 @@ draft: false
 
 # QTreeWidget — arbol convenience item-based (sin modelo aparte)
 
-`QTreeWidget` es la version **convenience** del arbol: junta vista y modelo en una sola clase, asi que se construye **item a item** con `QTreeWidgetItem` y sus hijos, **sin un modelo separado**. Es la via mas simple para arboles pequenos y estaticos. Por debajo es un [[QTreeView]] con su modelo interno: por eso piensas en *items*, no en indices ni en `setModel`. Para datos propios, grandes o compartidos por varias vistas, usa `QTreeView` + modelo (ver [[concepto_model_view]]).
+`QTreeWidget` es la version **convenience** del arbol: junta vista y modelo en una sola clase, asi que se construye **item a item** con `QTreeWidgetItem` y sus hijos, **sin un modelo separado**. Es la via mas simple para arboles pequeños y estaticos. Por debajo es un [[QTreeView]] con su modelo interno: por eso piensas en *items*, no en indices ni en `setModel`. Para datos propios, grandes o compartidos por varias vistas, usa `QTreeView` + modelo (ver [[concepto_model_view]]).
 
 ## Importacion
 
@@ -40,11 +40,11 @@ classDiagram
     class QTreeWidget { +setColumnCount() +setHeaderLabels() +addTopLevelItem() +itemClicked +itemDoubleClicked }
 ```
 
-Hereda de [[QTreeView]] todo lo de expandir/colapsar y la cabecera; lo que aporta es la API **item-based**: `addTopLevelItem`, `setHeaderLabels`, `currentItem`. Sus senales tambien cambian de plano: en vez de emitir un `QModelIndex` (como la vista), emiten directamente el `QTreeWidgetItem` afectado.
+Hereda de [[QTreeView]] todo lo de expandir/colapsar y la cabecera; lo que aporta es la API **item-based**: `addTopLevelItem`, `setHeaderLabels`, `currentItem`. Sus señales tambien cambian de plano: en vez de emitir un `QModelIndex` (como la vista), emiten directamente el `QTreeWidgetItem` afectado.
 
-## Senales
+## Señales
 
-| Senal | Cuando se emite | Argumentos |
+| Señal | Cuando se emite | Argumentos |
 |-------|-----------------|------------|
 | `itemClicked` | al hacer clic en un item | `item: QTreeWidgetItem, column: int` |
 | `itemDoubleClicked` | al hacer doble clic en un item | `item: QTreeWidgetItem, column: int` |
@@ -73,14 +73,14 @@ QTreeWidget(parent: QWidget | None = None)
 |-------|----------|----------|
 | `setColumnCount(columns: int)` | `None` | fija cuantas columnas tiene el arbol |
 | `setHeaderLabels(labels: list[str])` | `None` | pone los textos de la fila de cabecera (define columnas) |
-| `addTopLevelItem(item: QTreeWidgetItem)` | `None` | anade un nodo de primer nivel (raiz) |
+| `addTopLevelItem(item: QTreeWidgetItem)` | `None` | añade un nodo de primer nivel (raiz) |
 | `topLevelItem(index: int)` | `QTreeWidgetItem` | el nodo raiz en esa posicion |
 | `currentItem()` | `QTreeWidgetItem` | el item actualmente seleccionado |
 | `clear()` | `None` | borra todos los items |
 
 ## QTreeWidgetItem — el nodo
 
-Cada nodo del arbol es un `QTreeWidgetItem`. Se anaden hijos con `padre.addChild(hijo)`, o creando el item con su padre directo: `QTreeWidgetItem(padre, ["texto"])`. La jerarquia se arma **encadenando items**, no con un modelo.
+Cada nodo del arbol es un `QTreeWidgetItem`. Se añaden hijos con `padre.addChild(hijo)`, o creando el item con su padre directo: `QTreeWidgetItem(padre, ["texto"])`. La jerarquia se arma **encadenando items**, no con un modelo.
 
 | Metodo | Devuelve | Que hace |
 |--------|----------|----------|

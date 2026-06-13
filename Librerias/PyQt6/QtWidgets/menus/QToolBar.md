@@ -23,7 +23,7 @@ draft: false
 
 Una **barra de herramientas** es una fila (o columna) de botones, normalmente con iconos, que
 ejecutan **acciones rapidas**. Es la franja de botones que vive bajo el menu de una ventana de
-aplicacion. No se crea suelta: se anade a una [[QMainWindow]] con `ventana.addToolBar("nombre")`,
+aplicacion. No se crea suelta: se añade a una [[QMainWindow]] con `ventana.addToolBar("nombre")`,
 que la construye, la acopla arriba y te devuelve el `QToolBar` ya colocado. Lo idiomatico es
 llenarla con las **mismas** [[QAction]] que ya usa el menu, para no duplicar logica.
 
@@ -58,12 +58,12 @@ classDiagram
 ```
 
 Como `QToolBar` **ES un [[QWidget]]**, lo que no define lo hereda: mostrarse, habilitarse,
-ocultarse y la geometria vienen de `QWidget`; conectar senales y el `parent` vienen de `QObject`.
+ocultarse y la geometria vienen de `QWidget`; conectar señales y el `parent` vienen de `QObject`.
 Lo suyo es solo gestionar la fila de **acciones**: anadirlas, separarlas y orientarlas.
 
-## Senales
+## Señales
 
-| Senal | Cuando se emite | Argumentos |
+| Señal | Cuando se emite | Argumentos |
 |-------|-----------------|------------|
 | `actionTriggered` | cuando se activa una de sus acciones (clic en un boton de la barra) | `action: QAction` (la accion disparada) |
 
@@ -72,7 +72,7 @@ barra.actionTriggered.connect(lambda accion: print(accion.text()))
 ```
 
 Lo habitual no es conectar `actionTriggered`, sino conectar el `triggered` de **cada** [[QAction]]
-por separado; esta senal sirve cuando quieres un unico manejador para toda la barra.
+por separado; esta señal sirve cuando quieres un unico manejador para toda la barra.
 
 ## Propiedades
 

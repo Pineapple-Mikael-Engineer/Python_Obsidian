@@ -23,7 +23,7 @@ draft: false
 
 # QAbstractButton — base abstracta de todos los botones
 
-`QAbstractButton` es la clase base de **todos** los botones de Qt: [[QPushButton]], `QCheckBox`, `QRadioButton` y `QToolButton`. Aporta lo comun a cualquier boton — texto, icono, estado checkable y las senales `clicked`/`toggled` — pero **es abstracta**: no se instancia directo. Se usan sus hijas concretas, o se subclasea para construir un boton propio (forma o dibujo a medida). Cuando consultes una senal o un metodo de boton, casi siempre vive aqui.
+`QAbstractButton` es la clase base de **todos** los botones de Qt: [[QPushButton]], `QCheckBox`, `QRadioButton` y `QToolButton`. Aporta lo comun a cualquier boton — texto, icono, estado checkable y las señales `clicked`/`toggled` — pero **es abstracta**: no se instancia directo. Se usan sus hijas concretas, o se subclasea para construir un boton propio (forma o dibujo a medida). Cuando consultes una señal o un metodo de boton, casi siempre vive aqui.
 
 ## Importacion
 
@@ -52,11 +52,11 @@ classDiagram
     class QToolButton { +setArrowType() }
 ```
 
-`QAbstractButton` toma de [[QWidget]] el ser visible (`show`, `setEnabled`, tooltip) y de `QObject` el `parent` y el `connect`. Lo suyo es la **logica de boton**: texto, icono, estado pulsado y las senales. Cada hija solo agrega su matiz (`setDefault` en [[QPushButton]], tristate en `QCheckBox`, exclusion mutua en `QRadioButton`).
+`QAbstractButton` toma de [[QWidget]] el ser visible (`show`, `setEnabled`, tooltip) y de `QObject` el `parent` y el `connect`. Lo suyo es la **logica de boton**: texto, icono, estado pulsado y las señales. Cada hija solo agrega su matiz (`setDefault` en [[QPushButton]], tristate en `QCheckBox`, exclusion mutua en `QRadioButton`).
 
-## Senales
+## Señales
 
-| Senal | Cuando se emite | Argumentos |
+| Señal | Cuando se emite | Argumentos |
 |-------|-----------------|------------|
 | `clicked` | al pulsar y soltar dentro del boton | `checked: bool` (estado, solo util si es checkable) |
 | `pressed` | al presionar (antes de soltar) | — |
@@ -79,7 +79,7 @@ En Qt los atributos son **propiedades**: se leen y escriben con getter/setter, n
 | `checkable` | `bool` | `isCheckable()` \| `setCheckable(bool)` | si el boton mantiene estado pulsado |
 | `checked` | `bool` | `isChecked()` \| `setChecked(bool)` | estado actual (solo si es checkable) |
 | `autoRepeat` | `bool` | `autoRepeat()` \| `setAutoRepeat(bool)` | reemite `clicked` mientras se mantiene pulsado |
-| `iconSize` | `QSize` | `iconSize()` \| `setIconSize(QSize)` | tamano en pixeles del icono |
+| `iconSize` | `QSize` | `iconSize()` \| `setIconSize(QSize)` | tamaño en pixeles del icono |
 
 ## Constructor y metodos
 
@@ -127,14 +127,14 @@ class BotonCirculo(QAbstractButton):
 
 app = QApplication(sys.argv)
 b = BotonCirculo()
-b.clicked.connect(lambda: print("clic", b.isChecked()))   # senal heredada
+b.clicked.connect(lambda: print("clic", b.isChecked()))   # señal heredada
 b.show()
 sys.exit(app.exec())
 ```
 
 ## Personalizar (subclasear)
 
-Para un boton con **forma o dibujo propio** (no rectangular, con animacion), se subclasea `QAbstractButton` y se sobreescribe `paintEvent` para dibujarlo y `sizeHint` para su tamano. Se aprovecha gratis toda la logica de boton (estado checkable, senales `clicked`/`toggled`). Receta completa en [[widget_personalizado]].
+Para un boton con **forma o dibujo propio** (no rectangular, con animacion), se subclasea `QAbstractButton` y se sobreescribe `paintEvent` para dibujarlo y `sizeHint` para su tamaño. Se aprovecha gratis toda la logica de boton (estado checkable, señales `clicked`/`toggled`). Receta completa en [[widget_personalizado]].
 
 ## Errores comunes
 

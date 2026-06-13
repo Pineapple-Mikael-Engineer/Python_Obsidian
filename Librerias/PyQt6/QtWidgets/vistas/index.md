@@ -6,7 +6,7 @@ draft: false
 
 # QtWidgets/vistas — listas, tablas y arboles (Modelo/Vista)
 
-Esta carpeta agrupa los widgets que muestran **COLECCIONES** de datos: listas, tablas y arboles. La distincion central es como manejan esos datos. Las **View** (`QListView`, `QTableView`, `QTreeView`) muestran un **modelo** separado: la vista pinta, el modelo guarda, y se conectan con `setModel`. Los **Widget** (`QListWidget`, `QTableWidget`, `QTreeWidget`) son la version *convenience* **item-based**: juntan modelo y vista en una clase, asi que cargas los datos item a item sin modelo aparte. El Widget es mas simple para datos pequenos y estaticos; la View escala a datos propios, grandes o compartidos. Todo el modelo mental esta en [[concepto_model_view]].
+Esta carpeta agrupa los widgets que muestran **COLECCIONES** de datos: listas, tablas y arboles. La distincion central es como manejan esos datos. Las **View** (`QListView`, `QTableView`, `QTreeView`) muestran un **modelo** separado: la vista pinta, el modelo guarda, y se conectan con `setModel`. Los **Widget** (`QListWidget`, `QTableWidget`, `QTreeWidget`) son la version *convenience* **item-based**: juntan modelo y vista en una clase, asi que cargas los datos item a item sin modelo aparte. El Widget es mas simple para datos pequeños y estaticos; la View escala a datos propios, grandes o compartidos. Todo el modelo mental esta en [[concepto_model_view]].
 
 ## En accion
 
@@ -50,7 +50,7 @@ classDiagram
     class QTreeWidget { +addTopLevelItem() +setHeaderLabels() }
 ```
 
-Toda vista hereda de [[QAbstractItemView]] el conectar con un modelo, la seleccion y las senales; cada **View** aporta su forma (lista, tabla, arbol) y cada **Widget** cuelga de su View como atajo item-based.
+Toda vista hereda de [[QAbstractItemView]] el conectar con un modelo, la seleccion y las señales; cada **View** aporta su forma (lista, tabla, arbol) y cada **Widget** cuelga de su View como atajo item-based.
 
 ## Que vista uso
 
@@ -64,11 +64,11 @@ flowchart TD
     T --> DT{"datos propios o grandes?"}
     A --> DA{"datos propios o grandes?"}
 
-    DL -->|"no, pequenos y estaticos"| LW["QListWidget"]
+    DL -->|"no, pequeños y estaticos"| LW["QListWidget"]
     DL -->|"si, propios o grandes"| LV["QListView + modelo"]
-    DT -->|"no, pequenos y estaticos"| TW["QTableWidget"]
+    DT -->|"no, pequeños y estaticos"| TW["QTableWidget"]
     DT -->|"si, propios o grandes"| TV["QTableView + modelo"]
-    DA -->|"no, pequenos y estaticos"| AW["QTreeWidget"]
+    DA -->|"no, pequeños y estaticos"| AW["QTreeWidget"]
     DA -->|"si, propios o grandes"| AV["QTreeView + modelo"]
 
     classDef pregunta fill:#5e81ac,stroke:#88c0d0,stroke-width:2px,color:#eceff4;
@@ -83,7 +83,7 @@ flowchart TD
 
 | Clase | Hereda de | Tipo | Rol |
 |-------|-----------|------|-----|
-| [[QAbstractItemView]] | `QWidget` | base | base abstracta de todas las vistas: `setModel`, seleccion, senales |
+| [[QAbstractItemView]] | `QWidget` | base | base abstracta de todas las vistas: `setModel`, seleccion, señales |
 | `QListView` | `QAbstractItemView` | View con modelo | muestra un modelo como **lista** de una columna |
 | `QTableView` | `QAbstractItemView` | View con modelo | muestra un modelo como **tabla** de filas y columnas |
 | [[QTreeView]] | `QAbstractItemView` | View con modelo | muestra un modelo como **arbol** jerarquico |

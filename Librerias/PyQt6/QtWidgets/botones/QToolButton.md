@@ -22,7 +22,7 @@ draft: false
 
 # QToolButton — boton compacto de barra de herramientas
 
-`QToolButton` es un **boton compacto pensado para barras de herramientas**: normalmente muestra **solo un icono** (sin texto ni relieve) y puede **desplegar un menu**. Es el boton que rellena una `QToolBar`. Comparte con [[QPushButton]] la senal `clicked`, pero su rol es distinto: ocupa poco, suele ir asociado a una `QAction` y admite un popup de opciones. Texto, icono y `clicked` los hereda de [[QAbstractButton]].
+`QToolButton` es un **boton compacto pensado para barras de herramientas**: normalmente muestra **solo un icono** (sin texto ni relieve) y puede **desplegar un menu**. Es el boton que rellena una `QToolBar`. Comparte con [[QPushButton]] la señal `clicked`, pero su rol es distinto: ocupa poco, suele ir asociado a una `QAction` y admite un popup de opciones. Texto, icono y `clicked` los hereda de [[QAbstractButton]].
 
 ## Importacion
 
@@ -43,11 +43,11 @@ classDiagram
     class QToolButton { +setMenu() +setPopupMode() +setDefaultAction() }
 ```
 
-Lo que `QToolButton` **no** define lo hereda: el texto, el icono y las senales `clicked`/`toggled` vienen de [[QAbstractButton]]; mostrarse, habilitarse o el tooltip vienen de [[QWidget]]; el `parent` y `connect` vienen de `QObject`. Lo suyo es el menu desplegable (`setMenu`, `setPopupMode`) y la integracion con acciones (`setDefaultAction`).
+Lo que `QToolButton` **no** define lo hereda: el texto, el icono y las señales `clicked`/`toggled` vienen de [[QAbstractButton]]; mostrarse, habilitarse o el tooltip vienen de [[QWidget]]; el `parent` y `connect` vienen de `QObject`. Lo suyo es el menu desplegable (`setMenu`, `setPopupMode`) y la integracion con acciones (`setDefaultAction`).
 
-## Senales
+## Señales
 
-| Senal | Cuando se emite | Argumentos |
+| Señal | Cuando se emite | Argumentos |
 |-------|-----------------|------------|
 | `clicked` | al pulsar y soltar dentro del boton | `checked: bool` |
 | `triggered` | cuando se dispara una accion de su menu | `action: QAction` |
@@ -132,6 +132,6 @@ sys.exit(app.exec())
 
 ## Notas relacionadas
 
-- [[QAbstractButton]] — la base que aporta texto, icono y las senales `clicked`/`toggled`
+- [[QAbstractButton]] — la base que aporta texto, icono y las señales `clicked`/`toggled`
 - [[QPushButton]] — el boton estandar para acciones con texto en dialogos
 - [[concepto_signals_slots]] — como conectar `clicked` o `triggered` a un slot

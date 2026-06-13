@@ -87,18 +87,18 @@ classDiagram
 ```
 
 Como `QWidget` **ES un `QObject`**, hereda de el lo fundamental del modelo de objetos de Qt:
-el mecanismo de **senales y slots** (`.connect`, `pyqtSignal`), el **arbol de objetos via
+el mecanismo de **señales y slots** (`.connect`, `pyqtSignal`), el **arbol de objetos via
 `parent`** (al destruir el padre se destruyen los hijos, gestionando la memoria), el
 **sistema de propiedades** y el `objectName`. Sobre esa base `QWidget` añade todo lo *visual*.
 A su vez, **toda la jerarquia de widgets cuelga de `QWidget`**: los botones, etiquetas, campos,
 ventanas y vistas heredan su geometria, visibilidad y manejo de eventos, y solo añaden lo suyo.
 
-## Senales
+## Señales
 
-`QWidget` emite **pocas** senales por si mismo; lo habitual es que sean los widgets concretos
+`QWidget` emite **pocas** señales por si mismo; lo habitual es que sean los widgets concretos
 (botones, campos…) los que añaden las suyas. Las propias de `QWidget`:
 
-| Senal | Cuando se emite | Argumentos |
+| Señal | Cuando se emite | Argumentos |
 |-------|-----------------|------------|
 | `windowTitleChanged` | al cambiar el titulo de la ventana (`setWindowTitle`) | `title: str` |
 | `customContextMenuRequested` | al pedir menu contextual, si `contextMenuPolicy` es `CustomContextMenu` | `pos: QPoint` |
@@ -255,7 +255,7 @@ herencia de widgets, [[concepto_herencia_widgets]].
 
 ## Notas relacionadas
 
-- [[QObject]] — la base no visual: senales/slots, parent y propiedades que QWidget hereda
+- [[QObject]] — la base no visual: señales/slots, parent y propiedades que QWidget hereda
 - [[concepto_herencia_widgets]] — por que todo widget ES un QWidget y como subclasearlo
 - [[QMainWindow]] — la ventana principal (con barra de menus y central widget) que hereda de QWidget
 - [[QLayout]] — los gestores que colocan a los hijos dentro de un QWidget

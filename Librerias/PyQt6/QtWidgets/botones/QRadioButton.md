@@ -22,7 +22,7 @@ draft: false
 
 # QRadioButton — boton de opcion exclusivo
 
-`QRadioButton` es un **boton de opcion exclusivo**: dentro de un mismo parent (o un `QButtonGroup`), **solo uno puede estar activo a la vez** — marcar uno desmarca automaticamente a los demas. Es la eleccion para "elige una de varias" (sexo, metodo de pago, calidad). Como [[QCheckBox]] ya es checkable; la diferencia es la exclusion mutua automatica entre radios que comparten contenedor. Texto, icono y la senal `clicked` los hereda de [[QAbstractButton]].
+`QRadioButton` es un **boton de opcion exclusivo**: dentro de un mismo parent (o un `QButtonGroup`), **solo uno puede estar activo a la vez** — marcar uno desmarca automaticamente a los demas. Es la eleccion para "elige una de varias" (sexo, metodo de pago, calidad). Como [[QCheckBox]] ya es checkable; la diferencia es la exclusion mutua automatica entre radios que comparten contenedor. Texto, icono y la señal `clicked` los hereda de [[QAbstractButton]].
 
 ## Importacion
 
@@ -43,11 +43,11 @@ classDiagram
     class QRadioButton { +autoExclusive }
 ```
 
-Lo que `QRadioButton` **no** define lo hereda: el texto, el icono y las senales `clicked`/`toggled` vienen de [[QAbstractButton]]; mostrarse, habilitarse o el tooltip vienen de [[QWidget]]; el `parent` y `connect` vienen de `QObject`. Apenas agrega lo suyo: la exclusion mutua (`autoExclusive`, activa por defecto).
+Lo que `QRadioButton` **no** define lo hereda: el texto, el icono y las señales `clicked`/`toggled` vienen de [[QAbstractButton]]; mostrarse, habilitarse o el tooltip vienen de [[QWidget]]; el `parent` y `connect` vienen de `QObject`. Apenas agrega lo suyo: la exclusion mutua (`autoExclusive`, activa por defecto).
 
-## Senales
+## Señales
 
-| Senal | Cuando se emite | Argumentos |
+| Señal | Cuando se emite | Argumentos |
 |-------|-----------------|------------|
 | `toggled` | cuando cambia entre marcado y desmarcado | `checked: bool` |
 | `clicked` | al pulsar y soltar dentro del radio | `checked: bool` |
@@ -113,7 +113,7 @@ w.show()
 sys.exit(app.exec())
 ```
 
-Los tres radios son exclusivos **solo porque comparten el mismo contenedor**. Un `QButtonGroup` agrupa de forma explicita (incluso entre layouts distintos) y centraliza el "cual esta marcado" en una sola senal `buttonClicked`.
+Los tres radios son exclusivos **solo porque comparten el mismo contenedor**. Un `QButtonGroup` agrupa de forma explicita (incluso entre layouts distintos) y centraliza el "cual esta marcado" en una sola señal `buttonClicked`.
 
 ## Errores comunes
 
@@ -125,6 +125,6 @@ Los tres radios son exclusivos **solo porque comparten el mismo contenedor**. Un
 
 ## Notas relacionadas
 
-- [[QAbstractButton]] — la base que aporta texto, icono y las senales `clicked`/`toggled`
+- [[QAbstractButton]] — la base que aporta texto, icono y las señales `clicked`/`toggled`
 - [[QCheckBox]] — para un on/off independiente en vez de una opcion exclusiva
 - [[concepto_signals_slots]] — como conectar `toggled` o `buttonClicked` a un slot

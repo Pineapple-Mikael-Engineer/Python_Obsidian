@@ -34,11 +34,11 @@ classDiagram
     class QTextEdit { +toPlainText() +setHtml() +append() +textChanged }
 ```
 
-`QTextEdit` deriva de `QAbstractScrollArea` (el area con barras de scroll y viewport; no tiene nota propia), que a su vez deriva de [[QWidget]]. De ahi vienen el scroll automatico, mostrarse y habilitarse; conectar senales y el `parent` vienen de `QObject`. Lo suyo es editar/mostrar texto con formato.
+`QTextEdit` deriva de `QAbstractScrollArea` (el area con barras de scroll y viewport; no tiene nota propia), que a su vez deriva de [[QWidget]]. De ahi vienen el scroll automatico, mostrarse y habilitarse; conectar señales y el `parent` vienen de `QObject`. Lo suyo es editar/mostrar texto con formato.
 
-## Senales
+## Señales
 
-| Senal | Cuando se emite | Argumentos |
+| Señal | Cuando se emite | Argumentos |
 |-------|-----------------|------------|
 | `textChanged` | cada vez que cambia el contenido (por usuario o por codigo) | — |
 
@@ -72,7 +72,7 @@ Dos sobrecargas; la habitual es `QTextEdit()` vacio. El `text` inicial se interp
 | `setPlainText(text: str)` | `None` | reemplaza todo el contenido por texto plano |
 | `toHtml()` | `str` | el contenido serializado como HTML |
 | `setHtml(html: str)` | `None` | reemplaza todo el contenido interpretando HTML |
-| `append(text: str)` | `None` | anade un parrafo al final (acepta HTML) |
+| `append(text: str)` | `None` | añade un parrafo al final (acepta HTML) |
 | `setReadOnly(readonly: bool)` | `None` | hace el editor solo lectura |
 | `clear()` | `None` | vacia el contenido |
 

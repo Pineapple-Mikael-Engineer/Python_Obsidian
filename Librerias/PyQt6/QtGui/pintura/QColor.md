@@ -17,7 +17,7 @@ draft: false
 
 # QColor — un color RGB, RGBA, HSV o por nombre
 
-`QColor` representa un **color** y es una **clase de valor**: no vive en el arbol de objetos, no emite senales, simplemente encapsula un color que se construye y se pasa a quien dibuja. Es el valor que consumen [[QPainter]] (`setPen`/`setBrush`), `QPen` y `QBrush`. Se puede definir por nombre CSS, por hex, por componentes RGB/RGBA o en espacio HSV, y ofrece metodos para leer sus componentes y para aclarar u oscurecer el color.
+`QColor` representa un **color** y es una **clase de valor**: no vive en el arbol de objetos, no emite señales, simplemente encapsula un color que se construye y se pasa a quien dibuja. Es el valor que consumen [[QPainter]] (`setPen`/`setBrush`), `QPen` y `QBrush`. Se puede definir por nombre CSS, por hex, por componentes RGB/RGBA o en espacio HSV, y ofrece metodos para leer sus componentes y para aclarar u oscurecer el color.
 
 ## Importacion
 
@@ -28,7 +28,7 @@ from PyQt6.QtGui import QColor
 ## Herencia
 
 > [!note] Clase de valor, no QObject
-> `QColor` **no** hereda de `QObject` ni emite senales: es un valor (como un `int` o una cadena), de los que se crean por copia y se pasan a las funciones de dibujo. No se subclasea ni se conecta a slots. Por eso esta nota no lleva `classDiagram` de herencia.
+> `QColor` **no** hereda de `QObject` ni emite señales: es un valor (como un `int` o una cadena), de los que se crean por copia y se pasan a las funciones de dibujo. No se subclasea ni se conecta a slots. Por eso esta nota no lleva `classDiagram` de herencia.
 
 ## Constructor y formas de crear un color
 

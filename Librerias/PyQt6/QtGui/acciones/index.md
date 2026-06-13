@@ -10,7 +10,7 @@ Esta carpeta agrupa las **acciones y atajos** de teclado de PyQt6. La [[QAction]
 
 ## En accion
 
-Un `QMainWindow` donde una **misma** `QAction` (con icono, atajo `Ctrl+S` y su `triggered`) se anade al menu y a la toolbar a la vez:
+Un `QMainWindow` donde una **misma** `QAction` (con icono, atajo `Ctrl+S` y su `triggered`) se añade al menu y a la toolbar a la vez:
 
 ```python
 from PyQt6.QtWidgets import QApplication, QMainWindow, QLabel

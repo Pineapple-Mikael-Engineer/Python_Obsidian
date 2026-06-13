@@ -13,7 +13,7 @@ draft: false
 
 # QPushButton — boton que emite clicked al pulsarse
 
-`QPushButton` es el boton de pulsar mas comun: muestra un texto (o icono) y **emite la senal `clicked`** cuando el usuario lo pulsa. Casi no se usa "tal cual": lo normal es crearlo, conectar su `clicked` a un slot, y estilizarlo con QSS. Toda su logica de boton (texto, icono, estado pulsado) la hereda de [[QAbstractButton]].
+`QPushButton` es el boton de pulsar mas comun: muestra un texto (o icono) y **emite la señal `clicked`** cuando el usuario lo pulsa. Casi no se usa "tal cual": lo normal es crearlo, conectar su `clicked` a un slot, y estilizarlo con QSS. Toda su logica de boton (texto, icono, estado pulsado) la hereda de [[QAbstractButton]].
 
 ## Importacion
 
@@ -34,11 +34,11 @@ classDiagram
     class QPushButton { +setDefault() +setMenu() }
 ```
 
-Lo que `QPushButton` **no** define lo hereda: el texto/icono y las senales (`clicked`, `toggled`…) vienen de [[QAbstractButton]]; mostrarse, habilitarse o el tooltip vienen de [[QWidget]]; conectar senales y el `parent` vienen de `QObject`. Apenas agrega lo suyo (`setDefault`, `setMenu`).
+Lo que `QPushButton` **no** define lo hereda: el texto/icono y las señales (`clicked`, `toggled`…) vienen de [[QAbstractButton]]; mostrarse, habilitarse o el tooltip vienen de [[QWidget]]; conectar señales y el `parent` vienen de `QObject`. Apenas agrega lo suyo (`setDefault`, `setMenu`).
 
-## Senales
+## Señales
 
-| Senal | Cuando se emite | Argumentos |
+| Señal | Cuando se emite | Argumentos |
 |-------|-----------------|------------|
 | `clicked` | al pulsar y soltar dentro del boton | `checked: bool` (estado, solo util si es checkable) |
 | `pressed` | al presionar (antes de soltar) | — |
@@ -133,6 +133,6 @@ Para un boton con **comportamiento o dibujo propio** (forma no rectangular, anim
 
 ## Notas relacionadas
 
-- [[QAbstractButton]] — la clase base que aporta texto, icono y las senales
+- [[QAbstractButton]] — la clase base que aporta texto, icono y las señales
 - [[concepto_signals_slots]] — como conectar `clicked` a un slot
 - [[QWidget]] — de donde vienen `show`, `setEnabled` y el resto

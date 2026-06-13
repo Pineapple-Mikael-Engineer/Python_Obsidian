@@ -19,7 +19,7 @@ draft: false
 
 # QFormLayout — filas de etiqueta + campo para formularios
 
-`QFormLayout` dispone los widgets en **filas de dos columnas**: una etiqueta a la izquierda y su control a la derecha. Es el layout ideal para **formularios** (nombre/email/edad...): se anaden filas con `addRow` y el layout se encarga de alinear etiquetas y campos, sin tener que calcular coordenadas. Toda la gestion de geometria la hereda de [[QLayout]]; lo suyo es el patron etiqueta-campo.
+`QFormLayout` dispone los widgets en **filas de dos columnas**: una etiqueta a la izquierda y su control a la derecha. Es el layout ideal para **formularios** (nombre/email/edad...): se añaden filas con `addRow` y el layout se encarga de alinear etiquetas y campos, sin tener que calcular coordenadas. Toda la gestion de geometria la hereda de [[QLayout]]; lo suyo es el patron etiqueta-campo.
 
 ## Importacion
 
@@ -112,6 +112,6 @@ sys.exit(app.exec())
 
 ## Notas relacionadas
 
-- [[QLayout]] — la clase base que aporta margenes, espaciado y anadir/quitar
+- [[QLayout]] — la clase base que aporta margenes, espaciado y añadir/quitar
 - [[concepto_layouts]] — modelo mental de la gestion de geometria en Qt
 - [[QGridLayout]] — la rejilla generica que `QFormLayout` especializa para formularios

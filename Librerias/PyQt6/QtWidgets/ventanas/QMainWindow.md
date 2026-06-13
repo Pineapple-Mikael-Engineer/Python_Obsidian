@@ -59,7 +59,7 @@ classDiagram
 
 Como `QMainWindow` **ES un [[QWidget]]**, lo que no define lo hereda: `show`, `resize`,
 `setWindowTitle`, los metodos-evento (`closeEvent`, `resizeEvent`) y toda la geometria vienen de
-`QWidget`; senales/slots y el `parent` vienen de `QObject`. Lo suyo es solo la **estructura de
+`QWidget`; señales/slots y el `parent` vienen de `QObject`. Lo suyo es solo la **estructura de
 ventana de aplicacion**: el armazon de menus, toolbars, central widget, statusbar y docks.
 
 ## Estructura visual

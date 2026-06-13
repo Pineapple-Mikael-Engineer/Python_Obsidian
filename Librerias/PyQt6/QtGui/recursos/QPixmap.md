@@ -17,7 +17,7 @@ draft: false
 
 # QPixmap — imagen en memoria optimizada para mostrarse en pantalla
 
-`QPixmap` es una **imagen en memoria optimizada para MOSTRARSE en pantalla** (dibujarla rapido en un widget). Es una **clase de valor**: no vive en el arbol de objetos ni emite senales, se crea y se pasa a quien dibuja. Es el formato de imagen que consumen `QLabel.setPixmap`, `QPainter.drawPixmap` y `QIcon`. Su contrapartida es [[QImage]]: QPixmap es para **mostrar** (rapido en pantalla, pero no deja editar pixeles); QImage es para **manipular pixeles**. Se convierte de una a otra con `QPixmap.fromImage` / `toImage`.
+`QPixmap` es una **imagen en memoria optimizada para MOSTRARSE en pantalla** (dibujarla rapido en un widget). Es una **clase de valor**: no vive en el arbol de objetos ni emite señales, se crea y se pasa a quien dibuja. Es el formato de imagen que consumen `QLabel.setPixmap`, `QPainter.drawPixmap` y `QIcon`. Su contrapartida es [[QImage]]: QPixmap es para **mostrar** (rapido en pantalla, pero no deja editar pixeles); QImage es para **manipular pixeles**. Se convierte de una a otra con `QPixmap.fromImage` / `toImage`.
 
 ## Importacion
 
@@ -28,20 +28,20 @@ from PyQt6.QtGui import QPixmap
 ## Herencia
 
 > [!note] Clase de valor, no QObject
-> `QPixmap` **no** hereda de `QObject` ni emite senales: es un valor que se crea por copia y se pasa a las funciones de dibujo. No se subclasea ni se conecta a slots. Por eso esta nota no lleva `classDiagram` de herencia.
+> `QPixmap` **no** hereda de `QObject` ni emite señales: es un valor que se crea por copia y se pasa a las funciones de dibujo. No se subclasea ni se conecta a slots. Por eso esta nota no lleva `classDiagram` de herencia.
 
 ## Constructor y formas de crear un pixmap
 
 ```python
 QPixmap(ruta: str)                    # cargar desde archivo ("imagen.png")
-QPixmap(ancho: int, alto: int)        # pixmap vacio del tamano dado
+QPixmap(ancho: int, alto: int)        # pixmap vacio del tamaño dado
 QPixmap.fromImage(imagen: QImage)     # staticmethod: desde una QImage
 ```
 
 | Forma | Ejemplo | Resultado |
 |-------|---------|-----------|
 | Desde archivo | `QPixmap("imagen.png")` | la imagen cargada (vacia si la ruta es mala) |
-| Vacia por tamano | `QPixmap(200, 100)` | pixmap de 200x100 sin contenido definido |
+| Vacia por tamaño | `QPixmap(200, 100)` | pixmap de 200x100 sin contenido definido |
 | Desde una QImage | `QPixmap.fromImage(img)` | convierte una [[QImage]] (editada) a pixmap para mostrar |
 
 ## Metodos

@@ -34,11 +34,11 @@ classDiagram
     class QSlider { +setOrientation() +setTickPosition() +setTickInterval() }
 ```
 
-El valor, el rango, los pasos y las senales (`valueChanged`, `sliderMoved`...) vienen de `QAbstractSlider` —compartidos con `QScrollBar` y `QDial`—; mostrarse y habilitarse de [[QWidget]]; conectar y el `parent` de `QObject`. `QSlider` agrega lo visual de la barra: orientacion y las marcas (ticks).
+El valor, el rango, los pasos y las señales (`valueChanged`, `sliderMoved`...) vienen de `QAbstractSlider` —compartidos con `QScrollBar` y `QDial`—; mostrarse y habilitarse de [[QWidget]]; conectar y el `parent` de `QObject`. `QSlider` agrega lo visual de la barra: orientacion y las marcas (ticks).
 
-## Senales
+## Señales
 
-| Senal | Cuando se emite | Argumentos |
+| Señal | Cuando se emite | Argumentos |
 |-------|-----------------|------------|
 | `valueChanged` | cada vez que cambia el valor (arrastre, teclado o codigo) | `value: int` |
 | `sliderMoved` | mientras el usuario arrastra el tirador | `value: int` |
@@ -115,6 +115,6 @@ w.show(); sys.exit(app.exec())
 
 ## Notas relacionadas
 
-- [[QAbstractSlider]] — la base que aporta valor, rango y senales
+- [[QAbstractSlider]] — la base que aporta valor, rango y señales
 - [[QWidget]] — de donde vienen `show` y `setEnabled`
 - [[concepto_signals_slots]] — como conectar `valueChanged` a un slot

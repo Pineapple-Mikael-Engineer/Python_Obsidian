@@ -22,7 +22,7 @@ draft: false
 
 # QTabWidget — contenedor de pestanas con solapas
 
-`QTabWidget` es un contenedor de **pestanas**: muestra una barra de solapas y, debajo, el widget asociado a la solapa activa. Cada pestana aloja un **widget distinto** (normalmente un contenedor con su propio layout) y el usuario cambia de pagina pulsando las solapas. Lo normal es crearlo, ir anadiendo paginas con `addTab(widget, "Titulo")` y, si interesa, conectar `currentChanged` para reaccionar al cambio.
+`QTabWidget` es un contenedor de **pestanas**: muestra una barra de solapas y, debajo, el widget asociado a la solapa activa. Cada pestana aloja un **widget distinto** (normalmente un contenedor con su propio layout) y el usuario cambia de pagina pulsando las solapas. Lo normal es crearlo, ir añadiendo paginas con `addTab(widget, "Titulo")` y, si interesa, conectar `currentChanged` para reaccionar al cambio.
 
 ## Importacion
 
@@ -41,11 +41,11 @@ classDiagram
     class QTabWidget { +addTab() +currentIndex() +currentChanged }
 ```
 
-Lo que `QTabWidget` **no** define lo hereda: mostrarse, habilitarse, el tooltip o el tamano vienen de [[QWidget]]; conectar senales y el `parent` (que gestiona la destruccion de las paginas hijas) vienen de `QObject`. Lo propio es la gestion de pestanas: anadir, quitar, indice activo y sus senales.
+Lo que `QTabWidget` **no** define lo hereda: mostrarse, habilitarse, el tooltip o el tamaño vienen de [[QWidget]]; conectar señales y el `parent` (que gestiona la destruccion de las paginas hijas) vienen de `QObject`. Lo propio es la gestion de pestanas: añadir, quitar, indice activo y sus señales.
 
-## Senales
+## Señales
 
-| Senal | Cuando se emite | Argumentos |
+| Señal | Cuando se emite | Argumentos |
 |-------|-----------------|------------|
 | `currentChanged` | al cambiar la pestana visible | `index: int` (la pestana ahora activa, `-1` si no hay) |
 | `tabCloseRequested` | al pulsar la "x" de una pestana | `index: int` (la pestana a cerrar; solo si `setTabsClosable(True)`) |
@@ -75,11 +75,11 @@ En Qt los "atributos" son **propiedades** (getter/setter, no atributo directo). 
 QTabWidget(parent: QWidget | None = None)
 ```
 
-Un unico constructor; el `parent` es opcional (el layout lo asigna al hacer `addWidget`). Las paginas se anaden despues con `addTab`.
+Un unico constructor; el `parent` es opcional (el layout lo asigna al hacer `addWidget`). Las paginas se añaden despues con `addTab`.
 
 | Firma | Devuelve | Que hace |
 |-------|----------|----------|
-| `addTab(widget: QWidget, label: str)` | `int` | anade una pestana al final; devuelve su **indice** |
+| `addTab(widget: QWidget, label: str)` | `int` | añade una pestana al final; devuelve su **indice** |
 | `insertTab(index: int, widget: QWidget, label: str)` | `int` | inserta una pestana en `index`; devuelve el indice real |
 | `currentIndex()` | `int` | indice de la pestana visible (`-1` si no hay ninguna) |
 | `setCurrentIndex(index: int)` | `None` | cambia a la pestana `index` por codigo |

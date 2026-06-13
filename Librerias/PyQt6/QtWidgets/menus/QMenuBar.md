@@ -40,11 +40,11 @@ classDiagram
     class QMenuBar { +addMenu() +addAction() +clear() }
 ```
 
-Como `QMenuBar` **ES un [[QWidget]]**, lo que no define lo hereda: mostrarse, habilitarse y la geometria vienen de `QWidget`; conectar senales y el `parent` vienen de `QObject`. Lo suyo es solo organizar los menus de nivel superior de la ventana.
+Como `QMenuBar` **ES un [[QWidget]]**, lo que no define lo hereda: mostrarse, habilitarse y la geometria vienen de `QWidget`; conectar señales y el `parent` vienen de `QObject`. Lo suyo es solo organizar los menus de nivel superior de la ventana.
 
-## Senales
+## Señales
 
-| Senal | Cuando se emite | Argumentos |
+| Señal | Cuando se emite | Argumentos |
 |-------|-----------------|------------|
 | `triggered` | se activo cualquier accion de cualquiera de sus menus | `action: QAction` (la accion elegida) |
 
@@ -74,7 +74,7 @@ Un unico constructor, pero **lo idiomatico es no instanciarla**: usa `ventana.me
 |-------|----------|----------|
 | `addMenu(titulo: str)` | `QMenu` | crea un menu desplegable con ese titulo y lo devuelve |
 | `addMenu(menu: QMenu)` | `QAction` | acopla un `QMenu` ya creado a la barra |
-| `addAction(texto: str)` | `QAction` | anade una accion directa en la barra (poco habitual) |
+| `addAction(texto: str)` | `QAction` | añade una accion directa en la barra (poco habitual) |
 | `clear()` | `None` | elimina todos los menus y acciones de la barra |
 
 ## Casos de uso

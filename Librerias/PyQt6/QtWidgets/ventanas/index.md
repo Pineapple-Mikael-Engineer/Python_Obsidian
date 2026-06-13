@@ -6,7 +6,7 @@ draft: false
 
 # QtWidgets/ventanas — ventana principal y dialogos
 
-Esta carpeta agrupa las **ventanas de nivel superior**: las que aparecen como una ventana propia del sistema, sin un `parent` visual que las contenga. Son de dos clases. La **ventana principal** de la app es `QMainWindow`: trae de fabrica el armazon tipico de una aplicacion —barra de menus, barras de herramientas, barra de estado y un **widget central**—. Los **dialogos** son ventanas secundarias y suelen ser modales (bloquean el resto hasta que respondes): `QDialog` es el dialogo generico que construyes tu, y `QMessageBox`/`QFileDialog` son dialogos **predefinidos** para los dos casos mas comunes (mostrar un mensaje o pregunta, y elegir un archivo o carpeta). Todos son `QWidget`, asi que ya saben dibujarse, mostrarse con `show()` y recibir eventos; lo que anaden es la estructura propia de una ventana completa.
+Esta carpeta agrupa las **ventanas de nivel superior**: las que aparecen como una ventana propia del sistema, sin un `parent` visual que las contenga. Son de dos clases. La **ventana principal** de la app es `QMainWindow`: trae de fabrica el armazon tipico de una aplicacion —barra de menus, barras de herramientas, barra de estado y un **widget central**—. Los **dialogos** son ventanas secundarias y suelen ser modales (bloquean el resto hasta que respondes): `QDialog` es el dialogo generico que construyes tu, y `QMessageBox`/`QFileDialog` son dialogos **predefinidos** para los dos casos mas comunes (mostrar un mensaje o pregunta, y elegir un archivo o carpeta). Todos son `QWidget`, asi que ya saben dibujarse, mostrarse con `show()` y recibir eventos; lo que añaden es la estructura propia de una ventana completa.
 
 ## En accion
 
@@ -53,7 +53,7 @@ classDiagram
     class QFileDialog { +getOpenFileName() +getExistingDirectory() }
 ```
 
-Todas las ventanas son una rama de `QWidget`: lo que no definen (dibujarse, `show()`, eventos) lo heredan de ahi. `QMainWindow` cuelga directo de `QWidget` y anade el armazon de la app. Los dialogos predefinidos `QMessageBox` y `QFileDialog` no cuelgan de `QWidget` directo: heredan de `QDialog`, asi que son dialogos ya construidos —el comportamiento modal y `accept`/`reject` les viene de `QDialog`.
+Todas las ventanas son una rama de `QWidget`: lo que no definen (dibujarse, `show()`, eventos) lo heredan de ahi. `QMainWindow` cuelga directo de `QWidget` y añade el armazon de la app. Los dialogos predefinidos `QMessageBox` y `QFileDialog` no cuelgan de `QWidget` directo: heredan de `QDialog`, asi que son dialogos ya construidos —el comportamiento modal y `accept`/`reject` les viene de `QDialog`.
 
 ## Que ventana uso
 

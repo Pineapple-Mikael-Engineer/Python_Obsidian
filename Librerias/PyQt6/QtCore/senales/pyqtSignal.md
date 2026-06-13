@@ -1,6 +1,6 @@
 ---
-title: pyqtSignal — declarar una senal propia
-aliases: [pyqtSignal, senal propia, custom signal]
+title: pyqtSignal — declarar una señal propia
+aliases: [pyqtSignal, señal propia, custom signal]
 tags: [pyqt6, api/funcion, core]
 lib: pyqt6
 mod: QtCore
@@ -9,9 +9,9 @@ requiere: [concepto_signals_slots]
 draft: false
 ---
 
-# pyqtSignal — declarar una senal propia
+# pyqtSignal — declarar una señal propia
 
-`pyqtSignal` crea una **senal propia**: el aviso que tu clase emitira cuando le pase algo. Se asigna como **atributo de clase** (a nivel de la clase, NO dentro de `__init__`) en una subclase de `QObject`. PyQt la convierte en una senal real, ligada por instancia, en cuanto el objeto se construye. Es la mitad emisora del mecanismo de [[concepto_signals_slots | senales y slots]]: lo que declaras con `pyqtSignal` luego se dispara con `.emit()` y se escucha con `.connect()`.
+`pyqtSignal` crea una **señal propia**: el aviso que tu clase emitira cuando le pase algo. Se asigna como **atributo de clase** (a nivel de la clase, NO dentro de `__init__`) en una subclase de `QObject`. PyQt la convierte en una señal real, ligada por instancia, en cuanto el objeto se construye. Es la mitad emisora del mecanismo de [[concepto_signals_slots | senales y slots]]: lo que declaras con `pyqtSignal` luego se dispara con `.emit()` y se escucha con `.connect()`.
 
 ## Importacion
 
@@ -25,12 +25,12 @@ from PyQt6.QtCore import QObject, pyqtSignal
 pyqtSignal(*types, name: str = None)
 ```
 
-- **`*types`**: los tipos de los argumentos que la senal **llevara** (los que recibira el slot). Pueden ser tipos Python (`int`, `str`, `float`, `bool`, `list`, `dict`, `object`) o tipos Qt. Sin tipos = senal sin datos.
-- **`name`**: el nombre Qt de la senal. Por defecto, el del atributo. Util si quieres que el nombre visible en Qt difiera del nombre Python.
+- **`*types`**: los tipos de los argumentos que la señal **llevara** (los que recibira el slot). Pueden ser tipos Python (`int`, `str`, `float`, `bool`, `list`, `dict`, `object`) o tipos Qt. Sin tipos = señal sin datos.
+- **`name`**: el nombre Qt de la señal. Por defecto, el del atributo. Util si quieres que el nombre visible en Qt difiera del nombre Python.
 
 ## Como se usa
 
-La senal se declara a nivel de clase y se referencia luego como `self.<nombre>`:
+La señal se declara a nivel de clase y se referencia luego como `self.<nombre>`:
 
 ```python
 from PyQt6.QtCore import QObject, pyqtSignal
@@ -39,12 +39,12 @@ class Termometro(QObject):
     temperatura_cambiada = pyqtSignal(float)   # ATRIBUTO DE CLASE, no en __init__
 
     def medir(self, t):
-        self.temperatura_cambiada.emit(t)       # disparar la senal
+        self.temperatura_cambiada.emit(t)       # disparar la señal
 ```
 
-Aunque la declares una vez en la clase, cada **instancia** tiene su propia senal independiente: conectar `sensor_a.temperatura_cambiada` no afecta a `sensor_b`.
+Aunque la declares una vez en la clase, cada **instancia** tiene su propia señal independiente: conectar `sensor_a.temperatura_cambiada` no afecta a `sensor_b`.
 
-Tipos de declaracion segun lo que lleve la senal:
+Tipos de declaracion segun lo que lleve la señal:
 
 | Declaracion | Lleva | El slot recibe |
 |-------------|-------|----------------|
@@ -56,7 +56,7 @@ Tipos de declaracion segun lo que lleve la senal:
 
 ## Sobrecarga (varias firmas)
 
-Una senal puede declarar **varias firmas** pasando listas de tipos. La senal podra emitir un tipo u otro; al conectar o emitir, eliges la firma con `senal[tipo]`:
+Una señal puede declarar **varias firmas** pasando listas de tipos. La señal podra emitir un tipo u otro; al conectar o emitir, eliges la firma con `señal[tipo]`:
 
 ```python
 from PyQt6.QtCore import QObject, pyqtSignal
@@ -81,7 +81,7 @@ La **primera** firma de la lista es la por defecto: `e.valor.connect(...)` (sin 
 
 ## Casos de uso
 
-Senal sin datos, como simple aviso de que algo ocurrio:
+Señal sin datos, como simple aviso de que algo ocurrio:
 
 ```python
 from PyQt6.QtCore import QObject, pyqtSignal
@@ -98,7 +98,7 @@ t.terminada.connect(lambda: print("lista"))
 t.ejecutar()                              # imprime "lista"
 ```
 
-Senal que transporta datos hacia varios escuchadores:
+Señal que transporta datos hacia varios escuchadores:
 
 ```python
 from PyQt6.QtCore import QObject, pyqtSignal
@@ -136,15 +136,15 @@ c.push({"id": 1})                         # dict {'id': 1}
 
 | Error | Causa | Solucion |
 |-------|-------|----------|
-| La senal no dispara nada / no existe | la declaraste dentro de `__init__` | declarala como **atributo de clase**, a nivel de la clase |
+| La señal no dispara nada / no existe | la declaraste dentro de `__init__` | declarala como **atributo de clase**, a nivel de la clase |
 | `TypeError: ... is not a Qt property or signal` | la clase no hereda de `QObject` | haz que herede de `QObject` (o de un widget, que ya lo hace) |
 | `TypeError` al hacer `.emit(...)` | los tipos de `emit` no coinciden con los de `pyqtSignal(...)` | usa los mismos tipos en la declaracion y en `emit` |
-| `KeyError` al usar `senal[tipo]` | esa firma no fue declarada en la sobrecarga | declara la firma en `pyqtSignal([...], [...])` o usa una existente |
-| El slot recibe argumentos de mas | la senal lleva datos y el slot no los espera | acepta el argumento o usa un `lambda` que lo ignore |
+| `KeyError` al usar `señal[tipo]` | esa firma no fue declarada en la sobrecarga | declara la firma en `pyqtSignal([...], [...])` o usa una existente |
+| El slot recibe argumentos de mas | la señal lleva datos y el slot no los espera | acepta el argumento o usa un `lambda` que lo ignore |
 
 ## Notas relacionadas
 
-- [[concepto_signals_slots]] — el mecanismo completo de senales y slots
-- [[emit]] — disparar una senal declarada con `pyqtSignal`
-- [[connect]] — conectar la senal a un slot
-- [[QObject]] — solo sus subclases pueden tener senales
+- [[concepto_signals_slots]] — el mecanismo completo de señales y slots
+- [[emit]] — disparar una señal declarada con `pyqtSignal`
+- [[connect]] — conectar la señal a un slot
+- [[QObject]] — solo sus subclases pueden tener señales

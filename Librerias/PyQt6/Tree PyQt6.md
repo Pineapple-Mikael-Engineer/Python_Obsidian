@@ -10,7 +10,7 @@ draft: true
 
 > Organizacion **jerarquica por modulo de Qt** (`QtCore`, `QtGui`, `QtWidgets`) cruzada con
 > tematicas. PyQt6 es la libreria mas **orientada a objetos** del vault: todo hereda de
-> `QObject` (rama no visual) o de `QWidget` (rama visual), la comunicacion va por **senales
+> `QObject` (rama no visual) o de `QWidget` (rama visual), la comunicacion va por **señales
 > y slots**, y personalizar = **subclasear y sobreescribir**. Por eso la **herencia** es dato
 > de primera clase (campo `hereda_de` en el frontmatter + `classDiagram` en cada index).
 > `✅` = nota creada · sin marca = roadmap pendiente.
@@ -40,7 +40,7 @@ PyQt6/
 │
 ├── 📁 conceptos_transversales/            # el modelo mental (lo mas importante en Qt)
 │   ├── concepto_qobject_arbol.md         # QObject, parent/child, ownership y memoria
-│   ├── concepto_signals_slots.md         # senales y slots: la columna vertebral
+│   ├── concepto_signals_slots.md         # señales y slots: la columna vertebral
 │   ├── concepto_event_loop.md            # QApplication.exec(): el bucle de eventos
 │   ├── concepto_sistema_eventos.md       # QEvent, event(), eventFilter, override de *Event
 │   ├── concepto_herencia_widgets.md      # subclasear para personalizar (el patron clave)
@@ -49,13 +49,13 @@ PyQt6/
 │   └── concepto_model_view.md            # arquitectura Modelo/Vista
 │
 ├── 📁 QtCore/                             # base NO visual; raiz de la comunicacion
-│   ├── QObject.md                        # la clase raiz: parent/child, senales, propiedades, eventos
+│   ├── QObject.md                        # la clase raiz: parent/child, señales, propiedades, eventos
 │   ├── pyqtProperty.md                   # @pyqtProperty: definir una propiedad Qt (DECORADOR)
 │   ├── 📁 senales/
-│   │   ├── pyqtSignal.md                 # declarar una senal propia (factory, atributo de clase)
-│   │   ├── connect.md                    # conectar senal -> slot (y disconnect)
+│   │   ├── pyqtSignal.md                 # declarar una señal propia (factory, atributo de clase)
+│   │   ├── connect.md                    # conectar señal -> slot (y disconnect)
 │   │   ├── pyqtSlot.md                   # @pyqtSlot: marcar un metodo como slot (DECORADOR)
-│   │   └── emit.md                       # emitir una senal
+│   │   └── emit.md                       # emitir una señal
 │   ├── 📁 temporizadores/
 │   │   ├── QTimer.md
 │   │   └── QElapsedTimer.md
@@ -170,7 +170,7 @@ PyQt6/
 | Bloque | Notas (aprox.) | Prioridad |
 |--------|:---:|-----------|
 | `conceptos_transversales/` | 8 | 🔴 primero (modelo mental POO) |
-| `QtCore/` (QObject + senales + timers + hilos + utils) | ~15 | 🔴 base de todo |
+| `QtCore/` (QObject + señales + timers + hilos + utils) | ~15 | 🔴 base de todo |
 | `QtWidgets/` (QApplication, QWidget + widgets + layouts + ventanas + vistas) | ~40 | 🟠 el grueso |
 | `QtGui/` (pintura + recursos + eventos + acciones) | ~19 | 🟠 necesario para personalizar |
 | `patrones/` | 5 | 🟡 lo que distingue saber Qt |
@@ -178,7 +178,7 @@ PyQt6/
 
 ### Orden sugerido de relleno
 
-1. **`conceptos_transversales`** + `index.md` — QObject, senales/slots, event loop, herencia.
+1. **`conceptos_transversales`** + `index.md` — QObject, señales/slots, event loop, herencia.
 2. **`QtCore/QObject`** + `senales/` — la raiz y la comunicacion.
 3. **`QtWidgets/QWidget`** + `QApplication` + `layouts/` + `ventanas/` — el esqueleto de una app.
 4. **`QtWidgets`** widgets concretos (botones, entradas, muestra, contenedores).

@@ -17,7 +17,7 @@ draft: false
 
 # QIcon — un icono multi-resolucion para botones, acciones y ventanas
 
-`QIcon` representa un **icono**: una imagen pensada para botones, acciones, pestanas y la ventana, y es una **clase de valor** (no vive en el arbol de objetos ni emite senales). A diferencia de una imagen suelta, un `QIcon` puede contener **varias resoluciones** (para que Qt elija la nitida segun el tamano) y **varios estados** (normal, deshabilitado, activo). Se construye desde un archivo, desde un [[QPixmap]] o desde el tema del sistema, y se pasa a quien lo muestra con `setIcon` / `setWindowIcon`.
+`QIcon` representa un **icono**: una imagen pensada para botones, acciones, pestanas y la ventana, y es una **clase de valor** (no vive en el arbol de objetos ni emite señales). A diferencia de una imagen suelta, un `QIcon` puede contener **varias resoluciones** (para que Qt elija la nitida segun el tamaño) y **varios estados** (normal, deshabilitado, activo). Se construye desde un archivo, desde un [[QPixmap]] o desde el tema del sistema, y se pasa a quien lo muestra con `setIcon` / `setWindowIcon`.
 
 ## Importacion
 
@@ -28,7 +28,7 @@ from PyQt6.QtGui import QIcon
 ## Herencia
 
 > [!note] Clase de valor, no QObject
-> `QIcon` **no** hereda de `QObject` ni emite senales: es un valor que se crea por copia y se entrega a botones, acciones o la ventana. No se subclasea ni se conecta a slots. Por eso esta nota no lleva `classDiagram` de herencia.
+> `QIcon` **no** hereda de `QObject` ni emite señales: es un valor que se crea por copia y se entrega a botones, acciones o la ventana. No se subclasea ni se conecta a slots. Por eso esta nota no lleva `classDiagram` de herencia.
 
 ## Constructor y formas de crear un icono
 
@@ -48,8 +48,8 @@ QIcon.fromTheme(nombre: str)        # staticmethod: icono del TEMA del sistema
 
 | Firma | Devuelve | Que hace |
 |-------|----------|----------|
-| `addFile(ruta: str)` | `None` | anade otra resolucion del mismo icono |
-| `pixmap(w: int, h: int)` | `QPixmap` | obtiene el icono renderizado a un tamano |
+| `addFile(ruta: str)` | `None` | añade otra resolucion del mismo icono |
+| `pixmap(w: int, h: int)` | `QPixmap` | obtiene el icono renderizado a un tamaño |
 | `isNull()` | `bool` | `True` si el icono esta vacio (ruta mala, sin contenido) |
 | `fromTheme(nombre: str)` | `QIcon` | **staticmethod**: icono del tema del sistema |
 

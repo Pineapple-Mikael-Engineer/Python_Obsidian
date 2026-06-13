@@ -23,7 +23,7 @@ draft: false
 
 # QTableWidget — tabla convenience que se llena celda a celda
 
-`QTableWidget` es la version *convenience* **item-based** de la tabla: junta modelo y vista en una sola clase, asi que **no manejas un modelo aparte**. Llenas la tabla celda a celda con objetos `QTableWidgetItem` (`setItem`), sin implementar nada. Es lo comodo para tablas **pequenas y estaticas**; para datos propios, grandes o varias vistas del mismo dato, usa la vista [[QTableView]] con un modelo. Ver [[concepto_model_view]] para cuando elegir cada una.
+`QTableWidget` es la version *convenience* **item-based** de la tabla: junta modelo y vista en una sola clase, asi que **no manejas un modelo aparte**. Llenas la tabla celda a celda con objetos `QTableWidgetItem` (`setItem`), sin implementar nada. Es lo comodo para tablas **pequeñas y estaticas**; para datos propios, grandes o varias vistas del mismo dato, usa la vista [[QTableView]] con un modelo. Ver [[concepto_model_view]] para cuando elegir cada una.
 
 ## Importacion
 
@@ -45,11 +45,11 @@ classDiagram
     class QTableWidget { +setItem() +setRowCount() +cellClicked }
 ```
 
-Lo que `QTableWidget` **no** define lo hereda: cabeceras, ordenacion y ancho de columnas vienen de [[QTableView]]; la seleccion y las senales `clicked`/`doubleClicked` de [[QAbstractItemView]]; el ser visible de [[QWidget]]. Lo propio que agrega es la API **item-based** (`setRowCount`, `setItem`, `item`) y senales en coordenadas de celda (`cellClicked(row, column)`), mas comodas que el `QModelIndex` de la vista base.
+Lo que `QTableWidget` **no** define lo hereda: cabeceras, ordenacion y ancho de columnas vienen de [[QTableView]]; la seleccion y las señales `clicked`/`doubleClicked` de [[QAbstractItemView]]; el ser visible de [[QWidget]]. Lo propio que agrega es la API **item-based** (`setRowCount`, `setItem`, `item`) y señales en coordenadas de celda (`cellClicked(row, column)`), mas comodas que el `QModelIndex` de la vista base.
 
-## Senales
+## Señales
 
-| Senal | Cuando se emite | Argumentos |
+| Señal | Cuando se emite | Argumentos |
 |-------|-----------------|------------|
 | `cellClicked` | al hacer clic en una celda | `row: int, column: int` |
 | `cellChanged` | cuando cambia el contenido de una celda | `row: int, column: int` |

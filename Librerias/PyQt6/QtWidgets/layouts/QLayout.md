@@ -18,7 +18,7 @@ draft: false
 
 # QLayout — base de los gestores de geometria
 
-`QLayout` es la clase base de todos los layouts de Qt: `QVBoxLayout`/`QHBoxLayout` (via `QBoxLayout`), `QGridLayout` y `QFormLayout`. Su trabajo es **gestionar la geometria de los widgets hijos**: colocarlos y redimensionarlos cuando la ventana cambia de tamano. Punto clave: **no es un widget** — hereda de `QObject`, no de [[QWidget]] — por eso un layout no se muestra ni se pulsa; se **asigna a un widget contenedor** y este lo dibuja. No se usa `QLayout` directo: siempre una subclase concreta.
+`QLayout` es la clase base de todos los layouts de Qt: `QVBoxLayout`/`QHBoxLayout` (via `QBoxLayout`), `QGridLayout` y `QFormLayout`. Su trabajo es **gestionar la geometria de los widgets hijos**: colocarlos y redimensionarlos cuando la ventana cambia de tamaño. Punto clave: **no es un widget** — hereda de `QObject`, no de [[QWidget]] — por eso un layout no se muestra ni se pulsa; se **asigna a un widget contenedor** y este lo dibuja. No se usa `QLayout` directo: siempre una subclase concreta.
 
 ## Importacion
 
@@ -47,7 +47,7 @@ classDiagram
     class QHBoxLayout { +horizontal }
 ```
 
-`QLayout` hereda de `QObject` (no de [[QWidget]]): de ahi el `parent` y el ser un objeto Qt, pero **no** la capacidad de mostrarse. Lo comun a todo layout (anadir widgets, margenes, espaciado) vive aqui; cada subclase aporta su forma de colocar (`QBoxLayout` en linea, `QGridLayout` en rejilla, `QFormLayout` en pares etiqueta-campo).
+`QLayout` hereda de `QObject` (no de [[QWidget]]): de ahi el `parent` y el ser un objeto Qt, pero **no** la capacidad de mostrarse. Lo comun a todo layout (añadir widgets, margenes, espaciado) vive aqui; cada subclase aporta su forma de colocar (`QBoxLayout` en linea, `QGridLayout` en rejilla, `QFormLayout` en pares etiqueta-campo).
 
 ## Propiedades
 
@@ -55,7 +55,7 @@ classDiagram
 |-----------|------|------------------|----------|
 | `contentsMargins` | `QMargins` | `contentsMargins()` \| `setContentsMargins(l, t, r, b)` | margen interior alrededor del contenido |
 | `spacing` | `int` | `spacing()` \| `setSpacing(int)` | separacion entre widgets hijos (px) |
-| `enabled` | `bool` | `isEnabled()` \| `setEnabled(bool)` | si el layout reorganiza al cambiar de tamano |
+| `enabled` | `bool` | `isEnabled()` \| `setEnabled(bool)` | si el layout reorganiza al cambiar de tamaño |
 
 ## Constructor y metodos
 
@@ -67,8 +67,8 @@ No se instancia directo (es abstracta): da error o un layout inutil. Si se pasa 
 
 | Firma | Devuelve | Que hace |
 |-------|----------|----------|
-| `addWidget(w: QWidget)` | `None` | anade un widget al layout (lo coloca y gestiona) |
-| `addItem(item: QLayoutItem)` | `None` | anade un item generico (uso interno/avanzado) |
+| `addWidget(w: QWidget)` | `None` | añade un widget al layout (lo coloca y gestiona) |
+| `addItem(item: QLayoutItem)` | `None` | añade un item generico (uso interno/avanzado) |
 | `addLayout(sub: QLayout)` | `None` | anida un layout dentro de otro (definido en subclases como `QBoxLayout`) |
 | `setContentsMargins(l: int, t: int, r: int, b: int)` | `None` | fija el margen interior en pixeles |
 | `setSpacing(spacing: int)` | `None` | separacion en px entre los widgets |

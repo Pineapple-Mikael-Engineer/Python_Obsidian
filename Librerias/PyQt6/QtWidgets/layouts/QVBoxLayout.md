@@ -19,7 +19,7 @@ draft: false
 
 # QVBoxLayout — apila widgets en vertical
 
-`QVBoxLayout` apila los widgets hijos **verticalmente**, de arriba a abajo (una columna). Es una subclase de [[QBoxLayout]] que **no anade nada nuevo**: solo fija la direccion en `TopToBottom`. Todos sus metodos (`addWidget`, `addStretch`, `addSpacing`, `setSpacing`...) los hereda; esta nota es breve por eso. Es, junto a [[QHBoxLayout]], el layout mas usado.
+`QVBoxLayout` apila los widgets hijos **verticalmente**, de arriba a abajo (una columna). Es una subclase de [[QBoxLayout]] que **no añade nada nuevo**: solo fija la direccion en `TopToBottom`. Todos sus metodos (`addWidget`, `addStretch`, `addSpacing`, `setSpacing`...) los hereda; esta nota es breve por eso. Es, junto a [[QHBoxLayout]], el layout mas usado.
 
 ## Importacion
 
@@ -39,7 +39,7 @@ classDiagram
     class QVBoxLayout { +TopToBottom }
 ```
 
-`QVBoxLayout` apenas aporta logica propia: hereda de [[QBoxLayout]] toda la forma de anadir y empujar widgets, y de [[QLayout]] los margenes y el espaciado. Lo unico suyo es prefijar la direccion vertical.
+`QVBoxLayout` apenas aporta logica propia: hereda de [[QBoxLayout]] toda la forma de añadir y empujar widgets, y de [[QLayout]] los margenes y el espaciado. Lo unico suyo es prefijar la direccion vertical.
 
 ## Constructor y metodos
 

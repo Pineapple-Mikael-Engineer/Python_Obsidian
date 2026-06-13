@@ -1,6 +1,6 @@
 ---
-title: emit — disparar una senal
-aliases: [emit, emitir senal, disparar senal]
+title: emit — disparar una señal
+aliases: [emit, emitir señal, disparar señal]
 tags: [pyqt6, api/metodo, core]
 lib: pyqt6
 mod: QtCore
@@ -9,9 +9,9 @@ requiere: [concepto_signals_slots]
 draft: false
 ---
 
-# emit — disparar una senal
+# emit — disparar una señal
 
-`senal.emit(*args)` **dispara** la senal: ejecuta, en orden de conexion, todos los slots conectados a ella, pasandoles `args`. Es el momento en que el aviso sale del objeto emisor hacia sus escuchadores. Es la mitad activa del mecanismo de [[concepto_signals_slots | senales y slots]]: [[connect]] registra quien escucha, `emit` provoca la reaccion. Los tipos de `args` deben coincidir con los declarados en [[pyqtSignal]].
+`senal.emit(*args)` **dispara** la señal: ejecuta, en orden de conexion, todos los slots conectados a ella, pasandoles `args`. Es el momento en que el aviso sale del objeto emisor hacia sus escuchadores. Es la mitad activa del mecanismo de [[concepto_signals_slots | senales y slots]]: [[connect]] registra quien escucha, `emit` provoca la reaccion. Los tipos de `args` deben coincidir con los declarados en [[pyqtSignal]].
 
 ## Firma
 
@@ -24,7 +24,7 @@ senal.emit(*args) -> None
 
 ## Como se usa
 
-Por convencion, una senal se emite **desde dentro** de la misma clase que la declara: es ese objeto quien sabe cuando ha ocurrido el evento. Los tipos de `emit` casan con los de `pyqtSignal`:
+Por convencion, una señal se emite **desde dentro** de la misma clase que la declara: es ese objeto quien sabe cuando ha ocurrido el evento. Los tipos de `emit` casan con los de `pyqtSignal`:
 
 ```python
 from PyQt6.QtCore import QObject, pyqtSignal
@@ -48,7 +48,7 @@ class Descarga(QObject):
 
 ## Sobrecarga
 
-Si la senal declara varias firmas, elige cual emitir con `senal[tipo]` antes de `.emit`:
+Si la señal declara varias firmas, elige cual emitir con `señal[tipo]` antes de `.emit`:
 
 ```python
 from PyQt6.QtCore import QObject, pyqtSignal
@@ -67,7 +67,7 @@ Sin indice, `self.valor.emit(...)` usa la **primera** firma declarada (`[int]`).
 
 ## Casos de uso
 
-Senal con datos hacia varios slots conectados:
+Señal con datos hacia varios slots conectados:
 
 ```python
 from PyQt6.QtCore import QObject, pyqtSignal
@@ -85,7 +85,7 @@ sensor.medir(36.5)        # imprime "36.5 C" y "ok"
 sensor.medir(39.0)        # imprime "39.0 C" y "alerta"
 ```
 
-Senal sin datos, como aviso de fin:
+Señal sin datos, como aviso de fin:
 
 ```python
 from PyQt6.QtCore import QObject, pyqtSignal
@@ -102,7 +102,7 @@ t.terminada.connect(lambda: print("lista"))
 t.ejecutar()                              # imprime "lista"
 ```
 
-App completa: emitir una senal propia para reaccionar en la GUI:
+App completa: emitir una señal propia para reaccionar en la GUI:
 
 ```python
 from PyQt6.QtWidgets import QApplication, QLabel, QPushButton, QVBoxLayout, QWidget
@@ -141,13 +141,13 @@ sys.exit(app.exec())
 | Error | Causa | Solucion |
 |-------|-------|----------|
 | `TypeError` al emitir | los tipos/numero de `emit(...)` no casan con `pyqtSignal(...)` | emite exactamente los tipos declarados (`pyqtSignal(int)` -> `emit(un_int)`) |
-| Nada ocurre al emitir | no habia ningun slot conectado con `.connect` | conecta antes de emitir, o revisa que conectaste la senal correcta |
-| Emites una senal "de otra clase" y falla | intentas emitir la senal sin instancia o desde fuera | emite desde **dentro** de la clase que la declara, sobre `self.senal` |
-| `KeyError` con `senal[tipo].emit` | esa firma no fue declarada en la sobrecarga | usa una firma declarada en `pyqtSignal([...], [...])` |
+| Nada ocurre al emitir | no habia ningun slot conectado con `.connect` | conecta antes de emitir, o revisa que conectaste la señal correcta |
+| Emites una señal "de otra clase" y falla | intentas emitir la señal sin instancia o desde fuera | emite desde **dentro** de la clase que la declara, sobre `self.senal` |
+| `KeyError` con `señal[tipo].emit` | esa firma no fue declarada en la sobrecarga | usa una firma declarada en `pyqtSignal([...], [...])` |
 | El slot recibe argumentos de mas | emites datos a un slot que no los espera | ajusta el slot o envuelvelo en un `lambda` que ignore el argumento |
 
 ## Notas relacionadas
 
-- [[concepto_signals_slots]] — el mecanismo completo de senales y slots
-- [[pyqtSignal]] — declarar la senal que luego se emite
+- [[concepto_signals_slots]] — el mecanismo completo de señales y slots
+- [[pyqtSignal]] — declarar la señal que luego se emite
 - [[connect]] — registrar los slots que `emit` dispara

@@ -23,7 +23,7 @@ draft: false
 
 # QTreeView — vista de arbol jerarquico de un modelo
 
-`QTreeView` es la **vista** que muestra los datos de un **modelo** en forma de **arbol** jerarquico: items que pueden tener hijos, expandibles y colapsables. Como toda vista del patron Modelo/Vista (ver [[concepto_model_view]]), no almacena los datos: los pide a un modelo que se conecta con `setModel`. La jerarquia (que item es hijo de cual) la define **el modelo**, no la vista. Usa `QTreeView` cuando tus datos son jerarquicos, propios o grandes; para arboles pequenos y estaticos hechos a mano esta [[QTreeWidget]].
+`QTreeView` es la **vista** que muestra los datos de un **modelo** en forma de **arbol** jerarquico: items que pueden tener hijos, expandibles y colapsables. Como toda vista del patron Modelo/Vista (ver [[concepto_model_view]]), no almacena los datos: los pide a un modelo que se conecta con `setModel`. La jerarquia (que item es hijo de cual) la define **el modelo**, no la vista. Usa `QTreeView` cuando tus datos son jerarquicos, propios o grandes; para arboles pequeños y estaticos hechos a mano esta [[QTreeWidget]].
 
 ## Importacion
 
@@ -44,11 +44,11 @@ classDiagram
     class QTreeWidget { +addTopLevelItem() +setHeaderLabels() }
 ```
 
-Todo lo de conectar un modelo, la seleccion y las senales `clicked`/`doubleClicked` lo hereda de [[QAbstractItemView]]; el ser visible viene de [[QWidget]]. `QTreeView` aporta lo especifico del arbol: expandir/colapsar nodos y la cabecera. `QTreeWidget` es su hija **convenience** item-based, que junta vista y modelo en una clase.
+Todo lo de conectar un modelo, la seleccion y las señales `clicked`/`doubleClicked` lo hereda de [[QAbstractItemView]]; el ser visible viene de [[QWidget]]. `QTreeView` aporta lo especifico del arbol: expandir/colapsar nodos y la cabecera. `QTreeWidget` es su hija **convenience** item-based, que junta vista y modelo en una clase.
 
-## Senales
+## Señales
 
-| Senal | Cuando se emite | Argumentos |
+| Señal | Cuando se emite | Argumentos |
 |-------|-----------------|------------|
 | `clicked` | al hacer clic en un item | `index: QModelIndex` |
 | `doubleClicked` | al hacer doble clic en un item | `index: QModelIndex` |
@@ -138,18 +138,18 @@ sys.exit(app.exec())
 | Necesitas... | Usa |
 |--------------|-----|
 | Datos propios (disco, DB, lista en memoria), grandes, o varias vistas del mismo dato | **`QTreeView`** + modelo (`QStandardItemModel`, `QFileSystemModel`) |
-| Un arbol pequeno y estatico que llenas a mano | **[[QTreeWidget]]** (item-based, sin modelo aparte) |
+| Un arbol pequeño y estatico que llenas a mano | **[[QTreeWidget]]** (item-based, sin modelo aparte) |
 
 ## Errores comunes
 
 | Error | Causa | Solucion |
 |-------|-------|----------|
 | El arbol sale vacio | no le asignaste modelo | llama a `setModel(modelo)` |
-| Intentas anadir hijos a la vista | la jerarquia se arma en el **modelo**, no en `QTreeView` | usa `appendRow`/`addChild` sobre los items del modelo |
-| `clicked` falla al usar el argumento | la senal emite un `QModelIndex`, no texto | usa `index.data()` / `index.row()` |
+| Intentas añadir hijos a la vista | la jerarquia se arma en el **modelo**, no en `QTreeView` | usa `appendRow`/`addChild` sobre los items del modelo |
+| `clicked` falla al usar el argumento | la señal emite un `QModelIndex`, no texto | usa `index.data()` / `index.row()` |
 
 ## Notas relacionadas
 
-- [[QAbstractItemView]] — la base que aporta `setModel`, seleccion y senales
+- [[QAbstractItemView]] — la base que aporta `setModel`, seleccion y señales
 - [[QTreeWidget]] — el atajo item-based del arbol
 - [[concepto_model_view]] — el patron Modelo/Vista/Delegate de Qt

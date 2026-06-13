@@ -21,7 +21,7 @@ draft: false
 
 # QStackedWidget — pila de widgets sin solapas
 
-`QStackedWidget` apila varios widgets ocupando el mismo hueco, pero **solo uno es visible a la vez** y **sin solapas**: el cambio de pagina se hace por **codigo** (no hay barra que pulse el usuario). Es ideal para un asistente (wizard) por pasos o para paneles que se alternan segun una seleccion. Lo normal es anadir las paginas con `addWidget` y mover el indice con `setCurrentIndex`.
+`QStackedWidget` apila varios widgets ocupando el mismo hueco, pero **solo uno es visible a la vez** y **sin solapas**: el cambio de pagina se hace por **codigo** (no hay barra que pulse el usuario). Es ideal para un asistente (wizard) por pasos o para paneles que se alternan segun una seleccion. Lo normal es añadir las paginas con `addWidget` y mover el indice con `setCurrentIndex`.
 
 ## Importacion
 
@@ -42,11 +42,11 @@ classDiagram
     class QStackedWidget { +addWidget() +setCurrentIndex() +currentChanged }
 ```
 
-Lo que `QStackedWidget` **no** define lo hereda: el marco (`setFrameShape`) viene de `QFrame`; mostrarse, habilitarse y el tamano vienen de [[QWidget]]; conectar senales y el `parent` (que destruye las paginas hijas) vienen de `QObject`. Lo propio es la pila: anadir paginas y elegir cual se muestra.
+Lo que `QStackedWidget` **no** define lo hereda: el marco (`setFrameShape`) viene de `QFrame`; mostrarse, habilitarse y el tamaño vienen de [[QWidget]]; conectar señales y el `parent` (que destruye las paginas hijas) vienen de `QObject`. Lo propio es la pila: añadir paginas y elegir cual se muestra.
 
-## Senales
+## Señales
 
-| Senal | Cuando se emite | Argumentos |
+| Señal | Cuando se emite | Argumentos |
 |-------|-----------------|------------|
 | `currentChanged` | al cambiar la pagina visible | `index: int` (la pagina ahora activa, `-1` si no hay) |
 
@@ -71,7 +71,7 @@ En Qt los "atributos" son **propiedades** (getter/setter):
 QStackedWidget(parent: QWidget | None = None)
 ```
 
-Un unico constructor; el `parent` es opcional. Las paginas se anaden despues con `addWidget`.
+Un unico constructor; el `parent` es opcional. Las paginas se añaden despues con `addWidget`.
 
 | Firma | Devuelve | Que hace |
 |-------|----------|----------|
@@ -134,7 +134,7 @@ sys.exit(app.exec())                        # PyQt6: exec() sin guion bajo
 
 | Error | Causa | Solucion |
 |-------|-------|----------|
-| Veo todas las paginas a la vez | no se trata de eso: se muestra **una** a la vez | comprueba que cada pagina sea un widget anadido con `addWidget` |
+| Veo todas las paginas a la vez | no se trata de eso: se muestra **una** a la vez | comprueba que cada pagina sea un widget añadido con `addWidget` |
 | No cambia de pagina al pulsar | esperabas solapas; aqui el cambio es por codigo | conecta el boton a `setCurrentIndex(i)` o `setCurrentWidget(w)` |
 | `setCurrentIndex` se sale de rango | indice mayor que `count() - 1` | valida `i + 1 < stack.count()` antes de avanzar |
 

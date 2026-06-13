@@ -1,6 +1,6 @@
 ---
-title: senal personalizada — declarar y emitir una pyqtSignal propia
-aliases: [senal personalizada, signal propia, pyqtSignal, emitir senal]
+title: señal personalizada — declarar y emitir una pyqtSignal propia
+aliases: [señal personalizada, signal propia, pyqtSignal, emitir señal]
 tags: [pyqt6, patron, core]
 lib: pyqt6
 tipo: patron
@@ -8,21 +8,21 @@ requiere: [concepto_signals_slots, pyqtSignal]
 draft: false
 ---
 
-# senal personalizada — declarar y emitir una pyqtSignal propia
+# señal personalizada — declarar y emitir una pyqtSignal propia
 
-Definir senales propias es lo que hace que **tus** clases participen del mismo juego que los widgets de Qt: un `QPushButton` anuncia `clicked` y cualquiera se suscribe sin que el boton sepa quien escucha. Con una senal propia, tu worker avisa "voy por el 40%", tu modelo de datos avisa "una fila cambio", tu widget avisa "mi valor es otro" — y el receptor reacciona sin que el emisor lo conozca. Es el mismo **desacoplamiento** de [[concepto_signals_slots | senales y slots]], pero ahora aplicado a tu dominio.
+Definir señales propias es lo que hace que **tus** clases participen del mismo juego que los widgets de Qt: un `QPushButton` anuncia `clicked` y cualquiera se suscribe sin que el boton sepa quien escucha. Con una señal propia, tu worker avisa "voy por el 40%", tu modelo de datos avisa "una fila cambio", tu widget avisa "mi valor es otro" — y el receptor reacciona sin que el emisor lo conozca. Es el mismo **desacoplamiento** de [[concepto_signals_slots | senales y slots]], pero ahora aplicado a tu dominio.
 
-La idea clave que ordena todo lo demas: una [[pyqtSignal]] se declara como **ATRIBUTO DE CLASE**, nunca dentro de `__init__`. PyQt la "liga" a cada instancia cuando el objeto se construye; si la metes en `__init__` no llega a ser una senal real.
+La idea clave que ordena todo lo demas: una [[pyqtSignal]] se declara como **ATRIBUTO DE CLASE**, nunca dentro de `__init__`. PyQt la "liga" a cada instancia cuando el objeto se construye; si la metes en `__init__` no llega a ser una señal real.
 
 ## La receta minima
 
-Una subclase de `QObject`, una senal declarada a nivel de clase, un metodo que la dispara con `.emit()`, y alguien que conecta un slot:
+Una subclase de `QObject`, una señal declarada a nivel de clase, un metodo que la dispara con `.emit()`, y alguien que conecta un slot:
 
 ```python
 from PyQt6.QtCore import QObject, pyqtSignal
 
 class Modelo(QObject):
-    cambiado = pyqtSignal()              # ATRIBUTO DE CLASE: la senal, sin datos
+    cambiado = pyqtSignal()              # ATRIBUTO DE CLASE: la señal, sin datos
 
     def tocar(self):
         self.cambiado.emit()            # disparar -> ejecuta los slots conectados
@@ -36,9 +36,9 @@ Tres piezas: **declarar** (atributo de clase), **emitir** (`self.cambiado.emit()
 
 ## Construccion paso a paso
 
-### 1. Declarar la senal
+### 1. Declarar la señal
 
-La senal va **a nivel de la clase**, como `cambiado = pyqtSignal()`, no como `self.cambiado = ...` en `__init__`. PyQt usa esa declaracion de clase para fabricar, en cada instancia, una senal real ligada a ese objeto. Cada instancia tiene su propia senal independiente: conectar la de un objeto no afecta a otro.
+La señal va **a nivel de la clase**, como `cambiado = pyqtSignal()`, no como `self.cambiado = ...` en `__init__`. PyQt usa esa declaracion de clase para fabricar, en cada instancia, una señal real ligada a ese objeto. Cada instancia tiene su propia señal independiente: conectar la de un objeto no afecta a otro.
 
 ```python
 from PyQt6.QtCore import QObject, pyqtSignal
@@ -61,11 +61,11 @@ m = Mal()
 m.listo.connect(lambda: print("hola"))  # AttributeError: 'pyqtSignal' object has no attribute 'connect'
 ```
 
-Dentro de `__init__`, `pyqtSignal()` es un objeto inerte sin `connect`/`emit` ligados al QObject. La conversion a senal real solo ocurre para los atributos declarados en el cuerpo de la clase.
+Dentro de `__init__`, `pyqtSignal()` es un objeto inerte sin `connect`/`emit` ligados al QObject. La conversion a señal real solo ocurre para los atributos declarados en el cuerpo de la clase.
 
-### 2. Llevar datos: tipos en la senal
+### 2. Llevar datos: tipos en la señal
 
-Los argumentos de `pyqtSignal(...)` son los **tipos** que la senal transporta hacia el slot. Sin tipos, la senal es un simple aviso; con tipos, lleva datos.
+Los argumentos de `pyqtSignal(...)` son los **tipos** que la señal transporta hacia el slot. Sin tipos, la señal es un simple aviso; con tipos, lleva datos.
 
 ```python
 from PyQt6.QtCore import QObject, pyqtSignal
@@ -100,7 +100,7 @@ Regla de oro: los tipos de `emit(...)` deben **coincidir** con los de `pyqtSigna
 
 ### 3. Conectar y desconectar
 
-`.connect(slot)` une la senal a un slot; puedes conectar **varios** slots a la misma senal y todos se ejecutan al emitir. `.disconnect()` deshace la conexion.
+`.connect(slot)` une la señal a un slot; puedes conectar **varios** slots a la misma señal y todos se ejecutan al emitir. `.disconnect()` deshace la conexion.
 
 ```python
 from PyQt6.QtCore import QObject, pyqtSignal
@@ -128,10 +128,10 @@ b.click()                               # no imprime nada
 
 `disconnect(slot)` quita un slot concreto; `disconnect()` sin argumentos desconecta todos. Conecta **por nombre del metodo** (`guardar`), nunca llamandolo (`guardar()`).
 
-### 4. Senales con sobrecarga
+### 4. Señales con sobrecarga
 
 > [!nota] Avanzado
-> Una misma senal puede declarar **varias firmas** pasando listas de tipos. Es util cuando un mismo hecho del dominio puede expresarse con datos distintos, pero la mayoria de notas no lo necesita: una senal por hecho suele ser mas claro.
+> Una misma señal puede declarar **varias firmas** pasando listas de tipos. Es util cuando un mismo hecho del dominio puede expresarse con datos distintos, pero la mayoria de notas no lo necesita: una señal por hecho suele ser mas claro.
 
 ```python
 from PyQt6.QtCore import QObject, pyqtSignal
@@ -140,7 +140,7 @@ class Entrada(QObject):
     valor = pyqtSignal([int], [str])        # puede emitir un int O un str
 
     def enviar_numero(self, n):
-        self.valor[int].emit(n)             # eliges la firma con senal[tipo]
+        self.valor[int].emit(n)             # eliges la firma con señal[tipo]
 
     def enviar_texto(self, s):
         self.valor[str].emit(s)
@@ -182,7 +182,7 @@ def al_terminar(msg):
     print("LISTO:", msg)
 
 d = Descargador("http://ejemplo.com/archivo.zip")
-d.progreso.connect(pintar_barra)            # conectar AMBAS senales a sus slots
+d.progreso.connect(pintar_barra)            # conectar AMBAS señales a sus slots
 d.terminado.connect(al_terminar)
 d.correr()
 # [          ] 0%
@@ -198,7 +198,7 @@ El `Descargador` no importa nada de la interfaz: solo declara dos hechos de su d
 
 ## Segundo ejemplo: un widget que emite su cambio
 
-Un widget propio expone una propiedad `valor` cuyo setter **emite** solo cuando el valor cambia de verdad. El guard `if nuevo == self._valor: return` evita avisos redundantes y, sobre todo, cortar **bucles de senales** (A actualiza a B, B reactualiza a A, y asi sin fin). Enlaza con el patron [[widget_personalizado]].
+Un widget propio expone una propiedad `valor` cuyo setter **emite** solo cuando el valor cambia de verdad. El guard `if nuevo == self._valor: return` evita avisos redundantes y, sobre todo, cortar **bucles de señales** (A actualiza a B, B reactualiza a A, y asi sin fin). Enlaza con el patron [[widget_personalizado]].
 
 ```python
 from PyQt6.QtWidgets import QApplication, QWidget
@@ -232,19 +232,19 @@ c.valor = 3      # (nada: no cambio)
 c.valor = 5      # valor -> 5
 ```
 
-Como hereda de `QWidget` (que ya es `QObject`), no hace falta heredar de `QObject` aparte: el widget ya puede tener senales. El setter es el unico sitio que muta `_valor`, asi que es el lugar natural para el guard y el `emit`.
+Como hereda de `QWidget` (que ya es `QObject`), no hace falta heredar de `QObject` aparte: el widget ya puede tener señales. El setter es el unico sitio que muta `_valor`, asi que es el lugar natural para el guard y el `emit`.
 
 ## Buenas practicas
 
-1. Declara la senal **siempre** a nivel de clase (`mi_senal = pyqtSignal(...)`), nunca con `self.` en `__init__`.
+1. Declara la señal **siempre** a nivel de clase (`mi_senal = pyqtSignal(...)`), nunca con `self.` en `__init__`.
 2. Nombra en participio/pasado como Qt: `clicked`, `valueChanged`, `terminado`, `error_ocurrido`; el nombre describe el **hecho**, no la accion del receptor.
-3. **Tipa** la senal y emite los tipos exactos: `pyqtSignal(int)` se emite con un `int`, no con un `str`.
-4. Emite **solo cuando el estado cambia de verdad** (guard `if nuevo == self._valor: return`): evita avisos redundantes y bucles de senales entre objetos.
+3. **Tipa** la señal y emite los tipos exactos: `pyqtSignal(int)` se emite con un `int`, no con un `str`.
+4. Emite **solo cuando el estado cambia de verdad** (guard `if nuevo == self._valor: return`): evita avisos redundantes y bucles de señales entre objetos.
 5. No emitas en `__init__`: cuando el objeto se construye **nadie ha podido conectar** todavia, asi que ese aviso se pierde.
 6. Usa `pyqtSignal(object)` para transportar tipos Python arbitrarios (listas, dataclasses, instancias propias) sin convertir.
-7. Una senal = **un hecho del dominio** (`fila_anadida`, `descarga_terminada`), no detalles de la interfaz como `boton2Pulsado`.
+7. Una señal = **un hecho del dominio** (`fila_anadida`, `descarga_terminada`), no detalles de la interfaz como `boton2Pulsado`.
 8. Centraliza el `emit` en el setter / el unico metodo que muta el estado; no lo repartas por la clase.
-9. **Documenta** que senales emite cada clase y con que datos (en PyQt6 esto va tambien en el frontmatter `senales:` de la nota de clase).
+9. **Documenta** que señales emite cada clase y con que datos (en PyQt6 esto va tambien en el frontmatter `senales:` de la nota de clase).
 10. Conecta **por nombre del metodo** (`self.f`), nunca llamandolo (`self.f()`): con parentesis conectas el resultado de la llamada, no el slot.
 
 ## Errores comunes
@@ -254,14 +254,14 @@ Como hereda de `QWidget` (que ya es `QObject`), no hace falta heredar de `QObjec
 | `AttributeError: 'pyqtSignal' object has no attribute 'connect'` | la declaraste dentro de `__init__` (`self.x = pyqtSignal()`) | declarala como **atributo de clase**, en el cuerpo de la clase |
 | `TypeError` al hacer `.emit(...)` | los tipos de `emit` no casan con los de `pyqtSignal(...)` | emite los mismos tipos que declaraste; usa `object` para tipos Python libres |
 | El slot no se ejecuta y no hay error | conectaste `self.f()` (con parentesis): pasaste el resultado, no el slot | conecta por nombre: `senal.connect(self.f)` |
-| La senal "no dispara" pese a emitir | emitiste **antes** de que nadie conectara (p. ej. en `__init__`) | emite despues de que el receptor haya hecho `.connect(...)` |
-| El slot falla por argumentos de mas/menos | olvidaste que el slot recibe los **mismos args** que lleva la senal | acepta esos argumentos en el slot, o usa un `lambda` que los ignore |
+| La señal "no dispara" pese a emitir | emitiste **antes** de que nadie conectara (p. ej. en `__init__`) | emite despues de que el receptor haya hecho `.connect(...)` |
+| El slot falla por argumentos de mas/menos | olvidaste que el slot recibe los **mismos args** que lleva la señal | acepta esos argumentos en el slot, o usa un `lambda` que los ignore |
 | `TypeError: ... is not a Qt property or signal` | la clase no hereda de `QObject` (ni de un widget) | haz que herede de `QObject` o de algun `QWidget` |
 
 ## Notas relacionadas
 
-- [[concepto_signals_slots]] — el mecanismo completo de senales y slots
-- [[pyqtSignal]] — la funcion que declara la senal (firma, sobrecarga, tipos)
+- [[concepto_signals_slots]] — el mecanismo completo de señales y slots
+- [[pyqtSignal]] — la funcion que declara la señal (firma, sobrecarga, tipos)
 - [[pyqtSlot]] — marcar un metodo como slot con sus tipos
-- [[widget_personalizado]] — subclasear un widget que expone sus propias senales
+- [[widget_personalizado]] — subclasear un widget que expone sus propias señales
 - [[QThread]] — donde corre de verdad un worker que reporta progreso

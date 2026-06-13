@@ -20,7 +20,7 @@ draft: false
 `QKeySequence` representa una **combinacion de teclas** (por ejemplo `Ctrl+S`). Es el valor que se pasa a `setShortcut` de una [[QAction]] o al constructor de un [[QShortcut]]. Puede construirse desde un texto literal o, mejor, desde un atajo **estandar y portable** entre sistemas operativos.
 
 > [!nota] Clase de valor, no hereda de `QObject`
-> A diferencia de `QAction` o `QShortcut`, `QKeySequence` **no es un `QObject`**: es una clase de valor (como `QColor` o `QPoint`). No tiene senales ni `parent`; se crea, se copia y se pasa como argumento. Por eso no lleva `classDiagram` de herencia.
+> A diferencia de `QAction` o `QShortcut`, `QKeySequence` **no es un `QObject`**: es una clase de valor (como `QColor` o `QPoint`). No tiene señales ni `parent`; se crea, se copia y se pasa como argumento. Por eso no lleva `classDiagram` de herencia.
 
 ## Importacion
 

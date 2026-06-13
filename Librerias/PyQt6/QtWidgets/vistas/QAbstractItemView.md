@@ -51,11 +51,11 @@ classDiagram
     class QTreeView { +setExpanded() }
 ```
 
-Diagrama simplificado: entre `QAbstractItemView` y sus hijas hay clases intermedias en Qt, pero lo esencial es que **toda vista hereda de aqui** el conectar con un modelo, la seleccion y las senales de interaccion. De [[QWidget]] toma el ser visible; cada hija aporta su disposicion (lista, rejilla, arbol).
+Diagrama simplificado: entre `QAbstractItemView` y sus hijas hay clases intermedias en Qt, pero lo esencial es que **toda vista hereda de aqui** el conectar con un modelo, la seleccion y las señales de interaccion. De [[QWidget]] toma el ser visible; cada hija aporta su disposicion (lista, rejilla, arbol).
 
-## Senales
+## Señales
 
-| Senal | Cuando se emite | Argumentos |
+| Señal | Cuando se emite | Argumentos |
 |-------|-----------------|------------|
 | `clicked` | al hacer clic en un item | `index: QModelIndex` |
 | `doubleClicked` | al hacer doble clic en un item | `index: QModelIndex` |
@@ -99,7 +99,7 @@ Es abstracta: no se instancia directo. Estos metodos los heredan todas las vista
 
 ## Casos de uso
 
-El patron central: crear vista, crear modelo, conectarlos con `setModel`, conectar senales.
+El patron central: crear vista, crear modelo, conectarlos con `setModel`, conectar señales.
 
 ```python
 from PyQt6.QtWidgets import QApplication, QListView
@@ -130,7 +130,7 @@ Lo habitual no es subclasear la vista, sino instalar un **delegate**: una subcla
 | Error | Causa | Solucion |
 |-------|-------|----------|
 | La vista aparece vacia | no le asignaste modelo | llama a `setModel(modelo)` |
-| Mi slot de `clicked` falla al usar el argumento | la senal emite un `QModelIndex`, no texto | usa `index.data()` / `index.row()` sobre el `QModelIndex` |
+| Mi slot de `clicked` falla al usar el argumento | la señal emite un `QModelIndex`, no texto | usa `index.data()` / `index.row()` sobre el `QModelIndex` |
 | Puedo seleccionar varias filas sin querer | el modo de seleccion por defecto lo permite | `setSelectionMode(... .SingleSelection)` |
 | Edita celdas al hacer doble clic sin querer | hay `editTriggers` activos | `setEditTriggers(... .NoEditTriggers)` |
 

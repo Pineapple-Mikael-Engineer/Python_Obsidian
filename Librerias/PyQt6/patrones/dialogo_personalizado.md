@@ -88,7 +88,7 @@ permite leerlos desde los metodos del dialogo.
 
 No pongas botones sueltos: usa [[QDialogButtonBox]] con los **botones estandar**. La ventaja es
 que coloca Ok y Cancel en el **orden correcto de cada plataforma** (en Windows va Ok | Cancel; en
-macOS, Cancel | Ok) sin que tu te ocupes. Conectas sus dos senales a los slots del dialogo:
+macOS, Cancel | Ok) sin que tu te ocupes. Conectas sus dos señales a los slots del dialogo:
 
 ```python
 botones = QDialogButtonBox(
@@ -100,10 +100,10 @@ botones.rejected.connect(self.reject)            # se dispara con el boton "nega
 form.addRow(botones)
 ```
 
-- `accept()` cierra el dialogo con codigo `Accepted`, y emite las senales `accepted` y `finished`.
+- `accept()` cierra el dialogo con codigo `Accepted`, y emite las señales `accepted` y `finished`.
 - `reject()` cierra con `Rejected` (es tambien lo que hace pulsar Esc o cerrar la ventana).
 
-La senal `accepted` del `QDialogButtonBox` agrupa todos los botones de rol "aceptar" (Ok, Yes,
+La señal `accepted` del `QDialogButtonBox` agrupa todos los botones de rol "aceptar" (Ok, Yes,
 Apply...), y `rejected` los de rol "rechazar" (Cancel, No, Close). Por eso basta con dos conexiones.
 
 ### 3. Modal: exec() y su valor de retorno
@@ -123,7 +123,7 @@ else:
 > `exec()` (sin guion bajo), no `exec_()` como en PyQt5.
 
 Para un dialogo que **no bloquea** (que convive con la ventana principal) usarias `show()` u
-`open()`, y recogerias el resultado por la senal `finished`; pero para pedir datos lo normal es el
+`open()`, y recogerias el resultado por la señal `finished`; pero para pedir datos lo normal es el
 modal con `exec()`.
 
 ### 4. Recuperar los datos
@@ -259,7 +259,7 @@ sys.exit(app.exec())
 ## Buenas practicas
 
 1. **Usa `QDialogButtonBox`, no botones sueltos.** Coloca Ok/Cancel en el orden correcto de cada
-   plataforma y agrupa los roles en las senales `accepted`/`rejected`.
+   plataforma y agrupa los roles en las señales `accepted`/`rejected`.
 2. **Conecta `accepted`/`rejected` a `accept`/`reject`.** Es lo que hace que el dialogo se cierre
    con el codigo adecuado; sin esas conexiones los botones no hacen nada.
 3. **Expon los resultados con getters**, no dejes que el exterior lea los widgets internos. Asi

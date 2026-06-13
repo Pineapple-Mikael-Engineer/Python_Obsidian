@@ -34,11 +34,11 @@ classDiagram
     class QPlainTextEdit { +toPlainText() +appendPlainText() +textChanged }
 ```
 
-`QPlainTextEdit` deriva de `QAbstractScrollArea` (el area con barras de scroll y viewport; no tiene nota propia), que a su vez deriva de [[QWidget]]. De ahi vienen el scroll automatico, mostrarse y habilitarse; conectar senales y el `parent` vienen de `QObject`. Lo suyo es editar texto plano de forma eficiente.
+`QPlainTextEdit` deriva de `QAbstractScrollArea` (el area con barras de scroll y viewport; no tiene nota propia), que a su vez deriva de [[QWidget]]. De ahi vienen el scroll automatico, mostrarse y habilitarse; conectar señales y el `parent` vienen de `QObject`. Lo suyo es editar texto plano de forma eficiente.
 
-## Senales
+## Señales
 
-| Senal | Cuando se emite | Argumentos |
+| Señal | Cuando se emite | Argumentos |
 |-------|-----------------|------------|
 | `textChanged` | cada vez que cambia el contenido (por usuario o por codigo) | — |
 
@@ -69,7 +69,7 @@ Dos sobrecargas; la habitual es `QPlainTextEdit()` vacio.
 |-------|----------|----------|
 | `toPlainText()` | `str` | el contenido completo como texto plano |
 | `setPlainText(text: str)` | `None` | reemplaza todo el contenido |
-| `appendPlainText(text: str)` | `None` | anade una linea al final (ideal para logs) |
+| `appendPlainText(text: str)` | `None` | añade una linea al final (ideal para logs) |
 | `setReadOnly(readonly: bool)` | `None` | hace el editor solo lectura |
 | `clear()` | `None` | vacia el contenido |
 

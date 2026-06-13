@@ -70,13 +70,13 @@ classDiagram
 ```
 
 Como `QDialog` **ES un [[QWidget]]**, hereda mostrarse, el titulo, el layout y los eventos de
-`QWidget`, y senales/slots de `QObject`. Lo que añade es la **logica de dialogo**: ser modal,
-cerrarse con un resultado (`accept`/`reject`) y las senales que avisan de ese resultado. De
+`QWidget`, y señales/slots de `QObject`. Lo que añade es la **logica de dialogo**: ser modal,
+cerrarse con un resultado (`accept`/`reject`) y las señales que avisan de ese resultado. De
 `QDialog` cuelgan a su vez los dialogos predefinidos `QMessageBox` y `QFileDialog`.
 
-## Senales
+## Señales
 
-| Senal | Cuando se emite | Argumentos |
+| Señal | Cuando se emite | Argumentos |
 |-------|-----------------|------------|
 | `accepted` | el dialogo se cierra con `accept()` (Aceptar/Ok) | — |
 | `rejected` | el dialogo se cierra con `reject()` (Cancelar/Esc) | — |
@@ -111,7 +111,7 @@ gestiona su memoria como hijo. El **valor que devuelve** un dialogo modal es el 
 | Firma | Devuelve | Que hace |
 |-------|----------|----------|
 | `exec()` | `int` | abre **modal**: **BLOQUEA** hasta cerrarse y devuelve `QDialog.DialogCode.Accepted` o `Rejected` |
-| `open()` | `None` | abre **no modal** (no bloquea); el resultado llega por la senal `finished` |
+| `open()` | `None` | abre **no modal** (no bloquea); el resultado llega por la señal `finished` |
 | `accept()` | `None` | cierra con `Accepted`, emite `accepted` y `finished` |
 | `reject()` | `None` | cierra con `Rejected`, emite `rejected` y `finished` |
 | `done(r: int)` | `None` | cierra fijando el codigo `r` y emite `finished` |
@@ -162,7 +162,7 @@ sys.exit(app.exec())
 ## Personalizar (subclasear)
 
 El patron habitual es **subclasear `QDialog`** para crear un formulario propio: montas los campos
-con un layout, añades un `QDialogButtonBox` (Ok/Cancel) conectando sus senales a `accept`/`reject`,
+con un layout, añades un `QDialogButtonBox` (Ok/Cancel) conectando sus señales a `accept`/`reject`,
 y expones un metodo que **devuelve los datos** tras aceptar.
 
 ```python

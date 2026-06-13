@@ -11,11 +11,11 @@ draft: false
 
 # gestion geometrica con layouts — posicionar widgets automaticamente
 
-Un **layout** (`QVBoxLayout`, `QHBoxLayout`, `QGridLayout`, `QFormLayout`) coloca y redimensiona los widgets **automaticamente** cuando cambia el tamano de la ventana. Es la alternativa a posicionar a mano con `setGeometry`/`move`, que fija coordenadas rigidas y no se adapta. Un layout no es un widget: hereda de `QLayout` y se encarga de gestionar la geometria de los widgets que contiene.
+Un **layout** (`QVBoxLayout`, `QHBoxLayout`, `QGridLayout`, `QFormLayout`) coloca y redimensiona los widgets **automaticamente** cuando cambia el tamaño de la ventana. Es la alternativa a posicionar a mano con `setGeometry`/`move`, que fija coordenadas rigidas y no se adapta. Un layout no es un widget: hereda de `QLayout` y se encarga de gestionar la geometria de los widgets que contiene.
 
 ## Por que existe
 
-Si colocas los widgets a mano (`boton.move(10, 40)`, `boton.setGeometry(...)`), la interfaz queda clavada a unas coordenadas: al maximizar la ventana, cambiar la fuente o traducir el texto, todo se descuadra. El layout resuelve esto: tu describes la **relacion** entre widgets (en columna, en fila, en rejilla) y el layout recalcula posiciones y tamanos en cada redimension.
+Si colocas los widgets a mano (`boton.move(10, 40)`, `boton.setGeometry(...)`), la interfaz queda clavada a unas coordenadas: al maximizar la ventana, cambiar la fuente o traducir el texto, todo se descuadra. El layout resuelve esto: tu describes la **relacion** entre widgets (en columna, en fila, en rejilla) y el layout recalcula posiciones y tamaños en cada redimension.
 
 ```python
 # A mano (rigido): coordenadas fijas, no se adapta.
@@ -48,7 +48,7 @@ sys.exit(app.exec())
 
 Metodos para llenar un layout:
 
-- `addWidget(w)` — anade un widget.
+- `addWidget(w)` — añade un widget.
 - `addLayout(sub)` — anida otro layout (composicion).
 - `addStretch()` — inserta un espacio elastico que empuja al resto.
 - `addSpacing(px)` — un hueco fijo en pixeles.

@@ -6,7 +6,7 @@ draft: false
 
 # QtWidgets/botones — botones y casillas
 
-Esta carpeta agrupa los **botones**: widgets que el usuario pulsa para disparar una accion o fijar una opcion. Todos heredan de [[QAbstractButton]], asi que comparten lo esencial — texto, icono y las senales `clicked`/`toggled` — y cada uno solo agrega su matiz. [[QPushButton]] es el boton de accion clasico; [[QToolButton]] su version compacta para barras de herramientas; [[QCheckBox]] una casilla on/off independiente; y [[QRadioButton]] una opcion exclusiva dentro de un grupo. Saber cual usar es, sobre todo, saber que senal vas a conectar.
+Esta carpeta agrupa los **botones**: widgets que el usuario pulsa para disparar una accion o fijar una opcion. Todos heredan de [[QAbstractButton]], asi que comparten lo esencial — texto, icono y las señales `clicked`/`toggled` — y cada uno solo agrega su matiz. [[QPushButton]] es el boton de accion clasico; [[QToolButton]] su version compacta para barras de herramientas; [[QCheckBox]] una casilla on/off independiente; y [[QRadioButton]] una opcion exclusiva dentro de un grupo. Saber cual usar es, sobre todo, saber que señal vas a conectar.
 
 ## En accion
 
@@ -66,7 +66,7 @@ classDiagram
     class QRadioButton { +autoExclusive }
 ```
 
-`QAbstractButton` es la **base abstracta**: no se instancia, pero concentra la logica de boton (texto, icono, estado checkable, senales `clicked`/`toggled`). Cada hija concreta solo agrega lo suyo: el menu/default de [[QPushButton]], el popup compacto de [[QToolButton]], el tri-estado de [[QCheckBox]] y la exclusion mutua de [[QRadioButton]].
+`QAbstractButton` es la **base abstracta**: no se instancia, pero concentra la logica de boton (texto, icono, estado checkable, señales `clicked`/`toggled`). Cada hija concreta solo agrega lo suyo: el menu/default de [[QPushButton]], el popup compacto de [[QToolButton]], el tri-estado de [[QCheckBox]] y la exclusion mutua de [[QRadioButton]].
 
 ## Que boton uso
 
@@ -91,9 +91,9 @@ flowchart TD
 
 ## Las clases
 
-| Clase | Hereda de | Senal clave | Rol |
+| Clase | Hereda de | Señal clave | Rol |
 |-------|-----------|-------------|-----|
-| [[QAbstractButton]] | `QWidget` | `clicked` | base abstracta: texto, icono, estado y senales comunes |
+| [[QAbstractButton]] | `QWidget` | `clicked` | base abstracta: texto, icono, estado y señales comunes |
 | [[QPushButton]] | `QAbstractButton` | `clicked` | boton de accion estandar con texto en dialogos |
 | [[QToolButton]] | `QAbstractButton` | `clicked` | boton compacto de barra de herramientas; admite menu |
 | [[QCheckBox]] | `QAbstractButton` | `toggled` | casilla on/off independiente (opcional tri-estado) |

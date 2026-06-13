@@ -36,9 +36,9 @@ classDiagram
 
 Como [[QSpinBox]], hereda **casi todo** de `QAbstractSpinBox` (la caja, las flechas, la edicion). La unica diferencia frente a `QSpinBox` es que trabaja con `float` y agrega `setDecimals` para controlar cuantas cifras decimales se muestran.
 
-## Senales
+## Señales
 
-| Senal | Cuando se emite | Argumentos |
+| Señal | Cuando se emite | Argumentos |
 |-------|-----------------|------------|
 | `valueChanged` | cada vez que cambia el valor decimal | `value: float` |
 

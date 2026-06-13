@@ -6,7 +6,7 @@ draft: false
 
 # QtWidgets/layouts — colocar widgets automaticamente
 
-Esta carpeta agrupa la **gestion geometrica**: los layouts colocan y redimensionan los widgets **automaticamente** cuando cambia el tamano de la ventana (ver [[concepto_layouts]]). En lugar de fijar coordenadas a mano con `setGeometry`/`move` —que clava la interfaz a unas posiciones rigidas que se descuadran al maximizar, cambiar la fuente o traducir el texto—, tu describes la **relacion** entre los widgets (en columna, en fila, en rejilla o como formulario) y el layout recalcula posiciones y tamanos en cada redimension. Un layout no es un widget: hereda de `QLayout`, que cuelga directo de `QObject`, y se limita a **gestionar** la geometria de los widgets que contiene.
+Esta carpeta agrupa la **gestion geometrica**: los layouts colocan y redimensionan los widgets **automaticamente** cuando cambia el tamaño de la ventana (ver [[concepto_layouts]]). En lugar de fijar coordenadas a mano con `setGeometry`/`move` —que clava la interfaz a unas posiciones rigidas que se descuadran al maximizar, cambiar la fuente o traducir el texto—, tu describes la **relacion** entre los widgets (en columna, en fila, en rejilla o como formulario) y el layout recalcula posiciones y tamaños en cada redimension. Un layout no es un widget: hereda de `QLayout`, que cuelga directo de `QObject`, y se limita a **gestionar** la geometria de los widgets que contiene.
 
 ## En accion
 
@@ -52,7 +52,7 @@ classDiagram
     class QFormLayout { +addRow() }
 ```
 
-Los layouts son la excepcion visible del modulo: heredan de `QLayout` —no de `QWidget`—, asi que no se dibujan; lo que define `QLayout` (anadir, anidar, margenes) lo heredan todos. `QVBoxLayout` y `QHBoxLayout` son `QBoxLayout` configurado en una direccion; `QGridLayout` y `QFormLayout` cuelgan directos de `QLayout`.
+Los layouts son la excepcion visible del modulo: heredan de `QLayout` —no de `QWidget`—, asi que no se dibujan; lo que define `QLayout` (añadir, anidar, margenes) lo heredan todos. `QVBoxLayout` y `QHBoxLayout` son `QBoxLayout` configurado en una direccion; `QGridLayout` y `QFormLayout` cuelgan directos de `QLayout`.
 
 ## Que layout uso
 
@@ -79,7 +79,7 @@ flowchart TD
 
 | Clase | Hereda de | Rol |
 |-------|-----------|-----|
-| [[QLayout]] | `QObject` | base abstracta de todos los layouts: anadir, anidar, margenes y espaciado |
+| [[QLayout]] | `QObject` | base abstracta de todos los layouts: añadir, anidar, margenes y espaciado |
 | [[QBoxLayout]] | `QLayout` | base de los layouts en linea (vertical u horizontal); `addStretch`, `addSpacing` |
 | [[QVBoxLayout]] | `QBoxLayout` | apila los widgets en **columna** (de arriba a abajo) |
 | [[QHBoxLayout]] | `QBoxLayout` | apila los widgets en **fila** (de izquierda a derecha) |

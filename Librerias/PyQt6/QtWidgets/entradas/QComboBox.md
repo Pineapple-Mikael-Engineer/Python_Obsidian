@@ -32,11 +32,11 @@ classDiagram
     class QComboBox { +addItem() +currentText() +currentData() +currentIndexChanged }
 ```
 
-`QComboBox` deriva directo de [[QWidget]]: mostrarse, habilitarse y el tooltip vienen de ahi; conectar senales y el `parent` vienen de `QObject`. Lo suyo es gestionar la lista de items, la seleccion actual y el dato asociado a cada item.
+`QComboBox` deriva directo de [[QWidget]]: mostrarse, habilitarse y el tooltip vienen de ahi; conectar señales y el `parent` vienen de `QObject`. Lo suyo es gestionar la lista de items, la seleccion actual y el dato asociado a cada item.
 
-## Senales
+## Señales
 
-| Senal | Cuando se emite | Argumentos |
+| Señal | Cuando se emite | Argumentos |
 |-------|-----------------|------------|
 | `currentIndexChanged` | cambia la seleccion, por usuario **o por codigo** (`setCurrentIndex`) | `index: int` |
 | `currentTextChanged` | cambia el texto seleccionado | `text: str` |
@@ -69,8 +69,8 @@ Una sola sobrecarga; se crea vacio y se llena con `addItem` / `addItems`.
 
 | Firma | Devuelve | Que hace |
 |-------|----------|----------|
-| `addItem(text: str, userData=None)` | `None` | anade un item; `userData` es un dato oculto opcional |
-| `addItems(texts: list[str])` | `None` | anade varios items de golpe |
+| `addItem(text: str, userData=None)` | `None` | añade un item; `userData` es un dato oculto opcional |
+| `addItems(texts: list[str])` | `None` | añade varios items de golpe |
 | `currentText()` | `str` | el texto del item seleccionado |
 | `currentIndex()` | `int` | el indice del item seleccionado |
 | `setCurrentIndex(index: int)` | `None` | selecciona el item por indice (dispara `currentIndexChanged`) |
@@ -116,7 +116,7 @@ w.show(); sys.exit(app.exec())
 |-------|-------|----------|
 | El slot no reacciona cuando cambias la seleccion por codigo | usaste `activated`, que solo se emite por accion del usuario | usa `currentIndexChanged` si quieres reaccionar tambien al cambio por codigo |
 | Confundes el indice con el texto | `currentIndex()` da un `int`, `currentText()` da el `str` | usa el que corresponda; para el dato oculto, `currentData()` |
-| `currentData()` devuelve `None` | no asociaste `userData` al anadir el item | pasa el dato en `addItem(texto, dato)` |
+| `currentData()` devuelve `None` | no asociaste `userData` al añadir el item | pasa el dato en `addItem(texto, dato)` |
 
 ## Notas relacionadas
 

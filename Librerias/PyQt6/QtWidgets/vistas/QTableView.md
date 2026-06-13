@@ -45,13 +45,13 @@ classDiagram
     class QTableWidget { +setItem() +setRowCount() }
 ```
 
-Lo que `QTableView` **no** define lo hereda: conectar con un modelo (`setModel`), la seleccion y las senales de interaccion (`clicked`, `doubleClicked`, `activated`) vienen de [[QAbstractItemView]]; el ser visible viene de [[QWidget]]. `QTableView` agrega lo propio de una rejilla: cabeceras (`horizontalHeader`, `verticalHeader`), ancho de columnas y ordenacion. De `QTableView` hereda a su vez [[QTableWidget]], el atajo item-based.
+Lo que `QTableView` **no** define lo hereda: conectar con un modelo (`setModel`), la seleccion y las señales de interaccion (`clicked`, `doubleClicked`, `activated`) vienen de [[QAbstractItemView]]; el ser visible viene de [[QWidget]]. `QTableView` agrega lo propio de una rejilla: cabeceras (`horizontalHeader`, `verticalHeader`), ancho de columnas y ordenacion. De `QTableView` hereda a su vez [[QTableWidget]], el atajo item-based.
 
-## Senales
+## Señales
 
 Heredadas de [[QAbstractItemView]]; todas emiten un `QModelIndex`.
 
-| Senal | Cuando se emite | Argumentos |
+| Señal | Cuando se emite | Argumentos |
 |-------|-----------------|------------|
 | `clicked` | al hacer clic en una celda | `index: QModelIndex` |
 | `doubleClicked` | al hacer doble clic en una celda | `index: QModelIndex` |
@@ -126,5 +126,5 @@ Para **datos propios** (una base de datos, una lista en memoria) se subclasea `Q
 ## Notas relacionadas
 
 - [[concepto_model_view]] — el patron Modelo/Vista/Delegate de Qt
-- [[QAbstractItemView]] — la base que aporta `setModel`, seleccion y senales
+- [[QAbstractItemView]] — la base que aporta `setModel`, seleccion y señales
 - [[QTableWidget]] — el atajo item-based (modelo+vista en una clase)

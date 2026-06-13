@@ -19,7 +19,7 @@ draft: false
 
 # QBoxLayout — apila widgets en una sola direccion
 
-`QBoxLayout` es la base de [[QVBoxLayout]] y `QHBoxLayout`: coloca los widgets hijos **en una sola direccion** (vertical u horizontal), uno tras otro. Casi nunca se usa "tal cual": lo normal es instanciar directamente las subclases concretas, que solo fijan la direccion por ti. Sus metodos para anadir (`addWidget`, `addLayout`, `addStretch`...) viven aqui y los heredan ambas subclases. Toda la gestion de geometria comun (margenes, espaciado) viene de [[QLayout]].
+`QBoxLayout` es la base de [[QVBoxLayout]] y `QHBoxLayout`: coloca los widgets hijos **en una sola direccion** (vertical u horizontal), uno tras otro. Casi nunca se usa "tal cual": lo normal es instanciar directamente las subclases concretas, que solo fijan la direccion por ti. Sus metodos para añadir (`addWidget`, `addLayout`, `addStretch`...) viven aqui y los heredan ambas subclases. Toda la gestion de geometria comun (margenes, espaciado) viene de [[QLayout]].
 
 ## Importacion
 
@@ -66,11 +66,11 @@ A diferencia de sus subclases, `QBoxLayout` exige la direccion como primer argum
 
 | Firma | Devuelve | Que hace |
 |-------|----------|----------|
-| `addWidget(w: QWidget, stretch: int = 0, alignment: Qt.AlignmentFlag = Qt.AlignmentFlag(0))` | `None` | anade un widget; `stretch` reparte el espacio sobrante |
+| `addWidget(w: QWidget, stretch: int = 0, alignment: Qt.AlignmentFlag = Qt.AlignmentFlag(0))` | `None` | añade un widget; `stretch` reparte el espacio sobrante |
 | `addLayout(layout: QLayout, stretch: int = 0)` | `None` | anida otro layout dentro de este |
 | `addStretch(stretch: int = 0)` | `None` | inserta espacio elastico que empuja a los widgets |
 | `addSpacing(size: int)` | `None` | inserta un hueco fijo de `size` px |
-| `insertWidget(index: int, w: QWidget, stretch: int = 0)` | `None` | anade un widget en la posicion `index` |
+| `insertWidget(index: int, w: QWidget, stretch: int = 0)` | `None` | añade un widget en la posicion `index` |
 | `setSpacing(spacing: int)` | `None` | separacion en px entre widgets (heredado de [[QLayout]]) |
 | `setContentsMargins(l: int, t: int, r: int, b: int)` | `None` | fija el margen interior (heredado de [[QLayout]]) |
 | `setDirection(direction: QBoxLayout.Direction)` | `None` | cambia el sentido del apilado |

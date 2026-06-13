@@ -30,7 +30,7 @@ from PyQt6.QtGui import QPainter
 ## Herencia
 
 > [!note] No hereda de QObject
-> `QPainter` es una **clase de utilidad**, no un `QObject`: no tiene `parent`, no vive en el arbol de objetos y **no emite senales**. No se subclasea ni se conecta a slots; se instancia, se usa y se destruye. Por eso esta nota no lleva `classDiagram` de herencia: lo relevante de `QPainter` es con quien **colabora**, no de quien desciende.
+> `QPainter` es una **clase de utilidad**, no un `QObject`: no tiene `parent`, no vive en el arbol de objetos y **no emite señales**. No se subclasea ni se conecta a slots; se instancia, se usa y se destruye. Por eso esta nota no lleva `classDiagram` de herencia: lo relevante de `QPainter` es con quien **colabora**, no de quien desciende.
 
 ## Clases que colaboran
 

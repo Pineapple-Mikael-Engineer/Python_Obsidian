@@ -17,7 +17,7 @@ draft: false
 
 # QPainterPath — describe una figura compleja para dibujar de una vez
 
-`QPainterPath` acumula una **ruta**: una combinacion de lineas, curvas y formas (rectangulos, elipses) que se construye paso a paso y luego se dibuja o se rellena **de una sola vez** con `painter.drawPath(path)`. Es una clase de **valor/utilidad** (no hereda de `QObject` ni emite senales): sirve para describir poligonos, contornos con curvas o siluetas que no se pueden hacer con un solo `drawRect`/`drawEllipse`.
+`QPainterPath` acumula una **ruta**: una combinacion de lineas, curvas y formas (rectangulos, elipses) que se construye paso a paso y luego se dibuja o se rellena **de una sola vez** con `painter.drawPath(path)`. Es una clase de **valor/utilidad** (no hereda de `QObject` ni emite señales): sirve para describir poligonos, contornos con curvas o siluetas que no se pueden hacer con un solo `drawRect`/`drawEllipse`.
 
 ## Importacion
 
@@ -26,7 +26,7 @@ from PyQt6.QtGui import QPainterPath
 ```
 
 > [!nota] Sin herencia relevante
-> Como [[QPen]] y [[QBrush]], es un objeto de valor: no cuelga de `QObject`, sin `parent` ni senales. Se construye, se llena con sus metodos y se entrega a [[QPainter]].
+> Como [[QPen]] y [[QBrush]], es un objeto de valor: no cuelga de `QObject`, sin `parent` ni señales. Se construye, se llena con sus metodos y se entrega a [[QPainter]].
 
 ## Constructor y metodos
 
@@ -41,8 +41,8 @@ QPainterPath(start: QPointF)          # ruta que arranca en un punto
 | `lineTo(x: float, y: float)` | `None` | traza una linea recta hasta el punto |
 | `cubicTo(c1x, c1y, c2x, c2y, x, y)` | `None` | curva Bezier cubica (dos puntos de control) |
 | `quadTo(cx, cy, x, y)` | `None` | curva Bezier cuadratica (un punto de control) |
-| `addRect(x, y, w, h)` | `None` | anade un rectangulo a la ruta |
-| `addEllipse(x, y, w, h)` | `None` | anade una elipse a la ruta |
+| `addRect(x, y, w, h)` | `None` | añade un rectangulo a la ruta |
+| `addEllipse(x, y, w, h)` | `None` | añade una elipse a la ruta |
 | `closeSubpath()` | `None` | cierra el subtrazo actual (lo une con su inicio) |
 
 ## Casos de uso

@@ -10,7 +10,7 @@ draft: false
 
 # manejar eventos — sobreescribir manejadores y filtrar con eventFilter
 
-Hay dos grandes modos de extender Qt. Uno son las **senales** (notificaciones de alto nivel que conectas con `.connect`). El otro, el que aqui nos ocupa, es interceptar los **eventos** que el framework manda a un widget —raton, teclado, foco, cierre, repintado— **sobreescribiendo su manejador**. Es la via para los casos en que no existe una senal que sirva: detectar la posicion exacta de cada clic, reaccionar a una tecla concreta, vetar el cierre de la ventana. La idea es directa: cada tipo de evento tiene su **manejador virtual** ([[QMouseEvent]] llega a `mousePressEvent`, el teclado a `keyPressEvent`, etc.); tu lo sobreescribes en una subclase y Qt lo llama por ti cuando ese evento ocurre. Esta nota es la receta detallada del patron que [[concepto_sistema_eventos]] introduce.
+Hay dos grandes modos de extender Qt. Uno son las **señales** (notificaciones de alto nivel que conectas con `.connect`). El otro, el que aqui nos ocupa, es interceptar los **eventos** que el framework manda a un widget —raton, teclado, foco, cierre, repintado— **sobreescribiendo su manejador**. Es la via para los casos en que no existe una señal que sirva: detectar la posicion exacta de cada clic, reaccionar a una tecla concreta, vetar el cierre de la ventana. La idea es directa: cada tipo de evento tiene su **manejador virtual** ([[QMouseEvent]] llega a `mousePressEvent`, el teclado a `keyPressEvent`, etc.); tu lo sobreescribes en una subclase y Qt lo llama por ti cuando ese evento ocurre. Esta nota es la receta detallada del patron que [[concepto_sistema_eventos]] introduce.
 
 ## La receta minima
 
@@ -34,7 +34,7 @@ w.show()
 sys.exit(app.exec())
 ```
 
-Eso es todo lo imprescindible: heredar y sobreescribir el manejador del evento que te interesa. Tu no llamas a `mousePressEvent`; lo invoca el event loop cuando se pulsa el raton sobre el widget. A partir de aqui solo se anaden capas.
+Eso es todo lo imprescindible: heredar y sobreescribir el manejador del evento que te interesa. Tu no llamas a `mousePressEvent`; lo invoca el event loop cuando se pulsa el raton sobre el widget. A partir de aqui solo se añaden capas.
 
 ## Construccion paso a paso
 
@@ -48,7 +48,7 @@ Cada evento tiene su manejador con un **nombre fijo**: lo sobreescribes en una s
 | `mouseMoveEvent(self, e)` | se mueve el raton (con boton pulsado por defecto) | `QMouseEvent` |
 | `keyPressEvent(self, e)` | se pulsa una tecla (con el foco) | `QKeyEvent` |
 | `wheelEvent(self, e)` | se gira la rueda del raton | `QWheelEvent` |
-| `resizeEvent(self, e)` | cambia el tamano del widget | `QResizeEvent` |
+| `resizeEvent(self, e)` | cambia el tamaño del widget | `QResizeEvent` |
 | `closeEvent(self, e)` | se pide cerrar la ventana | `QCloseEvent` |
 | `paintEvent(self, e)` | hay que repintar el widget | `QPaintEvent` |
 
@@ -257,7 +257,7 @@ Arrastra la caja con el boton izquierdo, pulsa Escape para devolverla a su sitio
 
 ## Buenas practicas
 
-1. **Prefiere SENALES si existe una que sirva.** Sobreescribir un evento es para control fino (la posicion del clic, una tecla concreta, vetar el cierre); si te basta reaccionar a "algo paso" (`clicked`, `valueChanged`), conecta la senal y no toques eventos.
+1. **Prefiere Señales si existe una que sirva.** Sobreescribir un evento es para control fino (la posicion del clic, una tecla concreta, vetar el cierre); si te basta reaccionar a "algo paso" (`clicked`, `valueChanged`), conecta la señal y no toques eventos.
 2. **Sobreescribe el manejador ESPECIFICO antes que `event()`.** `mousePressEvent`, `keyPressEvent`, `closeEvent`... son mas claros y directos. Reserva `event()` para lo que esos manejadores no reciben (como el Tab).
 3. **Llama a `super().<manejador>(e)` cuando NO consumes el evento.** Si no, te cargas el comportamiento por defecto del widget (un `QLineEdit` dejaria de escribir). Consumes lo que reconoces, delegas el resto al base.
 4. **`setFocusPolicy(Qt.FocusPolicy.StrongFocus)` para recibir teclado.** Un `QWidget` plano no toma el foco por defecto y `keyPressEvent` no se llama nunca. Es el olvido numero uno con el teclado.

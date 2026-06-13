@@ -6,7 +6,7 @@ draft: false
 
 # QtWidgets/entradas — campos de entrada de datos
 
-Esta carpeta agrupa los widgets con los que el usuario **INTRODUCE datos** en la interfaz: texto (una linea o varios parrafos), numeros (enteros o decimales) y seleccion (elegir de una lista o un valor dentro de un rango). Frente a los widgets de salida (que solo muestran), estos **reciben** la entrada y avisan del cambio mediante senales —tipicamente `valueChanged` o `textChanged`— que conectas a un slot para procesar lo introducido (ver [[concepto_signals_slots]]).
+Esta carpeta agrupa los widgets con los que el usuario **INTRODUCE datos** en la interfaz: texto (una linea o varios parrafos), numeros (enteros o decimales) y seleccion (elegir de una lista o un valor dentro de un rango). Frente a los widgets de salida (que solo muestran), estos **reciben** la entrada y avisan del cambio mediante señales —tipicamente `valueChanged` o `textChanged`— que conectas a un slot para procesar lo introducido (ver [[concepto_signals_slots]]).
 
 ## En accion
 
@@ -97,7 +97,7 @@ flowchart TD
 
 ## Las clases
 
-| Clase | Hereda de | Senal clave | Rol |
+| Clase | Hereda de | Señal clave | Rol |
 |-------|-----------|-------------|-----|
 | [[QLineEdit]] | `QWidget` | `textChanged` | una linea de **texto corto** (nombre, busqueda) |
 | [[QTextEdit]] | `QAbstractScrollArea` | `textChanged` | texto largo **con formato** (negrita, color, HTML) |

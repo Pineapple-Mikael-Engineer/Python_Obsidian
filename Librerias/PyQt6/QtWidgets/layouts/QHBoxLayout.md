@@ -19,7 +19,7 @@ draft: false
 
 # QHBoxLayout — apila widgets en horizontal
 
-`QHBoxLayout` apila los widgets hijos **horizontalmente**, de izquierda a derecha (una fila). Es la version horizontal de [[QVBoxLayout]]: una subclase de [[QBoxLayout]] que **no anade nada nuevo**, solo fija la direccion en `LeftToRight`. Todos sus metodos (`addWidget`, `addStretch`, `addSpacing`, `setSpacing`...) los hereda; por eso esta nota es breve.
+`QHBoxLayout` apila los widgets hijos **horizontalmente**, de izquierda a derecha (una fila). Es la version horizontal de [[QVBoxLayout]]: una subclase de [[QBoxLayout]] que **no añade nada nuevo**, solo fija la direccion en `LeftToRight`. Todos sus metodos (`addWidget`, `addStretch`, `addSpacing`, `setSpacing`...) los hereda; por eso esta nota es breve.
 
 ## Importacion
 
@@ -39,7 +39,7 @@ classDiagram
     class QHBoxLayout { +LeftToRight }
 ```
 
-`QHBoxLayout` apenas aporta logica propia: hereda de [[QBoxLayout]] toda la forma de anadir y empujar widgets, y de [[QLayout]] los margenes y el espaciado. Lo unico suyo es prefijar la direccion horizontal.
+`QHBoxLayout` apenas aporta logica propia: hereda de [[QBoxLayout]] toda la forma de añadir y empujar widgets, y de [[QLayout]] los margenes y el espaciado. Lo unico suyo es prefijar la direccion horizontal.
 
 ## Constructor y metodos
 

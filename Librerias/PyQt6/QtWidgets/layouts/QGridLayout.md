@@ -19,7 +19,7 @@ draft: false
 
 # QGridLayout — coloca widgets en una rejilla de filas y columnas
 
-`QGridLayout` coloca los widgets en una **rejilla** de filas y columnas: cada widget ocupa una celda `(fila, columna)`, y puede extenderse a varias con `rowSpan`/`columnSpan`. Es el layout para todo lo que tiene forma de cuadricula: formularios en rejilla, calculadoras, paneles de mandos. Toda la gestion de geometria (margenes, espaciado, anadir/quitar) la hereda de [[QLayout]]; lo suyo es ubicar por coordenadas en vez de en linea.
+`QGridLayout` coloca los widgets en una **rejilla** de filas y columnas: cada widget ocupa una celda `(fila, columna)`, y puede extenderse a varias con `rowSpan`/`columnSpan`. Es el layout para todo lo que tiene forma de cuadricula: formularios en rejilla, calculadoras, paneles de mandos. Toda la gestion de geometria (margenes, espaciado, añadir/quitar) la hereda de [[QLayout]]; lo suyo es ubicar por coordenadas en vez de en linea.
 
 ## Importacion
 
@@ -116,6 +116,6 @@ sys.exit(app.exec())
 
 ## Notas relacionadas
 
-- [[QLayout]] — la clase base que aporta margenes, espaciado y anadir/quitar
+- [[QLayout]] — la clase base que aporta margenes, espaciado y añadir/quitar
 - [[concepto_layouts]] — modelo mental de la gestion de geometria en Qt
 - [[QFormLayout]] — para formularios etiqueta-campo, donde la rejilla a mano sobra

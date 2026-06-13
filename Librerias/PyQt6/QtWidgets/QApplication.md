@@ -44,11 +44,11 @@ classDiagram
     class QApplication { +setStyleSheet() +setStyle() }
 ```
 
-Lo que `QApplication` **no** define lo hereda: el bucle de eventos (`exec`, `quit`, `processEvents`) y la instancia activa (`instance`) vienen de `QCoreApplication`; las pantallas, el portapapeles y la fuente global vienen de [[QGuiApplication]]; conectar senales y el `parent` vienen de `QObject`. Lo propio de `QApplication` (la rama de widgets) son las hojas de estilo QSS y el estilo visual (`setStyleSheet`, `setStyle`).
+Lo que `QApplication` **no** define lo hereda: el bucle de eventos (`exec`, `quit`, `processEvents`) y la instancia activa (`instance`) vienen de `QCoreApplication`; las pantallas, el portapapeles y la fuente global vienen de [[QGuiApplication]]; conectar señales y el `parent` vienen de `QObject`. Lo propio de `QApplication` (la rama de widgets) son las hojas de estilo QSS y el estilo visual (`setStyleSheet`, `setStyle`).
 
-## Senales
+## Señales
 
-| Senal | Cuando se emite | Argumentos |
+| Señal | Cuando se emite | Argumentos |
 |-------|-----------------|------------|
 | `aboutToQuit` | justo antes de que la app termine, antes de salir de `exec()` | — |
 | `lastWindowClosed` | al cerrarse la ultima ventana visible | — |

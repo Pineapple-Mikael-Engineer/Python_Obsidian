@@ -34,9 +34,9 @@ classDiagram
 
 `QGroupBox` agrega el **titulo, el borde y el estado checkable**; el resto (mostrarse, alojar un layout, habilitarse) lo hereda de [[QWidget]]. El layout interno y los widgets que contiene los gestiona como cualquier `QWidget` contenedor.
 
-## Senales
+## Señales
 
-| Senal | Cuando se emite | Argumentos |
+| Señal | Cuando se emite | Argumentos |
 |-------|-----------------|------------|
 | `toggled` | al marcar/desmarcar la casilla del titulo (solo si es checkable) | `on: bool` (nuevo estado) |
 | `clicked` | al pulsar la casilla del titulo | `checked: bool` |
@@ -64,7 +64,7 @@ QGroupBox(title: str, parent: QWidget | None = None)
 | Firma | Devuelve | Que hace |
 |-------|----------|----------|
 | `setTitle(title: str)` | `None` | fija el texto del titulo |
-| `setCheckable(checkable: bool)` | `None` | anade la casilla que activa/desactiva el grupo |
+| `setCheckable(checkable: bool)` | `None` | añade la casilla que activa/desactiva el grupo |
 | `setChecked(checked: bool)` | `None` | marca/desmarca la casilla (solo si es checkable) |
 | `isChecked()` | `bool` | `True` si la casilla esta marcada |
 | `setFlat(flat: bool)` | `None` | dibujo plano sin la caja completa |

@@ -33,11 +33,11 @@ classDiagram
     class QSplitter { +addWidget() +setOrientation() +setSizes() +splitterMoved }
 ```
 
-`QSplitter` hereda de [[QFrame]] (y por tanto de [[QWidget]]): de ahi vienen el marco opcional y todo lo basico de widget. Lo que aporta es **la barra divisoria y el reparto de tamanos** entre los widgets que aloja.
+`QSplitter` hereda de [[QFrame]] (y por tanto de [[QWidget]]): de ahi vienen el marco opcional y todo lo basico de widget. Lo que aporta es **la barra divisoria y el reparto de tamaños** entre los widgets que aloja.
 
-## Senales
+## Señales
 
-| Senal | Cuando se emite | Argumentos |
+| Señal | Cuando se emite | Argumentos |
 |-------|-----------------|------------|
 | `splitterMoved` | cuando el usuario arrastra la barra y cambia el reparto | `pos: int` (posicion), `index: int` (que barra) |
 
@@ -50,7 +50,7 @@ splitter.splitterMoved.connect(lambda pos, idx: print(pos, idx))
 | Propiedad | Tipo | Leer \| escribir | Controla |
 |-----------|------|------------------|----------|
 | `orientation` | `Qt.Orientation` | `orientation()` \| `setOrientation(Qt.Orientation)` | reparto horizontal o vertical |
-| `childrenCollapsible` | `bool` | `childrenCollapsible()` \| `setChildrenCollapsible(bool)` | si un panel puede colapsar a tamano 0 |
+| `childrenCollapsible` | `bool` | `childrenCollapsible()` \| `setChildrenCollapsible(bool)` | si un panel puede colapsar a tamaño 0 |
 | `handleWidth` | `int` | `handleWidth()` \| `setHandleWidth(int)` | grosor de la barra arrastrable |
 
 La orientacion usa el enum con **scope** de PyQt6: `Qt.Orientation.Horizontal` (por defecto) o `Qt.Orientation.Vertical`.
@@ -66,8 +66,8 @@ QSplitter(orientation: Qt.Orientation, parent: QWidget | None = None)
 |-------|----------|----------|
 | `addWidget(widget: QWidget)` | `None` | agrega un panel al final del splitter |
 | `setOrientation(orientation: Qt.Orientation)` | `None` | reparto `Horizontal` o `Vertical` |
-| `setSizes(sizes: list[int])` | `None` | tamanos iniciales de cada panel (en px) |
-| `sizes()` | `list[int]` | tamanos actuales de los paneles |
+| `setSizes(sizes: list[int])` | `None` | tamaños iniciales de cada panel (en px) |
+| `sizes()` | `list[int]` | tamaños actuales de los paneles |
 | `setStretchFactor(index: int, factor: int)` | `None` | que panel crece al redimensionar la ventana |
 
 ## Casos de uso

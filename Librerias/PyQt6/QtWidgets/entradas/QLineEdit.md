@@ -13,7 +13,7 @@ draft: false
 
 # QLineEdit — campo de texto de una sola linea
 
-`QLineEdit` es el campo de entrada de **una sola linea**: el usuario escribe texto y tu lo lees con `text()`. Es el widget tipico de un formulario (nombre, email, busqueda, password). Lo normal es crearlo, conectar una de sus senales (`returnPressed`, `editingFinished`) y leer su contenido. Mostrarse, habilitarse y el tooltip los hereda de [[QWidget]].
+`QLineEdit` es el campo de entrada de **una sola linea**: el usuario escribe texto y tu lo lees con `text()`. Es el widget tipico de un formulario (nombre, email, busqueda, password). Lo normal es crearlo, conectar una de sus señales (`returnPressed`, `editingFinished`) y leer su contenido. Mostrarse, habilitarse y el tooltip los hereda de [[QWidget]].
 
 ## Importacion
 
@@ -32,11 +32,11 @@ classDiagram
     class QLineEdit { +text() +setText() +setEchoMode() +textChanged +returnPressed }
 ```
 
-`QLineEdit` deriva directo de [[QWidget]]: mostrarse, habilitarse y el tooltip vienen de ahi; conectar senales y el `parent` vienen de `QObject`. Lo suyo es todo lo de editar una linea de texto (`text`, `echoMode`, validador, senales de edicion).
+`QLineEdit` deriva directo de [[QWidget]]: mostrarse, habilitarse y el tooltip vienen de ahi; conectar señales y el `parent` vienen de `QObject`. Lo suyo es todo lo de editar una linea de texto (`text`, `echoMode`, validador, señales de edicion).
 
-## Senales
+## Señales
 
-| Senal | Cuando se emite | Argumentos |
+| Señal | Cuando se emite | Argumentos |
 |-------|-----------------|------------|
 | `textChanged` | en **cualquier** cambio del texto, incluso por codigo (`setText`) | `text: str` |
 | `textEdited` | solo cuando el **usuario** edita (no al `setText` por codigo) | `text: str` |

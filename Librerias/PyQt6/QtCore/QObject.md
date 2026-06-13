@@ -1,5 +1,5 @@
 ---
-title: QObject — la raiz de Qt (parent/child, senales, propiedades, eventos)
+title: QObject — la raiz de Qt (parent/child, señales, propiedades, eventos)
 aliases:
   - QObject
   - objeto base
@@ -19,14 +19,14 @@ requiere:
 draft: false
 ---
 
-# QObject — la raiz de Qt (parent/child, senales, propiedades, eventos)
+# QObject — la raiz de Qt (parent/child, señales, propiedades, eventos)
 
-`QObject` es la **clase base de casi todo** en Qt: es la raiz de la que cuelgan tanto la rama visual (`QWidget`) como la no visual (`QTimer`, `QThread`, los modelos). No se instancia "tal cual" muy a menudo, pero entenderla es entender Qt, porque aporta las **cuatro capacidades** que el resto hereda. Solo los `QObject` pueden tener senales: si una clase tuya las necesita, tiene que heredar de aqui.
+`QObject` es la **clase base de casi todo** en Qt: es la raiz de la que cuelgan tanto la rama visual (`QWidget`) como la no visual (`QTimer`, `QThread`, los modelos). No se instancia "tal cual" muy a menudo, pero entenderla es entender Qt, porque aporta las **cuatro capacidades** que el resto hereda. Solo los `QObject` pueden tener señales: si una clase tuya las necesita, tiene que heredar de aqui.
 
 Las cuatro capacidades que aporta:
 
 - **Arbol parent/child** — cada objeto puede tener un padre que **posee su memoria**: al destruir el padre se destruyen los hijos (ver [[concepto_qobject_arbol]]).
-- **Senales y slots** — el mecanismo de comunicacion de Qt; declararlas requiere ser `QObject`.
+- **Señales y slots** — el mecanismo de comunicacion de Qt; declararlas requiere ser `QObject`.
 - **Sistema de propiedades** — atributos accesibles por nombre con `property()` / `setProperty()`.
 - **Manejo de eventos** — recibir, filtrar e instalar filtros de eventos.
 
@@ -53,11 +53,11 @@ classDiagram
     class QAbstractItemModel { +data() +rowCount() }
 ```
 
-Como **todo desciende de `QObject`**, todo objeto Qt tiene `parent`/`children` (gestion de memoria), puede emitir senales y filtrar eventos. La rama visual (`QWidget` y sus hijos) anade el dibujado; la no visual (`QTimer`, `QThread`, modelos) usa solo lo que `QObject` ya ofrece.
+Como **todo desciende de `QObject`**, todo objeto Qt tiene `parent`/`children` (gestion de memoria), puede emitir señales y filtrar eventos. La rama visual (`QWidget` y sus hijos) añade el dibujado; la no visual (`QTimer`, `QThread`, modelos) usa solo lo que `QObject` ya ofrece.
 
-## Senales
+## Señales
 
-| Senal | Cuando se emite | Argumentos |
+| Señal | Cuando se emite | Argumentos |
 |-------|-----------------|------------|
 | `destroyed` | justo cuando el objeto se destruye | `obj: QObject` (el objeto que muere) |
 | `objectNameChanged` | al cambiar el `objectName` | `name: str` (el nuevo nombre) |
@@ -94,10 +94,10 @@ El `parent` es opcional; al fijarlo, el padre pasa a **poseer** al objeto y gest
 | `objectName()` | `str` | el nombre actual |
 | `installEventFilter(obj: QObject)` | `None` | hace que `obj` intercepte los eventos de este objeto |
 | `deleteLater()` | `None` | destruccion **segura diferida**: borra el objeto cuando el bucle de eventos vuelve a control (nunca borres a mano un QObject en uso) |
-| `blockSignals(block: bool)` | `bool` | silencia/reactiva las senales; devuelve el estado anterior |
+| `blockSignals(block: bool)` | `bool` | silencia/reactiva las señales; devuelve el estado anterior |
 | `setProperty(nombre: str, valor)` | `bool` | fija una propiedad por nombre (incluso una dinamica nueva) |
 | `property(nombre: str)` | `object` | lee una propiedad por nombre |
-| `sender()` | `QObject` | dentro de un slot, **quien emitio** la senal que lo disparo |
+| `sender()` | `QObject` | dentro de un slot, **quien emitio** la señal que lo disparo |
 
 ## Casos de uso
 
@@ -116,7 +116,7 @@ print(padre.findChild(QObject, "config"))     # <hijo>
 hijo.setProperty("activo", True)
 print(hijo.property("activo"))                # True
 
-# silenciar senales temporalmente
+# silenciar señales temporalmente
 hijo.blockSignals(True)
 hijo.setObjectName("otro")       # NO emite objectNameChanged
 hijo.blockSignals(False)
@@ -124,13 +124,13 @@ hijo.blockSignals(False)
 
 ## Personalizar (subclasear)
 
-Se subclasea `QObject` para objetos **no visuales con senales propias**: un *worker* que corre una tarea, un modelo de datos, un controlador. El requisito es heredar de `QObject`, llamar a `super().__init__()` y declarar las senales con `pyqtSignal`.
+Se subclasea `QObject` para objetos **no visuales con señales propias**: un *worker* que corre una tarea, un modelo de datos, un controlador. El requisito es heredar de `QObject`, llamar a `super().__init__()` y declarar las señales con `pyqtSignal`.
 
 ```python
 from PyQt6.QtCore import QObject, pyqtSignal
 
 class Worker(QObject):
-    progreso = pyqtSignal(int)       # senal propia (solo posible por ser QObject)
+    progreso = pyqtSignal(int)       # señal propia (solo posible por ser QObject)
     terminado = pyqtSignal()
 
     def __init__(self, parent=None):
@@ -150,7 +150,7 @@ w.correr()
 
 | Error | Causa | Solucion |
 |-------|-------|----------|
-| `pyqtSignal` falla o las senales no funcionan | la clase **no** hereda de `QObject` | hereda de `QObject` (o de un widget, que ya lo es) |
+| `pyqtSignal` falla o las señales no funcionan | la clase **no** hereda de `QObject` | hereda de `QObject` (o de un widget, que ya lo es) |
 | `RuntimeError: super-class __init__() never called` | olvidaste `super().__init__()` en la subclase | llama a `super().__init__(parent)` lo primero en `__init__` |
 | Crash al destruir un objeto en uso | lo borraste a mano mientras el bucle aun lo usaba | usa `deleteLater()`, no `del` |
 | `findChild` devuelve `None` | el `objectName` no coincide o el hijo no es de ese tipo | fija `setObjectName` antes y pasa el tipo correcto |
@@ -158,5 +158,5 @@ w.correr()
 ## Notas relacionadas
 
 - [[concepto_qobject_arbol]] — el arbol parent/child y la gestion de memoria
-- [[concepto_signals_slots]] — las senales que solo un `QObject` puede emitir
+- [[concepto_signals_slots]] — las señales que solo un `QObject` puede emitir
 - [[QWidget]] — la rama visual que hereda de `QObject`

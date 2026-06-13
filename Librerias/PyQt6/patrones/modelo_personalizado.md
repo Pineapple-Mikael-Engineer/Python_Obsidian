@@ -158,7 +158,7 @@ def headerData(self, section, orientation, role=Qt.ItemDataRole.DisplayRole):
 
 Por defecto el modelo es de **solo lectura**. Para que el usuario pueda editar una celda con doble clic hacen falta tres piezas:
 
-1. **`flags(index)`** declara que la celda es editable anadiendo `ItemIsEditable` a las flags por defecto.
+1. **`flags(index)`** declara que la celda es editable añadiendo `ItemIsEditable` a las flags por defecto.
 2. **`setData(index, value, role)`** recibe el nuevo valor, lo escribe en tus datos, **emite `dataChanged`** y devuelve `True` (o `False` si rechazas el valor).
 3. **`self.dataChanged.emit(index, index)`** avisa a la vista de que esa celda cambio. **Sin esto la vista no se refresca**: tu dato cambia pero la pantalla sigue mostrando el viejo.
 
@@ -177,9 +177,9 @@ def setData(self, index, value, role=Qt.ItemDataRole.EditRole):
 
 `dataChanged.emit(top_left, bottom_right)` toma el rango de celdas afectadas; para una sola celda, el mismo `index` dos veces.
 
-### 6. Anadir/quitar filas: beginInsertRows / endInsertRows
+### 6. Añadir/quitar filas: beginInsertRows / endInsertRows
 
-Cambiar el **tamano** de la tabla (insertar o borrar filas) es distinto de cambiar un valor: la vista mantiene sus propios indices y seleccion, asi que **debe enterarse antes y despues** de la mutacion. Por eso rodeas el cambio de la lista con un par de llamadas:
+Cambiar el **tamaño** de la tabla (insertar o borrar filas) es distinto de cambiar un valor: la vista mantiene sus propios indices y seleccion, asi que **debe enterarse antes y despues** de la mutacion. Por eso rodeas el cambio de la lista con un par de llamadas:
 
 ```python
 def insertar_fila(self, valores):
@@ -189,14 +189,14 @@ def insertar_fila(self, valores):
     self.endInsertRows()                                 # FIN: la vista ya se reajusto
 ```
 
-El primer argumento de `beginInsertRows` es el **padre** (`QModelIndex()` vacio = la raiz, lo normal en una tabla); luego la primera y ultima fila que vas a anadir. Para borrar es identico con `beginRemoveRows(QModelIndex(), fila, fila)` ... `endRemoveRows()`.
+El primer argumento de `beginInsertRows` es el **padre** (`QModelIndex()` vacio = la raiz, lo normal en una tabla); luego la primera y ultima fila que vas a añadir. Para borrar es identico con `beginRemoveRows(QModelIndex(), fila, fila)` ... `endRemoveRows()`.
 
 > [!warning] Nunca mutes la lista "a pelo"
 > Hacer `self._datos.append(...)` o `del self._datos[i]` **sin** el par `begin.../end...` deja a la vista desincronizada con los datos: filas fantasma, celdas que no responden o un crash al hacer scroll. La mutacion va **siempre** entre `beginInsertRows`/`endInsertRows` (o `beginRemoveRows`/`endRemoveRows`).
 
 ## Ejemplo completo: tabla editable de productos
 
-Modelo sobre una lista de listas (columnas: nombre, precio, stock). Es editable, tiene cabeceras, alinea los numeros a la derecha, pinta el stock cero en rojo y trae un boton "Anadir fila" que usa `beginInsertRows`. Ejecutable de principio a fin:
+Modelo sobre una lista de listas (columnas: nombre, precio, stock). Es editable, tiene cabeceras, alinea los numeros a la derecha, pinta el stock cero en rojo y trae un boton "Añadir fila" que usa `beginInsertRows`. Ejecutable de principio a fin:
 
 ```python
 from PyQt6.QtWidgets import (
@@ -297,7 +297,7 @@ class Ventana(QWidget):
         self.tabla.setModel(self.modelo)
         self.tabla.resizeColumnsToContents()
 
-        boton = QPushButton("Anadir fila")
+        boton = QPushButton("Añadir fila")
         boton.clicked.connect(self.modelo.anadir_producto)
 
         layout = QVBoxLayout(self)
@@ -332,7 +332,7 @@ Doble clic en una celda para editarla; el boton inserta una fila nueva y la tabl
 | Error | Causa | Solucion |
 |-------|-------|----------|
 | Celdas vacias o valores raros | te falto el `return None` final, o no filtras por `role` en `data` | devuelve el dato solo en su rol y `None` para el resto |
-| La vista no refresca tras editar | `setData` no emite `dataChanged` | anade `self.dataChanged.emit(index, index)` tras escribir |
+| La vista no refresca tras editar | `setData` no emite `dataChanged` | añade `self.dataChanged.emit(index, index)` tras escribir |
 | Filas fantasma, celdas muertas o crash al insertar | mutaste la lista sin `beginInsertRows`/`endInsertRows` | rodea siempre la mutacion con el par `begin.../end...` |
 | `IndexError` al hacer scroll o seleccionar | no validaste `index.isValid()` en `data`/`setData` | comprueba `if not index.isValid(): return None` al inicio |
 | La celda no deja editarse con doble clic | falta `ItemIsEditable` en `flags` | `return super().flags(index) \| Qt.ItemFlag.ItemIsEditable` |
@@ -343,5 +343,5 @@ Doble clic en una celda para editarla; el boton inserta una fila nueva y la tabl
 
 - [[concepto_model_view]] — el patron Modelo/Vista/Delegate y cuando Widget vs View
 - [[QTableView]] — la vista que consume este modelo via `setModel`
-- [[QAbstractItemView]] — la base que aporta `setModel`, seleccion y senales a las vistas
-- [[QTableWidget]] — el atajo item-based (modelo+vista en una clase) para datos pequenos
+- [[QAbstractItemView]] — la base que aporta `setModel`, seleccion y señales a las vistas
+- [[QTableWidget]] — el atajo item-based (modelo+vista en una clase) para datos pequeños

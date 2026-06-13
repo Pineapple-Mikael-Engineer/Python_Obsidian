@@ -61,7 +61,7 @@ Para **mostrar** una imagen tal cual se usa `QPixmap`; para **editar** sus pixel
 | [[QPixmap]] | imagen optimizada para **mostrar** en pantalla (QLabel, QPainter) |
 | [[QImage]] | imagen para **editar pixel a pixel** (acceso y manipulacion) |
 | [[QIcon]] | **icono** multi-resolucion y multi-estado para botones, acciones y ventana |
-| [[QFont]] | **fuente** del texto: familia, tamano, peso y estilo |
+| [[QFont]] | **fuente** del texto: familia, tamaño, peso y estilo |
 
 ## Notas relacionadas
 

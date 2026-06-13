@@ -18,7 +18,7 @@ draft: false
 
 # QBrush — define el relleno (la brocha) de las formas
 
-`QBrush` describe **con que se rellena** el interior de las formas que dibuja [[QPainter]]: un color solido, un patron o un gradiente. Es una clase de **valor/utilidad** (no hereda de `QObject` ni emite senales): se crea, se configura y se pasa a `painter.setBrush(...)`. Mientras [[QPen]] controla el contorno, `QBrush` controla el area interior.
+`QBrush` describe **con que se rellena** el interior de las formas que dibuja [[QPainter]]: un color solido, un patron o un gradiente. Es una clase de **valor/utilidad** (no hereda de `QObject` ni emite señales): se crea, se configura y se pasa a `painter.setBrush(...)`. Mientras [[QPen]] controla el contorno, `QBrush` controla el area interior.
 
 ## Importacion
 
@@ -27,7 +27,7 @@ from PyQt6.QtGui import QBrush
 ```
 
 > [!nota] Sin herencia relevante
-> Como [[QPen]], `QBrush` es un objeto de valor: no cuelga de `QObject`, no tiene `parent` ni senales. Se copia por valor.
+> Como [[QPen]], `QBrush` es un objeto de valor: no cuelga de `QObject`, no tiene `parent` ni señales. Se copia por valor.
 
 ## Constructor
 

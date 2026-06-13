@@ -23,7 +23,7 @@ draft: false
 
 # QListWidget — lista convenience que junta modelo y vista
 
-`QListWidget` es la version **convenience item-based** de [[QListView]]: junta modelo y vista en una sola clase, asi que la llenas con items directamente (sin modelo aparte). Cada elemento es un `QListWidgetItem`. Es la opcion mas simple para listas **pequenas y estaticas**; para datos grandes o propios conviene `QListView` + un modelo. Ver [[concepto_model_view]] para el modelo mental completo.
+`QListWidget` es la version **convenience item-based** de [[QListView]]: junta modelo y vista en una sola clase, asi que la llenas con items directamente (sin modelo aparte). Cada elemento es un `QListWidgetItem`. Es la opcion mas simple para listas **pequeñas y estaticas**; para datos grandes o propios conviene `QListView` + un modelo. Ver [[concepto_model_view]] para el modelo mental completo.
 
 ## Importacion
 
@@ -46,13 +46,13 @@ classDiagram
     class QListWidget { +addItem() +currentRow() +item() +clear() +itemClicked }
 ```
 
-Hereda de [[QListView]] toda la maquinaria de vista de lista (disposicion, seleccion, scroll, `setViewMode`) y a traves de ella de [[QAbstractItemView]]. Lo que agrega es un **modelo interno ya montado**: en vez de `setModel`, expone metodos item-based (`addItem`, `item`, `takeItem`) y senales que entregan el `QListWidgetItem` o el numero de fila, no un `QModelIndex`.
+Hereda de [[QListView]] toda la maquinaria de vista de lista (disposicion, seleccion, scroll, `setViewMode`) y a traves de ella de [[QAbstractItemView]]. Lo que agrega es un **modelo interno ya montado**: en vez de `setModel`, expone metodos item-based (`addItem`, `item`, `takeItem`) y señales que entregan el `QListWidgetItem` o el numero de fila, no un `QModelIndex`.
 
-## Senales
+## Señales
 
-A diferencia de las vistas puras, sus senales entregan el **item** (objeto) o la **fila** (int), no un `QModelIndex`:
+A diferencia de las vistas puras, sus señales entregan el **item** (objeto) o la **fila** (int), no un `QModelIndex`:
 
-| Senal | Cuando se emite | Argumentos |
+| Señal | Cuando se emite | Argumentos |
 |-------|-----------------|------------|
 | `currentRowChanged` | cambia la fila seleccionada | `row: int` |
 | `itemClicked` | al hacer clic en un item | `item: QListWidgetItem` |

@@ -59,7 +59,7 @@ classDiagram
     class QStatusBar { +showMessage() +addWidget() }
 ```
 
-Las cuatro **son `QWidget`**: lo que no definen (mostrarse, habilitarse, geometria) lo heredan de `QWidget`, y las senales/`parent` de `QObject`. Lo suyo es solo su papel en el armazon de la ventana.
+Las cuatro **son `QWidget`**: lo que no definen (mostrarse, habilitarse, geometria) lo heredan de `QWidget`, y las señales/`parent` de `QObject`. Lo suyo es solo su papel en el armazon de la ventana.
 
 ## Que uso
 

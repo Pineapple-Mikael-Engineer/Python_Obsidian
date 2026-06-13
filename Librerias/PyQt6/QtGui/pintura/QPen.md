@@ -18,7 +18,7 @@ draft: false
 
 # QPen — define el contorno (la pluma) del dibujo
 
-`QPen` describe **como se traza el contorno**: el color, el grosor y el estilo de las lineas y de los **bordes** de las formas que dibuja [[QPainter]]. Es una clase de **valor/utilidad** (no hereda de `QObject` ni emite senales): se crea, se configura y se pasa a `painter.setPen(...)`. A partir de ahi, cada linea o borde que dibuje el painter usa esa pluma hasta que se cambie.
+`QPen` describe **como se traza el contorno**: el color, el grosor y el estilo de las lineas y de los **bordes** de las formas que dibuja [[QPainter]]. Es una clase de **valor/utilidad** (no hereda de `QObject` ni emite señales): se crea, se configura y se pasa a `painter.setPen(...)`. A partir de ahi, cada linea o borde que dibuje el painter usa esa pluma hasta que se cambie.
 
 ## Importacion
 
@@ -27,7 +27,7 @@ from PyQt6.QtGui import QPen
 ```
 
 > [!nota] Sin herencia relevante
-> `QPen` es un objeto de valor (como `QColor` o `QPainterPath`): no cuelga de `QObject`, no tiene `parent` ni senales. Se copia por valor, no por referencia con parent.
+> `QPen` es un objeto de valor (como `QColor` o `QPainterPath`): no cuelga de `QObject`, no tiene `parent` ni señales. Se copia por valor, no por referencia con parent.
 
 ## Constructor
 

@@ -18,7 +18,7 @@ draft: false
 
 # QImage — imagen optimizada para manipular pixeles
 
-`QImage` es una **imagen optimizada para MANIPULAR PIXELES**: leer y escribir el color de cada pixel, convertir entre formatos, generar imagenes por codigo. Es una **clase de valor**: no vive en el arbol de objetos ni emite senales. Su contrapartida es [[QPixmap]], que esta pensada para **mostrar** rapido en pantalla pero no deja editar pixeles. El flujo tipico es: editar en `QImage` y, para mostrarla, convertir a pixmap con `QPixmap.fromImage(img)`.
+`QImage` es una **imagen optimizada para MANIPULAR PIXELES**: leer y escribir el color de cada pixel, convertir entre formatos, generar imagenes por codigo. Es una **clase de valor**: no vive en el arbol de objetos ni emite señales. Su contrapartida es [[QPixmap]], que esta pensada para **mostrar** rapido en pantalla pero no deja editar pixeles. El flujo tipico es: editar en `QImage` y, para mostrarla, convertir a pixmap con `QPixmap.fromImage(img)`.
 
 ## Importacion
 
@@ -29,7 +29,7 @@ from PyQt6.QtGui import QImage
 ## Herencia
 
 > [!note] Clase de valor, no QObject
-> `QImage` **no** hereda de `QObject` ni emite senales: es un valor que se crea por copia. No se subclasea ni se conecta a slots. Por eso esta nota no lleva `classDiagram` de herencia.
+> `QImage` **no** hereda de `QObject` ni emite señales: es un valor que se crea por copia. No se subclasea ni se conecta a slots. Por eso esta nota no lleva `classDiagram` de herencia.
 
 ## Constructor y formas de crear una imagen
 
@@ -41,7 +41,7 @@ QImage(ancho: int, alto: int, formato: QImage.Format)   # vacia, en un formato d
 | Forma | Ejemplo | Resultado |
 |-------|---------|-----------|
 | Desde archivo | `QImage("imagen.png")` | la imagen cargada (vacia si la ruta es mala) |
-| Vacia por tamano y formato | `QImage(64, 64, QImage.Format.Format_RGB32)` | lienzo de 64x64 listo para escribir pixeles |
+| Vacia por tamaño y formato | `QImage(64, 64, QImage.Format.Format_RGB32)` | lienzo de 64x64 listo para escribir pixeles |
 
 ## Metodos
 

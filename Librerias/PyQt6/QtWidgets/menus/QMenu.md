@@ -41,11 +41,11 @@ classDiagram
     class QMenu { +addAction() +addMenu() +addSeparator() +exec() }
 ```
 
-Como `QMenu` **ES un [[QWidget]]**, lo que no define lo hereda: mostrarse, habilitarse y la geometria vienen de `QWidget`; conectar senales y el `parent` vienen de `QObject`. Lo suyo es agrupar acciones y mostrarse como desplegable o contextual.
+Como `QMenu` **ES un [[QWidget]]**, lo que no define lo hereda: mostrarse, habilitarse y la geometria vienen de `QWidget`; conectar señales y el `parent` vienen de `QObject`. Lo suyo es agrupar acciones y mostrarse como desplegable o contextual.
 
-## Senales
+## Señales
 
-| Senal | Cuando se emite | Argumentos |
+| Señal | Cuando se emite | Argumentos |
 |-------|-----------------|------------|
 | `triggered` | se eligio una accion del menu | `action: QAction` (la accion activada) |
 | `aboutToShow` | justo antes de mostrarse | — (util para rellenar el menu al vuelo) |
@@ -78,7 +78,7 @@ Dos sobrecargas; pero lo habitual es **no instanciarlo a mano** y obtenerlo de `
 | Firma | Devuelve | Que hace |
 |-------|----------|----------|
 | `addAction(texto: str)` | `QAction` | crea una accion con ese texto y la devuelve |
-| `addAction(action: QAction)` | `None` | anade una `QAction` ya creada al menu |
+| `addAction(action: QAction)` | `None` | añade una `QAction` ya creada al menu |
 | `addMenu(titulo: str)` | `QMenu` | crea y devuelve un submenu |
 | `addSeparator()` | `QAction` | inserta una linea separadora entre grupos |
 | `exec(pos: QPoint)` | `QAction` | muestra el menu en esa posicion (contextual) y devuelve la accion elegida |

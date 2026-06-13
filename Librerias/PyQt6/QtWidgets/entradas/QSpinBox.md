@@ -13,7 +13,7 @@ draft: false
 
 # QSpinBox — entrada de enteros con flechas arriba/abajo
 
-`QSpinBox` es un campo para introducir un **numero entero** dentro de un rango: muestra el valor y unas flechas arriba/abajo para subirlo o bajarlo de a un paso (tambien con teclado o rueda del raton). Lo habitual es fijarle un rango con `setRange`, opcionalmente un prefijo o sufijo (" kg", "%"), y conectar su senal `valueChanged` para reaccionar al cambio. Para decimales se usa [[QDoubleSpinBox]].
+`QSpinBox` es un campo para introducir un **numero entero** dentro de un rango: muestra el valor y unas flechas arriba/abajo para subirlo o bajarlo de a un paso (tambien con teclado o rueda del raton). Lo habitual es fijarle un rango con `setRange`, opcionalmente un prefijo o sufijo (" kg", "%"), y conectar su señal `valueChanged` para reaccionar al cambio. Para decimales se usa [[QDoubleSpinBox]].
 
 ## Importacion
 
@@ -34,11 +34,11 @@ classDiagram
     class QSpinBox { +setValue() +setRange() +setPrefix() +setSuffix() +valueChanged }
 ```
 
-La caja, las flechas y el comportamiento de edicion vienen de `QAbstractSpinBox`; mostrarse, habilitarse y el tooltip de [[QWidget]]; conectar senales y el `parent` de `QObject`. `QSpinBox` agrega lo especifico de enteros (valor, rango, paso, prefijo/sufijo).
+La caja, las flechas y el comportamiento de edicion vienen de `QAbstractSpinBox`; mostrarse, habilitarse y el tooltip de [[QWidget]]; conectar señales y el `parent` de `QObject`. `QSpinBox` agrega lo especifico de enteros (valor, rango, paso, prefijo/sufijo).
 
-## Senales
+## Señales
 
-| Senal | Cuando se emite | Argumentos |
+| Señal | Cuando se emite | Argumentos |
 |-------|-----------------|------------|
 | `valueChanged` | cada vez que cambia el valor entero | `value: int` |
 | `textChanged` | cuando cambia el texto mostrado (incluye prefijo/sufijo) | `text: str` |

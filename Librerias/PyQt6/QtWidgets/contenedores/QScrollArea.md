@@ -51,7 +51,7 @@ En Qt los "atributos" son **propiedades** (getter/setter):
 | Propiedad | Tipo | Leer \| escribir | Controla |
 |-----------|------|------------------|----------|
 | `widget` | `QWidget` | `widget()` \| `setWidget(w)` | el contenido que se desplaza |
-| `widgetResizable` | `bool` | `widgetResizable()` \| `setWidgetResizable(bool)` | si el widget se ajusta al area en vez de a su tamano natural |
+| `widgetResizable` | `bool` | `widgetResizable()` \| `setWidgetResizable(bool)` | si el widget se ajusta al area en vez de a su tamaño natural |
 | `horizontalScrollBarPolicy` | `enum` | `horizontalScrollBarPolicy()` \| `setHorizontalScrollBarPolicy(...)` | cuando aparece la barra horizontal |
 | `verticalScrollBarPolicy` | `enum` | `verticalScrollBarPolicy()` \| `setVerticalScrollBarPolicy(...)` | cuando aparece la barra vertical |
 | `enabled` | `bool` | `isEnabled()` \| `setEnabled(bool)` | habilitado o en gris (de [[QWidget]]) |

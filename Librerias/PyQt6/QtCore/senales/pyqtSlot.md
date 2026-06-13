@@ -30,7 +30,7 @@ def metodo(self, ...):
 
 ## Como se usa
 
-El decorador va sobre un metodo de una subclase de `QObject` (o de cualquier widget, que ya hereda de [[QObject]]). Los tipos del decorador deben casar con los que emite la senal a la que se conecta.
+El decorador va sobre un metodo de una subclase de `QObject` (o de cualquier widget, que ya hereda de [[QObject]]). Los tipos del decorador deben casar con los que emite la señal a la que se conecta.
 
 ```python
 from PyQt6.QtCore import QObject, pyqtSignal, pyqtSlot
@@ -62,7 +62,7 @@ class Calculadora(QObject):
 
 ## Casos de uso
 
-- **Sobrecarga por tipos**: varios `@pyqtSlot` con tipos distintos sobre metodos del mismo nombre permiten que un mismo slot responda a senales de firmas diferentes.
+- **Sobrecarga por tipos**: varios `@pyqtSlot` con tipos distintos sobre metodos del mismo nombre permiten que un mismo slot responda a señales de firmas diferentes.
 
 ```python
 from PyQt6.QtCore import QObject, pyqtSlot
@@ -86,12 +86,12 @@ class Receptor(QObject):
 | Error | Causa | Solucion |
 |-------|-------|----------|
 | `@pyqtSlot` no surte efecto | lo pusiste en una funcion suelta, no en un metodo de un `QObject` | el decorador solo aplica a metodos de una subclase de `QObject` / widget |
-| `TypeError` o el slot no se dispara al conectar | los tipos del decorador no casan con los que emite la senal | usa los mismos tipos: `pyqtSignal(int)` -> `@pyqtSlot(int)` |
+| `TypeError` o el slot no se dispara al conectar | los tipos del decorador no casan con los que emite la señal | usa los mismos tipos: `pyqtSignal(int)` -> `@pyqtSlot(int)` |
 | La sobrecarga "se pisa" | declaraste dos metodos del mismo nombre sin decorar | cada version necesita su propio `@pyqtSlot(<tipo>)` para registrarse |
 | Slot entre hilos se ejecuta en el hilo equivocado | el metodo no estaba decorado, Qt no conocia su firma | decora con `@pyqtSlot(...)` para habilitar la conexion en cola |
 
 ## Notas relacionadas
 
-- [[concepto_signals_slots]] — el mecanismo de senales y slots donde encaja este decorador
-- [[pyqtSignal]] — declarar la senal que se conecta al slot
+- [[concepto_signals_slots]] — el mecanismo de señales y slots donde encaja este decorador
+- [[pyqtSignal]] — declarar la señal que se conecta al slot
 - [[QObject]] — solo sus subclases pueden tener slots registrados

@@ -32,9 +32,9 @@ classDiagram
 
 Lo que `QProgressBar` **no** define lo hereda de [[QWidget]]: mostrarse, habilitarse, el tooltip. Lo suyo es el progreso: `setValue`, `setRange`, `setFormat`.
 
-## Senales
+## Señales
 
-| Senal | Cuando se emite | Argumentos |
+| Señal | Cuando se emite | Argumentos |
 |-------|-----------------|------------|
 | `valueChanged` | cada vez que cambia el valor actual de la barra | `value: int` (el nuevo valor) |
 
@@ -99,7 +99,7 @@ w.show(); sys.exit(app.exec())
 El patron tipico es conectar la barra al avance de un worker que corre en otro hilo:
 
 ```python
-worker.progreso.connect(barra.setValue)   # el worker emite el % por una senal
+worker.progreso.connect(barra.setValue)   # el worker emite el % por una señal
 ```
 
 ## Errores comunes

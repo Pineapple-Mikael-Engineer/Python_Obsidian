@@ -45,13 +45,13 @@ classDiagram
     class QListWidget { +addItem() +currentRow() }
 ```
 
-Lo esencial lo hereda de [[QAbstractItemView]]: conectar con un modelo (`setModel`), la seleccion, el `currentIndex()` y las senales de interaccion (`clicked`, `doubleClicked`, `activated`). De [[QWidget]] toma el ser visible. `QListView` apenas agrega lo suyo: la disposicion en lista o en rejilla de iconos (`setViewMode`, `setFlow`).
+Lo esencial lo hereda de [[QAbstractItemView]]: conectar con un modelo (`setModel`), la seleccion, el `currentIndex()` y las señales de interaccion (`clicked`, `doubleClicked`, `activated`). De [[QWidget]] toma el ser visible. `QListView` apenas agrega lo suyo: la disposicion en lista o en rejilla de iconos (`setViewMode`, `setFlow`).
 
-## Senales
+## Señales
 
-Hereda las senales de [[QAbstractItemView]]; todas emiten el `QModelIndex` del item:
+Hereda las señales de [[QAbstractItemView]]; todas emiten el `QModelIndex` del item:
 
-| Senal | Cuando se emite | Argumentos |
+| Señal | Cuando se emite | Argumentos |
 |-------|-----------------|------------|
 | `clicked` | al hacer clic en un item | `index: QModelIndex` |
 | `doubleClicked` | al hacer doble clic en un item | `index: QModelIndex` |
@@ -123,7 +123,7 @@ Con un `QStandardItemModel` puedes ademas dar icono y datos a cada item; el mode
 | Necesitas... | Usa |
 |--------------|-----|
 | Datos propios (DB, lista en memoria), muchos items, o varias vistas del mismo dato | **`QListView`** + modelo |
-| Una lista pequena y estatica, llenada item a item | **[[QListWidget]]** (convenience item-based) |
+| Una lista pequeña y estatica, llenada item a item | **[[QListWidget]]** (convenience item-based) |
 
 Regla practica: empieza con `QListWidget` si solo vas a volcar un punado de elementos fijos; pasa a `QListView` + modelo cuando los datos son tuyos, grandes o se reusan en otra vista, porque escala y no los duplica.
 
@@ -133,11 +133,11 @@ Regla practica: empieza con `QListWidget` si solo vas a volcar un punado de elem
 |-------|-------|----------|
 | La vista aparece vacia | no le asignaste modelo | llama a `setModel(modelo)` |
 | Intento editar la lista "en la vista" y no cambia | la vista no almacena datos, solo los muestra | edita el **modelo** (`modelo.setStringList(...)`), la vista se actualiza sola |
-| Mi slot de `clicked` falla al usar el argumento | la senal emite un `QModelIndex`, no texto | usa `index.data()` / `index.row()` |
+| Mi slot de `clicked` falla al usar el argumento | la señal emite un `QModelIndex`, no texto | usa `index.data()` / `index.row()` |
 | Espero columnas y solo veo una | `QListView` es de una sola columna | para varias columnas usa `QTableView` |
 
 ## Notas relacionadas
 
-- [[QAbstractItemView]] — la base que aporta `setModel`, seleccion y las senales
+- [[QAbstractItemView]] — la base que aporta `setModel`, seleccion y las señales
 - [[QListWidget]] — la version convenience item-based (modelo+vista en una clase)
 - [[concepto_model_view]] — el patron Modelo/Vista/Delegate de Qt
