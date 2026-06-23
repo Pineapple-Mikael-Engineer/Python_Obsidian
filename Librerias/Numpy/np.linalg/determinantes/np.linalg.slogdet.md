@@ -44,8 +44,8 @@ real ($e^{4605}$) desborde cualquier flotante. **El mapa de shapes** es el mismo
 la matriz a un escalar— pero produciendo **dos** salidas con esa misma forma de lote:
 
 $$
-(\underbrace{\dots}_{\text{lote}},\, n,\, n)\ \xrightarrow{\ \text{slogdet}\ }\
-\underbrace{(\dots)}_{\text{sign}}\ ,\ \underbrace{(\dots)}_{\text{logabsdet}}
+(\underbrace{n_0,\dots,n_{k-1}}_{\text{lote}},\, n,\, n)\ \xrightarrow{\ \text{slogdet}\ }\
+\underbrace{(n_0,\dots,n_{k-1})}_{\text{sign}}\ ,\ \underbrace{(n_0,\dots,n_{k-1})}_{\text{logabsdet}}
 $$
 
 Para una sola matriz $(n,n)$ ambas salidas son **escalares** `()`; para un lote $(b,n,n)$ ambas son

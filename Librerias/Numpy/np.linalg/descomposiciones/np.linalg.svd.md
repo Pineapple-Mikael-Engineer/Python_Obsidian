@@ -39,9 +39,9 @@ El **mapa de shapes** (con $k = \min(m, n)$); nótese que `S` es **1D** y `Vh` y
 traspuesta:
 
 $$
-(\underbrace{\dots}_{\text{lote}},\, m,\, n)\ \xrightarrow{\ \text{svd}\ }\
-U\,(\dots,\, m,\, m\,|\,k),\ \ S\,(\dots,\, k),\ \ V\!h\,(\dots,\, n\,|\,k,\, n)
-\qquad k=\min(m,n)
+(n_0,\dots,n_{k-1},\, m,\, n)\ \xrightarrow{\ \text{svd}\ }\
+U\,(n_0,\dots,n_{k-1},\, m,\, m\,|\,r),\ \ S\,(n_0,\dots,n_{k-1},\, r),\ \ V\!h\,(n_0,\dots,n_{k-1},\, n\,|\,r,\, n)
+\qquad r=\min(m,n)
 $$
 
 (las dos opciones de $U$/$V\!h$ son `full_matrices=True` | `False`). Por índices, $A$ es una suma de

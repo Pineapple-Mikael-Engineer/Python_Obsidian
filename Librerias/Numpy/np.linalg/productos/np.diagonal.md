@@ -39,13 +39,13 @@ Con `offset`, la diagonal desplazada es $d_i = A_{i,\,i+\text{offset}}$.
 **El mapa de shapes** (la relación entrada → salida, incluido el caso por lotes N-D):
 
 $$
-(\underbrace{\dots}_{\text{lote}},\, n,\, m)\ \xrightarrow{\ \text{diagonal}\ }\ (\underbrace{\dots}_{\text{lote}},\ \min(n, m))
+(n_0,\dots,n_{k-1},\, m,\, p)\ \xrightarrow{\ \text{diagonal}\ }\ (n_0,\dots,n_{k-1},\ \min(m, p))
 $$
 
 Los **dos ejes** de la matriz (`axis1`, `axis2`) **se eliminan** y la diagonal de longitud
-$\min(n,m)$ se **añade como ÚLTIMO eje**. Esto sorprende: aunque diagonalices los dos primeros ejes,
-el eje de la diagonal aparece al **final**, no donde estaban. Una matriz $(n,m)$ da $(\min(n,m),)$;
-una pila $(b,n,n)$ da $(b, n)$ —una diagonal por matriz—.
+$\min(m,p)$ se **añade como ÚLTIMO eje**. Esto sorprende: aunque diagonalices los dos primeros ejes,
+el eje de la diagonal aparece al **final**, no donde estaban. Una matriz $(m,p)$ da $(\min(m,p),)$;
+una pila $(b,m,m)$ da $(b, m)$ —una diagonal por matriz—.
 
 Visualmente, para una matriz $3\times 3$ se extraen los elementos marcados (los $A_{ii}$) a un
 vector:

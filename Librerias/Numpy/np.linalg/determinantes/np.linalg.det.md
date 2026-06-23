@@ -49,7 +49,7 @@ $$
 escalar, dejando intactos los ejes de lote anteriores:
 
 $$
-(\underbrace{\dots}_{\text{lote}},\, n,\, n)\ \xrightarrow{\ \det\ }\ (\underbrace{\dots}_{\text{lote}})
+(\underbrace{n_0,\dots,n_{k-1}}_{\text{lote}},\, n,\, n)\ \xrightarrow{\ \det\ }\ (\underbrace{n_0,\dots,n_{k-1}}_{\text{lote}})
 $$
 
 Para una sola matriz $(n,n)$ el lote es vacío y la salida es un **escalar** `()`; para una pila

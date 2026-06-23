@@ -48,10 +48,10 @@ independiente extra.
 vector $(\dots,n)$ o un bloque de varios lados $(\dots,n,k)$:
 
 $$
-(\dots,\,n,\,n)\ ,\ (\dots,\,n)\ \xrightarrow{\ \text{solve}\ }\ (\dots,\,n)
+(n_0,\dots,n_{k-1},\,n,\,n)\ ,\ (n_0,\dots,n_{k-1},\,n)\ \xrightarrow{\ \text{solve}\ }\ (n_0,\dots,n_{k-1},\,n)
 $$
 $$
-(\dots,\,n,\,n)\ ,\ (\dots,\,n,\,k)\ \xrightarrow{\ \text{solve}\ }\ (\dots,\,n,\,k)
+(n_0,\dots,n_{k-1},\,n,\,n)\ ,\ (n_0,\dots,n_{k-1},\,n,\,k)\ \xrightarrow{\ \text{solve}\ }\ (n_0,\dots,n_{k-1},\,n,\,k)
 \qquad (k\ \text{lados a la vez})
 $$
 

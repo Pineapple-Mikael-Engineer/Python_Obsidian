@@ -45,7 +45,7 @@ $A A^{+} A = A$. Si $A$ es cuadrada e invertible, $A^{+} = A^{-1}$ exactamente.
 **intercambian**:
 
 $$
-(\underbrace{\dots}_{\text{lote}},\, m,\, n)\ \xrightarrow{\ \text{pinv}\ }\ (\underbrace{\dots}_{\text{lote}},\, n,\, m)
+(\underbrace{n_0,\dots,n_{k-1}}_{\text{lote}},\, m,\, n)\ \xrightarrow{\ \text{pinv}\ }\ (\underbrace{n_0,\dots,n_{k-1}}_{\text{lote}},\, n,\, m)
 $$
 
 Una matriz $(m, n)$ produce una $(n, m)$: la pseudoinversa "transpone" la forma, igual que la

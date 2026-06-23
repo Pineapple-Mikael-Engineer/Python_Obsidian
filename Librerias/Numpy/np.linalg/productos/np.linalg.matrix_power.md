@@ -29,17 +29,17 @@ poder multiplicarse consigo misma. Aparece en cadenas de Markov, sistemas dinám
 
 ## La idea en una fórmula
 
-Para $A$ de shape $(\dots, m, m)$, la potencia $n$-ésima encadena $n$ productos matriciales:
+Para $A$ de shape $(n_0,\dots,n_{k-1}, m, m)$, la potencia $n$-ésima encadena $n$ productos matriciales:
 
 $$
 A^n = \underbrace{A \cdot A \cdots A}_{n\ \text{factores}} \qquad (A^n)_{ij} = \sum_{k_1,\dots,k_{n-1}} A_{i k_1} A_{k_1 k_2} \cdots A_{k_{n-1} j}
 $$
 
 **El mapa de shapes** — la matriz debe ser **cuadrada** ($m \times m$) y la salida conserva el shape;
-los `…` son ejes de lote que se preservan intactos:
+los $n_0,\dots,n_{k-1}$ son ejes de lote que se preservan intactos:
 
 $$
-(\underbrace{\dots}_{\text{lote}},\, m,\, m)\ \xrightarrow{\ \text{matrix\_power},\ n\ }\ (\underbrace{\dots}_{\text{lote}},\, m,\, m)
+(n_0,\dots,n_{k-1},\, m,\, m)\ \xrightarrow{\ \text{matrix\_power},\ n\ }\ (n_0,\dots,n_{k-1},\, m,\, m)
 $$
 
 El exponente $n$ es un entero con tres regímenes según su signo:
@@ -63,7 +63,7 @@ np.linalg.matrix_power(a, n) -> ndarray
 
 ### `a` — la matriz (o lote de matrices) a elevar
 `array_like` con `ndim >= 2` cuyos **dos últimos ejes son iguales** (`a.shape[-1] == a.shape[-2]`),
-es decir cuadrada $(\dots, m, m)$. Admite **pilas**: los ejes anteriores son lote y cada matriz del
+es decir cuadrada $(n_0,\dots,n_{k-1}, m, m)$. Admite **pilas**: los ejes anteriores son lote y cada matriz del
 lote se eleva por separado. Si no es cuadrada, lanza `LinAlgError`.
 
 ### `n` — el exponente entero

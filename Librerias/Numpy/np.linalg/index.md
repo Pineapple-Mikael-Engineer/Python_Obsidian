@@ -16,7 +16,7 @@ array `(..., n, n)` no es "una matriz", es **una pila de matrices** `n×n`, y la
 de forma independiente sobre cada una. Casi todo delega en **LAPACK** (la biblioteca de referencia en
 Fortran), así que el rendimiento es de nivel compilado.
 
-$$ (\underbrace{\dots}_{\text{lote}},\,n,\,n)\ \xrightarrow{\ \text{op sobre los 2 últimos ejes}\ }\ (\underbrace{\dots}_{\text{lote}},\,\text{resultado}) $$
+$$ (n_0,\dots,n_{k-1},\,m,\,m)\ \xrightarrow{\ \text{op sobre los 2 últimos ejes}\ }\ (n_0,\dots,n_{k-1},\,\text{resultado}) $$
 
 ## En acción
 

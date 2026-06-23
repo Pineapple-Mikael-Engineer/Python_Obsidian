@@ -39,12 +39,12 @@ la matriz **se contraen juntos** y desaparecen.
 **El mapa de shapes** (la relación entrada → salida, incluido el caso por lotes N-D):
 
 $$
-(\underbrace{\dots}_{\text{lote}},\, n,\, n)\ \xrightarrow{\ \text{trace}\ }\ (\underbrace{\dots}_{\text{lote}})
+(n_0,\dots,n_{k-1},\, m,\, m)\ \xrightarrow{\ \text{trace}\ }\ (n_0,\dots,n_{k-1})
 $$
 
-Los **dos últimos ejes** (por defecto) son la matriz y se **colapsan a un escalar**; los `…`
-anteriores son ejes de lote que **sobreviven**. Una matriz $(n,n)$ da un escalar `()`; una pila
-$(b,n,n)$ da un vector $(b,)$ —una traza por matriz del lote—. La regla extendida con `offset` suma
+Los **dos últimos ejes** (por defecto) son la matriz y se **colapsan a un escalar**; los
+$n_0,\dots,n_{k-1}$ anteriores son ejes de lote que **sobreviven**. Una matriz $(m,m)$ da un escalar `()`; una pila
+$(b,m,m)$ da un vector $(b,)$ —una traza por matriz del lote—. La regla extendida con `offset` suma
 la diagonal desplazada $A_{i,\,i+\text{offset}}$.
 
 Visualmente, para una matriz $4\times 4$ la traza recorre la diagonal marcada (los elementos

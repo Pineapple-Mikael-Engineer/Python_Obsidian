@@ -36,7 +36,7 @@ multiplicar y **sumar sobre ellos**. Los ejes contraídos $c_1\dots c_N$ aparece
 **El mapa de shapes** — la salida es la concatenación de los ejes libres de `a` con los de `b`:
 
 $$
-(\underbrace{\dots}_{a}^{\text{libres}},\, c_1\dots c_N)\ ,\ (c_1\dots c_N,\, \underbrace{\dots}_{b}^{\text{libres}})\ \longrightarrow\ (\underbrace{\dots}_{a}^{\text{libres}},\, \underbrace{\dots}_{b}^{\text{libres}})
+(\underbrace{n_0,\dots,n_{r-1}}_{a\ \text{libres}},\, c_1\dots c_N)\ ,\ (c_1\dots c_N,\, \underbrace{m_0,\dots,m_{s-1}}_{b\ \text{libres}})\ \longrightarrow\ (\underbrace{n_0,\dots,n_{r-1}}_{a\ \text{libres}},\, \underbrace{m_0,\dots,m_{s-1}}_{b\ \text{libres}})
 $$
 
 La fórmula por índices, con los ejes libres $i$ de `a` y $j$ de `b`, sumando sobre los ejes

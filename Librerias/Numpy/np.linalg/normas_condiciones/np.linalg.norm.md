@@ -34,9 +34,9 @@ Una norma reduce el/los eje(s) indicados por `axis` y devuelve la magnitud. **El
 (la relación entrada → salida) depende de cuántos ejes consume `ord`/`axis`:
 
 $$
-(\underbrace{\dots}_{\text{lote}},\, n)\ \xrightarrow{\ \text{axis}=k\ \text{(norma de vector)}}\ (\underbrace{\dots}_{\text{lote}})
+(\underbrace{n_0,\dots,n_{k-1}}_{\text{lote}},\, n)\ \xrightarrow{\ \text{axis}=k\ \text{(norma de vector)}}\ (\underbrace{n_0,\dots,n_{k-1}}_{\text{lote}})
 \qquad
-(\underbrace{\dots}_{\text{lote}},\, m,\, n)\ \xrightarrow{\ \text{axis}=(i,j)\ \text{(norma de matriz)}}\ (\underbrace{\dots}_{\text{lote}})
+(\underbrace{n_0,\dots,n_{k-1}}_{\text{lote}},\, m,\, n)\ \xrightarrow{\ \text{axis}=(i,j)\ \text{(norma de matriz)}}\ (\underbrace{n_0,\dots,n_{k-1}}_{\text{lote}})
 $$
 
 Sin `axis`, `x` 1D se trata como un vector entero y `x` 2D como una matriz entera; en ambos casos

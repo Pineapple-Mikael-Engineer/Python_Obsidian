@@ -46,7 +46,7 @@ Ver [[np.trace]] (la traza) y [[np.linalg.det]] (el determinante).
 **El mapa de shapes** — entrada `(...,n,n)` → **una sola** salida `(...,n)`:
 
 $$
-\underbrace{(\dots,\,n,\,n)}_{A}\ \xrightarrow{\ \text{eigvalsh}\ }\ \underbrace{(\dots,\,n)}_{w\ \text{reales, ascendentes}}
+\underbrace{(n_0,\dots,n_{k-1},\,n,\,n)}_{A}\ \xrightarrow{\ \text{eigvalsh}\ }\ \underbrace{(n_0,\dots,n_{k-1},\,n)}_{w\ \text{reales, ascendentes}}
 $$
 
 ## Firma

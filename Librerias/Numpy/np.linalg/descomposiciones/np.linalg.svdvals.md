@@ -39,7 +39,7 @@ El **mapa de shapes**: colapsa los dos ejes de la matriz a un único eje de long
 [[concepto_shape|lote]] sobre los ejes previos:
 
 $$
-(\underbrace{\dots}_{\text{lote}},\, m,\, n)\ \xrightarrow{\ \text{svdvals}\ }\ (\underbrace{\dots}_{\text{lote}},\, \min(m, n))
+(n_0,\dots,n_{k-1},\, m,\, n)\ \xrightarrow{\ \text{svdvals}\ }\ (n_0,\dots,n_{k-1},\, \min(m, n))
 $$
 
 Equivalencia exacta: $\sigma_i = \sqrt{\lambda_i(A^{H}A)}$, las raíces de los autovalores de

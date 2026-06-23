@@ -23,7 +23,7 @@ draft: false
 
 `np.linalg.matrix_transpose` (≡ `np.matrix_transpose`, añadida en **NumPy 2.0**) intercambia los
 **dos últimos ejes** de un array, dejando intactos los ejes anteriores. Es la transpuesta **consciente
-de lotes**: en un stack $(\dots, m, n)$ transpone cada matriz por separado y conserva los ejes de
+de lotes**: en un stack $(n_0,\dots,n_{k-1}, m, n)$ transpone cada matriz por separado y conserva los ejes de
 lote. Esa es exactamente su diferencia con `.T` / [[np.transpose]], que invierten **todos** los ejes y
 por tanto **mezclan el lote** en N-D. Equivale a `np.swapaxes(x, -1, -2)`. Es la transpuesta que
 quieres siempre que trabajes con pilas de matrices.
@@ -37,10 +37,10 @@ $$
 B_{\,\dots,\, i,\, j} = A_{\,\dots,\, j,\, i}
 $$
 
-**El mapa de shapes** — los ejes de lote `…` quedan intactos y solo se permutan los dos últimos:
+**El mapa de shapes** — los ejes de lote $n_0,\dots,n_{k-1}$ quedan intactos y solo se permutan los dos últimos:
 
 $$
-(\underbrace{\dots}_{\text{lote}},\, m,\, n)\ \xrightarrow{\ \text{matrix\_transpose}\ }\ (\underbrace{\dots}_{\text{lote}},\, n,\, m)
+(n_0,\dots,n_{k-1},\, m,\, n)\ \xrightarrow{\ \text{matrix\_transpose}\ }\ (n_0,\dots,n_{k-1},\, n,\, m)
 $$
 
 Contrástalo con `.T`, que aplica la permutación que **invierte la tupla entera** de ejes:

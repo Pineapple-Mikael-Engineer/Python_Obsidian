@@ -39,7 +39,7 @@ $$
 El **mapa de shapes** depende de `mode`; en el modo `reduced` (defecto), con $k = \min(m, n)$:
 
 $$
-(m,\, n)\ \xrightarrow{\ \text{qr, reduced}\ }\ Q\,(m,\, k),\ R\,(k,\, n)\qquad k=\min(m,n)
+(n_0,\dots,n_{k-1},\, m,\, n)\ \xrightarrow{\ \text{qr, reduced}\ }\ Q\,(n_0,\dots,n_{k-1},\, m,\, r),\ R\,(n_0,\dots,n_{k-1},\, r,\, n)\qquad r=\min(m,n)
 $$
 
 Para una matriz **alta** ($m > n$), $k = n$: $Q$ es $(m, n)$ con columnas ortonormales y $R$ es

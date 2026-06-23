@@ -48,7 +48,7 @@ $$
 `(...,n,n)`:
 
 $$
-\underbrace{(\dots,\,n,\,n)}_{A}\ \xrightarrow{\ \text{eig}\ }\ \big(\ \underbrace{(\dots,\,n)}_{w}\ ,\ \underbrace{(\dots,\,n,\,n)}_{v}\ \big)
+\underbrace{(n_0,\dots,n_{k-1},\,n,\,n)}_{A}\ \xrightarrow{\ \text{eig}\ }\ \big(\ \underbrace{(n_0,\dots,n_{k-1},\,n)}_{w}\ ,\ \underbrace{(n_0,\dots,n_{k-1},\,n,\,n)}_{v}\ \big)
 $$
 
 Los dos últimos ejes de $A$ son la matriz; los `…` anteriores son ejes de **lote**. Por cada matriz

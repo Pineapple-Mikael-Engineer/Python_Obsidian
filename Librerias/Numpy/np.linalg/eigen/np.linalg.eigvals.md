@@ -41,7 +41,7 @@ $\mathbf{v}$.
 que devuelve dos):
 
 $$
-\underbrace{(\dots,\,n,\,n)}_{A}\ \xrightarrow{\ \text{eigvals}\ }\ \underbrace{(\dots,\,n)}_{w}
+\underbrace{(n_0,\dots,n_{k-1},\,n,\,n)}_{A}\ \xrightarrow{\ \text{eigvals}\ }\ \underbrace{(n_0,\dots,n_{k-1},\,n)}_{w}
 $$
 
 Los dos últimos ejes de $A$ (la matriz) **se contraen** a un vector de $n$ autovalores; los `…`

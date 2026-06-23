@@ -46,12 +46,12 @@ El eje $k$ —la dimensión interior— **aparece en el sumatorio y desaparece**
 **El mapa de shapes** (la relación entrada → salida, incluido el caso por lotes N-D):
 
 $$
-(\underbrace{\dots}_{\text{lote}},\, m,\, k)\ \times\ (\underbrace{\dots}_{\text{lote}},\, k,\, n)\ \longrightarrow\ (\underbrace{\dots}_{\text{lote}},\, m,\, n)
+(n_0,\dots,n_{k-1},\, m,\, p)\ \times\ (n_0,\dots,n_{k-1},\, p,\, q)\ \longrightarrow\ (n_0,\dots,n_{k-1},\, m,\, q)
 $$
 
-Los **dos últimos ejes** son la matriz; los `…` anteriores son ejes de lote que se alinean por
-broadcasting; el eje interior $k$ se **contrae y desaparece**. Esta única regla gobierna todos los
-casos: producto punto ($k$ contra $k$ → escalar), matriz·vector, y la pila N-D.
+Los **dos últimos ejes** son la matriz; los $n_0,\dots,n_{k-1}$ anteriores son ejes de lote que se alinean por
+broadcasting; el eje interior $p$ se **contrae y desaparece**. Esta única regla gobierna todos los
+casos: producto punto ($p$ contra $p$ → escalar), matriz·vector, y la pila N-D.
 
 Visualmente, para $A_{(2\times 3)}$ y $B_{(3\times 2)}$ se contrae la dimensión $3$:
 

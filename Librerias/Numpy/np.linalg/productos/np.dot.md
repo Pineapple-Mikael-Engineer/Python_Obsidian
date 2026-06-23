@@ -38,7 +38,7 @@ eje de `a` con el penúltimo de `b`. La pregunta clave nunca es "¿qué hace `do
 Esa única regla genera todos los casos. El **mapa de shapes** general:
 
 $$
-(\dots,\, i,\, k)\ \times\ (\dots,\, k,\, j)\ \longrightarrow\ (\dots,\, i,\ \dots,\, j)
+(n_0,\dots,n_{r-1},\, i,\, k)\ \times\ (m_0,\dots,m_{s-1},\, k,\, j)\ \longrightarrow\ (n_0,\dots,n_{r-1},\, i,\ m_0,\dots,m_{s-1},\, j)
 $$
 
 El eje compartido $k$ **se contrae y desaparece**; todos los demás ejes de `a` y de `b`
@@ -63,7 +63,7 @@ $$
 \text{2D·2D:}\quad & (m,k),\ (k,n) &&\longrightarrow\ (m,n) && \text{matricial} \\
 \text{2D·1D:}\quad & (m,k),\ (k) &&\longrightarrow\ (m) && \text{matriz · vector} \\
 \text{1D·2D:}\quad & (k),\ (k,n) &&\longrightarrow\ (n) && \text{vector · matriz} \\
-\text{N-D:}\quad & (\dots,i,k),\ (\dots,k,j) &&\longrightarrow\ (\dots,i,\dots,j) && \text{tensorial}
+\text{N-D:}\quad & (n_0,\dots,n_{r-1},i,k),\ (m_0,\dots,m_{s-1},k,j) &&\longrightarrow\ (n_0,\dots,n_{r-1},i,m_0,\dots,m_{s-1},j) && \text{tensorial}
 \end{aligned}
 $$
 

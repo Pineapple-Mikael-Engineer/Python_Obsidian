@@ -42,7 +42,7 @@ $$
 cualquier eje de lote anterior:
 
 $$
-(\underbrace{\dots}_{\text{lote}},\, m,\, n)\ \xrightarrow{\ \text{cond}\ }\ (\underbrace{\dots}_{\text{lote}})
+(\underbrace{n_0,\dots,n_{k-1}}_{\text{lote}},\, m,\, n)\ \xrightarrow{\ \text{cond}\ }\ (\underbrace{n_0,\dots,n_{k-1}}_{\text{lote}})
 $$
 
 La interpretación práctica: con $\kappa \approx 10^{k}$ esperas **perder unos $k$ dígitos** de

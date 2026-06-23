@@ -40,7 +40,7 @@ donde $\varepsilon$ es la precisión de máquina (`eps`). **El mapa de shapes**:
 colapsa los dos últimos ejes (la matriz) a un **entero** y conserva los ejes de lote:
 
 $$
-(\underbrace{\dots}_{\text{lote}},\, m,\, n)\ \xrightarrow{\ \text{matrix\_rank}\ }\ (\underbrace{\dots}_{\text{lote}})\ \ \text{(enteros)}
+(\underbrace{n_0,\dots,n_{k-1}}_{\text{lote}},\, m,\, n)\ \xrightarrow{\ \text{matrix\_rank}\ }\ (\underbrace{n_0,\dots,n_{k-1}}_{\text{lote}})\ \ \text{(enteros)}
 $$
 
 El rango está acotado por $0 \le \operatorname{rank}(A) \le \min(m, n)$. Igualdad con $\min(m,n)$ →

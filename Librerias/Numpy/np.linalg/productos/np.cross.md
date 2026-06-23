@@ -52,14 +52,14 @@ paralelogramo), y el vector resultante es **perpendicular** a $a$ y a $b$ (regla
 los demás ejes son lote y se alinean por broadcasting.
 
 $$
-(\underbrace{\dots}_{\text{lote}},\, 3)\ \times\ (\underbrace{\dots}_{\text{lote}},\, 3)\ \longrightarrow\ (\underbrace{\dots}_{\text{lote}},\, 3)
+(n_0,\dots,n_{k-1},\, 3)\ \times\ (n_0,\dots,n_{k-1},\, 3)\ \longrightarrow\ (n_0,\dots,n_{k-1},\, 3)
 $$
 
 Si los vectores son **2D** (tamaño 2 en el eje), el resultado es el **escalar** $a_1 b_2 - a_2 b_1$
 (la componente $z$, único valor no nulo de un cruce en el plano): ese eje **desaparece**.
 
 $$
-(\underbrace{\dots}_{\text{lote}},\, 2)\ \times\ (\underbrace{\dots}_{\text{lote}},\, 2)\ \longrightarrow\ (\underbrace{\dots}_{\text{lote}})
+(n_0,\dots,n_{k-1},\, 2)\ \times\ (n_0,\dots,n_{k-1},\, 2)\ \longrightarrow\ (n_0,\dots,n_{k-1})
 $$
 
 Visualmente, para dos vectores de la base canónica el cruce devuelve el tercero (regla de la mano

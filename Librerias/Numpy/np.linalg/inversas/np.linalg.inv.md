@@ -47,7 +47,7 @@ es inestable), sino una **factorización LU** con sustitución.
 **El mapa de shapes** (entrada → salida, incluido el caso por lotes N-D):
 
 $$
-(\underbrace{\dots}_{\text{lote}},\, n,\, n)\ \xrightarrow{\ \text{inv}\ }\ (\underbrace{\dots}_{\text{lote}},\, n,\, n)
+(\underbrace{n_0,\dots,n_{k-1}}_{\text{lote}},\, n,\, n)\ \xrightarrow{\ \text{inv}\ }\ (\underbrace{n_0,\dots,n_{k-1}}_{\text{lote}},\, n,\, n)
 $$
 
 Los **dos últimos ejes** forman la matriz cuadrada que se invierte; los `…` anteriores son ejes de

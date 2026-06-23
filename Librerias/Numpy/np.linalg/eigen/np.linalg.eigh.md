@@ -46,7 +46,7 @@ $$
 **El mapa de shapes** — entrada `(...,n,n)` → dos salidas:
 
 $$
-\underbrace{(\dots,\,n,\,n)}_{A}\ \xrightarrow{\ \text{eigh}\ }\ \big(\ \underbrace{(\dots,\,n)}_{w\ \text{reales, ascendentes}}\ ,\ \underbrace{(\dots,\,n,\,n)}_{v\ \text{ortonormales en columnas}}\ \big)
+\underbrace{(n_0,\dots,n_{k-1},\,n,\,n)}_{A}\ \xrightarrow{\ \text{eigh}\ }\ \big(\ \underbrace{(n_0,\dots,n_{k-1},\,n)}_{w\ \text{reales, ascendentes}}\ ,\ \underbrace{(n_0,\dots,n_{k-1},\,n,\,n)}_{v\ \text{ortonormales en columnas}}\ \big)
 $$
 
 ```text

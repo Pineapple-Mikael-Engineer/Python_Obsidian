@@ -41,7 +41,7 @@ El **mapa de shapes** mantiene la dimensión —descompone una matriz cuadrada e
 en [[concepto_shape|lote]] sobre los ejes previos:
 
 $$
-(\underbrace{\dots}_{\text{lote}},\, n,\, n)\ \xrightarrow{\ \text{cholesky}\ }\ L\,(\underbrace{\dots}_{\text{lote}},\, n,\, n)
+(n_0,\dots,n_{k-1},\, n,\, n)\ \xrightarrow{\ \text{cholesky}\ }\ L\,(n_0,\dots,n_{k-1},\, n,\, n)
 $$
 
 Por índices, cada entrada de $L$ se obtiene por sustitución hacia adelante (los elementos por encima
