@@ -1,68 +1,90 @@
 ---
-title: np/manipulacion_forma/dividir — partir arrays en subarrays
+title: np/manipulacion_forma/dividir — partir arrays en sub-arrays
 tags:
   - numpy
   - indice
 draft: false
 ---
 
-# np/manipulacion_forma/dividir — partir arrays en subarrays
+# np/manipulacion_forma/dividir — partir arrays en sub-arrays
 
-El inverso de `combinar/`: toma un array y lo parte en una lista de subarrays. Los subarrays resultantes son **vistas** del original — comparten el mismo buffer de memoria, por lo que modificarlos modifica el array fuente.
+El **inverso de `combinar/`**: toma un único array y lo parte, a lo largo de un eje, en una **lista**
+de sub-arrays. Donde [[np.concatenate]] une varios arrays por un eje, las funciones de aquí deshacen
+esa unión troceando ese mismo eje. Todos los sub-arrays resultantes son **vistas** del original
+—comparten su buffer de memoria—, por lo que modificarlos modifica el array fuente (ver
+[[concepto_views_vs_copias]]).
 
-Las tres funciones son variantes de la misma operacion base con diferentes restricciones de eje. `np.split` es la mas general; `np.vsplit` y `np.hsplit` son alias legibles para los casos mas frecuentes (dividir por filas o por columnas).
+Todas las funciones comparten la misma firma base `f(ary, indices_or_sections[, axis])` y solo
+cambian en qué eje actúan y si exigen división exacta.
 
-## La restriccion de la division exacta
+## split vs array_split: la división exacta
 
-Cuando se pasa un entero como segundo argumento, NumPy exige que el eje se divida exactamente en ese numero de partes iguales. Si el eje tiene 10 elementos y se pide dividir en 3, se lanza `ValueError`. La alternativa es pasar una lista de indices de corte: `np.split(a, [3, 7])` produce tres subarrays con los elementos `[0:3]`, `[3:7]` y `[7:]` — y con indices no tiene que ser exacto.
+La diferencia clave de la familia está en el **modo entero** (cuando el segundo argumento es un
+número $N$ de partes):
 
-## Funciones
+- [[np.split]] **exige división exacta**: si el eje no es divisible por $N$, lanza `ValueError`.
+- [[np.array_split]] **admite partes desiguales**: reparte el resto entre los primeros trozos, así
+  que **nunca falla** por el tamaño. Partir 7 elementos en 3 da trozos de `3, 2, 2`.
 
-### [[np.split]] — division generica
+Con una **lista de índices de corte** (`np.split(a, [3, 7])`) ninguno de los dos exige
+divisibilidad: ambos trocean como el slicing de Python (`a[:3]`, `a[3:7]`, `a[7:]`).
 
-La funcion raiz. Divide el array a lo largo del eje `axis` (default: 0). El segundo argumento puede ser:
-- Un entero N: divide en N partes iguales. Falla si el eje no es divisible por N.
-- Una lista de indices: corta en esas posiciones, como el indexado de Python. No requiere partes iguales.
+```python
+import numpy as np
 
-Devuelve una lista de subarrays (vistas). Funciona con cualquier `ndim` y cualquier eje.
+np.split(np.arange(9), 3)          # OK → 3 partes de (3,)
+# np.split(np.arange(10), 3)       # ValueError: división no exacta
+[a.shape for a in np.array_split(np.arange(10), 3)]   # [(4,), (3,), (3,)]
+```
 
-### [[np.vsplit]] — dividir por filas (eje 0)
+## Los atajos por eje fijo: vsplit / hsplit / dsplit
 
-Atajo para `np.split(a, indices_or_sections, axis=0)`. Mas legible cuando se trabaja con matrices y la intencion es separar grupos de filas. Requiere que el array tenga al menos 2 dimensiones; para arrays 1D usar `np.split` directamente.
+Tres envoltorios de `split` con el `axis` ya fijado. No añaden cómputo: solo hacen el código más
+legible al nombrar la dirección del corte. Cada uno equivale a `np.split(ary, ..., axis=<eje>)`.
 
-Uso tipico: separar un dataset en bloques de entrenamiento, validacion y test cortando por filas.
+| Atajo | Eje | Corta | Equivale a | `ndim` mínimo |
+|---|---|---|---|---|
+| [[np.vsplit]] | 0 | filas (vertical) | `split(a, ..., axis=0)` | 2 |
+| [[np.hsplit]] | 1 | columnas (horizontal) | `split(a, ..., axis=1)` | 2 (acepta 1D → eje 0) |
+| [[np.dsplit]] | 2 | profundidad (*depth*) | `split(a, ..., axis=2)` | 3 |
 
-### [[np.hsplit]] — dividir por columnas (eje 1)
-
-Atajo para `np.split(a, indices_or_sections, axis=1)`. Util para separar grupos de columnas de una matriz: caracteristicas, etiquetas, subconjuntos de variables. Para arrays 1D se comporta como `split` en el eje 0 (porque no existe el eje 1).
+`hsplit` es el único que tolera arrays 1D (cae al eje 0); `vsplit` requiere 2D y `dsplit` requiere 3D.
 
 ## Tabla de funciones
 
-| Funcion | Eje de division | Devuelve vistas | Restriccion |
-|---------|----------------|-----------------|-------------|
-| [[np.split]] | Cualquiera (default 0) | Si | Division exacta si se usa entero |
-| [[np.vsplit]] | Eje 0 (filas) | Si | ndim >= 2 |
-| [[np.hsplit]] | Eje 1 (columnas) | Si | ndim >= 2; en 1D divide eje 0 |
+| Función | Eje | Partes desiguales | Devuelve | Inverso de |
+|---|---|---|---|---|
+| [[np.split]] | cualquiera (default 0) | no (exige exacto) | `list[ndarray]` (vistas) | [[np.concatenate]] |
+| [[np.array_split]] | cualquiera (default 0) | **sí** | `list[ndarray]` (vistas) | [[np.concatenate]] |
+| [[np.vsplit]] | 0 (filas) | no | `list[ndarray]` (vistas) | [[np.vstack]] |
+| [[np.hsplit]] | 1 (columnas) | no | `list[ndarray]` (vistas) | [[np.hstack]] |
+| [[np.dsplit]] | 2 (profundidad) | no | `list[ndarray]` (vistas) | [[np.dstack]] |
 
-## Patron de indices vs. entero
+> [!important] Todas devuelven una LISTA, no un array
+> El retorno es siempre una `list` de `ndarray`. Lo idiomático es **desempaquetar** cuando se conoce
+> el número de trozos: `izq, der = np.hsplit(M, 2)`.
+
+## Entero vs índices de corte
 
 ```python
 import numpy as np
 
 a = np.arange(12).reshape(4, 3)
 
-# Division en partes iguales (entero): debe ser exacto
-partes = np.vsplit(a, 2)       # 2 matrices de (2, 3) — OK
-# np.vsplit(a, 3)              # Error: 4 no es divisible entre 3
+# Partes iguales (entero): debe ser exacto con split
+partes = np.vsplit(a, 2)        # 2 matrices de (2, 3) — OK
+# np.vsplit(a, 3)               # ValueError: 4 no es divisible entre 3
+partes = np.array_split(a, 3)   # OK → (2,3), (1,3), (1,3)
 
-# Division en posiciones arbitrarias (lista de indices)
-partes = np.vsplit(a, [1, 3])  # shapes (1,3), (2,3), (1,3) — siempre OK
+# Posiciones arbitrarias (lista de índices): siempre válido
+partes = np.vsplit(a, [1, 3])   # shapes (1,3), (2,3), (1,3)
 ```
 
-## Relacion con combinar
+## Relación con combinar
 
-`dividir/` y `combinar/` son operaciones inversas logicamente, pero no simetricas en memoria:
-- `split` → vistas (sin copia)
-- `concatenate` de esas vistas → copia
+`dividir/` y `combinar/` son inversos lógicos, pero **no simétricos en memoria**:
 
-Esto significa que iterar sobre subarrays de un array grande es barato, pero reunirlos en un nuevo array tiene coste.
+- `split` y compañía → **vistas** (sin copia, O(1) en memoria).
+- `concatenate` de esas vistas → **copia** a un buffer nuevo.
+
+Iterar sobre los sub-arrays de un array grande es barato; reunirlos en un array nuevo tiene coste.

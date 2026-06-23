@@ -8,78 +8,83 @@ draft: false
 
 # np/manipulacion_forma/combinar — unir arrays en uno
 
-Las seis funciones de esta carpeta toman varios arrays separados y los fusionan en uno solo. Todas devuelven una **copia** — no existe vista al combinar buffers de memoria independientes.
+Las seis funciones de esta carpeta toman varios arrays separados y los **fusionan en uno solo**. Todas devuelven una **copia**: no existe vista al combinar buffers de memoria independientes. Todo el grupo se entiende a través de una sola pregunta sobre el [[concepto_shape|shape]]: ¿el resultado tiene el **mismo número de ejes** que las entradas, o **uno más**?
 
-La distincion conceptual mas importante: algunas funciones unen a lo largo de un **eje existente** (los arrays deben tener el mismo numero de dimensiones y shapes compatibles) y `np.stack` crea un **eje nuevo** (todos los arrays deben tener exactamente la misma shape). Confundir estas dos categorias es la fuente mas comun de errores de shape en NumPy.
+## La distinción central: eje existente vs. eje nuevo
 
-## El eje existente vs. el eje nuevo
+Es la división que organiza el grupo entero y la fuente más común de errores de shape en NumPy.
 
-Dos vectores `(5,)` unidos con `np.concatenate` dan `(10,)` — mismo numero de dimensiones, mas elementos en el eje 0. Los mismos vectores unidos con `np.stack(axis=0)` dan `(2, 5)` — una nueva dimension aparece. Elegir entre ellos depende de si el resultado debe tener el mismo numero de ejes que los inputs o uno mas.
+**[[np.concatenate]] hace crecer un eje que ya existe.** Los arrays deben tener el mismo `ndim` y coincidir en todos los ejes salvo en el de unión, cuya longitud se suma. El `ndim` no cambia:
 
-## Funciones
+$$
+(n_0,\dots,a,\dots),(n_0,\dots,b,\dots)\;\xrightarrow{\ \text{axis}=p\ }\;(n_0,\dots,a+b,\dots)
+$$
 
-### [[np.concatenate]] — union generica por eje existente
+**[[np.stack]] inserta un eje nuevo.** Todos los arrays deben tener **exactamente el mismo shape**; aparece una dimensión de tamaño $r$ (el número de arrays). El `ndim` sube en 1:
 
-La funcion base de todo el grupo. Acepta una secuencia de arrays y un eje a lo largo del cual unirlos. Todos los arrays deben tener el mismo `ndim` y la misma shape en todos los ejes excepto en `axis`. No crea nuevas dimensiones. Es la mas flexible y la mas explicita: si sabes que eje quieres usar y tus arrays ya tienen la dimension correcta, esta es la eleccion.
+$$
+\underbrace{(n_0,\dots,n_{k-1}),\dots,(n_0,\dots,n_{k-1})}_{r\ \text{arrays}}\;\xrightarrow{\ \text{stack, axis}=p\ }\;(n_0,\dots,\overbrace{r}^{\text{nuevo}},\dots,n_{k-1})
+$$
 
-### [[np.stack]] — apilar creando un eje nuevo
+Dos vectores `(5,)`: con `concatenate` dan `(10,)` (mismo `ndim`, más elementos); con `stack` dan `(2, 5)` (aparece un eje). Elegir entre ellos es elegir si quieres el mismo número de ejes o uno más.
 
-A diferencia de todas las demas funciones de este grupo, `stack` exige que todos los arrays tengan exactamente la misma shape e inserta un nuevo eje en la posicion `axis`. El resultado tiene `ndim + 1` dimensiones. Util para construir un tensor de lotes desde muestras individuales: N arrays de shape `(H, W)` apilados con `axis=0` dan `(N, H, W)`.
+## Los atajos: concatenate/stack por un eje fijo
 
-### [[np.vstack]] — apilar verticalmente (eje 0)
+Las otras cuatro funciones son **atajos** de las dos base con el eje ya elegido (y, algunas, una promoción de dimensión automática). Saber a qué eje van es saber qué hacen.
 
-Une arrays a lo largo del eje 0. Para arrays 2D es identico a `concatenate(..., axis=0)`. El caso especial util: para arrays 1D, `vstack` los convierte a filas antes de apilar — un vector `(5,)` se trata como `(1, 5)`. Conveniente cuando se tienen vectores que se quieren apilar como filas de una matriz.
+| Función | Une por | ¿Eje nuevo? | Promoción / caso 1D | Equivale a |
+|---|---|---|---|---|
+| [[np.concatenate]] | eje libre (`axis`) | No | 1D concatena en eje 0 | — (es la base) |
+| [[np.stack]] | eje **nuevo** | Sí (`ndim + 1`) | trata cada array como elemento | — (es la base) |
+| [[np.vstack]] | eje 0 (filas) | No | 1D `(n,)` → fila `(1, n)` | `concatenate(axis=0)` |
+| [[np.hstack]] | eje 1 (columnas); eje 0 en 1D | No | 1D se aplana en eje 0 | `concatenate(axis=1)` |
+| [[np.dstack]] | eje 2 (profundidad) | No | 2D `(m,n)` → `(m, n, 1)` | `concatenate(axis=2)` |
+| [[np.column_stack]] | eje 1 (columnas) | No | 1D `(n,)` → columna `(n, 1)` | `hstack` tras promover |
 
-### [[np.hstack]] — apilar horizontalmente (eje 1)
+El detalle clave de los atajos es la **promoción de dimensión**: `vstack` convierte vectores en filas, `column_stack` los convierte en columnas, `dstack` los lleva a profundidad. Por eso resuelven casos que `concatenate` no resolvería sin un `reshape` previo.
 
-Une arrays a lo largo del eje 1 para arrays de 2D o mas. Para arrays 1D es simplemente una concatenacion en el eje 0 (porque un vector no tiene eje 1). Util para anadir columnas a una matriz existente.
+## El requisito común: shapes compatibles
 
-### [[np.dstack]] — apilar en profundidad (eje 2)
+Combinar nunca inventa datos: exige que las formas encajen.
 
-Une arrays a lo largo del tercer eje. Antes de apilar, convierte arrays 1D a shape `(1, n, 1)` y arrays 2D a `(m, n, 1)`. Especializado para construir arrays 3D (imagenes RGB, volumenes) desde capas 2D o vectores de profundidad.
+- **concatenate y los atajos por eje existente**: todos los shapes iguales **salvo en el eje de unión** (que se suma). Mismo `ndim`.
+- **stack**: todos los shapes **idénticos** (es lo más estricto).
 
-### [[np.column_stack]] — vectores 1D como columnas
+Si las formas no encajan, NumPy lanza un error de dimensiones antes de copiar nada.
 
-Convierte vectores 1D en columnas `(n, 1)` y luego los concatena horizontalmente. Para arrays 2D se comporta como `hstack`. Muy util en el patron clasico de construir una matriz de datos desde vectores de caracteristicas: `np.column_stack([x, y, z])` donde `x`, `y`, `z` son vectores.
+## Guía de elección
 
-## Tabla de funciones
+| Situación | Función recomendada |
+|---|---|
+| Arrays con el mismo `ndim`, eje a elegir | [[np.concatenate]] |
+| Construir un lote desde muestras de igual shape | [[np.stack]] |
+| Añadir filas a una matriz | [[np.vstack]] |
+| Añadir columnas (desde arrays 2D) | [[np.hstack]] |
+| Construir una matriz desde vectores 1D | [[np.column_stack]] |
+| Apilar imágenes o capas en profundidad | [[np.dstack]] |
 
-| Funcion | Une por | Crea eje nuevo | Caso especial 1D |
-|---------|---------|----------------|-----------------|
-| [[np.concatenate]] | Eje libre | No | Concatena en eje 0 |
-| [[np.stack]] | Eje nuevo | Si | Trata cada vector como elemento |
-| [[np.vstack]] | Eje 0 | No | Convierte a fila `(1, n)` |
-| [[np.hstack]] | Eje 1 | No | Concatena en eje 0 |
-| [[np.dstack]] | Eje 2 | No | Convierte a `(1, n, 1)` |
-| [[np.column_stack]] | Eje 1 | No | Convierte a columna `(n, 1)` |
-
-## Guia de eleccion
-
-| Situacion | Funcion recomendada |
-|-----------|---------------------|
-| Arrays con el mismo ndim, eje libre | [[np.concatenate]] |
-| Construir lote desde muestras de igual shape | [[np.stack]] |
-| Anadir filas a una matriz | [[np.vstack]] |
-| Anadir columnas a una matriz (desde arrays 2D) | [[np.hstack]] |
-| Construir matriz desde vectores de datos | [[np.column_stack]] |
-| Apilar imagenes o capas en la dimension de profundidad | [[np.dstack]] |
-
-## Ejemplo: construir matriz de datos
+## Ejemplo: construir una matriz de datos
 
 ```python
 import numpy as np
 
-tiempo = np.linspace(0, 1, 100)    # shape (100,)
-senal = np.sin(2 * np.pi * tiempo) # shape (100,)
-ruido = np.random.randn(100)       # shape (100,)
+tiempo = np.linspace(0, 1, 100)      # (100,)
+senal = np.sin(2 * np.pi * tiempo)   # (100,)
+ruido = np.random.randn(100)         # (100,)
 
-# column_stack: cada vector se convierte en columna
-datos = np.column_stack([tiempo, senal, ruido])  # shape (100, 3)
+# column_stack: cada vector 1D se convierte en una columna
+datos = np.column_stack([tiempo, senal, ruido])   # (100, 3)
 
-# Equivalente explicito con concatenate:
+# Equivalente explícito con concatenate (hay que crear el eje de columna a mano):
 datos2 = np.concatenate([
     tiempo.reshape(-1, 1),
     senal.reshape(-1, 1),
-    ruido.reshape(-1, 1)
-], axis=1)
+    ruido.reshape(-1, 1),
+], axis=1)                                          # (100, 3)
 ```
+
+## Notas relacionadas
+
+- [[concepto_shape]] — qué shapes son compatibles al combinar
+- [[concepto_axis_parametro]] — el eje que crece vs. el eje que se inserta
+- [[np.split]] — la operación inversa (separar un array)

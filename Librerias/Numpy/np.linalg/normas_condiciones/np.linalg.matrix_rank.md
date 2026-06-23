@@ -1,5 +1,5 @@
 ---
-title: np.linalg.matrix_rank — Rango de una matriz vía SVD
+title: np.linalg.matrix_rank — rango (independencia lineal) de una matriz vía SVD
 aliases:
   - matrix_rank
   - linalg.matrix_rank
@@ -8,115 +8,234 @@ tags:
   - numpy
   - api/funcion
   - algebra/matricial
-
-# --- Clasificación ---
 lib: numpy
 mod: np.linalg
 tipo: funcion
-
-# --- Comportamiento ---
-retorna: int
+retorna: int | ndarray
 inplace: false
-
+requiere:
+  - concepto_shape
 draft: false
 ---
 
-# np.linalg.matrix_rank — Rango de una matriz vía SVD
+# np.linalg.matrix_rank — rango (independencia lineal) de una matriz vía SVD
 
-## Firma de la función
+`np.linalg.matrix_rank` cuenta cuántas filas (o columnas) de `A` son **linealmente
+independientes**: su rango. Numéricamente, eso es el **número de valores singulares mayores que un
+umbral** de la [[np.linalg.svd|SVD]] — los valores singulares casi nulos corresponden a direcciones
+que la matriz "aplasta", es decir, a dependencias lineales. Sirve para detectar **deficiencia de
+rango**: columnas redundantes en datos, sistemas sin solución única, matrices casi singulares.
+
+## La idea en una fórmula
+
+El rango es el número de valores singulares $\sigma_i$ de la SVD que superan una tolerancia $\tau$:
+
+$$
+\operatorname{rank}(A) = \#\{\, i : \sigma_i > \tau \,\}
+\qquad
+\tau = \texttt{S.max()} \cdot \max(m, n) \cdot \varepsilon \ \text{(por defecto)}
+$$
+
+donde $\varepsilon$ es la precisión de máquina (`eps`). **El mapa de shapes**: `matrix_rank`
+colapsa los dos últimos ejes (la matriz) a un **entero** y conserva los ejes de lote:
+
+$$
+(\underbrace{n_0,\dots,n_{k-1}}_{\text{lote}},\, m,\, n)\ \xrightarrow{\ \text{matrix\_rank}\ }\ (\underbrace{n_0,\dots,n_{k-1}}_{\text{lote}})\ \ \text{(enteros)}
+$$
+
+El rango está acotado por $0 \le \operatorname{rank}(A) \le \min(m, n)$. Igualdad con $\min(m,n)$ →
+**rango completo** (sin dependencias); menor → **rango deficiente**.
+
+```text
+σ = [4.7, 2.1, 1e-16]   →  dos σ "grandes", uno ~0  →  rank = 2
+                           el valor singular nulo señala una dirección dependiente
+```
+
+## Firma
 
 ```python
 np.linalg.matrix_rank(
-    A,
-    tol=None,
-    hermitian=False
-) -> int
+    A,                 # array_like (..., M, N): matriz o pila de matrices
+    tol=None,          # float | array_like: umbral absoluto (heredado; usar rtol)
+    hermitian=False,   # bool: A es hermítica/simétrica → autovalores en vez de SVD
+    *,
+    rtol=None,         # float | array_like: umbral relativo a S.max() (NumPy ≥ 1.24)
+) -> int | ndarray
 ```
 
-## Valor de retorno
+## Los parámetros en detalle
 
-Devuelve el **rango** de `A`: el número de filas/columnas **linealmente independientes**, equivalente al número de valores singulares mayores que una tolerancia. Se calcula contando valores singulares significativos de la SVD.
+### `A` — el tensor de entrada
+`array_like` de shape `(M, N)` o pila `(..., M, N)`. **No** necesita ser cuadrada: el rango está
+definido para cualquier matriz. Con más de 2 ejes opera por lotes sobre los dos últimos.
 
-| Caso | Rango | Significado |
-|------|-------|-------------|
-| `(m, n)` rango completo | `min(m, n)` | sin dependencias lineales |
-| rango deficiente | `< min(m, n)` | hay filas/columnas redundantes |
-| matriz nula | `0` | todos los elementos cero |
-
-```python
-import numpy as np
-A = np.array([[1, 2],
-              [2, 4]])      # fila 2 = 2 × fila 1
-np.linalg.matrix_rank(A)    # 1  → rango deficiente
-np.linalg.matrix_rank(np.eye(3))   # 3  → rango completo
-```
-
-Para `A` con más de 2 dimensiones, opera sobre las pilas de matrices `(..., M, N)` y devuelve un `ndarray` de enteros.
-
-## Parámetros en detalle
-
-### `A` — array de entrada
-
-Matriz `(M, N)` o pila de matrices `(..., M, N)`. No necesita ser cuadrada.
-
-### `tol` — umbral de valor singular
-
-Valores singulares por debajo de `tol` se consideran cero. Si es `None`, NumPy usa una tolerancia por defecto basada en el mayor valor singular y la precisión de máquina (`S.max() * max(M, N) * eps`). Súbelo si los datos tienen ruido.
+### `tol` — umbral absoluto de valor singular
+Valores singulares por debajo de `tol` se consideran **cero** (direcciones dependientes). Si es
+`None`, NumPy usa la tolerancia por defecto $\texttt{S.max()} \cdot \max(M,N) \cdot \varepsilon$,
+escalada a los datos. Súbelo cuando los datos tengan **ruido** y quieras que el ruido no cuente
+como una dirección independiente.
 
 ```python
 A = np.array([[1.0, 2.0],
-              [2.0, 4.000001]])   # casi dependiente
-np.linalg.matrix_rank(A)          # 2  → el ruido cuenta como independiente
-np.linalg.matrix_rank(A, tol=1e-3)# 1  → tolerancia agresiva lo colapsa
+              [2.0, 4.000001]])      # casi dependiente (ruido en una cifra)
+np.linalg.matrix_rank(A)            # 2  → el ruido cuenta como independiente
+np.linalg.matrix_rank(A, tol=1e-3) # 1  → tolerancia agresiva lo colapsa
+```
+
+### `rtol` — umbral relativo (preferido)
+Igual que `tol` pero **relativo** al mayor valor singular: el umbral efectivo es
+$\texttt{rtol} \cdot \texttt{S.max()}$. Es keyword-only y la forma recomendada en NumPy moderno
+(escala sola con la magnitud de los datos). No combinar con `tol`: se usa uno u otro.
+
+```python
+np.linalg.matrix_rank(A, rtol=1e-5)  # umbral = 1e-5 · σ_max
 ```
 
 ### `hermitian` — matriz hermítica/simétrica
-
-Si `True`, asume que `A` es hermítica (simétrica real) y usa una descomposición de autovalores más eficiente en lugar de la SVD general.
+Si `True`, asume que `A` es hermítica (simétrica real) y usa una descomposición de **autovalores**,
+más eficiente que la SVD general. Solo actívalo si `A` lo es de verdad; si no, el resultado es
+incorrecto.
 
 ```python
 S = np.array([[2.0, 1.0], [1.0, 2.0]])
-np.linalg.matrix_rank(S, hermitian=True)   # 2
+np.linalg.matrix_rank(S, hermitian=True)   # 2  → ruta eficiente
+```
+
+## El caso N-D / axis
+
+`matrix_rank` no tiene `axis`: trata **siempre** los dos últimos ejes como la matriz y todo lo
+anterior como **lote**. Cada matriz del lote produce un **entero**; el resultado tiene el shape del
+lote.
+
+| `A.shape` | salida | lectura |
+|-----------|--------|---------|
+| `(m, n)` | `int` de Python | rango de la matriz |
+| `(b, m, n)` | `(b,)` enteros | un rango por matriz del lote |
+| `(b, c, m, n)` | `(b, c)` enteros | una rejilla de rangos |
+
+```python
+lote = np.stack([np.eye(3),                       # rango 3
+                 np.array([[1.,2.,3.],
+                           [2.,4.,6.],             # fila 2 = 2·fila 1
+                           [0.,0.,1.]])])          # rango 2
+lote.shape                  # (2, 3, 3)
+np.linalg.matrix_rank(lote) # [3, 2]  → un entero por matriz, sin bucle
+```
+
+## Vectorización
+
+El caso por lotes evita un bucle Python: NumPy calcula la SVD de cada matriz en LAPACK y cuenta los
+valores singulares significativos en C. Es [[concepto_vectorizacion]] sobre álgebra lineal:
+
+```python
+# Bucle Python: una SVD por matriz
+def rangos(stack):
+    out = np.empty(stack.shape[0], dtype=int)
+    for i in range(stack.shape[0]):
+        out[i] = np.linalg.matrix_rank(stack[i])
+    return out
+
+# Vectorizado: NumPy recorre el lote en LAPACK
+np.linalg.matrix_rank(stack)
+```
+
+Mismo resultado; la versión vectorizada no salta al intérprete por cada matriz.
+
+## Valor de retorno
+
+| Entrada | salida | tipo |
+|---------|--------|------|
+| `(m, n)` | un rango | **`int` de Python** |
+| `(b, m, n)` | `(b,)` | `ndarray` de enteros |
+| `(b, c, m, n)` | `(b, c)` | `ndarray` de enteros |
+
+- Para una matriz 2D el retorno es un **`int` de Python** (no un `ndarray` 0-d).
+- Para una pila N-D es un `ndarray` de enteros con el shape del lote.
+- El rango siempre cumple $0 \le \operatorname{rank} \le \min(M, N)$.
+
+```python
+A = np.array([[1, 2], [2, 4]])        # fila 2 = 2 · fila 1
+np.linalg.matrix_rank(A)              # 1   → rango deficiente
+np.linalg.matrix_rank(np.eye(3))      # 3   → rango completo
+type(np.linalg.matrix_rank(A))        # <class 'int'>
 ```
 
 ## Casos de uso
 
-### Detectar columnas redundantes en datos
+### Rango deficiente de una matriz concreta (fila dependiente)
+La tercera fila de $A$ es la **suma** de las dos primeras ($[5,7,9]=[1,2,3]+[4,5,6]$), así que solo hay **dos** filas independientes: el rango es $2 < 3=\min(m,n)$, deficiente.
+
+$$
+A=\begin{bmatrix}1&2&3\\4&5&6\\5&7&9\end{bmatrix},
+\qquad
+\text{fila}_3=\text{fila}_1+\text{fila}_2
+\ \Longrightarrow\
+\operatorname{rank}(A)=2
+$$
+
+Vía SVD, sus valores singulares son aproximadamente $\sigma\approx[15.7,\ 0.8,\ \mathbf{0}]$: el tercero, casi nulo, señala la dirección dependiente y no se cuenta.
 
 ```python
+A = np.array([[1., 2., 3.],
+              [4., 5., 6.],
+              [5., 7., 9.]])         # fila 3 = fila 1 + fila 2
+np.linalg.matrix_rank(A)             # 2  → rango deficiente (una dependencia)
+np.linalg.svd(A, compute_uv=False)   # [15.7..., 0.8..., ~1e-16]  → un σ ≈ 0
+np.linalg.matrix_rank(np.eye(3))     # 3  → rango completo, sin dependencias
+```
+
+### Detectar columnas redundantes en datos
+```python
 X = np.array([[1, 2, 3],
-              [2, 4, 6],
+              [2, 4, 6],              # = 2 · fila 1
               [1, 0, 1]], dtype=float)
-np.linalg.matrix_rank(X)   # 2  → una columna/fila es combinación de otras
+np.linalg.matrix_rank(X)             # 2  → una fila/columna es combinación de otras
 ```
 
 ### Comprobar si un sistema tiene solución única
-
 ```python
 A = np.array([[1.0, 1.0], [1.0, 1.0]])
-np.linalg.matrix_rank(A)   # 1 < 2  → sistema sin solución única
+np.linalg.matrix_rank(A)             # 1 < 2  → sin solución única
 ```
 
-## Buenas prácticas
+### Datos ruidosos: ajustar la tolerancia
+```python
+ruido = np.eye(3) + 1e-9 * np.random.rand(3, 3)
+np.linalg.matrix_rank(ruido)               # 3   → el ruido aparenta independencia
+np.linalg.matrix_rank(ruido, rtol=1e-6)    # 3   → aquí sigue, pero el umbral controla
+```
 
-1. Con datos reales (ruidosos), ajusta `tol` en vez de fiarte del rango "exacto".
-2. Para matrices simétricas/hermíticas, activa `hermitian=True` por rendimiento.
-3. Rango `< min(M, N)` implica que la matriz es singular o el sistema es deficiente: revisa antes de invertir.
-4. Combínalo con [[np.linalg.cond]] para distinguir "singular exacta" de "casi singular".
+### N-D: rango de un lote de matrices `(b, m, n) → (b,)`
+Los dos últimos ejes son la matriz $m\times n$; el primero es el lote. `matrix_rank` colapsa cada matriz a un entero: $(b,m,n)\to(b,)$.
+
+```python
+lote = np.random.rand(10, 5, 4)      # 10 matrices 5×4 (genéricas → rango 4)
+np.linalg.matrix_rank(lote).shape    # (10,)  → un rango por matriz del lote
+np.linalg.matrix_rank(lote)          # [4, 4, ..., 4]  → rango completo min(5,4)=4
+```
+
+### Lote 4D: rejilla de rangos `(4, 5, 3, 3)`
+Con un eje de lote extra, el resultado es una rejilla de enteros: $(4,5,3,3)\to(4,5)$.
+
+```python
+np.random.seed(0)
+lote = np.random.rand(4, 5, 3, 3)    # rejilla 4×5 de matrices 3×3
+np.linalg.matrix_rank(lote).shape    # (4, 5)  → un rango por matriz, sin bucle
+```
 
 ## Errores comunes
 
 | Error | Causa | Solución |
 |-------|-------|----------|
-| Rango mayor del esperado | ruido numérico cuenta como independiente | subir `tol` |
-| Rango menor del esperado | `tol` demasiado alto | bajar/quitar `tol` |
-| Resultado inesperado en simétrica | no se usó la ruta eficiente | `hermitian=True` (solo si lo es de verdad) |
-| `LinAlgError` durante la SVD | matriz con `NaN`/`inf` | limpiar valores no finitos antes |
+| Rango mayor del esperado | el ruido numérico cuenta como dirección independiente | subir `tol`/`rtol` |
+| Rango menor del esperado | umbral demasiado alto colapsa direcciones reales | bajar/quitar `tol`/`rtol` |
+| Resultado raro en simétrica | no se usó la ruta eficiente / se usó mal | `hermitian=True` solo si lo es de verdad |
+| `LinAlgError` durante la SVD | la matriz contiene `NaN`/`inf` | limpiar valores no finitos antes |
+| Mezclar `tol` y `rtol` | son redundantes | usar **uno**; preferir `rtol` |
 
 ## Notas relacionadas
 
-- [[concepto_shape]]
-- [[np.linalg.svd]]
-- [[np.linalg.cond]]
-- [[np.linalg.det]]
-- [[np.linalg.matrix_rank|rango]]
+- [[np.linalg.svd]] — los valores singulares que se cuentan para obtener el rango
+- [[np.linalg.cond]] — distingue "singular exacta" de "casi singular" (κ frente a rango)
+- [[np.linalg.norm]] · [[np.linalg.det]] · [[np.linalg.solve]]
+- [[normas_condiciones/index|normas y condiciones]] — la nota madre del grupo

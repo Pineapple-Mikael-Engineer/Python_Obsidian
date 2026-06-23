@@ -18,39 +18,42 @@ draft: false
 
 # np.random.f — Distribución F de Snedecor
 
-Modela la distribución **F de Snedecor**, definida como el cociente de dos variables chi-cuadrado independientes, cada una dividida por sus grados de libertad. Es la distribución de referencia en **ANOVA** y en los contrastes de **comparación de varianzas** entre dos poblaciones. Está construida a partir de la [[np.random.chisquare|distribución chi-cuadrado]].
+Genera muestras de la distribución **F de Snedecor**, definida como el **cociente de dos chi-cuadrado independientes**, cada una dividida por sus grados de libertad. Es siempre no negativa y asimétrica a la derecha. Es la distribución de referencia en **ANOVA** y en los contrastes de **comparación de varianzas** entre dos poblaciones. Está construida a partir de la [[np.random.chisquare|distribución chi-cuadrado]].
 
-## Firma de la función
+## La idea
+
+Si $U \sim \chi^2(d_1)$ y $V \sim \chi^2(d_2)$ son chi-cuadrado independientes, con $d_1 = $ `dfnum` y $d_2 = $ `dfden`, entonces:
+
+$$ F \;=\; \frac{U/d_1}{V/d_2} \;\sim\; F(d_1, d_2) $$
+
+Su densidad sobre `x ≥ 0` depende de los **dos parámetros de forma** `dfnum` y `dfden`:
+
+$$ f(x;d_1,d_2) \;\propto\; \frac{x^{\,d_1/2-1}}{\left(d_1\,x + d_2\right)^{(d_1+d_2)/2}}, \qquad x \ge 0 $$
+
+Propiedades clave:
+
+- Los valores son siempre **no negativos** y la cola superior es larga (asimetría a la derecha).
+- La media (para $d_2 > 2$) es $\dfrac{d_2}{d_2-2}$, cercana a 1 cuando `dfden` es grande.
+- A mayor `dfden`, la masa se **concentra alrededor de 1**; a `dfden` bajo, colas pesadas.
+
+> [!tip] Versión moderna
+> La API recomendada desde NumPy 1.17 usa un generador explícito en vez del estado global. Ver [[np.random.default_rng]].
+> ```python
+> rng = np.random.default_rng()
+> rng.f(dfnum=5, dfden=20, size=1000)
+> ```
+
+## Firma
 
 ```python
-np.random.f(
-    dfnum,
-    dfden,
-    size=None
-) -> ndarray | float
+np.random.f(dfnum, dfden, size=None) -> ndarray | float
 ```
 
-## Valor de retorno
-
-| Caso | `size` | Retorno | Shape |
-|------|--------|---------|-------|
-| Escalar | `None` | `float` | `()` |
-| Vector | `int` | `ndarray` | `(size,)` |
-| nD | `tuple` | `ndarray` | igual a `size` |
-
-Los valores son siempre **no negativos** (`>= 0`), asimétricos a la derecha (cola larga superior).
-
-```python
-import numpy as np
-np.random.f(5, 20)          # 0.873...  (un escalar float)
-np.random.f(5, 20, size=4)  # array([1.21, 0.44, 2.07, 0.68])
-```
-
-## Parámetros en detalle
+## Los parámetros en detalle
 
 ### `dfnum` — grados de libertad del numerador
 
-Grados de libertad de la chi-cuadrado del numerador (`> 0`). En ANOVA corresponde a los grados de libertad **entre grupos**.
+Grados de libertad de la chi-cuadrado del numerador (`> 0`). En ANOVA corresponde a los grados de libertad **entre grupos**. Acepta escalar o array (broadcasting con `dfden` y `size`).
 
 ```python
 np.random.f(1, 30)    # numerador con 1 g.l.
@@ -71,7 +74,25 @@ np.random.f(5, 100)   # más concentrada cerca de 1
 Entero o tupla que define el [[concepto_shape|shape]] del resultado. Con `None` devuelve un escalar.
 
 ```python
-np.random.f(5, 20, size=(2, 3))   # array 2x3 de valores F
+np.random.f(5, 20, size=(2, 3))   # array 2×3 de valores F
+```
+
+## size y la forma de salida
+
+Devuelve reales no negativos, asimétricos a la derecha.
+
+| Llamada | Distribución | Shape | dtype |
+|---------|--------------|-------|-------|
+| `np.random.f(5, 20)` | F(5, 20) | `()` escalar | `float` |
+| `np.random.f(5, 20, 4)` | F(5, 20) | `(4,)` | `float64` |
+| `np.random.f(2, 27, 10000)` | F(2, 27) | `(10000,)` | `float64` |
+| `np.random.f(5, 20, (2, 3))` | F(5, 20) | `(2, 3)` | `float64` |
+
+```python
+import numpy as np
+np.random.seed(0)
+np.random.f(dfnum=5, dfden=20, size=4)
+# array([1.21, 0.44, 2.07, 0.68])
 ```
 
 ## Casos de uso
@@ -91,12 +112,15 @@ umbral = np.percentile(nulo, 95)   # valor crítico al 5%
 ratios = np.random.f(9, 9, size=5000)   # dos muestras de n=10
 ```
 
-## Buenas prácticas
+### Construirla a mano desde dos chi-cuadrado
 
-1. Fija la semilla con [[np.random.seed]] para reproducir las simulaciones.
-2. Recuerda que ambos parámetros deben ser estrictamente positivos.
-3. Si necesitas las chi-cuadrado por separado, genera dos con [[np.random.chisquare]] y divídelas manualmente.
-4. Para grandes `dfden`, la F tiende a comportarse como una chi-cuadrado escalada.
+```python
+# F(d1, d2) = (U/d1) / (V/d2) con U, V chi-cuadrado independientes
+d1, d2 = 5, 20
+U = np.random.chisquare(d1, size=10000)
+V = np.random.chisquare(d2, size=10000)
+F = (U / d1) / (V / d2)
+```
 
 ## Errores comunes
 
@@ -109,9 +133,8 @@ ratios = np.random.f(9, 9, size=5000)   # dos muestras de n=10
 
 ## Notas relacionadas
 
+- [[concepto_shape]]
+- [[np.random.default_rng]]
 - [[np.random.chisquare]]
 - [[np.random.t]]
-- [[np.random.laplace]]
-- [[np.random.logistic]]
 - [[np.random.seed]]
-- [[concepto_shape]]

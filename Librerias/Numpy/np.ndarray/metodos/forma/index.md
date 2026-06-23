@@ -1,81 +1,73 @@
 ---
-title: np.ndarray — metodos de forma
+title: ndarray — métodos de forma (forma-método de las funciones)
 tags:
   - numpy
   - indice
 draft: false
 ---
 
-# np.ndarray — metodos de forma
+# ndarray — métodos de forma (forma-método de las funciones)
 
-6 metodos para reorganizar la estructura dimensional del array desde el propio objeto. Ninguno cambia los datos numericos; todos reorganizan como se navegan esos datos en memoria. La distincion mas importante entre ellos es si devuelven una **vista** (comparten el mismo buffer de bytes con el original) o una **copia** (buffer independiente): modificar una vista modifica el original; modificar una copia no.
+Estos métodos son la **forma-método** de funciones de manipulación de forma ya documentadas. La
+regla general es
 
-## Tabla de metodos
+$$ \texttt{arr.f(args)} \;\equiv\; \texttt{np.f(arr, args)} $$
 
-| Metodo | Firma resumida | Vista / Copia | Descripcion |
-|--------|---------------|---------------|-------------|
-| [[ndarray.reshape]] | `arr.reshape(*shape)` | Vista si contiguo; copia si no | Asigna nueva forma compatible con el mismo numero de elementos |
-| [[ndarray.ravel]] | `arr.ravel(order='C')` | Vista si posible | Aplana a 1D; devuelve vista cuando el array es contiguo |
-| [[ndarray.flatten]] | `arr.flatten(order='C')` | Siempre copia | Aplana a 1D con independencia garantizada del original |
-| [[ndarray.transpose]] | `arr.transpose(*axes)` | Siempre vista | Permuta todos los ejes; sin argumentos equivale a `.T` |
-| [[ndarray.swapaxes]] | `arr.swapaxes(ax1, ax2)` | Siempre vista | Intercambia exactamente dos ejes |
-| [[ndarray.squeeze]] | `arr.squeeze(axis=None)` | Siempre vista | Elimina dimensiones de tamaño 1 |
+mismo comportamiento y misma semántica de ejes. Ninguno cambia los datos numéricos: solo
+reorganizan cómo se navega el mismo buffer. La explicación completa (mapa de shapes, contigüidad,
+cuándo es vista o copia) vive en la nota de **la función**; aquí solo el mapeo y lo **propio del
+método**.
 
-## `flatten` vs `ravel`
+## Método ≡ función
 
-Ambos producen un array 1D con los mismos datos, pero difieren en si copian. La eleccion es de intencion:
+| Método | Equivale a | Qué hace (1 línea) |
+|--------|-----------|--------------------|
+| `arr.reshape(*shape)` | [[np.reshape]] | Reinterpreta los datos con otra forma compatible. |
+| `arr.ravel(order)` | [[np.ravel]] | Aplana a 1D; **vista** si puede, copia si no. |
+| `arr.squeeze(axis)` | [[np.squeeze]] | Elimina los ejes de tamaño 1. |
+| `arr.swapaxes(a, b)` | [[np.swapaxes]] | Intercambia exactamente dos ejes (siempre vista). |
+| `arr.transpose(*axes)` | [[np.transpose]] | Permuta todos los ejes (siempre vista). |
+| `arr.flatten(order)` | *(sin gemela — ver abajo)* | Aplana a 1D; **siempre copia**. |
 
-| | `ravel` | `flatten` |
-|-|---------|-----------|
-| Devuelve | Vista si el array es contiguo; copia si no | Siempre copia |
-| Modifica el original | Si se modifica la vista, si | Nunca |
-| Uso tipico | Calculo temporal, encadenamiento | Cuando se necesita que la version aplanada sea independiente |
+Atributo relacionado: [[ndarray.T]] es la transpuesta como **atributo** (`arr.T`), equivalente a
+`arr.transpose()` sin argumentos.
 
-```python
-a = np.array([[1, 2], [3, 4]])
-r = a.ravel()    # vista — r[0] = 99 cambia a[0, 0]
-f = a.flatten()  # copia — f[0] = 99 no afecta a
-```
+## Cuándo usar la forma-método
 
-## `reshape` con `-1`
+Más concisa al encadenar (`a.reshape(2, -1).T.ravel()` se lee de izquierda a derecha) e idéntica
+en resultado. La forma-función admite encadenar entradas que no son ndarray todavía
+(`np.reshape([1, 2, 3, 4], (2, 2))`).
 
-Cuando uno de los valores de la nueva forma es `-1`, NumPy lo infiere automaticamente a partir de los demas:
+## Lo que SÍ difiere
 
-```python
-a = np.arange(12)
-a.reshape(3, -1)   # → shape (3, 4); NumPy calcula que 12/3 = 4
-a.reshape(-1)      # → shape (12,); equivalente a ravel
-```
+- **`arr.flatten()` SIEMPRE COPIA** (buffer independiente; modificarla no afecta al original).
+  En cambio [[np.ravel]] / `arr.ravel()` devuelven **VISTA si pueden** (array contiguo) y copia
+  si no. Es la diferencia clave de esta carpeta — ver [[concepto_views_vs_copias]].
 
-## `transpose` vs `swapaxes`
+  ```python
+  a = np.array([[1, 2], [3, 4]])
+  r = a.ravel();   r[0] = 99   # si r es vista → cambia a[0, 0]
+  f = a.flatten(); f[0] = 99   # copia → a queda intacto
+  ```
 
-`swapaxes` es un caso especial de `transpose` limitado a exactamente dos ejes:
+- `arr.flatten` **no tiene función gemela** `np.flatten`. El equivalente funcional es
+  `np.ravel(arr).copy()`.
 
-```python
-a = np.zeros((2, 3, 4))
-a.transpose(2, 0, 1).shape  # → (4, 2, 3)
-a.swapaxes(0, 2).shape      # → (4, 3, 2)
-```
+- **`arr.reshape` acepta argumentos sueltos**: `arr.reshape(2, 3)`. La función [[np.reshape]] exige
+  la forma como **tupla**: `np.reshape(arr, (2, 3))`. Ambas aceptan `-1` para inferir una dimensión.
 
-## `squeeze` — cuando usarlo
+- `reshape` y `ravel` devuelven **vista o copia según la contigüidad** del array (vista si los datos
+  pueden reinterpretarse sin moverlos). `transpose`, `swapaxes` y `squeeze` son **siempre vista**.
 
-Util para limpiar el output de funciones que devuelven shapes con dimensiones unitarias residuales, como `(1, n, 1)` o `(n, 1)`:
+> [!warning] Principio general: método in-place vs función que copia
+> Algunos métodos del `ndarray` mutan `arr` in-place (`arr.sort()`, `arr.fill()`, `arr.resize()`)
+> a diferencia de su función, que devuelve copia (`np.sort` no toca la entrada). Los métodos de
+> **esta** carpeta no mutan `arr`: o devuelven vista del mismo buffer, o una copia nueva. La
+> mutación in-place sí aparece en `seleccion/` (`arr.put`).
 
-```python
-a = np.zeros((1, 3, 1))
-a.squeeze().shape         # → (3,)
-a.squeeze(axis=0).shape   # → (3, 1)  — solo elimina el eje 0
-```
+## Notas relacionadas
 
-## Diferencia con las funciones `np.X`
-
-Cada metodo tiene una funcion NumPy equivalente en el modulo de manipulacion de forma. La semantica es identica; solo cambia la sintaxis:
-
-| Metodo (objeto) | Funcion (modulo) |
-|-----------------|-----------------|
-| `arr.reshape(3, 4)` | `np.reshape(arr, (3, 4))` |
-| `arr.ravel()` | `np.ravel(arr)` |
-| `arr.flatten()` | *(sin equivalente directo; usar `np.ravel(arr).copy()`)* |
-| `arr.transpose()` | `np.transpose(arr)` |
-| `arr.swapaxes(0, 1)` | `np.swapaxes(arr, 0, 1)` |
-| `arr.squeeze()` | `np.squeeze(arr)` |
+- [[concepto_views_vs_copias]] — qué método devuelve vista y cuál copia, y por qué
+- [[concepto_shape]] — el mapa de shapes que cada método aplica
+- [[ndarray.T]] — la transpuesta como atributo
+- [[Librerias/Numpy/index|NumPy raíz]]

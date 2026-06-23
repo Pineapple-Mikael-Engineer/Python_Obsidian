@@ -1,22 +1,44 @@
 ---
-title: np/polinomios — API legacy de polinomios
+title: np/polinomios — representar, evaluar, ajustar y derivar polinomios (API legacy)
 tags:
   - numpy
   - indice
 draft: false
 ---
 
-# np/polinomios — API legacy de polinomios
+# np/polinomios — representar, evaluar, ajustar y derivar polinomios
 
-Este grupo cubre la API clasica de NumPy para trabajar con polinomios. La representacion es simple: un array de coeficientes en orden descendente de potencias. Por ejemplo, `3x^2 + 2x + 1` se escribe `[3, 2, 1]` — el primer elemento siempre es el coeficiente del termino de mayor grado.
+Esta carpeta cubre la API **clásica (legacy)** de NumPy para trabajar con polinomios de una variable. La representación es un simple array de **coeficientes en orden descendente** de potencias: `[1, -3, 2]` es
 
-Es una API **legacy**: NumPy recomienda `numpy.polynomial` para codigo nuevo porque tiene mejor condicionamiento numerico y soporta distintas bases (Chebyshev, Legendre, Hermite). Pero la API de `np.poly*` sigue siendo ampliamente usada, es suficiente para la mayoria de problemas de ingenieria, y aparece frecuentemente en codigo existente.
+$$
+1\cdot x^{2} - 3\cdot x + 2 \;=\; x^{2} - 3x + 2
+$$
+
+El primer elemento es siempre el coeficiente del término de mayor grado. Sobre esa representación, las funciones de esta carpeta permiten **representar** un polinomio como objeto ([[np.poly1d]]), **evaluarlo** ([[np.polyval]]), **ajustarlo** a datos ([[np.polyfit]]), hallar sus **raíces** ([[np.roots]]) y calcular su **derivada** e **integral** ([[np.polyder]], [[np.polyint]]).
+
+> [!warning] Existe una API moderna recomendada: `np.polynomial.Polynomial`
+> Las funciones `np.poly1d`, `np.polyfit`, `np.polyval`, etc. son **legacy**. Para código nuevo, NumPy recomienda el paquete `numpy.polynomial` (clase `np.polynomial.Polynomial` y `Polynomial.fit`), que tiene **mejor condicionamiento numérico**, soporta otras bases (Chebyshev, Legendre, Hermite) y usa orden **ascendente** de coeficientes. Aun así, la API legacy sigue siendo omnipresente en código existente y es suficiente para la mayoría de problemas; es la que se documenta aquí.
 
 ## Notas de la carpeta
 
-- [[np.poly1d]] — objeto que encapsula un polinomio y lo hace tratable como una funcion Python. Soporta evaluacion con `p(x)`, suma `p1 + p2`, multiplicacion `p1 * p2` y derivacion `p.deriv()`. Es el punto de entrada de la API: las demas funciones aceptan tanto arrays de coeficientes como objetos `poly1d`.
-- [[np.polyfit]] — ajusta un polinomio de grado `deg` a datos `(x, y)` por minimos cuadrados. Devuelve los coeficientes del polinomio ajustado. Equivale a regresion polinomial; para grados altos puede ser numericamente inestable.
-- [[np.polyval]] — evalua el polinomio `p` (array de coeficientes o `poly1d`) en los valores `x`. Para un objeto `poly1d`, equivale a llamar `p(x)` directamente; util cuando se trabaja con coeficientes crudos sin crear el objeto.
-- [[np.polyder]] — calcula la derivada de orden `m` del polinomio `p`. Devuelve los coeficientes de la derivada como array — no usa diferenciacion numerica, es calculo exacto sobre los coeficientes.
-- [[np.polyint]] — calcula la integral indefinida de orden `m` del polinomio `p`. La constante de integracion es cero por defecto; se puede especificar con `k=`. Tambien exacto sobre coeficientes.
-- [[np.roots]] — calcula las raices del polinomio `p` (los valores de x donde p(x) = 0). Puede devolver raices complejas si el polinomio no tiene todas las raices reales. Internamente construye la matriz companera y calcula sus eigenvalues.
+| Nota | Tipo | Qué hace | Idea |
+|------|------|----------|------|
+| [[np.poly1d]] | clase | representa un polinomio como objeto callable y operable | `poly1d([1,-3,2])` = $x^2-3x+2$ |
+| [[np.polyval]] | función | evalúa un polinomio de coeficientes en puntos `x` | $p(x)=\sum_i c_i\,x^{n-i}$, vectorizado |
+| [[np.polyfit]] | función | ajusta un polinomio de grado `deg` por mínimos cuadrados | resuelve $V\mathbf{c}=\mathbf{y}$ con la Vandermonde |
+| [[np.roots]] | función | raíces del polinomio ($p(x)=0$) | autovalores de la matriz companion |
+| [[np.polyder]] | función | derivada del polinomio (baja el grado) | regla de la potencia, exacta |
+| [[np.polyint]] | función | integral indefinida (sube el grado, constante `k`) | inversa de la derivada |
+
+## El flujo típico
+
+1. **Ajustar** datos: `coef = np.polyfit(x, y, deg)` — internamente plantea la matriz de Vandermonde y la resuelve con [[np.linalg.lstsq]].
+2. **Evaluar** el ajuste: `y_pred = np.polyval(coef, x_nuevo)`.
+3. **Manipular** como objeto: `p = np.poly1d(coef)`, y entonces `p(x)`, `p.deriv()`, `p.integ()`, `p.r`.
+4. **Analizar**: [[np.roots]] para las raíces, [[np.polyder]] + [[np.roots]] para los extremos.
+
+## Notas relacionadas
+
+- [[np.linalg.lstsq]] — el solver de mínimos cuadrados detrás de [[np.polyfit]]
+- [[np.linalg.eigvals]] — los autovalores que [[np.roots]] usa sobre la matriz companion
+- [[Tree Numpy]] — árbol general de la librería

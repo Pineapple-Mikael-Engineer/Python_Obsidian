@@ -8,46 +8,60 @@ draft: false
 
 # np.linalg — autovalores y autovectores
 
-Los autovalores y autovectores de una matriz A son los escalares λ y vectores v tales que Av = λv: A "estira" v por un factor λ sin cambiar su direccion. Son fundamentales en PCA, analisis de estabilidad, vibraciones mecanicas, algoritmos de grafos (PageRank) y cualquier problema donde la dinamica de un sistema se describe por una matriz.
+Los **autovalores** $\lambda$ y **autovectores** $\mathbf{v}$ de una matriz $A$ son los escalares y
+vectores no nulos que cumplen la ecuación central:
 
-NumPy ofrece 4 variantes segun si la matriz es general o simetrica, y si se necesitan solo autovalores o tambien autovectores.
+$$
+A\,\mathbf{v} = \lambda\,\mathbf{v}
+$$
 
-## Funciones
+$A$ solo **estira** a $\mathbf{v}$ por un factor $\lambda$ sin cambiar su dirección. Son la base del
+PCA, el análisis de estabilidad de sistemas lineales, las vibraciones mecánicas (modos y frecuencias
+propias), los algoritmos de grafos (PageRank) y, en general, de cualquier problema cuya dinámica se
+describe con una matriz. Apilando los autovectores como **columnas** de $V$ y los autovalores en una
+diagonal $\Lambda$, la ecuación se vuelve la diagonalización $A = V\,\Lambda\,V^{-1}$.
 
-| Funcion | Autovalores | Autovectores | Tipo de matriz |
-|---|---|---|---|
-| [[np.linalg.eig]] | Si | Si | General (cualquier cuadrada) |
-| [[np.linalg.eigvals]] | Si | No | General (mas rapido sin vectores) |
-| [[np.linalg.eigh]] | Si | Si | Simetrica / hermitiana |
-| [[np.linalg.eigvalsh]] | Si | No | Simetrica / hermitiana |
+NumPy ofrece **cuatro** variantes según dos ejes de decisión: si la matriz es **general** o
+**simétrica/Hermítica**, y si necesitas **solo los autovalores** o **también los autovectores**.
 
-## Descripcion de cada funcion
+## Las cuatro funciones
 
-**`np.linalg.eig(a)`** — autovalores y autovectores para matrices cuadradas generales. Los autovalores pueden ser complejos incluso para matrices reales. Los autovectores estan en las columnas de la matriz devuelta (no en las filas).
+| Función | Matriz | Devuelve |
+|---|---|---|
+| [[np.linalg.eig]] | general (cualquier cuadrada) | autovalores **y** autovectores |
+| [[np.linalg.eigvals]] | general | solo autovalores |
+| [[np.linalg.eigh]] | simétrica / Hermítica | autovalores **y** autovectores |
+| [[np.linalg.eigvalsh]] | simétrica / Hermítica | solo autovalores |
 
-**`np.linalg.eigvals(a)`** — solo autovalores (sin autovectores). Mas rapido cuando no se necesitan los vectores.
+Las que llevan **vectores** ([[np.linalg.eig]], [[np.linalg.eigh]]) devuelven un namedtuple
+`(autovalores, autovectores)` con campos `eigenvalues` / `eigenvectors`; los autovectores son las
+**columnas** de la matriz `v` (`v[:, i]` es el autovector de `w[i]`). Las que **no** llevan vectores
+devuelven un solo `ndarray` de autovalores.
 
-**`np.linalg.eigh(a)`** — autovalores y autovectores para matrices simetricas reales o hermitanas complejas. Garantiza autovalores reales y autovectores ortonormales. Numericamente mas estable y rapido que `eig` para estas matrices. Los autovalores se devuelven en orden ascendente.
+## Cuándo usar cada una: simétrica → `eigh` siempre
 
-**`np.linalg.eigvalsh(a)`** — solo autovalores de matrices simetricas/hermitanas. La opcion mas rapida cuando la matriz es simetrica y solo se necesitan los valores.
-
-## Regla de decision
-
+```text
+¿La matriz es simétrica o Hermítica?
+  Sí  → eigh      (con vectores)   /  eigvalsh  (solo valores)
+  No  → eig       (con vectores)   /  eigvals   (solo valores)
 ```
-¿La matriz es simetrica o hermitiana?
-  Si  → eigh (con vectores) o eigvalsh (sin vectores)
-  No  → eig  (con vectores) o eigvals  (sin vectores)
-```
 
-| Necesito... | Funcion |
+| Necesito… | Función |
 |---|---|
-| Autovalores + autovectores, matriz general | [[np.linalg.eig]] |
-| Solo autovalores, matriz general | [[np.linalg.eigvals]] |
-| Autovalores + autovectores, matriz de covarianza / simetrica | [[np.linalg.eigh]] |
-| Solo autovalores, matriz simetrica (PCA, vibraciones) | [[np.linalg.eigvalsh]] |
+| autovalores + autovectores, matriz general | [[np.linalg.eig]] |
+| solo autovalores, matriz general | [[np.linalg.eigvals]] |
+| autovalores + autovectores, matriz simétrica (covarianza, PCA) | [[np.linalg.eigh]] |
+| solo autovalores, matriz simétrica | [[np.linalg.eigvalsh]] |
 
-Regla practica: si la matriz es de covarianza, de correlacion, o cualquier A^T A, usar `eigh`/`eigvalsh`.
+**Regla práctica:** si la matriz es de covarianza, de correlación, de Gram o cualquier
+$A^{\mathsf{T}}A$, es simétrica → usa **siempre** la familia `eigh`/`eigvalsh`. Frente a `eig`/`eigvals`,
+la variante simétrica es **más rápida y estable**, devuelve autovalores **reales** (nunca complejos
+espurios) y en **orden ascendente**, y autovectores **ortonormales**. La familia general `eig`/`eigvals`
+no ordena y puede devolver autovalores **complejos** aunque la matriz sea real.
 
-## Nota sobre matrices simetricas
+## Nota sobre `UPLO` y el lote N-D
 
-`eigh` y `eigvalsh` solo leen la mitad triangular de la matriz (inferior por defecto, controlado con `UPLO`). Los autovalores devueltos estan ordenados de menor a mayor, lo cual es conveniente para analisis espectral.
+`eigh` y `eigvalsh` solo leen la **mitad triangular** de la matriz (`UPLO='L'` inferior por defecto,
+`'U'` superior); el otro triángulo se ignora asumiendo simetría. Las cuatro funciones operan sobre los
+**dos últimos ejes** `(n, n)` y tratan los ejes anteriores como un **lote**: con shape `(..., n, n)`
+descomponen todas las matrices del lote de una sola llamada (ver [[concepto_shape]]).

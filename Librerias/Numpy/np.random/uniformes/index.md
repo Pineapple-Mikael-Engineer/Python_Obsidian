@@ -1,38 +1,56 @@
 ---
-title: uniformes — distribucion uniforme y sus alias
+title: uniformes — generar números con distribución uniforme
 tags:
   - numpy
   - indice
 draft: false
 ---
 
-# uniformes — distribucion uniforme y sus alias
+# uniformes — generar números con distribución uniforme
 
-La distribucion uniforme es el punto de partida de toda aleatoriedad numerica: todos los valores en un rango son igualmente probables. NumPy tiene 6 funciones para esto, aunque 4 de ellas son aliases identicos — una decision de diseño historica confusa que sobrevive por compatibilidad. La diferencia practica entre las funciones que no son alias esta en la interfaz de `size` y en si el rango es fijo `[0, 1)` o configurable.
+La distribución **uniforme** es el punto de partida de toda aleatoriedad numérica: dentro de un rango, todos los valores son igualmente probables. Esta carpeta cubre las tres funciones *legacy* de `np.random` para muestrearla. Todas producen la misma distribución; lo que cambia entre ellas es **cómo se pasa la forma del array** (dimensiones sueltas frente a tupla `size`) y si el **rango** es fijo `[0, 1)` o configurable.
 
-## Funciones
+> [!tip] Versión moderna
+> Las tres funciones de aquí operan sobre el **estado global** de `np.random` (el que fija `np.random.seed`), hoy considerado *legacy*. La API recomendada crea un generador propio y aislado con [[np.random.default_rng]]:
+> ```python
+> rng = np.random.default_rng()
+> rng.random(size=(2, 3))        # equivalente de np.random.random
+> rng.uniform(-1, 1, size=(2, 3)) # equivalente de np.random.uniform
+> ```
+> `Generator` unifica la interfaz: siempre `size=` como tupla, sin la variante de dimensiones sueltas.
 
-| Funcion | Rango | Interfaz de shape | Descripcion |
-|---------|-------|-------------------|-------------|
-| [[np.random.rand]] | `[0, 1)` | argumentos posicionales `rand(3, 4)` | Uniforme estandar con shape como args; interfaz estilo MATLAB |
-| [[np.random.random]] | `[0, 1)` | tupla `random((3, 4))` | Interfaz Pythonica; forma preferida sobre `rand` |
-| [[np.random.random_sample]] | `[0, 1)` | tupla | Alias exacto de `random` |
-| [[np.random.ranf]] | `[0, 1)` | tupla | Alias exacto de `random`; existe por compatibilidad historica |
-| [[np.random.sample]] | `[0, 1)` | tupla | Alias exacto de `random`; cuatro nombres para la misma funcion |
-| [[np.random.uniform]] | `[low, high)` | tupla o entero | Rango arbitrario con parametros explicitos; semanticamente la mas clara |
+## Las funciones
 
-## Alias: random = random_sample = ranf = sample
+| Función | Rango | Interfaz de shape | Cuándo usarla |
+|---|---|---|---|
+| [[np.random.rand]] | `[0, 1)` | dimensiones **sueltas**: `rand(3, 4)` | atajo de conveniencia (estilo MATLAB) |
+| [[np.random.random]] | `[0, 1)` | **tupla** `size`: `random((3, 4))` | la forma **canónica**; preferida sobre `rand` |
+| [[np.random.uniform]] | `[low, high)` | **tupla** `size` + `low`/`high` | cuando el rango importa y conviene explicitarlo |
 
-Las cuatro funciones son identicas en comportamiento. Se recomienda usar `np.random.random` por ser la mas legible. `rand` queda para codigo que privilegia la brevedad; `uniform` cuando el rango importa y conviene hacerlo explicito.
+## rand vs random vs uniform
+
+La elección es sencilla:
+
+- **`rand`** y **`random`** dan lo mismo (`[0, 1)`); solo difieren en la firma. `rand(2, 3)` toma las dimensiones **sueltas**; `random((2, 3))` toma una **tupla**. Si el shape ya está en una variable, `random(mi_shape)` es lo cómodo.
+- **`uniform`** es `random` con el rango parametrizado: `uniform(low, high, size)` cubre cualquier intervalo `[low, high)` sin reescalar a mano.
 
 ```python
 import numpy as np
 np.random.seed(0)
 
-np.random.rand(3)             # array([0.549, 0.715, 0.603]) — shape como args
-np.random.random((3,))        # misma distribucion, interfaz de tupla
-np.random.uniform(0, 1, 3)   # identico en resultado, con rango explicito
+np.random.rand(3)              # shape como argumentos sueltos
+np.random.random((3,))         # misma distribución, interfaz de tupla
+np.random.uniform(0, 1, 3)     # idéntico, con rango explícito
 
-# Uniforme en rango arbitrario
+# Uniforme en un rango arbitrario:
 np.random.uniform(low=-5, high=5, size=(2, 3))
 ```
+
+> [!note] Los alias `ranf` / `sample` / `random_sample` ya no existen
+> Históricamente `np.random.random_sample`, `np.random.ranf` y `np.random.sample` eran **alias exactos** de [[np.random.random]] (misma firma `size=None`): cuatro nombres para la misma función. Se han eliminado en NumPy moderno; usa siempre `np.random.random` o el `Generator` de [[np.random.default_rng]].
+
+## Notas relacionadas
+
+- [[np.random.default_rng]] — la API moderna recomendada (`Generator`)
+- [[np.random.seed]] — fijar la semilla del estado global *legacy*
+- [[concepto_shape]] — la forma del array generado por `size`

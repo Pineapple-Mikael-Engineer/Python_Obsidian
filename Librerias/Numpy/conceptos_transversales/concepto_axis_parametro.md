@@ -1,5 +1,5 @@
 ---
-title: Axis — El parametro que dirige las operaciones por eje
+title: Axis — El parámetro que dirige las operaciones por eje
 aliases:
   - axis
   - eje
@@ -16,30 +16,59 @@ requiere:
 draft: false
 ---
 
-# Axis — El parametro que dirige las operaciones por eje
+# Axis — El parámetro que dirige las operaciones por eje
 
-## Definicion fundamental
+## Definición fundamental
 
-El parametro **`axis`** indica **a lo largo de que dimension** se aplica una operacion. Aparece en casi todas las reducciones y manipulaciones (`sum`, `mean`, `max`, `concatenate`, `sort`...). Es el control direccional de NumPy.
+El parámetro **`axis`** indica **a lo largo de qué dimensión** se aplica una operación. Aparece en casi todas las reducciones y manipulaciones (`sum`, `mean`, `max`, `concatenate`, `sort`...). Es el control direccional de NumPy, el que conecta cada operación con un eje concreto de un [[concepto_ndarray|tensor]].
 
-**Caracteristica esencial:** `axis=k` significa "recorrer y **colapsar** el eje `k`", dejando intactos los demas. El eje sobre el que operas es el que **desaparece** del shape resultado.
+**Característica esencial:** `axis=k` significa "recorrer y **colapsar** el eje `k`", dejando intactos los demás. El eje sobre el que operas es el que **desaparece** del [[concepto_shape|shape]] resultado.
+
+## Por qué existe
+
+Una matriz `(2, 3)` se puede sumar de tres formas distintas: bajando por columnas, a lo largo de cada fila, o todo a la vez. Sin un parámetro que elija la dirección, NumPy tendría que ofrecer una función por cada combinación (`sum_columnas`, `sum_filas`...). `axis` unifica todas esas variantes en un único argumento: **una operación, un eje, una dirección**.
+
+```python
+import numpy as np
+M = np.arange(6).reshape(2, 3)   # [[0,1,2],[3,4,5]]
+
+M.sum(axis=0)   # baja por columnas   → [3, 5, 7]
+M.sum(axis=1)   # recorre cada fila   → [3, 12]
+M.sum()         # todo                → 15
+```
 
 ## La regla central
 
-> El eje indicado en `axis` es el que se **consume**. El shape resultado es el shape original sin esa posicion.
+> El eje indicado en `axis` es el que se **consume**. El shape resultado es el shape original sin esa posición.
 
-| Shape entrada | `axis` | Que se colapsa | Shape salida |
+| Shape entrada | `axis` | Qué se colapsa | Shape salida |
 |---------------|--------|----------------|--------------|
 | `(2, 3)` | `0` | filas | `(3,)` |
 | `(2, 3)` | `1` | columnas | `(2,)` |
 | `(2, 3)` | `None` | todo | `()` escalar |
 | `(2, 3, 4)` | `0` | primer eje | `(3, 4)` |
 | `(2, 3, 4)` | `1` | eje medio | `(2, 4)` |
-| `(2, 3, 4)` | `2` | ultimo eje | `(2, 3)` |
+| `(2, 3, 4)` | `2` | último eje | `(2, 3)` |
 
-## Por que confunde (y como fijar la intuicion)
+### El mapa de shapes formal
 
-La trampa: `axis=0` no significa "por filas" en el sentido de "una operacion por fila". Significa **moverse a lo largo del eje 0** (hacia abajo, entre filas), produciendo un resultado **por columna**.
+Para una reducción sobre el eje $p$ de un tensor de shape $(n_0,\dots,n_k)$, ese eje **se elimina** del shape:
+
+$$ (n_0,\dots,n_k)\ \xrightarrow{\ \text{axis}=p\ }\ (n_0,\dots,n_{p-1},\,n_{p+1},\dots,n_k) $$
+
+Con una **tupla de ejes** `axis=(p,q)` desaparecen **ambos** a la vez:
+
+$$ (n_0,\dots,n_k)\ \xrightarrow{\ \text{axis}=(p,q)\ }\ (\dots,\,n_{p-1},\,n_{p+1},\dots,\,n_{q-1},\,n_{q+1},\dots) $$
+
+Con `keepdims=True`, los ejes reducidos **no desaparecen**: quedan con tamaño $1$ en su posición original:
+
+$$ (n_0,\dots,n_k)\ \xrightarrow{\ \text{axis}=p,\ \text{keepdims}\ }\ (n_0,\dots,n_{p-1},\,1,\,n_{p+1},\dots,n_k) $$
+
+Y el caso `axis=None` contrae **todos** los ejes a un escalar de shape `()`.
+
+## Por qué confunde (y cómo fijar la intuición)
+
+La trampa: `axis=0` no significa "por filas" en el sentido de "una operación por fila". Significa **moverse a lo largo del eje 0** (hacia abajo, entre filas), produciendo un resultado **por columna**.
 
 ```python
 import numpy as np
@@ -51,9 +80,9 @@ M.sum(axis=1)   # [6, 15]     → suma A LO LARGO de cada fila (colapsa columnas
 M.sum()         # 21          → colapsa todo
 ```
 
-**Regla mnemotecnica:** "el eje que pongo en `axis` es el que se va". `axis=0` borra la dimension de las filas → quedan las columnas.
+**Regla mnemotécnica:** "el eje que pongo en `axis` es el que se va". `axis=0` borra la dimensión de las filas → quedan las columnas.
 
-## Visualizacion direccional
+## Visualización direccional
 
 ```
 M (shape 2x3):          axis=0  ↓ (recorre filas)        axis=1  → (recorre columnas)
@@ -86,38 +115,38 @@ M / sk     # OK por broadcasting
 ```python
 M = np.arange(6).reshape(2, 3)   # [[0,1,2],[3,4,5]]
 
-M.max(axis=0)   # [3, 4, 5]   → maximo por columna
-M.max(axis=1)   # [2, 5]      → maximo por fila
+M.max(axis=0)   # [3, 4, 5]   → máximo por columna
+M.max(axis=1)   # [2, 5]      → máximo por fila
 M.mean()        # 2.5         → media global
 ```
 
-### Nivel 2: `argmax` y la posicion a lo largo del eje
+### Nivel 2: `argmax` y la posición a lo largo del eje
 
 ```python
 M = np.array([[1, 9, 3],
               [7, 2, 8]])
 
-M.argmax(axis=0)  # [1, 0, 1]  → indice de fila con el max en cada columna
-M.argmax(axis=1)  # [1, 2]     → indice de columna con el max en cada fila
+M.argmax(axis=0)  # [1, 0, 1]  → índice de fila con el max en cada columna
+M.argmax(axis=1)  # [1, 2]     → índice de columna con el max en cada fila
 ```
 
 ### Nivel 3: axis negativo y en 3D
 
-`axis=-1` es siempre el ultimo eje, util cuando el ndim varia.
+`axis=-1` es siempre el último eje, útil cuando el `ndim` varía.
 
 ```python
 T = np.ones((2, 3, 4))
 
-T.sum(axis=-1).shape   # (2, 3)   → colapsa el ultimo eje (equivale a axis=2)
+T.sum(axis=-1).shape   # (2, 3)   → colapsa el último eje (equivale a axis=2)
 T.sum(axis=0).shape    # (3, 4)
 T.sum(axis=(0, 2)).shape  # (3,)  → axis acepta tupla: colapsa varios ejes
 ```
 
 ## Operaciones donde `axis` no reduce, sino que dirige
 
-No todas las operaciones con `axis` colapsan un eje; algunas lo usan como direccion:
+No todas las operaciones con `axis` colapsan un eje; algunas lo usan como dirección:
 
-| Operacion | Rol de `axis` | Efecto |
+| Operación | Rol de `axis` | Efecto |
 |-----------|---------------|--------|
 | `sum`, `mean`, `max` | reduce | el eje desaparece |
 | `cumsum`, `cumprod` | acumula a lo largo | el shape se conserva |
@@ -134,7 +163,7 @@ np.concatenate([A, B], axis=0).shape   # (4, 2)  → apila filas
 np.concatenate([A, B], axis=1).shape   # (2, 4)  → apila columnas
 ```
 
-## Casos que fallan (errores tipicos)
+## Casos que fallan (errores típicos)
 
 ### Error 1: confundir el sentido de axis=0 / axis=1
 
@@ -148,7 +177,7 @@ M.mean(axis=0)   # [2.0, 3.0]  media por columna (no era esto)
 ### Error 2: axis fuera de rango
 
 ```python
-M = np.ones((2, 3))   # ndim = 2, ejes validos: 0, 1, -1, -2
+M = np.ones((2, 3))   # ndim = 2, ejes válidos: 0, 1, -1, -2
 M.sum(axis=2)
 # AxisError: axis 2 is out of bounds for array of dimension 2
 ```
@@ -162,7 +191,7 @@ medias = M.mean(axis=1)              # shape (3,)  → no alinea con (3,4)
 M - M.mean(axis=1, keepdims=True)    # OK con keepdims (3,1)
 ```
 
-## Relacion con otros conceptos
+## Relación con otros conceptos
 
 - [[concepto_ndarray]]
 - [[concepto_shape]]

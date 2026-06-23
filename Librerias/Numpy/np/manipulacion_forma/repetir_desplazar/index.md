@@ -1,81 +1,84 @@
 ---
-title: np/manipulacion_forma/repetir_desplazar — duplicar y rotar elementos
+title: np/manipulacion_forma/repetir_desplazar — duplicar, rotar y rellenar elementos
 tags:
   - numpy
   - indice
 draft: false
 ---
 
-# np/manipulacion_forma/repetir_desplazar — duplicar y rotar elementos
+# np/manipulacion_forma/repetir_desplazar — duplicar, rotar y rellenar elementos
 
-Las tres funciones de esta carpeta trabajan sobre un solo array y modifican como se distribuyen sus elementos: dos de ellas aumentan el tamano duplicando datos (`tile`, `repeat`) y una mantiene el tamano y rota los elementos circularmente (`roll`). Todas devuelven una **copia**.
+Esta carpeta agrupa las funciones que **reorganizan los elementos** de un único array sin combinarlo
+con otros: dos lo **agrandan duplicando datos** ([[np.repeat]], [[np.tile]]), una lo **agranda
+rellenando** un borde ([[np.pad]]) y otra **conserva el tamaño rotando** los elementos ([[np.roll]]).
+Todas devuelven un array nuevo (copia); ninguna modifica la entrada.
 
-El grupo existe porque estos patrones aparecen con frecuencia en simulacion, procesado de senales y preparacion de datos: construir un kernel repetido, expandir una secuencia corta, implementar convolucion circular o preparar arrays para broadcasting sin copiar manualmente.
+El grupo existe porque estos patrones aparecen sin parar en simulación, procesado de señales y visión
+por computador: construir un kernel repetido, expandir una secuencia corta, dar margen a una imagen
+antes de convolucionar o implementar correlación circular.
 
-## La distincion clave: tile vs. repeat
+## La distinción clave: repeat vs tile (elemento vs bloque)
 
-Ambas duplican datos, pero en unidades diferentes:
+Las dos funciones que duplican lo hacen en **unidades distintas**, y confundirlas da resultados que
+*parecen* correctos pero significan otra cosa:
 
-- `np.tile(a, 2)` repite el **array completo** como un mosaico: `[1,2,3]` → `[1,2,3,1,2,3]`
-- `np.repeat(a, 2)` repite cada **elemento** individualmente: `[1,2,3]` → `[1,1,2,2,3,3]`
+$$ [\,1,2,3\,] \;\xrightarrow{\ \text{repeat},\ r=2\ }\; [\,1,1,2,2,3,3\,] \qquad\text{(repite el ELEMENTO)} $$
 
-Confundirlas produce resultados correctos en apariencia pero erroneos en significado.
+$$ [\,1,2,3\,] \;\xrightarrow{\ \text{tile},\ \text{reps}=2\ }\; [\,1,2,3,1,2,3\,] \qquad\text{(repite el BLOQUE)} $$
+
+```python
+import numpy as np
+a = np.array([1, 2, 3])
+np.repeat(a, 2)   # [1, 1, 2, 2, 3, 3]   → cada elemento, in situ
+np.tile(a, 2)     # [1, 2, 3, 1, 2, 3]   → el array entero, como mosaico
+```
 
 ## Funciones
 
-### [[np.tile]] — repetir el array como mosaico
+### [[np.repeat]] — repite cada elemento r veces
+Estira un eje duplicando cada elemento `r` veces consecutivas: $(\dots,n_p,\dots)\to(\dots,n_p\cdot r,\dots)$.
+Con `repeats` como array permite cuentas **desiguales** por elemento. Útil para expandir etiquetas por
+conteo, hacer upsample de imágenes píxel a píxel o duplicar muestras de un dataset.
 
-Construye un array nuevo repitiendo el array de entrada segun el parametro `reps`. Si `reps` es un entero, repite en el eje final. Si es una tupla `(2, 3)`, repite 2 veces en el eje 0 y 3 veces en el eje 1. Si `reps` tiene mas dimensiones que el array, el array se expande primero con dimensiones de tamano 1 al frente.
+### [[np.tile]] — repite el array entero como mosaico
+Embaldosa el bloque completo `reps` veces por eje: cada dimensión se multiplica por su `reps`. Útil
+para construir dameros, kernels periódicos o replicar un vector como filas de una matriz. A menudo el
+broadcasting evita tener que materializarlo.
 
-Util para crear fondos periodicos, kernels de convolucion, o cualquier patron que se repite espacialmente.
+### [[np.roll]] — desplaza circularmente
+Rota los elementos `shift` posiciones a lo largo de `axis`; lo que sale por un extremo entra por el
+otro. El **shape se conserva** y no se pierde ningún dato. Útil para correlación circular, desfases de
+señales periódicas y diferencias con retardo (`a - np.roll(a, 1)`).
 
-### [[np.repeat]] — repetir cada elemento N veces
-
-Repite cada elemento del array un numero dado de veces. Con `repeats` como entero todos los elementos se repiten el mismo numero de veces; con `repeats` como array se puede especificar cuantas veces se repite cada elemento individualmente. El parametro `axis` controla si la repeticion es elemento a elemento a lo largo de ese eje o sobre el array aplanado.
-
-Util para expandir etiquetas, duplicar muestras en un dataset desbalanceado, o construir senales con duraciones variables por segmento.
-
-### [[np.roll]] — desplazamiento circular
-
-Desplaza los elementos del array `shift` posiciones a lo largo del eje `axis`. Los elementos que "caen" por un extremo reaparecen por el otro — desplazamiento circular, no perdida de datos. `shift` positivo mueve hacia la derecha (o hacia abajo si `axis=0`); negativo, hacia la izquierda. Sin `axis`, el array se aplana antes de desplazar y luego se restaura la forma original.
-
-Util para correlacion circular, alineamiento de series temporales, implementacion de buffers circulares, o calcular diferencias con retardo: `a - np.roll(a, 1)` da la diferencia entre cada elemento y el anterior.
+### [[np.pad]] — añade relleno alrededor
+Agranda el array añadiendo un borde: cada eje crece por lo que se pida antes y después,
+$(n_0,\dots)\to(n_0+p_0,\dots)$. El `mode` (`'constant'`, `'edge'`, `'reflect'`, `'wrap'`...) decide
+con qué se rellena. Es el padding de imágenes y convoluciones, y la versión "no circular" de `roll`.
 
 ## Tabla de funciones
 
-| Funcion | Unidad que se repite | Tamano resultado | Siempre copia |
-|---------|---------------------|-----------------|---------------|
-| [[np.tile]] | El array completo | Mayor | Si |
-| [[np.repeat]] | Cada elemento individualmente | Mayor | Si |
-| [[np.roll]] | N/A (rota, no duplica) | Igual | Si |
+| Función | Qué hace al shape | Unidad / efecto | Devuelve |
+|---|---|---|---|
+| [[np.repeat]] | el eje crece: $n_p \to n_p\cdot r$ | repite cada **elemento** | copia |
+| [[np.tile]] | cada dim por su `reps` | repite el **bloque** entero | copia |
+| [[np.roll]] | shape **conservado** | rota circularmente | copia |
+| [[np.pad]] | cada eje $n_i \to n_i + p_i$ | rellena un **borde** | copia |
 
-## Ejemplo comparativo: tile vs. repeat
+## Ejemplo comparativo: agrandar de cuatro maneras
 
 ```python
 import numpy as np
-
 a = np.array([1, 2, 3])
 
-np.tile(a, 3)      # [1, 2, 3, 1, 2, 3, 1, 2, 3]
-np.repeat(a, 3)    # [1, 1, 1, 2, 2, 2, 3, 3, 3]
-
-# tile en 2D: reps como tupla
-b = np.array([[1, 2], [3, 4]])
-np.tile(b, (2, 3))
-# [[1, 2, 1, 2, 1, 2],
-#  [3, 4, 3, 4, 3, 4],
-#  [1, 2, 1, 2, 1, 2],
-#  [3, 4, 3, 4, 3, 4]]
+np.repeat(a, 2)               # [1, 1, 2, 2, 3, 3]          → elemento
+np.tile(a, 2)                 # [1, 2, 3, 1, 2, 3]          → bloque
+np.roll(a, 1)                 # [3, 1, 2]                   → rota (mismo tamaño)
+np.pad(a, (1, 1))             # [0, 1, 2, 3, 0]             → rellena borde
 ```
 
-## Ejemplo: roll para diferencias con retardo
+## Notas relacionadas
 
-```python
-import numpy as np
-
-senal = np.array([10, 13, 12, 15, 14, 16])
-retardo = np.roll(senal, 1)   # [16, 10, 13, 12, 15, 14]
-diferencia = senal - retardo   # diferencia entre cada muestra y la anterior
-# [−6, 3, −1, 3, −1, 2]
-# Nota: el primer elemento (-6) es el wrap-around circular, no una diferencia real
-```
+- [[concepto_shape]] — el mapa de shapes de cada transformación
+- [[concepto_axis_parametro]] — a lo largo de qué eje actúan `repeat` y `roll`
+- [[concepto_broadcasting]] — la alternativa sin materializar (`tile`)
+- [[Librerias/Numpy/np/manipulacion_forma/index|manipulacion_forma]] — la familia completa de forma

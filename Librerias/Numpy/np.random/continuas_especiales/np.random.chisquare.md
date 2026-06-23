@@ -15,40 +15,38 @@ draft: false
 
 # np.random.chisquare — Muestras de la distribución chi-cuadrado
 
-Modela la **suma de cuadrados de `df` normales estándar** independientes. Es la distribución de referencia en **tests de hipótesis** (bondad de ajuste, independencia en tablas de contingencia) y en la estimación de varianzas. Su único parámetro es `df`, los grados de libertad.
+Genera muestras de una distribución **chi-cuadrado** con `df` grados de libertad. Surge como la **suma de cuadrados de `df` normales estándar** independientes, por lo que es siempre no negativa y asimétrica a la derecha. Es la distribución de referencia en **tests de hipótesis** (bondad de ajuste, independencia en tablas de contingencia) y en la inferencia sobre varianzas.
 
-## Firma de la función
+## La idea
+
+Si $Z_1,\dots,Z_k$ son normales estándar independientes, entonces $\sum_{i=1}^{k} Z_i^2$ sigue una chi-cuadrado con $k = $ `df` grados de libertad. Su densidad sobre `x ≥ 0` es:
+
+$$ f(x;k) \;=\; \frac{x^{\,k/2-1}\,e^{-x/2}}{2^{\,k/2}\,\Gamma(k/2)}, \qquad x \ge 0 $$
+
+Aquí el único **parámetro de forma** es `df` (los grados de libertad $k$). Propiedades clave:
+
+- Media $\mathbb{E}[X] = k$ y varianza $\operatorname{Var}[X] = 2k$.
+- Con `df` pequeño es muy **sesgada a la derecha**; al crecer `df` se aproxima a una normal.
+- Es un **caso particular de la gamma**: `chisquare(df)` ≡ `gamma(shape=df/2, scale=2)`.
+
+> [!tip] Versión moderna
+> La API recomendada desde NumPy 1.17 usa un generador explícito en vez del estado global. Ver [[np.random.default_rng]].
+> ```python
+> rng = np.random.default_rng()
+> rng.chisquare(df=4, size=1000)
+> ```
+
+## Firma
 
 ```python
-np.random.chisquare(
-    df,
-    size=None
-) -> ndarray | float
+np.random.chisquare(df, size=None) -> ndarray | float
 ```
 
-## Valor de retorno
-
-Devuelve reales no negativos cuya media tiende a `df` y cuya varianza tiende a `2·df`. Es un caso particular de la gamma (`shape=df/2`, `scale=2`); por eso siempre es positiva y asimétrica, acercándose a una normal cuando `df` crece.
-
-| Entrada | Retorno | Ejemplo |
-|---------|---------|---------|
-| `chisquare(2)` con `size=None` | `float` | `1.37` |
-| `chisquare(2, size=4)` | `ndarray (4,)` | `[0.9, 3.1, 1.2, 0.4]` |
-| `chisquare(10)` | media ≈ 10 | menos asimétrica |
-| `chisquare(5, size=(2,3))` | `ndarray (2,3)` | matriz positiva |
-
-```python
-import numpy as np
-np.random.seed(0)
-np.random.chisquare(df=4, size=3)
-# array([3.21, 5.84, 2.10])  → media tiende a df = 4
-```
-
-## Parámetros en detalle
+## Los parámetros en detalle
 
 ### `df` — grados de libertad
 
-Número de normales estándar al cuadrado que se suman. Fija tanto la media (`df`) como la asimetría: con pocos `df` la distribución es muy sesgada a la derecha; con muchos se vuelve casi simétrica. Debe ser `> 0` (admite valores no enteros).
+Número de normales estándar al cuadrado que se suman. Fija tanto la media (`df`) como la asimetría: con pocos `df` la distribución está muy sesgada a la derecha; con muchos se vuelve casi simétrica. Debe ser `> 0` y admite valores **no enteros**. Acepta escalar o array (broadcasting con `size`).
 
 ```python
 np.random.chisquare(1)    # muy asimétrica, masa cerca de 0
@@ -63,6 +61,24 @@ Entero o tupla que define el [[concepto_shape|shape]] del array; `None` devuelve
 ```python
 np.random.chisquare(4, size=1000)    # vector (1000,)
 np.random.chisquare(4, size=(5, 5))  # matriz (5, 5)
+```
+
+## size y la forma de salida
+
+Devuelve reales no negativos con media tendente a `df` y varianza a `2·df`.
+
+| Llamada | Distribución | Shape | dtype |
+|---------|--------------|-------|-------|
+| `np.random.chisquare(2)` | χ²(2) | `()` escalar | `float` |
+| `np.random.chisquare(2, 4)` | χ²(2) | `(4,)` | `float64` |
+| `np.random.chisquare(10)` | χ²(10), media ≈ 10 | `()` escalar | `float` |
+| `np.random.chisquare(5, (2, 3))` | χ²(5) | `(2, 3)` | `float64` |
+
+```python
+import numpy as np
+np.random.seed(0)
+np.random.chisquare(df=4, size=3)
+# array([3.21, 5.84, 2.10])  → media tiende a df = 4
 ```
 
 ## Casos de uso
@@ -83,12 +99,12 @@ m.mean()   # ≈ 8     (df)
 m.var()    # ≈ 16    (2*df)
 ```
 
-## Buenas prácticas
+### Equivalencia con la gamma
 
-1. Asocia siempre `df` con los grados de libertad del test (categorías − 1, o filas-1 × columnas-1).
-2. Recuerda media = `df` y varianza = `2·df` para validar tus simulaciones.
-3. Es equivalente a `gamma(shape=df/2, scale=2)`: usa [[np.random.gamma]] si necesitas más flexibilidad.
-4. Fija la semilla con [[np.random.seed]] para reproducir la distribución nula.
+```python
+# chisquare(df) ≡ gamma(shape=df/2, scale=2)
+np.random.gamma(shape=5/2, scale=2, size=1000)
+```
 
 ## Errores comunes
 
@@ -97,11 +113,12 @@ m.var()    # ≈ 16    (2*df)
 | `ValueError: df <= 0` | Grados de libertad no positivos | Garantizar `df > 0` |
 | Media inesperada | Olvidar que la media es `df` | Ajustar `df` al estadístico real |
 | Esperar simetría con `df` bajo | Con pocos `df` es muy asimétrica | Subir `df` o aceptar el sesgo |
-| Valores negativos esperados | La chi-cuadrado es siempre ≥ 0 | Usar la t o la normal si necesitas negativos |
+| Esperar valores negativos | La chi-cuadrado es siempre ≥ 0 | Usar la t o la normal si necesitas negativos |
 
 ## Notas relacionadas
 
 - [[concepto_shape]]
+- [[np.random.default_rng]]
 - [[np.random.gamma]]
 - [[np.random.randn]]
 - [[np.random.seed]]

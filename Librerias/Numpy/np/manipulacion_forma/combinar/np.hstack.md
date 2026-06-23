@@ -1,8 +1,9 @@
 ---
-title: np.hstack — Apilar arrays horizontalmente (por columnas)
+title: np.hstack — apila por columnas (eje 1), atajo de concatenate
 aliases:
   - hstack
   - np.hstack
+  - apilar horizontal
 tags:
   - numpy
   - api/funcion
@@ -24,85 +25,125 @@ requiere:
 draft: false
 ---
 
-# np.hstack — Apilar arrays horizontalmente (por columnas)
+# np.hstack — apila por columnas (eje 1), atajo de concatenate
 
-## Firma de la función
+`np.hstack` une una secuencia de arrays **a lo largo del eje 1** (las columnas) para arrays 2D o más. Es un **atajo de [[np.concatenate]]**, pero con una trampa de dimensión: para arrays **1D une por el eje 0** (no hay eje 1 en un vector), de modo que dos `(3,)` dan `(6,)` y no columnas. Es la forma de "crecer a lo ancho": añadir columnas a una matriz.
 
-```python
-np.hstack(tup) -> ndarray
-```
+## La idea en una fórmula
 
-## Valor de retorno
+Para 2D+, concatena por el eje 1, que se **suma**; para 1D, por el eje 0:
 
-Devuelve un nuevo array uniendo la secuencia **horizontalmente**: en el eje 1 para arrays 2D, y en el eje 0 para arrays 1D. Es un atajo de [[np.concatenate]].
+$$
+(m,\,a),(m,\,b)\;\xrightarrow{\ \text{hstack, 2D}\ }\;(m,\,a+b)\qquad\qquad (a,),(b,)\;\xrightarrow{\ \text{hstack, 1D}\ }\;(a+b,)
+$$
 
-| Entrada | Shapes | Salida |
-|---------|--------|--------|
-| dos `(3,)` | 1D | `(6,)` |
-| `(2, 3)` y `(2, 2)` | 2D | `(2, 5)` |
+Es decir, `axis = 1` si `ndim >= 2`, y `axis = 0` si `ndim == 1`. En 2D, pega bloques uno al lado del otro:
 
-```python
-import numpy as np
-a = np.array([[1], [2], [3]])
-b = np.array([[4], [5], [6]])
-np.hstack((a, b))
-# array([[1, 4],
-#        [2, 5],
-#        [3, 6]])      # (3, 2)
-```
+$$
+\begin{bmatrix} 1 \\ 2 \\ 3 \end{bmatrix},\;\begin{bmatrix} 4 \\ 5 \\ 6 \end{bmatrix}\;\xrightarrow{\ \text{hstack}\ }\;\begin{bmatrix} 1 & 4 \\ 2 & 5 \\ 3 & 6 \end{bmatrix}\qquad (3,1),(3,1)\to(3,2)
+$$
 
 ## El caso 1D (cuidado)
 
-Con arrays 1D, `hstack` concatena en el **eje 0**, no crea columnas:
+Con vectores 1D, hstack **aplana** (une en eje 0), no crea columnas:
 
 ```python
-np.hstack((np.array([1, 2]), np.array([3, 4])))   # [1, 2, 3, 4]  → (4,)
+np.hstack((np.array([1, 2]), np.array([3, 4])))   # [1 2 3 4]  → (4,)
 ```
 
-Para tratar vectores 1D como columnas, usa [[np.column_stack]].
+Para tratar vectores 1D **como columnas**, usa [[np.column_stack]].
 
-## Parámetros en detalle
+## Firma
 
-### `tup` — secuencia de arrays
+```python
+np.hstack(
+    tup,         # secuencia de array_like
+    *,
+    dtype=None,  # dtype: tipo del resultado (NumPy reciente)
+    casting="same_kind",
+) -> ndarray
+```
 
-Tupla o lista. En 2D deben coincidir en el número de **filas** (eje 0).
+## Los parámetros en detalle
+
+### `tup` — la secuencia de arrays
+Tupla o lista de `array_like`. En 2D deben coincidir en el número de **filas** (eje 0); en 1D, no hay restricción de shape salvo ser 1D. El eje de unión depende del `ndim`.
+
+### `dtype` / `casting`
+Fuerzan el [[concepto_dtype|dtype]] de salida y la regla de conversión, igual que en [[np.concatenate]].
+
+## El caso N-D
+
+| Entrada | Eje de unión | Salida | Equivale a |
+|---|---|---|---|
+| dos `(3,)` | 0 (1D) | `(6,)` | `concatenate(axis=0)` |
+| `(2,3)`, `(2,2)` | 1 | `(2,5)` | `concatenate(axis=1)` |
+| `(2,3,4)`, `(2,5,4)` | 1 | `(2,8,4)` | `concatenate(axis=1)` |
+
+```python
+np.hstack((a, b))                # 1 si 2D+, 0 si 1D
+np.concatenate((a, b), axis=1)   # equivalente para arrays 2D+
+```
+
+## Vectorización
+
+Como atajo de concatenate, reserva el buffer una vez y copia cada bloque en su banda de columnas. El antipatrón es apilar en bucle: acumula en una lista y une una vez ([[concepto_vectorizacion]]).
+
+## Valor de retorno
+
+Un **nuevo** `ndarray` (copia). Para 2D+ crece el eje 1; para 1D, el eje 0. dtype: promoción común (o el forzado).
 
 ## Casos de uso
 
-### Añadir columnas a una matriz de diseño
+### Pegar dos columnas lado a lado
+Dos columnas `(3,1)` se unen por el eje 1 en una `(3,2)`:
+
+$$
+\begin{bmatrix} 1 \\ 2 \\ 3 \end{bmatrix},\;\begin{bmatrix} 4 \\ 5 \\ 6 \end{bmatrix}\;\xrightarrow{\ \text{hstack}\ }\;\begin{bmatrix} 1 & 4 \\ 2 & 5 \\ 3 & 6 \end{bmatrix}\qquad (3,1),(3,1)\to(3,2)
+$$
 
 ```python
 X = np.ones((100, 3))
 extra = np.random.rand(100, 2)
-X = np.hstack((X, extra))      # (100, 5)
+X = np.hstack((X, extra))      # (100, 5)  → añade columnas
 ```
 
 ### Concatenar tramos de una señal 1D
-
 ```python
-señal = np.hstack((tramo1, tramo2, tramo3))
+señal = np.hstack((tramo1, tramo2, tramo3))   # une en eje 0 (¡aplana!)
 ```
 
-## Buenas prácticas
+### 4D: crecer el eje 1 (canales) de un lote
+Sobre arrays 4D `(N,C,H,W)`, hstack une por `axis=1`: suma los canales dejando lote, alto y ancho intactos:
 
-1. Úsalo para crecer "a lo ancho" (más columnas) en 2D; para más filas, [[np.vstack]].
-2. Con vectores 1D que deban ser columnas, usa [[np.column_stack]] (evita el aplanado).
-3. Acumula en lista y une una vez para no copiar en cada paso.
+```python
+a = np.random.rand(8, 3, 32, 32)   # lote de 8, 3 canales
+b = np.random.rand(8, 1, 32, 32)   # un canal extra (p. ej. máscara)
+todo = np.hstack((a, b))           # (8, 4, 32, 32)  → 4D
+# ejes: (lote=8, canal=3+1=4, alto=32, ancho=32)
+```
+
+### 5D: unir por el eje de frames un lote de vídeos
+Sobre tensores 5D `(V,F,C,H,W)`, hstack toca `axis=1` (los frames):
+
+```python
+v1 = np.random.rand(4, 10, 3, 32, 32)   # 4 vídeos de 10 frames
+v2 = np.random.rand(4,  5, 3, 32, 32)   # 5 frames más por vídeo
+todo = np.hstack((v1, v2))              # (4, 15, 3, 32, 32)  → 5D
+# ejes: (vídeo=4, frame=10+5=15, canal=3, alto=32, ancho=32)
+```
 
 ## Errores comunes
 
 | Error | Causa | Solución |
-|-------|-------|----------|
-| Vectores 1D se aplanan en vez de formar columnas | `hstack` une 1D en eje 0 | usar [[np.column_stack]] |
-| `dimensions must match` | nº de filas distinto en 2D | igualar el eje 0 |
-
-## Limitaciones
-
-- El eje de unión depende de `ndim` (0 en 1D, 1 en 2D+): para control explícito usa [[np.concatenate]].
+|---|---|---|
+| Vectores 1D se aplanan en vez de formar columnas | hstack une 1D por el eje 0 | usar [[np.column_stack]] |
+| `dimensions ... must match` | nº de filas distinto en 2D | igualar el eje 0 |
+| Eje de unión inesperado | depende de `ndim` (0 en 1D, 1 en 2D+) | para control explícito, [[np.concatenate]] |
 
 ## Notas relacionadas
 
-- [[concepto_shape]]
-- [[np.concatenate]]
-- [[np.vstack]]
-- [[np.column_stack]]
+- [[concepto_shape]] — por qué 1D no tiene eje de columnas
+- [[np.concatenate]] — la función base (hstack = `axis=1` en 2D+)
+- [[np.vstack]] — el equivalente por filas
+- [[np.column_stack]] — apilar vectores 1D como columnas de verdad

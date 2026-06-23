@@ -1,5 +1,5 @@
 ---
-title: ufuncs — Universal Functions (el motor de vectorizacion)
+title: ufuncs — Universal Functions (el motor element-wise)
 aliases:
   - ufunc
   - universal function
@@ -18,345 +18,205 @@ requiere:
 draft: false
 ---
 
-# ufuncs — Universal Functions (el motor de vectorizacion)
+# ufuncs — Universal Functions (el motor element-wise)
 
-## Definicion fundamental
+## Definición fundamental
 
-Una **ufunc** (Universal Function) es una funcion que opera elemento a elemento sobre [[concepto_ndarray|arrays de NumPy]], soportando [[concepto_broadcasting|broadcasting]], casting de tipos, y diversas funcionalidades avanzadas como reducciones y acumulaciones.
+Una **ufunc** (Universal Function) es una **función compilada en C que opera elemento a elemento** sobre [[concepto_ndarray|arrays de NumPy]], aplicando [[concepto_broadcasting|broadcasting]] automático y promoción de tipos. `np.add`, `np.sin`, `np.exp` o `np.greater` son ufuncs.
 
-En esencia, una ufunc es la implementacion en C de una operacion matematica que puede aplicarse a arrays completos sin bucles Python explicitos. Este mecanismo es el que hace posible la [[concepto_vectorizacion|vectorizacion]].
+Es el motor real de la [[concepto_vectorizacion|vectorización]]: el bucle sobre los elementos vive dentro de la ufunc, no en Python. Los operadores `+ - * /` son **azúcar sintáctico** sobre ufuncs: `a + b` invoca `np.add(a, b)`.
 
-## Clasificacion de ufuncs
+## Por qué existen
 
-### Por numero de argumentos
-
-| Tipo | Entrada | Salida | Ejemplos |
-|------|---------|--------|----------|
-| Unarias | 1 array | 1 array | `np.sin`, `np.log`, `np.abs` |
-| Binarias | 2 arrays | 1 array | `np.add`, `np.multiply`, `np.power` |
-| Ternarias | 3 arrays | 1 array | `np.clip`, `np.where` (caso especial) |
-
-### Por operacion matematica
-
-| Categoria | Ejemplos | Dominio |
-|-----------|----------|---------|
-| Aritmeticas | `add`, `subtract`, `multiply`, `divide` | Algebra basica |
-| Potencias y logaritmos | `power`, `sqrt`, `log`, `exp` | Analisis |
-| Trigonometricas | `sin`, `cos`, `tan`, `arcsin` | Geometria |
-| Hiperbolicas | `sinh`, `cosh`, `tanh` | Calculo |
-| Logicas | `greater`, `less`, `equal`, `logical_and` | Comparaciones |
-| Bit a bit | `bitwise_and`, `bitwise_or`, `bitwise_xor` | Computacion |
-| Especiales | `absolute`, `sign`, `ceil`, `floor` | Redondeo |
-
-## Anatomia de una ufunc
-
-### Estructura interna
+Sin ufuncs, aplicar una operación matemática a un array exigiría un bucle Python, lento porque interpreta cada paso:
 
 ```python
-import numpy as np
+# Bucle Python (lento: interpreta n veces)
+out = np.empty_like(arr)
+for i in range(arr.size):
+    out[i] = math.sin(arr[i])
 
-# Cada ufunc tiene metodos y atributos
-ufunc = np.add
-
-print(ufunc.nin)      # 2 (numero de inputs)
-print(ufunc.nout)     # 1 (numero de outputs)
-print(ufunc.ntypes)   # 15 (tipos soportados)
-print(ufunc.types)    # ['??->?', 'bb->b', 'BB->B', ...]
+# ufunc (un único bucle en C, con broadcasting)
+out = np.sin(arr)
 ```
 
-### Metodos principales de las ufuncs
+La ufunc recorre los datos en C, respeta los `strides` del array y aplica broadcasting sin materializar formas intermedias.
 
-| Metodo | Descripcion | Ejemplo |
-|--------|-------------|---------|
-| `reduce` | Aplica acumulativamente | `np.add.reduce([1,2,3])` → `6` |
-| `accumulate` | Guarda resultados parciales | `np.add.accumulate([1,2,3])` → `[1,3,6]` |
-| `reduceat` | Reduce en intervalos | `np.add.reduceat([1,2,3,4], [0,2])` → `[3,7]` |
-| `outer` | Producto cartesiano | `np.add.outer([1,2], [3,4])` → matriz 2×2 |
-| `at` | Operacion in-place en indices | `np.add.at(arr, [0,2], 1)` |
+## La regla / el modelo central
 
-## Ejemplos detallados de metodos ufunc
+Una ufunc se caracteriza por su número de entradas (`nin`) y salidas (`nout`), y aplica la misma operación a cada posición tras alinear las formas con broadcasting:
 
-### 1. `reduce` — Reduccion secuencial
+$$ z_{i_0\dots i_k} = f\big(x_{i_0\dots i_k},\ y_{i_0\dots i_k}\big) $$
+
+donde los índices recorren la **shape común** resultante del broadcasting de las entradas. La salida tiene esa shape común; el `dtype` sale de las reglas de promoción (ver [[concepto_dtype|sistema de dtypes]]).
+
+### Clasificación por aridad
+
+| Tipo | `nin` | Ejemplos |
+|------|-------|----------|
+| Unarias | 1 | `np.sin`, `np.log`, `np.exp`, `np.absolute` |
+| Binarias | 2 | `np.add`, `np.multiply`, `np.power`, `np.greater` |
+| "Ternarias" | 3 | `np.clip` (en la práctica; `np.where` no es ufunc) |
+
+## Parámetros comunes de toda ufunc
+
+Toda ufunc acepta un puñado de parámetros que controlan **dónde** escribe, **sobre qué** elementos opera y **con qué tipo**:
+
+| Parámetro | Qué hace | Cuándo importa |
+|-----------|----------|----------------|
+| `out=` | Escribe el resultado en un array existente (incluso el de entrada → in-place) | Reutilizar memoria, evitar arrays temporales |
+| `where=` | Máscara booleana: solo calcula donde es `True`; el resto conserva el valor previo de `out` | Aplicación condicional sin indexar |
+| `dtype=` | Fuerza el tipo de cómputo/salida | Controlar precisión o evitar overflow del acumulador |
+| `casting=` | Política de conversión permitida: `'no'`, `'equiv'`, `'safe'`, `'same_kind'`, `'unsafe'` | Bloquear conversiones con pérdida |
 
 ```python
-# Suma acumulativa (equivalente a sum())
-arr = np.array([1, 2, 3, 4])
-resultado = np.add.reduce(arr)  # 1+2+3+4 = 10
+arr = np.random.rand(1_000_000)
 
-# Producto acumulativo
-resultado = np.multiply.reduce(arr)  # 1*2*3*4 = 24
+# out: reutiliza memoria, sin asignación extra
+buf = np.empty_like(arr)
+np.sin(arr, out=buf)
 
-# Con axis
-matriz = np.array([[1, 2, 3],
-                   [4, 5, 6]])
-resultado = np.add.reduce(matriz, axis=0)  # [5, 7, 9]
+# out + where: solo recalcula los elementos > 0.5
+mascara = arr > 0.5
+np.sin(arr, out=arr, where=mascara)   # los <= 0.5 quedan intactos
+
+# dtype + casting: fuerza float32 y prohíbe perder precisión
+np.multiply(arr, 2, dtype=np.float32, casting='same_kind')
 ```
 
-### 2. `accumulate` — Resultados intermedios
+> [!warning] `where` necesita un `out` definido
+> Donde `where` es `False`, el resultado conserva lo que hubiera en `out`. Si no pasas `out`, esas posiciones quedan **sin inicializar** (basura). Con `where` casi siempre se pasa `out` explícito.
+
+## Los métodos de una ufunc (lo que suele faltar)
+
+Las ufuncs **binarias** exponen métodos que reutilizan la operación para reducir, acumular o expandir un array. Son el corazón "oculto" de NumPy: `np.sum` es `np.add.reduce`, `np.cumsum` es `np.add.accumulate`.
+
+| Método | Equivale a | Mapa de shapes |
+|--------|-----------|----------------|
+| `reduce(a, axis)` | reducir un eje (`np.sum`, `np.prod`...) | colapsa el eje reducido |
+| `accumulate(a, axis)` | sumas/productos parciales (`np.cumsum`, `np.cumprod`) | conserva la shape |
+| `reduceat(a, idx)` | reduce por segmentos `[idx[i]:idx[i+1])` | `(n,) → (len(idx),)` |
+| `outer(a, b)` | combina **cada** par `(a_i, b_j)` | `a.shape + b.shape` |
+| `at(a, idx, b)` | aplica in-place en índices (con repetidos) | modifica `a`, no retorna |
+
+### `reduce` — colapsa un eje
 
 ```python
-# Sumas parciales
-arr = np.array([1, 2, 3, 4])
-resultado = np.add.accumulate(arr)  # [1, 3, 6, 10]
+a = np.array([1, 2, 3, 4])
+np.add.reduce(a)               # 1+2+3+4 = 10   (≡ np.sum)
+np.multiply.reduce(a)          # 1*2*3*4 = 24   (≡ np.prod)
 
-# Equivalente a cumsum()
-resultado = np.cumsum(arr)  # [1, 3, 6, 10]
-
-# Productos parciales
-resultado = np.multiply.accumulate(arr)  # [1, 2, 6, 24]
+m = np.array([[1, 2, 3],
+              [4, 5, 6]])
+np.add.reduce(m, axis=0)       # [5, 7, 9]   colapsa el eje 0
 ```
 
-### 3. `outer` — Producto cartesiano
+Mapa de shapes (idéntico al de [[concepto_axis_parametro|axis]]):
+$$ (n_0,\dots,n_k)\ \xrightarrow{\ \text{reduce, axis}=p\ }\ (n_0,\dots,n_{p-1},\,n_{p+1},\dots,n_k) $$
+
+### `accumulate` — resultados parciales (≡ cumsum)
 
 ```python
-# Suma externa
-a = np.array([1, 2, 3])
-b = np.array([10, 20, 30])
-resultado = np.add.outer(a, b)
+a = np.array([1, 2, 3, 4])
+np.add.accumulate(a)           # [1, 3, 6, 10]   (≡ np.cumsum)
+np.multiply.accumulate(a)      # [1, 2, 6, 24]   (≡ np.cumprod)
+```
 
-# Resultado:
-# [[11, 21, 31],
-#  [12, 22, 32],
-#  [13, 23, 33]]
+### `reduceat` — reducir por segmentos
 
-# Multiplicacion externa (tabla de multiplicar)
-resultado = np.multiply.outer(a, b)
+Para índices `idx`, reduce cada tramo `a[idx[i] : idx[i+1])` (el último llega hasta el final):
+
+```python
+a = np.array([1, 2, 3, 4, 5, 6])
+np.add.reduceat(a, [0, 2, 4])  # [3, 7, 11]
+# tramos: a[0:2]=1+2=3, a[2:4]=3+4=7, a[4:]=5+6=11
+```
+
+### `outer` — combinar todos los pares
+
+`outer(a, b)` aplica la ufunc a **cada** par `(a_i, b_j)`, expandiendo las formas. Es el caso general del producto externo:
+
+$$ (n_0,\dots,n_{p-1}),\ (m_0,\dots,m_{q-1})\ \xrightarrow{\ \text{outer}\ }\ (n_0,\dots,n_{p-1},\,m_0,\dots,m_{q-1}) $$
+
+con la celda $C_{i_0\dots i_{p-1},\,j_0\dots j_{q-1}} = f\big(a_{i_0\dots i_{p-1}},\, b_{j_0\dots j_{q-1}}\big)$.
+
+```python
+a = np.array([1, 2, 3])        # (3,)
+b = np.array([10, 20, 30])     # (3,)
+
+np.multiply.outer(a, b)        # (3,) + (3,) → (3, 3)  tabla de multiplicar
 # [[10, 20, 30],
 #  [20, 40, 60],
 #  [30, 60, 90]]
+
+np.add.outer(a, b)             # cada suma a_i + b_j
+# [[11, 21, 31],
+#  [12, 22, 32],
+#  [13, 23, 33]]
 ```
 
-### 4. `reduceat` — Reduccion en intervalos especificos
+Ejemplo N-D del mapa de shapes: con `a.shape = (2, 3)` y `b.shape = (4,)`, `np.multiply.outer(a, b).shape == (2, 3, 4)`.
+
+### `at` — operación in-place con índices repetidos
+
+A diferencia de `a[idx] += b`, `np.add.at` **acumula** correctamente cuando un índice se repite:
 
 ```python
-arr = np.array([1, 2, 3, 4, 5, 6])
-indices = np.array([0, 2, 4])
-
-# Suma: arr[0:2] + arr[2:4] + arr[4:6]
-resultado = np.add.reduceat(arr, indices)  # [3, 7, 11]
-# (1+2)=3, (3+4)=7, (5+6)=11
+a = np.zeros(5)
+np.add.at(a, [0, 2, 2, 4], 1)  # el índice 2 se incrementa DOS veces
+a                              # [1., 0., 2., 0., 1.]
 ```
 
-### 5. `at` — Operacion in-place en indices especificos
+## Casting y promoción de tipos
+
+Las ufuncs promueven al tipo más general entre las entradas (ver [[concepto_dtype|sistema de dtypes]]): `int + float → float`. El parámetro `casting` controla qué conversiones se permiten.
 
 ```python
-arr = np.array([0, 0, 0, 0, 0])
-indices = np.array([0, 2, 4])
+i = np.array([1, 2, 3], dtype=np.int32)
+f = np.array([0.5, 1.5, 2.5], dtype=np.float32)
+np.add(i, f).dtype             # float64 (promoción)
 
-# Incrementa en 1 los indices 0, 2, 4
-np.add.at(arr, indices, 1)
-print(arr)  # [1, 0, 1, 0, 1]
-
-# Multiples operaciones
-np.multiply.at(arr, indices, 2)
-print(arr)  # [2, 0, 2, 0, 2]
+# casting='no' prohíbe convertir el float
+np.add(i, 0.5, casting='no')   # TypeError: Cannot cast ufunc input...
 ```
 
-## Casting y tipos en ufuncs
+> [!warning] `out` con dtype incompatible
+> Si `out` tiene un dtype que la política de `casting` no permite, la ufunc lanza error en vez de truncar silenciosamente. Ej.: escribir `np.add(f, f, out=int_array)` con el `casting` por defecto (`'same_kind'`) falla porque `float → int` no es seguro.
 
-### Reglas de casting
+## Crear ufuncs propias
 
-Las ufuncs convierten automaticamente los tipos de datos siguiendo una jerarquia. El [[concepto_dtype_sistema|sistema de dtypes]] determina como se promocionan los tipos durante las operaciones.
-
-```mermaid
-mindmap
-  root((Casting en ufuncs))
-    Orden de promocion
-      bool
-      int
-      float
-      complex
-    Reglas
-      Operacion entre tipos
-        Promueve al mas general
-      Sin perdida de precision
-        Prefiere upcasting
-      Control manual
-        dtype parameter
-    Parametros de casting
-      'no'
-        Sin casting
-      'equiv'
-        Solo cambios de bytes
-      'safe'
-        Solo sin perdida
-      'same_kind'
-        Misma categoria
-      'unsafe'
-        Cualquier conversion
-```
-
-### Ejemplos de casting
+| Vía | Velocidad | Uso |
+|-----|-----------|-----|
+| ufunc nativa | 1× (referencia) | siempre que exista |
+| `np.frompyfunc` | ~10–50× más lenta | prototipado; retorna `object` |
+| `np.vectorize` | ~50–100× más lenta | comodidad + broadcasting, no rendimiento |
 
 ```python
-# Promocion automatica
-int_arr = np.array([1, 2, 3], dtype=np.int32)
-float_arr = np.array([0.5, 1.5, 2.5], dtype=np.float32)
-resultado = np.add(int_arr, float_arr)
-print(resultado.dtype)  # float64 (el mas general)
+def f(x, y):
+    return x**2 + y**2
 
-# Control de casting
-arr = np.array([1, 2, 3], dtype=np.int32)
-try:
-    np.add(arr, 0.5, casting='no')  # Error: no permite float
-except TypeError as e:
-    print(e)  # Cannot cast ufunc 'add' input from ...
+uf = np.frompyfunc(f, 2, 1)    # retorna dtype object (no optimizado)
+np.vectorize(f, otypes=[np.float64])(np.array([1, 2]), np.array([3, 4]))
 ```
 
-## Creando ufuncs personalizadas
+> [!note] `np.vectorize` no acelera
+> Es un envoltorio cómodo (firma, broadcasting) pero el bucle sigue en Python. Cuando importa la velocidad, hay que componer ufuncs nativas, no vectorizar funciones Python.
 
-### Con `np.frompyfunc` (generico, retorna objetos Python)
+## Casos que fallan
 
-```python
-def mi_funcion(x, y):
-    return x ** 2 + y ** 2
+| Error | Causa | Solución |
+|-------|-------|----------|
+| `'numpy.ufunc' object has no attribute 'reduce'` falla en unarias | `reduce`/`accumulate`/`outer` necesitan una ufunc **binaria** (asociativa) | usar `np.add`, `np.multiply`...; no `np.sin.reduce` |
+| `Cannot cast ufunc output` | `out` con dtype incompatible bajo la política `casting` | ajustar `out` o pasar `casting='unsafe'` conscientemente |
+| posiciones con basura tras `where` | `where=` sin `out` inicializado | pasar siempre `out=` cuando se usa `where=` |
+| `reduceat` da tramos inesperados | el último índice reduce hasta el final del array, no un tramo fijo | revisar la convención de segmentos `[idx[i]:idx[i+1])` |
 
-# Crear ufunc (retorna objetos Python, mas lento)
-mi_ufunc = np.frompyfunc(mi_funcion, nin=2, nout=1)
+## Relación con otros conceptos
 
-arr1 = np.array([1, 2, 3])
-arr2 = np.array([4, 5, 6])
-resultado = mi_ufunc(arr1, arr2)
-print(resultado)  # [17, 29, 45]
-print(resultado.dtype)  # object (no optimizado)
-```
-
-### Con `np.vectorize` (wrapper, mas flexible)
-
-```python
-def mi_funcion(x, y):
-    if x > y:
-        return x - y
-    else:
-        return y - x
-
-# Vectorizar (aun mas lento, pero con firma)
-mi_vec = np.vectorize(mi_funcion, otypes=[np.float64])
-arr1 = np.array([5, 1, 4])
-arr2 = np.array([3, 4, 2])
-resultado = mi_vec(arr1, arr2)  # [2, 3, 2]
-```
-
-### Nota sobre rendimiento
-
-| Metodo | Velocidad | Uso recomendado |
-|--------|-----------|-----------------|
-| Ufuncs nativas | 1× (mas rapido) | Siempre que existan |
-| `np.frompyfunc` | ~10-50× mas lento | Prototipado rapido |
-| `np.vectorize` | ~50-100× mas lento | Compatibilidad con broadcasting |
-| Bucle Python | ~100-500× mas lento | Solo cuando no hay alternativa |
-
-## Ufuncs y broadcasting
-
-Las ufuncs integran [[concepto_broadcasting|broadcasting]] automaticamente:
-
-```python
-# Broadcasting con ufuncs
-matriz = np.array([[1, 2, 3],
-                   [4, 5, 6]])
-vector = np.array([10, 20, 30])
-
-# add aplica broadcasting implicitamente
-resultado = np.add(matriz, vector)
-# [[11, 22, 33],
-#  [14, 25, 36]]
-
-# Equivalente a matriz + vector
-```
-
-## Tabla de ufuncs comunes por categoria
-
-### Aritmeticas basicas
-
-| Ufunc | Operador | Descripcion |
-|-------|----------|-------------|
-| `np.add` | `+` | Suma |
-| `np.subtract` | `-` | Resta |
-| `np.multiply` | `*` | Multiplicacion |
-| `np.divide` | `/` | Division |
-| `np.power` | `**` | Potencia |
-| `np.mod` | `%` | Modulo |
-| `np.absolute` | `abs()` | Valor absoluto |
-
-### Trigonometricas
-
-| Ufunc | Descripcion | Ufunc | Descripcion |
-|-------|-------------|-------|-------------|
-| `np.sin` | Seno | `np.arcsin` | Arcoseno |
-| `np.cos` | Coseno | `np.arccos` | Arcocoseno |
-| `np.tan` | Tangente | `np.arctan` | Arcotangente |
-| `np.sinh` | Seno hiperbolico | `np.arcsinh` | Arcoseno hiperbolico |
-| `np.cosh` | Coseno hiperbolico | `np.arccosh` | Arcocoseno hiperbolico |
-
-### Logaritmicas y exponenciales
-
-| Ufunc | Descripcion | Ufunc | Descripcion |
-|-------|-------------|-------|-------------|
-| `np.exp` | Exponencial | `np.log` | Logaritmo natural |
-| `np.exp2` | 2**x | `np.log2` | Logaritmo base 2 |
-| `np.expm1` | exp(x)-1 | `np.log10` | Logaritmo base 10 |
-| `np.sqrt` | Raiz cuadrada | `np.log1p` | log(1+x) |
-
-### Comparaciones logicas
-
-| Ufunc | Operador | Descripcion |
-|-------|----------|-------------|
-| `np.greater` | `>` | Mayor que |
-| `np.greater_equal` | `>=` | Mayor o igual |
-| `np.less` | `<` | Menor que |
-| `np.less_equal` | `<=` | Menor o igual |
-| `np.equal` | `==` | Igual |
-| `np.not_equal` | `!=` | Diferente |
-| `np.logical_and` | `&` | Y logico |
-| `np.logical_or` | `|` | O logico |
-| `np.logical_not` | `~` | NO logico |
-
-## Optimizacion con ufuncs
-
-### Evitar arrays temporales
-
-```python
-# Ineficiente (crea arrays temporales)
-arr = np.random.rand(1000000)
-resultado = np.sin(arr) + np.cos(arr) + np.tan(arr)
-
-# Mas eficiente (un solo bucle C)
-resultado = np.add(np.sin(arr), np.add(np.cos(arr), np.tan(arr)))
-# La diferencia es pequena, NumPy ya optimiza
-```
-
-### Usar `out` parameter para reutilizar memoria
-
-```python
-# Sin out (crea nuevo array)
-arr = np.random.rand(1000000)
-resultado = np.sin(arr)
-
-# Con out (reutiliza memoria)
-arr = np.random.rand(1000000)
-resultado = np.empty_like(arr)
-np.sin(arr, out=resultado)  # Sin asignacion extra
-
-# Operacion in-place
-np.sin(arr, out=arr)  # Modifica el original
-```
-
-### Usar `where` parameter para aplicar condicionalmente
-
-```python
-arr = np.random.rand(1000000)
-mascara = arr > 0.5
-
-# Aplica sin solo donde mascara es True
-np.sin(arr, out=arr, where=mascara)
-# Los elementos <= 0.5 no se modifican
-```
-
-## Relacion con otros conceptos
-
+- [[concepto_vectorizacion]] — la ufunc es lo que hace que la vectorización sea rápida.
+- [[concepto_broadcasting]] — toda ufunc alinea sus entradas con broadcasting.
 - [[concepto_ndarray]]
-- [[concepto_broadcasting]]
-- [[concepto_vectorizacion]]
-- [[concepto_dtype_sistema]]
+- [[concepto_dtype]]
+- [[concepto_axis_parametro]]
 - [[np.frompyfunc]]
 - [[np.vectorize]]

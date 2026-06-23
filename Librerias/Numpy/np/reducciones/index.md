@@ -1,45 +1,102 @@
 ---
-title: np/reducciones — funciones que colapsan dimensiones
+title: reducciones — colapsar un eje a un resumen
 tags:
   - numpy
   - indice
 draft: false
 ---
 
-# np/reducciones — funciones que colapsan dimensiones
+# reducciones — colapsar un eje a un resumen
 
-Las reducciones toman un array de N elementos y producen un resultado de menor rango: colapsan uno o varios ejes, convirtiendo filas o columnas enteras en un solo valor. Son la herramienta central para pasar de datos crudos a estadisticas, totales o derivadas.
+Una **reducción** colapsa uno o más ejes de un tensor a un resumen: convierte filas, columnas
+o el array entero en un único valor (suma, media, máximo, ¿hay algún verdadero?...). El concepto
+rector es [[concepto_axis_parametro]] — **el eje indicado desaparece** del resultado, no el que
+queda. Toda la familia comparte el mismo mapa de shapes:
 
-El parametro `axis` controla sobre que eje se colapsa: `axis=None` reduce todo el array a un escalar, `axis=0` colapsa a lo largo de las filas (resultado: una fila), `axis=1` colapsa a lo largo de las columnas (resultado: una columna). El parametro `keepdims=True` mantiene las dimensiones colapsadas como tamaño 1, lo que permite hacer broadcasting posterior sin necesidad de un `reshape` manual.
+$$ (n_0,\dots,n_k)\ \xrightarrow{\ \text{axis}=p\ }\ (n_0,\dots,n_{p-1},\,n_{p+1},\dots,n_k) $$
+
+Con `axis=None` el array se contrae a un escalar `()`; con `keepdims=True` el eje reducido queda
+como tamaño $1$ para mantener el [[concepto_broadcasting|broadcasting]] posterior.
+
+## En acción
+
+Un mismo array N-D recorrido por cuatro familias distintas — observa cómo cada `axis` borra una
+dimensión del shape:
 
 ```python
 import numpy as np
-M = np.array([[1, 2, 3],
-              [4, 5, 6]])
+T = np.arange(24).reshape(2, 3, 4)   # shape (2, 3, 4)
 
-np.sum(M)           # 21        — escalar (axis=None)
-np.sum(M, axis=0)   # [5, 7, 9] — una suma por columna
-np.sum(M, axis=1)   # [6, 15]   — una suma por fila
+np.sum(T, axis=0).shape     # (3, 4)  — agregación: colapsa el primer eje
+np.mean(T, axis=1).shape    # (2, 4)  — promedios: colapsa el eje medio
+np.max(T, axis=2).shape     # (2, 3)  — extremos: colapsa el último eje
+np.any(T > 10, axis=(0, 1)) # shape (4,) — lógicas: colapsa dos ejes a la vez
 
-np.sum(M, axis=0, keepdims=True)  # [[5, 7, 9]] — shape (1,3), util para broadcast
+np.sum(T)                   # 276     — axis=None: todo a un escalar
+```
+
+## Las familias
+
+```mermaid
+flowchart TD
+    classDef raiz fill:#4c6f9c,stroke:#2e4a6b,color:#fff,font-weight:bold;
+    classDef fam fill:#e3edf7,stroke:#4c6f9c,color:#1a2b3c;
+    classDef op fill:#d6e9d6,stroke:#4c7a4c,color:#1a2b3c;
+    classDef nan fill:#f7e3e3,stroke:#9c5e5e,color:#1a2b3c;
+
+    R["reducciones"]:::raiz
+
+    AG["agregación"]:::fam
+    PR["promedios"]:::fam
+    EX["extremos"]:::fam
+    LO["lógicas"]:::fam
+    DI["diferencial"]:::fam
+    NA["nan_safe"]:::nan
+
+    R --> AG
+    R --> PR
+    R --> EX
+    R --> LO
+    R --> DI
+    R --> NA
+
+    AG --> AGo["sum / prod + cumsum / cumprod"]:::op
+    PR --> PRo["mean / median / std / var"]:::op
+    EX --> EXo["max / min / argmax / argmin / ptp"]:::op
+    LO --> LOo["any / all / count_nonzero"]:::op
+    DI --> DIo["diff / gradient / trapz"]:::op
+    NA --> NAo["nansum / nanmean / nanmax... ignoran NaN"]:::op
 ```
 
 ## Subcarpetas
 
-| Subcarpeta | Funciones | Concepto |
+| Subcarpeta | Qué reduce | Notas |
 |---|---|---|
-| [[Librerias/Numpy/np/reducciones/agregacion/index\|agregacion/]] | 4 | Suma y producto, en version reductora y acumulativa |
-| [[Librerias/Numpy/np/reducciones/promedios/index\|promedios/]] | 5 | Estadistica de tendencia central y dispersion |
-| [[Librerias/Numpy/np/reducciones/extremos/index\|extremos/]] | 5 | Valores minimos/maximos y sus posiciones en el array |
-| [[Librerias/Numpy/np/reducciones/diferencial/index\|diferencial/]] | 3 | Calculo numerico discreto: derivadas e integrales aproximadas |
-| [[Librerias/Numpy/np/reducciones/nan_safe/index\|nan_safe/]] | 12 | Gemelas de las anteriores que ignoran NaN en vez de propagarlo |
+| [[Librerias/Numpy/np/reducciones/agregacion/index\|agregación]] | Suma y producto de los elementos | [[np.sum]] · [[np.prod]] + acumulados [[np.cumsum]] · [[np.cumprod]] (scan) |
+| [[Librerias/Numpy/np/reducciones/promedios/index\|promedios]] | Tendencia central y dispersión | [[np.mean]] · [[np.median]] · [[np.std]] · [[np.var]] |
+| [[Librerias/Numpy/np/reducciones/extremos/index\|extremos]] | El valor mayor/menor y su posición | [[np.max]] · [[np.min]] · [[np.argmax]] · [[np.argmin]] · [[np.ptp]] |
+| [[Librerias/Numpy/np/reducciones/logicas/index\|lógicas]] | Predicados booleanos sobre el eje | [[np.any]] · [[np.all]] · [[np.count_nonzero]] |
+| [[Librerias/Numpy/np/reducciones/diferencial/index\|diferencial]] | Cálculo discreto: derivadas e integrales | [[np.diff]] · [[np.gradient]] · [[np.trapz]] |
+| [[Librerias/Numpy/np/reducciones/nan_safe/index\|nan_safe]] | Las anteriores, ignorando `NaN` | [[np.nansum]] · [[np.nanmean]] · [[np.nanmax]]... |
 
-## Tabla de decision
+## Reduce vs. scan vs. acorta
 
-| Quiero... | Subcarpeta |
-|---|---|
-| Sumar o multiplicar elementos (con o sin acumulacion) | [[Librerias/Numpy/np/reducciones/agregacion/index\|agregacion/]] |
-| Media, mediana, desviacion estandar o varianza | [[Librerias/Numpy/np/reducciones/promedios/index\|promedios/]] |
-| El minimo, el maximo o el indice donde se encuentran | [[Librerias/Numpy/np/reducciones/extremos/index\|extremos/]] |
-| Derivadas o integrales numericas sobre datos muestreados | [[Librerias/Numpy/np/reducciones/diferencial/index\|diferencial/]] |
-| Cualquiera de lo anterior pero mis datos pueden tener NaN | [[Librerias/Numpy/np/reducciones/nan_safe/index\|nan_safe/]] |
+No toda esta familia colapsa el eje. Conviene distinguir tres comportamientos por lo que le hacen
+al shape:
+
+- **Reduce** ([[np.sum]], [[np.mean]], [[np.max]], [[np.any]]...): el eje **desaparece**.
+  $$ (n_0,\dots,n_k)\ \xrightarrow{\ \text{reduce, axis}=p\ }\ (n_0,\dots,n_{p-1},\,n_{p+1},\dots,n_k) $$
+
+- **Scan** ([[np.cumsum]], [[np.cumprod]]): barre el eje guardando los parciales; el **shape se
+  conserva** y el último elemento coincide con la reducción.
+  $$ (n_0,\dots,n_k)\ \xrightarrow{\ \text{scan, axis}=p\ }\ (n_0,\dots,n_k) $$
+
+- **Acorta** ([[np.diff]]): la diferencia entre vecinos deja **un elemento menos** en el eje
+  recorrido (cada orden `n` resta `n`).
+  $$ (\dots,n_p,\dots)\ \xrightarrow{\ \text{diff orden }n,\ \text{axis}=p\ }\ (\dots,n_p-n,\dots) $$
+
+## Notas relacionadas
+
+- [[concepto_axis_parametro]] — el eje que se consume (reduce), se barre (scan) o se acorta (diff)
+- [[concepto_vectorizacion]] — por qué una reducción sobre un eje sustituye al bucle Python
+- [[Librerias/Numpy/index|NumPy raíz]]

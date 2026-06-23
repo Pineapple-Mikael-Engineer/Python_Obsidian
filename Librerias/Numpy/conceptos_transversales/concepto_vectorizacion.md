@@ -16,318 +16,180 @@ requiere:
 draft: false
 ---
 
-# Vectorizacion — Operaciones sin bucles explicitos
+# Vectorización — Operaciones sin bucles explícitos
 
-## Definicion fundamental
+## Definición fundamental
 
-**Vectorizacion** es la tecnica de aplicar operaciones a arrays completos en lugar de hacerlo elemento por elemento mediante bucles explicitos en Python.
+**Vectorización** es operar sobre [[concepto_ndarray|arrays]] enteros en lugar de iterar elemento a elemento en Python. Una expresión como `a + b` no recorre los elementos en el intérprete: describe la operación sobre **todo el array** y deja que NumPy la ejecute de golpe.
 
-En lugar de:
-```python
-# Lento (Python loop)
-for i in range(len(arr)):
-    arr[i] = arr[i] * 2
-```
+La idea es **dejar de pensar en índices y empezar a pensar en shapes y ejes**. En código vectorizado no hay un `for i in range(...)` visible; hay una expresión que se lee como una fórmula matemática.
 
-Se escribe:
-```python
-# Rapido (vectorizado)
-arr = arr * 2
-```
+## La regla / el modelo central
 
-## Por que vectorizar es crucial
+> El bucle no desaparece: **se traslada a C**. La expresión NumPy ejecuta el mismo recorrido elemento a elemento, pero en un bucle compilado, sin overhead del intérprete y sin *boxing* de cada valor.
 
-### Comparacion de rendimiento
+Un bucle Python paga, **en cada iteración**, un coste que el bucle en C no paga:
 
-| Enfoque | Velocidad relativa | Codigo | Riesgo de errores |
-|---------|-------------------|--------|------------------|
-| Bucle Python puro | 1× (base lenta) | Muchas lineas | Alto |
-| List comprehension | ~2-3× | Medio | Medio |
-| NumPy vectorizado | ~50-100× | 1 linea | Bajo |
+| Coste por iteración | Bucle Python | Bucle en C (NumPy) |
+|---------------------|--------------|--------------------|
+| Comprobación de tipo | sí, cada vez | una sola vez, al inicio |
+| *Boxing*/objeto Python por elemento | sí | no, datos crudos contiguos |
+| Despacho del intérprete (bytecode) | sí | no, código máquina |
+| Acceso a memoria | indirecto, disperso | contiguo, *cache-friendly* |
 
-### Ejemplo concreto
+Eso es todo el modelo: **misma cantidad de operaciones, distinto motor**. El motor interno son las [[concepto_ufuncs|ufuncs]], que aplican la operación sobre el buffer de memoria sin volver al intérprete.
+
+## El contraste: bucle Python vs expresión NumPy
+
+El corazón de la nota. La misma operación, lado a lado, en tres niveles crecientes.
+
+### Nivel 1: sumar dos arrays
 
 ```python
 import numpy as np
-import time
-
-# Crear datos
-arr = np.random.rand(1000000)
-
-# Metodo 1: Bucle Python
-inicio = time.time()
-resultado_bucle = []
-for x in arr:
-    resultado_bucle.append(x ** 2 + np.sin(x))
-tiempo_bucle = time.time() - inicio
-
-# Metodo 2: Vectorizado
-inicio = time.time()
-resultado_vectorizado = arr ** 2 + np.sin(arr)
-tiempo_vectorizado = time.time() - inicio
-
-print(f"Bucle Python: {tiempo_bucle:.3f} seg")
-print(f"Vectorizado: {tiempo_vectorizado:.3f} seg")
-print(f"Aceleracion: {tiempo_bucle/tiempo_vectorizado:.0f}x")
+a = np.arange(1_000_000)
+b = np.arange(1_000_000)
 ```
-
-**Salida tipica:**
-```
-Bucle Python: 1.767 seg
-Vectorizado: 0.011 seg
-Aceleracion: 160x
-```
-
-## El problema del bucle Python
-
-Python es lento para operaciones numericas por varias razones:
-
-| Causa | Explicacion | Impacto |
-|-------|-------------|---------|
-| Tipado dinamico | Python verifica el tipo en cada iteracion | Alto |
-| Interpretado | No hay compilacion a codigo maquina | Alto |
-| Overhead de objeto | Cada elemento es un objeto Python completo | Muy alto |
-| Indireccion de memoria | Los elementos no son contiguos en memoria | Medio |
-
-NumPy vectorizado opera directamente en el buffer de memoria C, evitando todo este overhead.
-
-## Como funciona la vectorizacion internamente
-
-### Modelo conceptual
-
-```
-Bucle Python:
-┌─────────────────────────────────────────┐
-│ Python interpreter                       │
-│   for i in range(n):                     │
-│     check type(arr[i])                   │
-│     create Python object                 │
-│     execute operation                    │
-│     extract result                       │
-│     store back                           │
-└─────────────────────────────────────────┘
-         ↓ (n iteraciones, lento)
-
-Vectorizado:
-┌─────────────────────────────────────────┐
-│ C loop (compilado)                       │
-│   for i in range(n):                     │
-│     arr_c[i] = arr_c[i] * 2              │
-└─────────────────────────────────────────┘
-         ↓ (una llamada a C, rapido)
-```
-
-### El rol de las ufuncs
-
-Las [[concepto_ufuncs|Universal Functions (ufuncs)]] son el mecanismo interno que NumPy usa para vectorizar operaciones.
 
 ```python
-# Estas operaciones usan ufuncs internamente
-arr + 1        # ufunc: np.add
-arr * 2        # ufunc: np.multiply
-np.sin(arr)    # ufunc: np.sin
-arr > 0.5      # ufunc: np.greater
+# Bucle Python                      # Expresión NumPy
+c = np.empty_like(a)                c = a + b
+for i in range(len(a)):
+    c[i] = a[i] + b[i]
 ```
 
-## Tipos de vectorizacion
+El bucle entra y sale del intérprete un millón de veces; `a + b` hace **una** llamada que recorre el buffer en C.
 
-### 1. Operaciones aritmeticas elemento a elemento
+### Nivel 2: normalizar cada fila por su suma
 
 ```python
+M = np.random.rand(1000, 50)
+```
+
+```python
+# Bucle Python                          # Expresión NumPy
+out = np.empty_like(M)                  sumas = M.sum(axis=1, keepdims=True)  # (1000, 1)
+for i in range(M.shape[0]):             out = M / sumas                       # broadcasting
+    fila = M[i]
+    out[i] = fila / fila.sum()
+```
+
+La versión vectorizada piensa en **ejes**: reduce a lo largo de `axis=1` con `keepdims` para conservar la forma `(1000, 1)` y deja que [[concepto_broadcasting|broadcasting]] alinee la división. No hay índice de fila por ningún lado.
+
+### Nivel 3: una operación N-D sobre un lote
+
+Distancia al cuadrado de cada vector de un lote `(b, n)` a un centroide `(n,)`, sin bucle sobre el lote:
+
+```python
+lote = np.random.rand(128, 64)     # (b, n) = 128 vectores de dimensión 64
+centro = np.random.rand(64)        # (n,)
+```
+
+```python
+# Bucle Python                              # Expresión NumPy
+d = np.empty(lote.shape[0])                 dif = lote - centro            # (128,64) broadcasting
+for i in range(lote.shape[0]):              d = (dif ** 2).sum(axis=1)     # reduce el eje n → (128,)
+    dif = lote[i] - centro
+    d[i] = (dif ** 2).sum()
+```
+
+`lote - centro` alinea el `(64,)` del centro contra el último eje del lote por broadcasting; la reducción `sum(axis=1)` colapsa el eje de la dimensión y deja un resultado `(128,)`, **un escalar por vector del lote**. El `for i in range(b)` se ha disuelto en la elección del `axis`.
+
+## Cómo pensar vectorizado
+
+1. **En shapes, no en índices.** En vez de "para cada fila `i`...", pregunta "¿qué eje quiero reducir y qué eje quiero conservar?".
+2. **Alinear ejes** es trabajo de [[concepto_broadcasting|broadcasting]]: insertar un eje de tamaño 1 (`keepdims=True`, `np.newaxis`) suele bastar para que dos arrays operen sin bucle.
+3. **El motor son las ufuncs.** `a + b`, `np.sin(a)`, `a > 0` son ufuncs; conocerlas evita reinventar bucles.
+
+```python
+# Estas operaciones son ufuncs aplicadas sobre todo el array
+a + 1        # np.add
+a * 2        # np.multiply
+np.sin(a)    # np.sin
+a > 0.5      # np.greater
+```
+
+## Lo que NO se vectoriza directamente (y cómo manejarlo)
+
+### Caso 1: dependencias secuenciales
+
+Cada paso depende del anterior; no hay paralelismo elemento a elemento. La salida es una **función acumulativa**, no un bucle.
+
+```python
+# NO vectorizable como suma directa
 arr = np.array([1, 2, 3, 4])
+# arr[i] = arr[i-1] + arr[i]  ← depende del valor ya actualizado
 
-# Vectorizado
-arr + 10      # [11, 12, 13, 14]
-arr * 2       # [2, 4, 6, 8]
-arr ** 2      # [1, 4, 9, 16]
-1 / arr       # [1, 0.5, 0.333, 0.25]
+# Alternativa vectorizada: cumsum recorre la dependencia en C
+np.cumsum(arr)   # [1, 3, 6, 10]
 ```
 
-### 2. Funciones matematicas universales
+### Caso 2: condiciones con ramificación
+
+Un `if/elif/else` por elemento se traduce a `np.where` (o máscaras booleanas), no a un bucle:
 
 ```python
-arr = np.array([0, np.pi/2, np.pi])
-
-np.sin(arr)   # [0, 1, 0]
-np.cos(arr)   # [1, 0, -1]
-np.exp(arr)   # [1, 4.81, 23.14]
-np.log(arr + 1)  # [0, 0.45, 0.69]
-```
-
-### 3. Comparaciones y mascaras booleanas
-
-```python
-arr = np.array([1, 5, 2, 8, 3])
-
-# Vectorizado
-mascara = arr > 3        # [False, True, False, True, False]
-resultado = arr[mascara] # [5, 8]
-
-# Equivalente con bucle (mucho mas lento)
-mascara_bucle = []
-for x in arr:
-    mascara_bucle.append(x > 3)
-```
-
-### 4. Reducciones (operaciones agregadas)
-
-```python
-arr = np.array([[1, 2, 3],
-                [4, 5, 6]])
-
-np.sum(arr)           # 21 (todos los elementos)
-np.sum(arr, axis=0)   # [5, 7, 9] (por columna)
-np.mean(arr, axis=1)  # [2, 5] (por fila)
-np.max(arr)           # 6
-```
-
-### 5. Broadcasting combinado con vectorizacion
-
-```python
-# Broadcasting + vectorizacion = poder puro
-matriz = np.random.rand(100, 100)
-vector = np.random.rand(100)
-
-# Esto es vectorizado Y usa broadcasting
-resultado = matriz + vector  # Suma vector a cada fila
-```
-
-## Lo que NO es vectorizable (y como manejarlo)
-
-### Caso 1: Dependencias secuenciales
-
-```python
-# NO vectorizable (cada paso depende del anterior)
-arr = np.array([1, 2, 3, 4])
-for i in range(1, len(arr)):
-    arr[i] = arr[i-1] + arr[i]
-
-# Alternativa: funciones acumulativas
-arr = np.array([1, 2, 3, 4])
-arr = np.cumsum(arr)  # [1, 3, 6, 10]
-```
-
-### Caso 2: Condiciones complejas con ramificacion
-
-```python
-# Dificil de vectorizar
-for x in arr:
-    if x < 0:
-        resultado.append(0)
-    elif x < 0.5:
-        resultado.append(x * 2)
-    else:
-        resultado.append(x)
-
 # Vectorizado con np.where
 resultado = np.where(arr < 0, 0,
               np.where(arr < 0.5, arr * 2, arr))
 ```
 
-### Caso 3: Funciones que operan sobre escalares
+### Caso 3: funciones escalares y el espejismo de `np.vectorize`
+
+`np.vectorize` **no acelera**: es azúcar sintáctico que sigue ejecutando el bucle en Python por dentro. Sirve para comodidad de la firma, no para rendimiento.
 
 ```python
-def mi_funcion_escalar(x):
-    # Logica compleja que solo acepta escalares
+def f(x):
     return x ** 2 if x > 0 else 0
 
-# NO funciona directamente con arrays
-# arr_resultado = mi_funcion_escalar(arr)  # Error
+# np.vectorize NO es más rápido que un bucle: el for sigue en Python
+f_vec = np.vectorize(f)
+resultado = f_vec(arr)
 
-# Solucion: np.vectorize (mas lento, pero funciona)
-mi_funcion_vectorizada = np.vectorize(mi_funcion_escalar)
-resultado = mi_funcion_vectorizada(arr)
-
-# Mejor: reescribir para que sea vectorizada
-def mi_funcion_vectorizada(arr):
-    return np.where(arr > 0, arr ** 2, 0)
+# Mejor: reescribir de forma genuinamente vectorizada
+resultado = np.where(arr > 0, arr ** 2, 0)
 ```
 
-## Reglas para escribir codigo vectorizado
+## Casos que fallan (errores típicos)
 
-| Regla | Mal (lento) | Bien (rapido) |
-|-------|-------------|---------------|
-| Evitar bucles explicitos | `for i in range(len(arr)):` | `arr * 2` |
-| Usar operadores aritmeticos | `np.add(arr, 1)` | `arr + 1` |
-| Preferir ufuncs existentes | `np.fromiter(map(f, arr))` | `np.sin(arr)` |
-| Usar slicing en lugar de indexado individual | `arr[i]` en bucle | `arr[inicio:fin]` |
-| Combinar operaciones | `tmp1 = arr*2; tmp2 = tmp1+1` | `arr*2 + 1` |
-
-## Medir vectorizacion con `%timeit`
-
-En Jupyter/IPython:
+### Error 1: dejar un bucle Python innecesario
 
 ```python
-arr = np.random.rand(10000)
+# Lento: list comprehension sobre el array (sigue siendo Python puro)
+resultado = np.array([x * 2 for x in arr])
 
-# Bucle Python
-%%timeit
-resultado = []
-for x in arr:
-    resultado.append(x ** 2)
-# Salida: 100 loops, best of 5: 4.5 ms per loop
-
-# List comprehension
-%%timeit
-resultado = [x ** 2 for x in arr]
-# Salida: 1000 loops, best of 5: 1.2 ms per loop
-
-# Vectorizado
-%%timeit
-resultado = arr ** 2
-# Salida: 100000 loops, best of 5: 8.5 µs per loop
-```
-
-## Errores comunes al vectorizar
-
-### Error 1: Mezclar tipos de datos
-
-```python
-arr = np.array([1, 2, 3], dtype=np.int32)
-resultado = arr + 0.5  # dtype se convierte a float64 (ok, pero inesperado)
-print(resultado.dtype)  # float64
-```
-
-### Error 2: Asumir que toda operacion vectorizada es automatica
-
-```python
-# Esto NO es vectorizado (sigue siendo Python puro)
-arr = np.array([1, 2, 3])
-resultado = [x * 2 for x in arr]  # List comprehension, no vectorizado
-
-# Esto SI es vectorizado
+# Vectorizado de verdad
 resultado = arr * 2
 ```
 
-### Error 3: Olvidar que las reducciones cambian dimension
+### Error 2: romper la vectorización con `.tolist()`
+
+Convertir a lista saca los datos del buffer de C y vuelve al mundo de objetos Python; cualquier operación posterior pierde toda la ventaja.
+
+```python
+datos = arr.tolist()                 # ahora son ints/floats de Python, no un buffer
+resultado = [x * 2 for x in datos]   # bucle Python, boxing por elemento → lento
+```
+
+### Error 3: olvidar que las reducciones cambian la dimensión
 
 ```python
 arr = np.array([[1, 2, 3],
                 [4, 5, 6]])
 
-suma_total = np.sum(arr)        # Escalar (0D)
-suma_por_fila = np.sum(arr, axis=1)  # Vector (2,)
-suma_por_columna = np.sum(arr, axis=0)  # Vector (3,)
-
-# Para mantener dimensiones usar keepdims
-suma_con_dim = np.sum(arr, axis=1, keepdims=True)  # (2, 1)
+np.sum(arr)                       # escalar 0-D
+np.sum(arr, axis=1)               # vector (2,)
+np.sum(arr, axis=1, keepdims=True)  # (2, 1)  → conserva el eje para broadcasting
 ```
 
-## Beneficios secundarios de la vectorizacion
+Ver [[concepto_axis_parametro|axis]] para el detalle de qué eje desaparece.
 
-| Beneficio | Explicacion |
-|-----------|-------------|
-| Codigo mas legible | Menos lineas, intencion clara |
-| Menos bugs | Sin errores de indices de bucle |
-| Mas facil de mantener | Expresiones matematicas directas |
-| Documentacion implicita | La operacion es auto-evidente |
-| Consistencia con matematicas | Se lee como formulas |
-
-## Relacion con otros conceptos
+## Relación con otros conceptos
 
 - [[concepto_ndarray]]
 - [[concepto_broadcasting]]
 - [[concepto_ufuncs]]
+- [[concepto_axis_parametro]]
 - [[concepto_views_vs_copias]]
 - [[np.where]]
 - [[np.vectorize]]
