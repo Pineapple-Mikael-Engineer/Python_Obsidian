@@ -92,7 +92,16 @@ El orden es fijo; la **profundidad se adapta** a la función, pero las secciones
    - contracción: $C_{ij} = \sum_k A_{ik} B_{kj}$
 
    **(c) Visual con matrices / arrays pequeños** cuando aclare: un `(2,3)` concreto antes → después,
-   o un esquema de qué eje se contrae. Imprescindible en funciones N-D no obvias.
+   o un esquema de qué eje se contrae. Imprescindible en funciones N-D no obvias. Las **matrices se
+   dibujan con LaTeX** (`$$\begin{bmatrix} a & b \\ c & d \end{bmatrix}$$`), NO con caracteres de
+   caja ANSI (`┌ ┐ └ ┘`). El ANSI se reserva para anotaciones que no son matrices (flechas, ejes).
+
+   > [!warning] Tres errores de formato a evitar (rompen el render)
+   > 1. **`:` en valores de frontmatter** (sobre todo `title:`) rompe el YAML. Usa coma o reescribe:
+   >    `title: np.matmul — producto matricial, contrae la dimensión interior` (no `(@): contrae`).
+   > 2. **`$math$` dentro de comillas** (`"… $x$ …"`) no renderiza. Elige UNO: math sin comillas, o
+   >    texto plano entrecomillado. Nada de mezclar.
+   > 3. **Matrices en ANSI** (`┌ ┐`) quedan feas; usa `\begin{bmatrix}` / `\begin{vmatrix}`.
 
    > [!example] Por qué el mapa de shapes es obligatorio (caso `np.inner`)
    > Para `np.inner(a, b)` con `a.shape = (n_0,…,n_{p-1}, t)` y `b.shape = (m_0,…,m_{q-1}, t)` (último
