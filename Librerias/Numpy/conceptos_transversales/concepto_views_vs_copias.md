@@ -1,5 +1,5 @@
 ---
-title: Views vs Copias — Cuando se comparte memoria
+title: Views vs Copias — Cuándo se comparte memoria
 aliases:
   - view
   - copy
@@ -19,262 +19,179 @@ requiere:
 draft: false
 ---
 
-# Views vs Copias — Cuando se comparte memoria
+# Views vs Copias — Cuándo se comparte memoria
 
-## Definicion fundamental
+## Definición fundamental
 
-En NumPy, una **vista (view)** es un nuevo array que comparte el buffer de memoria con el array original. Una **copia (copy)** es un nuevo array con su propio buffer de memoria independiente.
+Una **vista (view)** es un ndarray nuevo que apunta al **mismo buffer de memoria** que el original, solo que con otros `shape`, `strides` y `offset`. Una **copia (copy)** es un ndarray nuevo con su **propio buffer** independiente.
 
-La distincion es critica porque:
-- Las vistas son instantaneas y usan poca memoria
-- Las copias consumen tiempo y memoria adicional
-- Modificar una vista modifica el original
-- Modificar una copia no afecta al original
+La consecuencia práctica que gobierna todo: **modificar una vista modifica el original**; modificar una copia no.
 
-## Comparacion fundamental
-
-| Caracteristica | Vista | Copia |
-|----------------|-------|-------|
-| Memoria adicional | Casi nula (solo metadatos) | Completa (todos los datos) |
-| Tiempo de creacion | Muy rapido (microsegundos) | Lento (proporcional al tamaño) |
-| Comparte datos con original | SI | NO |
-| Modificar afecta al original | SI | NO |
-| `flags.owndata` | `False` | `True` |
-| `base` atributo | Apunta al original | `None` |
-
-## Cuando se crea una vista
-
-### Operaciones que tipicamente crean vistas
-
-| Operacion | Ejemplo | ¿Vista? |
-|-----------|---------|---------|
-| Slicing | `arr[1:5, 2:6]` | SI (siempre) |
-| reshape (si es posible) | `arr.reshape(4, 3)` | SI (si contiguo) |
-| transpose | `arr.T` | SI |
-| ravel (a veces) | `arr.ravel()` | SI (si contiguo) |
-| squeeze | `arr.squeeze()` | SI |
-| expand_dims | `np.expand_dims(arr, 0)` | SI |
-| swapaxes | `arr.swapaxes(0, 1)` | SI |
-
-### Verificacion practica
+## Por qué importa la distinción
 
 ```python
 import numpy as np
+arr = np.array([1, 2, 3, 4, 5])
 
-arr = np.arange(12).reshape(3, 4)
+vista = arr[1:4]      # comparte buffer con arr
+vista[:] = 0
+arr                   # [1, 0, 0, 0, 5]  ← el original cambió
 
-vista = arr[0:2, 1:3]
-print(vista.base is arr)  # True
-
-vista_reshape = arr.reshape(4, 3)
-print(vista_reshape.base is arr)  # True
-
-vista_t = arr.T
-print(vista_t.base is arr)  # True
-
-vista[0, 0] = 999
-print(arr[0, 1])  # 999
+copia = arr[1:4].copy()
+copia[:] = 99
+arr                   # [1, 0, 0, 0, 5]  ← intacto
 ```
 
-## Cuando se crea una copia
+La vista es instantánea y no consume memoria de datos (solo metadatos: `shape`, `strides`, un puntero). La copia cuesta tiempo y memoria proporcionales al tamaño. El bug clásico es modificar una vista creyéndola independiente y corromper el original sin darse cuenta.
 
-### Operaciones que tipicamente crean copias
+## El modelo: mismo buffer, distintos strides
 
-| Operacion | Ejemplo | ¿Copia? |
-|-----------|---------|---------|
-| copy() | `arr.copy()` | SI (siempre) |
-| reshape (si no es contiguo) | `arr.T.reshape(12)` | SI |
-| ravel (si no es contiguo) | `arr.T.ravel()` | SI |
-| flatten | `arr.flatten()` | SI (siempre) |
-| astype | `arr.astype(np.float64)` | SI |
-| Indexado avanzado | `arr[[0, 1, 2]]` | SI |
-| Indexado booleano | `arr[arr > 5]` | SI |
+Un ndarray son **datos** (el buffer plano) más **metadatos** que describen cómo recorrerlo. Una vista reutiliza el buffer y solo cambia los metadatos (ver [[concepto_ndarray|ndarray]] y sus `strides`). Por eso un slice, una transpuesta o un reshape contiguo no copian nada: solo reinterpretan el mismo bloque de bytes.
 
-### Verificacion practica
+| Característica | Vista | Copia |
+|---------------|-------|-------|
+| Buffer de datos | Compartido con el original | Propio e independiente |
+| Memoria adicional | Casi nula (solo metadatos) | Completa (todos los datos) |
+| Tiempo de creación | Muy rápido (microsegundos) | Proporcional al tamaño |
+| Modificar afecta al original | SÍ | NO |
+| `.base` | Apunta al original (o a su ancestro) | `None` |
+| `.flags.owndata` | `False` | `True` |
+
+## La regla central: qué devuelve cada operación
+
+| Operación | Ejemplo | Devuelve |
+|-----------|---------|----------|
+| Slicing básico | `arr[1:5, 2:6]` | **vista** (siempre) |
+| `reshape` (si se puede) | `arr.reshape(4, 3)` | **vista** si es contiguo, copia si no |
+| Transpuesta | `arr.T`, `arr.swapaxes(0, 1)` | **vista** |
+| `ravel` | `arr.ravel()` | **vista** si es contiguo, copia si no |
+| `squeeze` / `expand_dims` | `arr.squeeze()` | **vista** |
+| Fancy indexing | `arr[[0, 2]]` | **copia** |
+| Indexado booleano | `arr[arr > 0]` | **copia** |
+| `flatten` | `arr.flatten()` | **copia** (siempre) |
+| `copy` | `arr.copy()` | **copia** (siempre) |
+| `astype` | `arr.astype(np.float64)` | **copia** |
+
+> [!regla] La frontera vista/copia coincide con la frontera básico/avanzado
+> El [[concepto_indexing|indexing]] **básico** (slices) da vistas; el **avanzado** (fancy y booleano) da copias. Y entre las funciones de forma, las que solo reordenan ejes o reinterpretan un buffer contiguo (`reshape`, `.T`, `ravel`) dan vistas; las que garantizan independencia (`flatten`, `copy`, `astype`) dan copias.
+
+## Cómo verificar si es vista o copia
 
 ```python
 arr = np.arange(12).reshape(3, 4)
 
-copia = arr.copy()
-print(copia.base is arr)  # False
-print(copia.flags.owndata)  # True
+vista = arr[0:2, 1:3]
+np.shares_memory(arr, vista)   # True
+vista.base is arr              # True
 
-copia_idx = arr[[0, 1, 2], [0, 1, 2]]
-print(copia_idx.base is arr)  # False
-
-copia_flat = arr.flatten()
-print(copia_flat.base is arr)  # False
-
-copia[0, 0] = 999
-print(arr[0, 0])  # 0
+copia = arr[[0, 1]]
+np.shares_memory(arr, copia)   # False
+copia.base                     # None
+copia.flags.owndata            # True
 ```
 
-## El caso especial: reshape
+- `np.shares_memory(a, b)` es la prueba definitiva: responde si dos arrays comparten algún byte de buffer.
+- `.base` apunta al array dueño del buffer (o `None` si el array es dueño).
+- `.flags.owndata` es `True` cuando el array posee su propio buffer.
 
-reshape es la operacion mas confusa respecto a vistas vs copias. Para entender completamente este caso, es necesario comprender como NumPy organiza los datos en memoria (ver [[concepto_contiguidad_memoria]]).
+## El caso especial: `reshape` depende de la contigüidad
 
-### Regla: reshape crea vista SI es posible
-
-| Condicion | Resultado | Ejemplo |
-|-----------|-----------|---------|
-| Array contiguo (C-order) | Vista | `arr.reshape(12)` |
-| Array contiguo (F-order) | Vista | `arr.reshape(12)` |
-| Array no contiguo | Copia | `arr.T.reshape(12)` |
-
-### Ejemplo del caso problematico
+`reshape` da vista **si los datos pueden reinterpretarse sin moverlos**, lo que exige que el array sea contiguo en memoria (ver [[concepto_contiguidad_memoria|contigüidad]]). Si no lo es, NumPy se ve forzado a copiar:
 
 ```python
 arr = np.arange(12).reshape(3, 4)
 
 vista = arr.reshape(12)
-print(vista.base is arr)  # True
+np.shares_memory(arr, vista)        # True  → contiguo, vista
 
-arr_transpuesta = arr.T
-copia = arr_transpuesta.reshape(12)
-print(copia.base is arr_transpuesta)  # False
-print(copia.flags.owndata)  # True
+copia = arr.T.reshape(12)           # arr.T no es contiguo
+np.shares_memory(arr, copia)        # False → tuvo que copiar
 ```
 
-## El caso especial: ravel vs flatten
+Lo mismo para `ravel` (vista si puede) frente a `flatten` (copia siempre).
 
-| Funcion | Comportamiento | Recomendacion |
-|---------|---------------|---------------|
-| ravel | Vista si es posible, copia si no | Preferida (mas eficiente) |
-| flatten | Siempre copia | Usar solo si se necesita copia garantizada |
+## Ejemplos progresivos N-D
+
+### Vista de un tensor `(b, n, m)`
 
 ```python
-arr = np.arange(12).reshape(3, 4)
+a = np.arange(24).reshape(2, 3, 4)
 
-vista = arr.ravel()
-print(vista.base is arr)  # True
+plano = a[0]                  # primer lote, shape (3, 4) → VISTA
+plano[0, 0] = 999
+a[0, 0, 0]                    # 999  ← cambió el original
 
-copia = arr.flatten()
-print(copia.base is arr)  # False
-
-arr_t = arr.T
-vista_o_copia = arr_t.ravel()
-print(vista_o_copia.base is arr_t)  # False
+sub = a[:, 1:, ::2]           # slicing básico en 3 ejes → VISTA
+np.shares_memory(a, sub)      # True
 ```
 
-## Como verificar si es vista o copia
-
-### Metodo 1: Atributo base
-
-El atributo [[ndarray.base]] permite saber si un array comparte memoria con otro.
+### Fancy/booleano en N-D siempre copia
 
 ```python
-arr = np.arange(10)
+a = np.arange(24).reshape(2, 3, 4)
 
-vista = arr[0:5]
-print(vista.base is arr)  # True → es vista
+lotes = a[[1, 0]]             # fancy sobre el eje 0 → COPIA, shape (2,3,4)
+np.shares_memory(a, lotes)    # False
 
-copia = arr.copy()
-print(copia.base is arr)  # False → es copia
+positivos = a[a > 10]         # booleano → COPIA 1D
+np.shares_memory(a, positivos)# False
 ```
 
-### Metodo 2: Flag owndata
+## Casos que fallan (errores típicos)
 
-```python
-arr = np.arange(10)
-print(arr.flags.owndata)  # True
-
-vista = arr[0:5]
-print(vista.flags.owndata)  # False
-
-copia = arr.copy()
-print(copia.flags.owndata)  # True
-```
-
-### Metodo 3: Modificar y observar
-
-```python
-arr = np.arange(5)
-vista = arr[0:3]
-copia = arr[0:3].copy()
-
-vista[0] = 999
-copia[0] = 888
-
-print(arr)  # [999, 1, 2, 3, 4]
-```
-
-## Implicancias de memoria y rendimiento
-
-### Tiempo de creacion
-
-```python
-import time
-
-arr = np.random.rand(10000000)
-
-inicio = time.time()
-vista = arr[0:5000000]
-print(f"Vista: {time.time() - inicio:.6f} seg")
-
-inicio = time.time()
-copia = arr[0:5000000].copy()
-print(f"Copia: {time.time() - inicio:.6f} seg")
-```
-
-### Memoria utilizada
-
-```python
-arr = np.random.rand(10000000)
-
-vista = arr[0:5000000]
-copia = arr[0:5000000].copy()
-
-print(f"Original: {arr.nbytes / 1024 / 1024:.1f} MB")
-print(f"Vista: {vista.nbytes / 1024 / 1024:.1f} MB")
-print(f"Copia: {copia.nbytes / 1024 / 1024:.1f} MB")
-```
-
-## Problemas comunes por no entender views
-
-### Problema 1: Modificar sin querer el original
+### Error 1: modificar un slice creyéndolo independiente
 
 ```python
 arr = np.array([1, 2, 3, 4, 5])
 vista = arr[1:4]
 vista[:] = 0
-print(arr)  # [1, 0, 0, 0, 5]
+arr                  # [1, 0, 0, 0, 5]  ← se modificó sin querer
+# Solución: arr[1:4].copy() si se necesita independencia
 ```
 
-**Solucion:** Usar `.copy()` si se necesita independencia.
+### Error 2: `b = a` vs `b = a[:]` vs `b = a.copy()`
 
-### Problema 2: Asumir que reshape siempre es gratis
+Tres formas que parecen iguales y no lo son:
+
+```python
+a = np.arange(5)
+
+b = a            # MISMO objeto: b is a → True; no es ni vista ni copia
+c = a[:]         # VISTA: objeto distinto, mismo buffer
+d = a.copy()     # COPIA: buffer propio
+
+b is a                       # True
+np.shares_memory(a, c)       # True   (vista)
+np.shares_memory(a, d)       # False  (copia)
+
+c[0] = 99
+a[0]             # 99  ← la vista propagó el cambio
+```
+
+### Error 3: asumir que `reshape` siempre es gratis
 
 ```python
 arr = np.random.rand(1000, 1000)
-arr_t = arr.T
-
-copia = arr_t.reshape(1000000)  # Lento (copia)
-vista = arr.reshape(1000000)    # Rapido (vista)
+vista = arr.reshape(1000000)        # rápido: vista (contiguo)
+copia = arr.T.reshape(1000000)      # lento: copia (no contiguo)
 ```
 
-### Problema 3: Cadenas de operaciones que fuerzan copias
+## Reglas prácticas
 
-```python
-arr = np.random.rand(100, 100)
-resultado = arr[::2, ::2].T.reshape(50, 25)
-print(resultado.flags.owndata)  # Puede ser True
-```
-
-## Reglas practicas
-
-| Situacion | Recomendacion |
+| Situación | Recomendación |
 |-----------|---------------|
-| Solo lectura de datos | Usar vista (mas eficiente) |
-| Modificar sin afectar original | Usar `.copy()` explicitamente |
+| Solo lectura de datos | Usar vista (más eficiente) |
+| Modificar sin afectar al original | Usar `.copy()` explícitamente |
 | No saber si se necesita independencia | Usar `.copy()` para estar seguro |
-| Operar con arrays no contiguos | Esperar posibles copias en reshape |
+| Operar con arrays no contiguos | Esperar copias en `reshape`/`ravel` |
 | Indexado avanzado o booleano | Asumir que crea copia |
-| Necesitar garantia de vista | Usar slicing simple |
+| Necesitar garantía de vista | Usar slicing básico |
 
-## Relacion con otros conceptos
+## Relación con otros conceptos
 
 - [[concepto_ndarray]]
 - [[concepto_contiguidad_memoria]]
+- [[concepto_indexing]]
 - [[np.reshape]]
 - [[np.ravel]]
 - [[ndarray.flatten]]

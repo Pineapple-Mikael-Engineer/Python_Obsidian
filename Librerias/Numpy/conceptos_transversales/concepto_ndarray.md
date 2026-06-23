@@ -17,187 +17,130 @@ draft: false
 
 # ndarray — La estructura base de NumPy
 
-## Definicion fundamental
+## Definición fundamental
 
-Un `ndarray` es un contenedor de datos homogeneos que representa un grid multidimensional. Toda operacion en NumPy, desde la mas simple hasta la mas compleja, involucra uno o mas `ndarray`.
+Un `ndarray` es un **buffer de bytes contiguo en memoria** acompañado de un puñado de metadatos que le dicen a NumPy cómo *interpretar* ese buffer como un tensor multidimensional. No es una lista de listas anidadas: es **un único bloque lineal** de RAM más una descripción de cómo recorrerlo.
 
-**Caracteristica esencial:** No es una lista de listas anidadas. Es un bloque lineal de memoria interpretado mediante metadatos.
+Toda operación de NumPy, de la más simple a la más compleja, manipula uno o más `ndarray`, y casi siempre lo hace **tocando los metadatos en vez de mover los datos**. Esa es la idea que hay que interiorizar.
 
-## Arquitectura interna
+## Por qué existe: separar los datos de su interpretación
 
-Un `ndarray` se compone exactamente de cuatro elementos:
+Un `ndarray` divide deliberadamente dos cosas:
 
-| Componente | Descripcion | Atributo en Python |
-|------------|-------------|--------------------|
-| Buffer de datos | Bloque contiguo de memoria con los valores brutos | `ndarray.data` |
-| Shape | Tupla con tamaño de cada dimension | `ndarray.shape` |
-| Dtype | Tipo de dato uniforme de los elementos | `ndarray.dtype` |
-| Strides | Tupla con saltos en bytes para cada dimension | `ndarray.strides` |
+- **Los datos**: una secuencia plana de bytes, igual que un array de C. Compacta, contigua, cache-friendly.
+- **La interpretación**: tres metadatos —`shape`, `dtype`, `strides`— que dicen cuántos elementos hay por eje, de qué tipo son y cuántos bytes hay que saltar para avanzar en cada eje.
 
-### El buffer de datos
+Esta separación es la que hace que `a.T`, `a.reshape(...)` o un slice `a[1:, ::2]` puedan devolver una **vista** (otro `ndarray` que apunta al *mismo* buffer con metadatos distintos) sin copiar un solo byte. La estructura del dato es barata de reinterpretar; el dato en sí no se toca.
 
-Es un segmento de memoria RAM que almacena los valores en secuencia lineal. NumPy no anida estructuras; aplana todo.
+## La estructura: buffer + 3 metadatos
 
-**Ejemplo concreto:**
+Un `ndarray` se compone del bloque de datos y tres descriptores. Los strides son la pieza clave, pero conviene verlos juntos.
+
+| Componente | Qué es | Atributo |
+|---|---|---|
+| Buffer de datos | Bloque contiguo de bytes con los valores brutos | `ndarray.data` |
+| `shape` | Tupla $(n_0,\dots,n_{k-1})$ con el tamaño de cada eje | `ndarray.shape` |
+| `dtype` | Tipo uniforme de los elementos (define el `itemsize`) | `ndarray.dtype` |
+| `strides` | Tupla $(s_0,\dots,s_{k-1})$: bytes a saltar por paso en cada eje | `ndarray.strides` |
+
+El `shape` se desarrolla en [[concepto_shape]] y el `dtype` en [[concepto_dtype]]. Aquí el protagonista son los **strides**, porque son los que explican *por qué NumPy es rápido y por qué tantas operaciones no copian*.
+
+## La clave: los strides y la fórmula del offset
+
+Un `strides` es una tupla $(s_0,\dots,s_{k-1})$ donde $s_d$ son los **bytes que hay que avanzar en el buffer para incrementar en 1 el índice del eje $d$**. Con eso, localizar cualquier elemento es una sola cuenta aritmética —no una búsqueda anidada—:
+
+$$ \text{offset}(i_0,\dots,i_{k-1}) \;=\; \sum_{d=0}^{k-1} i_d \cdot s_d $$
+
+donde el offset son los bytes desde el inicio del buffer hasta el elemento $A[i_0, i_1, \dots, i_{k-1}]$. Esta fórmula lineal es **todo el modelo de acceso** de un `ndarray`, y de ella se desprenden las tres consecuencias importantes:
+
+- **`a.T` no copia.** Transponer es simplemente **invertir la tupla de strides** (y la de shape). El buffer no se mueve; solo cambia el orden en que se interpretan los ejes. Por eso `a.T` es $O(1)$.
+- **El slicing es una vista.** Un slice ajusta el puntero de inicio y los strides (p. ej. `a[::2]` duplica el stride del eje), pero sigue apuntando al mismo buffer. Ver [[concepto_views_vs_copias]].
+- **El recorrido es rápido.** Cuando los strides hacen que los elementos consecutivos estén contiguos en memoria (C-order), la CPU explota la **localidad de caché** y la prebúsqueda. Ese es el corazón de la ventaja de rendimiento.
+
+### Cómo se calculan los strides en C-order
+
+En el orden por defecto (C-order, *row-major*), el último eje es el contiguo, y el stride de un eje es el `itemsize` multiplicado por el **producto de los tamaños de los ejes posteriores**:
+
+$$ s_d \;=\; \text{itemsize} \cdot \prod_{j=d+1}^{k-1} n_j $$
+
+El último eje siempre tiene $s_{k-1} = \text{itemsize}$ (producto vacío $= 1$).
+
+## Ejemplo N-D concreto: un `(2, 3, 4)` de `int64`
+
+Tomemos un tensor de shape $(2, 3, 4)$ y `dtype` `int64`, de modo que `itemsize = 8` bytes.
+
 ```python
 import numpy as np
-arr = np.array([[1, 2, 3],
-                [4, 5, 6]])
-# Buffer en memoria (C-order): [1, 2, 3, 4, 5, 6]
+A = np.arange(24, dtype=np.int64).reshape(2, 3, 4)
+A.shape      # (2, 3, 4)
+A.itemsize   # 8
+A.strides    # (96, 32, 8)
 ```
 
-**Implicancia:** Acceder al elemento en la posicion `[fila, columna]` es un calculo de offset, no una busqueda anidada.
+De dónde sale cada número, aplicando $s_d = \text{itemsize}\cdot\prod_{j>d} n_j$:
 
-### El shape (forma)
+| Eje $d$ | Tamaño $n_d$ | Ejes posteriores | $\prod_{j>d} n_j$ | $s_d = 8\cdot\prod$ |
+|---|---|---|---|---|
+| 0 | 2 | $(3, 4)$ | $3\cdot 4 = 12$ | $8\cdot 12 = 96$ |
+| 1 | 3 | $(4,)$ | $4$ | $8\cdot 4 = 32$ |
+| 2 | 4 | — | $1$ | $8\cdot 1 = 8$ |
 
-Tupla de enteros no negativos. Su longitud es el numero de dimensiones (rank).
+Lectura: para pasar a la siguiente "matriz" (eje 0) saltas 96 bytes (una matriz $3\times4$ entera = 12 elementos); para bajar una fila (eje 1) saltas 32 bytes (4 elementos); para avanzar una columna (eje 2) saltas 8 bytes (un `int64`). Y el offset del elemento `A[1, 2, 3]` es, en bytes:
 
-| Expresion | Shape | Dimensiones | Significado |
-|-----------|-------|-------------|-------------|
-| `np.array([1, 2, 3])` | `(3,)` | 1D | Vector de 3 elementos |
-| `np.array([[1,2],[3,4]])` | `(2, 2)` | 2D | Matriz 2×2 |
-| `np.array([[[1]]])` | `(1, 1, 1)` | 3D | Tensor 1×1×1 |
+$$ 1\cdot 96 + 2\cdot 32 + 3\cdot 8 \;=\; 96 + 64 + 24 \;=\; 184 \;=\; 23 \cdot 8 $$
 
-**Caso borde:** `shape = ()` representa un array de 0 dimensiones (escalar). Ejemplo: `np.array(5)`.
-
-### El dtype (tipo de dato)
-
-Homogeneidad estricta. Todos los elementos comparten el mismo tipo.
-
-**Jerarquia completa del sistema de tipos:**
-
-```mermaid
-mindmap
-  root((NumPy dtype))
-    Memoria Fija
-      ::icon(fa fa-microchip)
-      Cada elemento ocupa el
-      mismo espacio en bytes
-    Casting / Promocion
-      ::icon(fa fa-layer-group)
-      Upcasting automatico para
-      evitar perdida de precision
-    Categorias y Jerarquia
-      Logicos
-        np.bool_
-      Enteros con signo
-        np.int8
-        np.int16
-        np.int32
-        np.int64
-      Enteros sin signo
-        np.uint8
-        np.uint16
-        np.uint32
-        np.uint64
-      Punto Flotante
-        np.float16
-        np.float32
-        np.float64
-      Numeros Complejos
-        np.complex64
-        np.complex128
-```
-
-**Regla de conversion:** Operaciones entre tipos promueven al tipo mas general siguiendo la jerarquia:
-
-`bool → int → float → complex`
-
-Ejemplo practico:
-```python
-arr_int = np.array([1, 2, 3], dtype=np.int32)
-arr_float = np.array([0.5, 1.5, 2.5], dtype=np.float32)
-resultado = arr_int + arr_float
-# resultado.dtype es float64 (el mas general de ambos)
-```
-
-**Bytes por tipo (memoria fija):**
-
-| Categoria | Tipos | Bytes por elemento |
-|-----------|-------|-------------------|
-| Logico | `bool_` | 1 |
-| Entero (8) | `int8`, `uint8` | 1 |
-| Entero (16) | `int16`, `uint16` | 2 |
-| Entero (32) | `int32`, `uint32` | 4 |
-| Entero (64) | `int64`, `uint64` | 8 |
-| Flotante (16) | `float16` | 2 |
-| Flotante (32) | `float32` | 4 |
-| Flotante (64) | `float64` | 8 |
-| Complejo (64) | `complex64` | 8 (2 × float32) |
-| Complejo (128) | `complex128` | 16 (2 × float64) |
-
-### Los strides (pasos)
-
-**Definicion:** Tupla que indica, en bytes, cuantos saltar en el buffer para avanzar una posicion en cada dimension.
-
-**Ejemplo de calculo:**
-```python
-arr = np.array([[1, 2, 3],
-                [4, 5, 6]], dtype=np.int64)
-# itemsize = 8 bytes por elemento
-# shape = (2, 3)
-# strides = (24, 8)
-#   - Para avanzar 1 fila: saltar 3 elementos × 8 bytes = 24
-#   - Para avanzar 1 columna: saltar 1 elemento × 8 bytes = 8
-```
-
-**Por que son importantes:**
-- Definen si un array es contiguo (C-order vs F-order)
-- Permiten crear [[concepto_views_vs_copias]] sin copiar datos
-- Afectan drasticamente el rendimiento de iteracion
+es decir, el elemento número 23 del buffer —exactamente el último, como cabía esperar de `arange(24)`.
 
 ## Propiedades derivadas
 
-Estos atributos se calculan a partir de los cuatro componentes fundamentales:
+Todo lo demás se calcula a partir de los cuatro componentes:
 
-| Atributo | Formula | Ejemplo (array 2×3 de int64) |
-|----------|---------|------------------------------|
-| `ndarray.ndim` | `len(shape)` | `2` |
-| `ndarray.size` | `producto(shape)` | `6` |
+| Atributo | Fórmula | Ejemplo `(2, 3, 4)` int64 |
+|---|---|---|
+| `ndarray.ndim` | $k = \text{len(shape)}$ | `3` |
+| `ndarray.size` | $\prod_i n_i$ | `24` |
 | `ndarray.itemsize` | `dtype.itemsize` | `8` |
-| `ndarray.nbytes` | `size × itemsize` | `48` |
-| `ndarray.T` | Transposicion de shape | `(3, 2)` |
+| `ndarray.nbytes` | `size × itemsize` | `192` |
+| `ndarray.T` | strides y shape invertidos | shape `(4, 3, 2)` |
 
-## Orden de almacenamiento
+## Orden de almacenamiento: C-order vs F-order
 
-NumPy soporta dos ordenes principales:
+El mismo `shape` admite dos formas de tender los datos en el buffer, y la diferencia vive **enteramente en los strides**:
 
-| Orden | Significado | Strides tipico | Uso comun |
-|-------|-------------|----------------|-----------|
-| C-order (row-major) | Ultima dimension es contigua | `(m×itemsize, itemsize)` | Por defecto en NumPy |
-| F-order (column-major) | Primera dimension es contigua | `(itemsize, n×itemsize)` | Compatibilidad con Fortran |
+| Orden | Eje contiguo | Strides de `(m, n)` | Uso |
+|---|---|---|---|
+| C-order (*row-major*) | el último | `(n·itemsize, itemsize)` | por defecto en NumPy |
+| F-order (*column-major*) | el primero | `(itemsize, m·itemsize)` | interoperar con Fortran / BLAS |
 
-**Verificacion:**
 ```python
-arr_c = np.array([[1,2],[3,4]])  # C-order por defecto
-arr_f = np.array([[1,2],[3,4]], order='F')  # F-order
-
-arr_c.flags.c_contiguous  # True
-arr_f.flags.f_contiguous  # True
+c = np.array([[1, 2, 3], [4, 5, 6]], dtype=np.int64)            # C-order
+f = np.array([[1, 2, 3], [4, 5, 6]], dtype=np.int64, order='F') # F-order
+c.strides   # (24, 8)  → fila contigua
+f.strides   # (8, 16)  → columna contigua
+c.flags.c_contiguous   # True
+f.flags.f_contiguous   # True
 ```
 
-## Modelo mental para operaciones
+La contigüidad (que el recorrido lineal del buffer respete los strides sin huecos) se detalla en [[concepto_contiguidad_memoria]] y es lo que decide si un `reshape` puede ser vista o se ve forzado a copiar.
 
-Para entender cualquier operacion en NumPy, preguntar:
+## Casos que fallan (errores típicos)
 
-1. **Que pasa con el shape?** Se transforma, se mantiene, se reduce?
-2. **Que pasa con el dtype?** Cambia o se preserva?
-3. **Se crea una vista o una copia?** Ver [[concepto_views_vs_copias]]
-4. **Aplica [[concepto_broadcasting]]?** Como se alinean las dimensiones?
+| Error | Por qué | Realidad |
+|---|---|---|
+| Asumir que `a.T` copia | Transponer solo invierte los strides | `a.T` es una **vista** $O(1)$; modificarla modifica `a` |
+| Asumir que `a.reshape(...)` siempre copia | Si el array es contiguo, solo reescribe shape/strides | Devuelve una **vista** salvo que la nueva forma exija reordenar memoria |
+| Confundir `(3,)` con `(3, 1)` | Tienen los mismos valores pero distinto `ndim` | `(3,)` es 1D; `(3, 1)` es 2D (columna) → afecta a [[concepto_broadcasting]] |
+| Mezclar tipos en un mismo array | El `dtype` es **homogéneo** por construcción | Para datos heterogéneos: dtype estructurado |
 
-## Limitaciones fundamentales
+> [!warning] La trampa de la vista
+> Como `a.T`, los slices y muchos `reshape` comparten el buffer con el original, escribir en ellos
+> **muta el array de partida**. Si necesitas independencia, copia explícitamente con `.copy()`.
 
-| Restriccion | Explicacion | Excepcion |
-|-------------|-------------|-----------|
-| Homogeneidad | No mezclar `int` con `str` | Arrays estructurados (dtype compuesto) |
-| Tamaño fijo | No se puede redimensionar como listas | `np.resize` crea copia, no modifica original |
-| Memoria contigua por defecto | No es una lista enlazada | Arrays dispersos (scipy.sparse) |
-
-## Relacion con otros conceptos
+## Relación con otros conceptos
 
 - [[concepto_shape]]
 - [[concepto_dtype]]
 - [[concepto_contiguidad_memoria]]
+- [[concepto_views_vs_copias]]
 - [[concepto_broadcasting]]
 - [[concepto_vectorizacion]]
-- [[concepto_views_vs_copias]]

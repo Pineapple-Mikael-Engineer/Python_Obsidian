@@ -141,6 +141,25 @@ El orden es fijo; la **profundidad se adapta** a la función, pero las secciones
 
 ---
 
+## 🧩 Estructura de una nota de CONCEPTO
+
+Los conceptos son el **modelo mental**; no llevan firma/parámetros. Estructura:
+
+1. `# título` + **Definición fundamental** — 1–2 frases potentes de qué es.
+2. `## Por qué existe` — la motivación (sin X tedioso vs con X directo).
+3. `## La regla / el modelo central` — la regla mínima a memorizar, con **`$$` / tablas** cuando
+   aplique: el **mapa de shapes** de `axis`, las reglas de alineación de `broadcasting`, la
+   promoción de `dtype`, los strides de `ndarray`...
+4. `## Ejemplos progresivos` — Nivel 1/2/3, **incluyendo N-D con valores concretos**.
+5. `## Casos que fallan` — los errores típicos con su porqué.
+6. `## Relación con otros conceptos` — wikilinks.
+
+Misma vara matemática que las funciones: el concepto que gobierna el mapa de shapes (`axis`,
+`shape`, `broadcasting`, `indexing`) debe **mostrar la transformación de forma** con notación
+general $(n_0,\dots,n_k)$, no solo describirla en prosa.
+
+---
+
 ## 🧠 Conectar tensor ↔ operación (transversal)
 
 Siempre que se pueda, enmarca la función como una operación sobre los **ejes** de un tensor:
