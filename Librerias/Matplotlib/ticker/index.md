@@ -1,5 +1,5 @@
 ---
-title: ticker — Ticks de los ejes: dónde caen (Locator) y cómo se ven (Formatter)
+title: "ticker — Ticks de los ejes: dónde caen (Locator) y cómo se ven (Formatter)"
 tags: [matplotlib, indice]
 draft: false
 ---

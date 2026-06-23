@@ -1,5 +1,5 @@
 ---
-title: config — Configuración global: rcParams y estilos
+title: "config — Configuración global: rcParams y estilos"
 tags: [matplotlib, indice]
 draft: false
 ---
