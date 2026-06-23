@@ -104,12 +104,12 @@ matriz. `None` (defecto) da la euclídea ($L_2$) para vectores y la de Frobenius
 |-------|----------------|-----------------|
 | `None` | euclídea $\lVert x\rVert_2$ | Frobenius $\lVert A\rVert_F$ |
 | `2` | euclídea $\lVert x\rVert_2$ | espectral $\sigma_{\max}$ (vía SVD, costosa) |
-| `1` | $\sum_i |x_i|$ | máx. suma de columna |
-| `np.inf` | $\max_i |x_i|$ | máx. suma de fila |
-| `-np.inf` | $\min_i |x_i|$ | mín. suma de fila |
+| `1` | $\sum_i \|x_i\|$ | máx. suma de columna |
+| `np.inf` | $\max_i \|x_i\|$ | máx. suma de fila |
+| `-np.inf` | $\min_i \|x_i\|$ | mín. suma de fila |
 | `-1` / `-2` | $p$-norma con $p<0$ | mín. suma de columna / $\sigma_{\min}$ |
 | `0` | nº de elementos no nulos | — |
-| otro `p` (float) | $(\sum_i |x_i|^p)^{1/p}$ | — |
+| otro `p` (float) | $(\sum_i \|x_i\|^p)^{1/p}$ | — |
 | `'fro'` | — | Frobenius $\lVert A\rVert_F$ |
 | `'nuc'` | — | nuclear $\sum_i \sigma_i$ |
 
