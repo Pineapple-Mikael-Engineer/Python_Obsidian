@@ -181,7 +181,22 @@ type(np.trace(np.ones((5,3,3)), axis1=1, axis2=2))  # numpy.ndarray
 ## Casos de uso
 
 ### Invariantes de una matriz
+Con números concretos, la traza suma la diagonal resaltada (los $A_{ii}$):
+
+$$
+\operatorname{tr}
+\begin{bmatrix}
+\mathbf{1} & 2 & 3 \\
+4 & \mathbf{5} & 6 \\
+7 & 8 & \mathbf{9}
+\end{bmatrix}
+= \mathbf{1} + \mathbf{5} + \mathbf{9} = 15
+$$
+
 ```python
+A = np.arange(1, 10).reshape(3, 3)   # [[1,2,3],[4,5,6],[7,8,9]]
+np.trace(A)                          # 15  → 1 + 5 + 9 (diagonal resaltada)
+
 A = np.array([[2., 1.], [0., 3.]])
 np.trace(A)                       # 5.0  = suma de la diagonal
 np.linalg.eigvals(A).sum()        # 5.0  → traza = suma de autovalores
@@ -202,6 +217,19 @@ batch = np.random.rand(100, 5, 5)       # 100 matrices 5x5
 traces = np.trace(batch, axis1=-2, axis2=-1)
 traces.shape            # (100,)  → una traza por matriz, sin bucle
 ```
+
+### Lote 4D: una traza por matriz de una rejilla
+Con un tensor `(2, 3, n, n)` —rejilla `2x3` de matrices `n×n`— la traza sobre los dos últimos ejes
+colapsa cada matriz a un escalar, dejando la rejilla `(2, 3)`:
+
+```python
+T = np.arange(2*3*4*4).reshape(2, 3, 4, 4)   # shape (2, 3, 4, 4)
+tr = np.trace(T, axis1=-2, axis2=-1)
+tr.shape    # (2, 3)  → una traza por cada matriz 4x4 de la rejilla 2x3
+```
+
+El mapa de shapes: $(2,3,\mathbf{4},\mathbf{4})\xrightarrow{\ \text{trace}\ }(2,3)$ —los dos
+últimos ejes (en negrita) se contraen juntos y desaparecen—.
 
 ## Errores comunes
 

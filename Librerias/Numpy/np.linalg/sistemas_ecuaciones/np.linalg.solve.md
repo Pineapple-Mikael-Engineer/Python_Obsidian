@@ -164,7 +164,36 @@ A @ x              # [9., 8.]  → recupera b
 
 ## Casos de uso
 
+### Sistema 2×2 trabajado a mano
+El sistema concreto y su solución exacta (verificable sustituyendo):
+
+$$
+\begin{bmatrix} 2 & 1 \\ 1 & 3 \end{bmatrix}
+\begin{bmatrix} x_1 \\ x_2 \end{bmatrix}
+=
+\begin{bmatrix} 5 \\ 10 \end{bmatrix}
+\quad\Longrightarrow\quad
+\begin{bmatrix} x_1 \\ x_2 \end{bmatrix}
+=
+\begin{bmatrix} 1 \\ 3 \end{bmatrix}
+$$
+
+```python
+A = np.array([[2., 1.],
+              [1., 3.]])
+b = np.array([5., 10.])
+np.linalg.solve(A, b)   # [1., 3.]  → solución única, sin invertir
+```
+
 ### Sistema 3×3 determinado
+
+$$
+\begin{bmatrix} 1 & 2 & 3 \\ 2 & 5 & 3 \\ 1 & 0 & 8 \end{bmatrix}
+\begin{bmatrix} x_0 \\ x_1 \\ x_2 \end{bmatrix}
+=
+\begin{bmatrix} 6 \\ 4 \\ 9 \end{bmatrix}
+$$
+
 ```python
 A = np.array([[1., 2., 3.],
               [2., 5., 3.],
@@ -187,6 +216,22 @@ Una sola factorización LU sirve para todas las columnas: mucho más barato que 
 A = np.tile(np.array([[2., 1.], [1., 3.]]), (5, 1, 1))  # (5, 2, 2)
 b = np.random.rand(5, 2)
 np.linalg.solve(A, b).shape   # (5, 2)  → 5 sistemas resueltos a la vez
+```
+
+### Lote 4D: una rejilla de sistemas $3\times 3$
+Con dos ejes de lote, `solve` resuelve $4\times 5 = 20$ sistemas $3\times 3$ de una vez. La regla
+sigue siendo `solve`, **nunca** `inv`:
+
+$$
+\underbrace{(4,\,5,\,3,\,3)}_{A}\ ,\ \underbrace{(4,\,5,\,3)}_{b}\ \xrightarrow{\ \text{solve}\ }\ \underbrace{(4,\,5,\,3)}_{x}
+$$
+
+```python
+A = np.random.rand(4, 5, 3, 3) + np.eye(3)   # (4, 5, 3, 3): 20 matrices 3x3 invertibles
+b = np.random.rand(4, 5, 3)                  # (4, 5, 3): un lado por sistema
+x = np.linalg.solve(A, b)
+x.shape                                       # (4, 5, 3)  → 20 soluciones, sin bucle
+np.allclose(np.einsum('...ij,...j->...i', A, x), b)   # True  (recupera b en todo el lote)
 ```
 
 ## Errores comunes

@@ -175,6 +175,29 @@ np.allclose(A, U @ Sigma @ Vh)    # True
 
 ## Casos de uso
 
+### Ejemplo trabajado con números
+Una $A$ de $(2\times 2)$ simétrica con valores singulares limpios $\sigma_0=3,\ \sigma_1=1$. Como es
+simétrica, $U=V$ y $\Sigma$ recoge los $\sigma$ en su diagonal:
+
+$$
+A=\begin{bmatrix} 2 & 1 \\ 1 & 2 \end{bmatrix}
+= U\,\Sigma\,V^{H},\quad
+U=\tfrac{1}{\sqrt{2}}\begin{bmatrix} 1 & 1 \\ 1 & -1 \end{bmatrix},\;
+\Sigma=\begin{bmatrix} 3 & 0 \\ 0 & 1 \end{bmatrix},\;
+V^{H}=\tfrac{1}{\sqrt{2}}\begin{bmatrix} 1 & 1 \\ 1 & -1 \end{bmatrix}
+$$
+
+Aquí $1/\sqrt{2}\approx0.707$. `S` devuelve solo la diagonal `[3., 1.]` (un vector 1D), no la matriz
+$\Sigma$; el signo de las columnas de $U$/filas de $V^{H}$ puede salir negado por LAPACK.
+
+```python
+A = np.array([[2.0, 1.0], [1.0, 2.0]])
+U, S, Vh = np.linalg.svd(A)
+S                                  # [3., 1.]  → σ descendentes
+U                                  # ±[[0.7071, 0.7071], [0.7071, -0.7071]]
+np.allclose(A, U @ np.diag(S) @ Vh)   # True
+```
+
 ### Pseudo-inversa de Moore-Penrose
 ```python
 A = np.random.rand(4, 3)
@@ -207,9 +230,16 @@ scores = U * S                           # proyección de cada muestra
 
 ### Lote de SVD (N-D)
 ```python
-stack = np.random.rand(8, 6, 4)          # 8 matrices 6×4
+# 3D: 10 matrices 4×3 → k = min(4,3) = 3
+stack = np.random.rand(10, 4, 3)
 U, S, Vh = np.linalg.svd(stack, full_matrices=False)
-S.shape                                  # (8, 4)  → 8 vectores singulares, sin bucle
+U.shape, S.shape, Vh.shape               # (10, 4, 3), (10, 3), (10, 3, 3)  → sin bucle
+# con full_matrices=True:                # U (10, 4, 4), S (10, 3), Vh (10, 3, 3)
+
+# 4D: lote (8, 5) de matrices 4×3  → 40 SVD, S gana un eje por cada eje de lote
+stack4 = np.random.rand(8, 5, 4, 3)
+U4, S4, Vh4 = np.linalg.svd(stack4, full_matrices=False)
+U4.shape, S4.shape, Vh4.shape            # (8, 5, 4, 3), (8, 5, 3), (8, 5, 3, 3)
 ```
 
 ## Errores comunes

@@ -184,7 +184,17 @@ np.inner(M, w)        # [-2, -2]  → fila·w para cada fila
 
 ### N-D trabajado con valores concretos
 Con `a` de shape `(2, 2)` y `b` de shape `(2, 2)`, último eje $k=2$. La salida es `(2, 2)`: cada
-fila de `a` contra cada fila de `b`.
+fila de `a` contra cada fila de `b`. Suma sobre el **último eje** de ambos:
+
+$$
+\mathrm{inner}\!\left(\begin{bmatrix}1&2\\3&4\end{bmatrix},\ \begin{bmatrix}10&20\\30&40\end{bmatrix}\right)
+=
+\begin{bmatrix} 1\cdot10+2\cdot20 & 1\cdot30+2\cdot40 \\ 3\cdot10+4\cdot20 & 3\cdot30+4\cdot40 \end{bmatrix}
+=
+\begin{bmatrix}50&110\\110&250\end{bmatrix}
+$$
+
+Cada entrada $C_{ij}$ contrae la fila $i$ de `a` contra la fila $j$ de `b` (no fila contra columna, como en `@`); por eso `np.inner(a, b)` equivale a `a @ b.T`.
 
 ```python
 a = np.array([[1, 2],
@@ -195,13 +205,25 @@ np.inner(a, b)
 # [[ 50, 110],     a0·b0 = 1·10+2·20 = 50 ;  a0·b1 = 1·30+2·40 = 110
 #  [110, 250]]     a1·b0 = 3·10+4·20 =110 ;  a1·b1 = 3·30+4·40 = 250
 ```
-Subiendo a 3D, con `A.shape = (2, 1, 3)` y `B.shape = (4, 3)` se concatenan los ejes que sobreviven:
+
+### Dimensión alta: se concatenan los ejes que sobreviven
+Con `a.shape = (2, 2, 3)` y `b.shape = (4, 3)` (último eje $k=3$ común), sobreviven `(2, 2)` de `a` y `(4,)` de `b`:
 
 ```python
-A = np.arange(6).reshape(2, 1, 3)   # ejes previos (2, 1), k=3
-B = np.arange(12).reshape(4, 3)     # ejes previos (4,),   k=3
-np.inner(A, B).shape                # (2, 1, 4)  → (2,1) ⊕ (4,), el eje k=3 se contrae
+A = np.arange(12).reshape(2, 2, 3)   # ejes previos (2, 2), k=3
+B = np.arange(12).reshape(4, 3)      # ejes previos (4,),   k=3
+np.inner(A, B).shape                 # (2, 2, 4)  → (2,2) ⊕ (4,), el eje k=3 se contrae
 ```
+
+Y subiendo a un resultado **4D**, con dos arrays 2D+ que aportan ejes previos a ambos lados:
+
+```python
+A = np.ones((2, 1, 3))   # ejes previos (2, 1), k=3
+B = np.ones((5, 4, 3))   # ejes previos (5, 4), k=3
+np.inner(A, B).shape     # (2, 1, 5, 4)  → (2,1) ⊕ (5,4), rango 4; k=3 se contrae
+```
+
+El shape sale **mecánicamente del mapa**: se quita el último eje (`k=3`) de ambos y se pegan en orden los ejes previos de `a` y luego los de `b`.
 
 ## Errores comunes
 

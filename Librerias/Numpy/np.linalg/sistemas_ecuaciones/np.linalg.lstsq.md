@@ -144,12 +144,32 @@ s           # valores singulares de A
 ## Casos de uso
 
 ### Ajuste de una recta $y = m x + c$ (uso estrella)
+Cuatro puntos $(0,1),(1,3),(2,4),(3,6)$ generan un sistema **sobredeterminado** ($M=4$ ecuaciones,
+$N=2$ incógnitas). La **matriz de diseño** $A$ (columnas $[x,\,1]$) y el lado $\mathbf{b}=\mathbf{y}$:
+
+$$
+\underbrace{\begin{bmatrix} 0 & 1 \\ 1 & 1 \\ 2 & 1 \\ 3 & 1 \end{bmatrix}}_{A\ (4\times 2)}
+\begin{bmatrix} m \\ c \end{bmatrix}
+\;\approx\;
+\underbrace{\begin{bmatrix} 1 \\ 3 \\ 4 \\ 6 \end{bmatrix}}_{\mathbf{b}\ (4,)}
+\quad\xrightarrow{\ \text{lstsq}\ }\quad
+\begin{bmatrix} m \\ c \end{bmatrix}
+\approx
+\begin{bmatrix} 1.6 \\ 1.1 \end{bmatrix}
+$$
+
+No hay recta que pase por los cuatro puntos: `lstsq` devuelve la que **minimiza**
+$\lVert A\mathbf{x}-\mathbf{b}\rVert_2$. Las **cuatro salidas** de la tupla:
+
 ```python
 xd = np.array([0., 1., 2., 3.])
 yd = np.array([1., 3., 4., 6.])
-A = np.vstack([xd, np.ones_like(xd)]).T   # columnas: [x, 1]
-m, c = np.linalg.lstsq(A, yd, rcond=None)[0]
-m, c                                       # ≈ (1.6, 1.1)
+A = np.vstack([xd, np.ones_like(xd)]).T   # (4, 2)  columnas: [x, 1]
+x, residuals, rank, s = np.linalg.lstsq(A, yd, rcond=None)
+x            # [1.6, 1.1]   → (m, c), la solución (N,) = (2,)
+residuals    # [0.2]        → suma de residuos al cuadrado, (1,)
+rank         # 2            → rango efectivo de A (= N: rango completo)
+s            # [4.10, 1.09] → valores singulares de A, (min(M,N),) = (2,)
 ```
 
 ### Regresión lineal multivariable

@@ -146,6 +146,50 @@ np.allclose(a @ v, v @ np.diag(w))      # True → A V = V Λ
 
 ## Casos de uso
 
+### Ejemplo trabajado con números: matriz simétrica 2×2
+
+Tomamos una matriz **simétrica** y resolvemos a mano para ver el resultado "bonito" de `eigh`:
+
+$$
+A=\begin{bmatrix} 2 & 1 \\ 1 & 2 \end{bmatrix}
+$$
+
+$\det(A-\lambda I)=(2-\lambda)^2-1=0$ da $\lambda=1,3$. Como `eigh` los devuelve en **orden
+ascendente**, $\lambda_0=1$ y $\lambda_1=3$. Los autovectores **ortonormales** (columnas de $v$) son:
+
+$$
+w=\begin{bmatrix} 1 & 3 \end{bmatrix}
+\qquad
+v=\begin{bmatrix} -\tfrac{1}{\sqrt2} & \tfrac{1}{\sqrt2} \\[4pt] \phantom{-}\tfrac{1}{\sqrt2} & \tfrac{1}{\sqrt2} \end{bmatrix}
+\;\approx\;
+\begin{bmatrix} -0.707 & 0.707 \\ \phantom{-}0.707 & 0.707 \end{bmatrix}
+$$
+
+La columna 0 es $\tfrac{1}{\sqrt2}\begin{bmatrix}-1\\1\end{bmatrix}$ (para $\lambda=1$) y la columna 1
+es $\tfrac{1}{\sqrt2}\begin{bmatrix}1\\1\end{bmatrix}$ (para $\lambda=3$); el signo global no está
+fijado. Verificación de $A\mathbf v=\lambda\mathbf v$ para la columna 1 (autovalor $3$):
+
+$$
+A\begin{bmatrix} 1/\sqrt2 \\ 1/\sqrt2 \end{bmatrix}
+=\begin{bmatrix} 3/\sqrt2 \\ 3/\sqrt2 \end{bmatrix}
+=3\begin{bmatrix} 1/\sqrt2 \\ 1/\sqrt2 \end{bmatrix}\ \checkmark
+$$
+
+```python
+a = np.array([[2.0, 1.0],
+              [1.0, 2.0]])
+w, v = np.linalg.eigh(a)
+w                                       # array([1., 3.])  → reales y ascendentes
+v[:, 1]                                 # array([0.707, 0.707]) → autovector de w[1]=3 (COLUMNA)
+np.allclose(a @ v[:, 1], w[1] * v[:, 1])   # True → A v = λ v
+np.allclose(v.T @ v, np.eye(2))            # True → columnas ortonormales
+```
+
+> [!example] Matriz simétrica 3×3 (tridiagonal) trabajada
+> Para $A=\begin{bmatrix} 2 & 1 & 0 \\ 1 & 2 & 1 \\ 0 & 1 & 2 \end{bmatrix}$ los autovalores son
+> $w=\begin{bmatrix} 2-\sqrt2 & 2 & 2+\sqrt2 \end{bmatrix}\approx\begin{bmatrix} 0.586 & 2 & 3.414 \end{bmatrix}$,
+> de nuevo reales y en orden ascendente. La componente principal es `v[:, -1]` (autovalor $2+\sqrt2$).
+
 ### PCA: direcciones de máxima varianza
 ```python
 X = np.random.rand(100, 3)
@@ -161,10 +205,22 @@ es_pos_def = np.all(np.linalg.eigh(G).eigenvalues > 0)
 ```
 
 ### Lote de Hamiltonianos (N-D): niveles de energía
+
+Para un lote `(b, n, n)` simétrico, `w` es `(b, n)` y `v` es `(b, n, n)`: por cada matriz, `n`
+autovalores reales ascendentes y `n` autovectores ortonormales en columnas.
+
 ```python
-H = np.random.rand(50, 6, 6)
-H = H + H.transpose(0, 2, 1)            # 50 matrices simétricas 6×6
-energias = np.linalg.eigh(H).eigenvalues   # (50, 6) reales y ordenadas por matriz
+H = np.random.rand(50, 6, 6)           # b=50 matrices 6×6  → shape (50, 6, 6)
+H = H + H.transpose(0, 2, 1)           # simetrizar cada matriz del lote
+w, v = np.linalg.eigh(H)               # w: (50, 6)   v: (50, 6, 6)
+w.shape, v.shape                       # ((50, 6), (50, 6, 6))
+estado_fundamental = v[:, :, 0]        # autovector del menor autovalor por matriz → (50, 6)
+
+# lote 2D (4D): (b, c, n, n) → w:(b, c, n)  v:(b, c, n, n)
+B = np.random.rand(8, 5, 4, 4)
+B = B + B.transpose(0, 1, 3, 2)               # simetrizar el bloque (4,4) final
+w4, v4 = np.linalg.eigh(B)
+w4.shape, v4.shape                            # ((8, 5, 4), (8, 5, 4, 4))
 ```
 
 ## Errores comunes

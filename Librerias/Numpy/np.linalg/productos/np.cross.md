@@ -197,6 +197,27 @@ n = np.cross(Q - P, R - P)   # [0, 0, 1]  → normal al plano XY
 n / np.linalg.norm(n)        # normal unitaria
 ```
 
+Desarrollando el determinante con números concretos, $a=(2,3,4)$ y $b=(5,6,7)$:
+
+$$
+a \times b =
+\begin{vmatrix}
+\hat{\imath} & \hat{\jmath} & \hat{k} \\
+2 & 3 & 4 \\
+5 & 6 & 7
+\end{vmatrix}
+=
+\bigl(\,3\cdot7-4\cdot6,\ \ 4\cdot5-2\cdot7,\ \ 2\cdot6-3\cdot5\,\bigr)
+=
+\begin{bmatrix} -3 \\ 6 \\ -3 \end{bmatrix}
+$$
+
+```python
+a = np.array([2, 3, 4])
+b = np.array([5, 6, 7])
+np.cross(a, b)   # [-3, 6, -3]  → el determinante simbólico desarrollado
+```
+
 ### Momento de una fuerza (torque)
 El momento $\vec{\tau} = \vec{r} \times \vec{F}$: brazo de palanca cruzado con la fuerza.
 
@@ -231,6 +252,19 @@ np.cross(e1, e2)
 #  [ 1, -1,  1],
 #  [ 0, -6,  0]]   → una normal por triángulo, sin bucle
 ```
+
+### Lote 4D de vectores (rejilla de campos vectoriales)
+El eje de tamaño 3 es el vector; todo lo demás (aquí una rejilla `(2, 3, 4)`) es lote y se conserva.
+Una sola llamada cruza los $2\cdot3\cdot4 = 24$ pares de vectores.
+
+```python
+A = np.random.rand(2, 3, 4, 3)   # shape (2, 3, 4, 3): rejilla 2x3x4 de vectores 3D
+B = np.random.rand(2, 3, 4, 3)   # shape (2, 3, 4, 3)
+np.cross(A, B).shape             # (2, 3, 4, 3)  → el eje de vectores (último, =3) se conserva
+```
+
+El mapa de shapes: $(2,3,4,\mathbf{3})\times(2,3,4,\mathbf{3})\longrightarrow(2,3,4,\mathbf{3})$
+—el eje de vectores en negrita se mantiene, los ejes de lote se broadcastean—.
 
 ## Errores comunes
 

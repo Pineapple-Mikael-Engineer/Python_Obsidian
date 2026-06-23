@@ -179,6 +179,18 @@ B = np.array([[5, 6], [7, 8]])
 np.einsum('ij,jk->ik', A, B)   # [[19, 22], [43, 50]]  ≡ A @ B
 ```
 
+El string `'ij,jk->ik'` ES el producto matricial $C_{ik}=\sum_j A_{ij}B_{jk}$, con la `j`
+contraída. Con números:
+
+$$
+\begin{bmatrix} 1 & 2 \\ 3 & 4 \end{bmatrix}
+\begin{bmatrix} 5 & 6 \\ 7 & 8 \end{bmatrix}
+=
+\begin{bmatrix} 1\cdot5+2\cdot7 & 1\cdot6+2\cdot8 \\ 3\cdot5+4\cdot7 & 3\cdot6+4\cdot8 \end{bmatrix}
+=
+\begin{bmatrix} 19 & 22 \\ 43 & 50 \end{bmatrix}
+$$
+
 ### Reducciones dirigidas
 ```python
 X = np.arange(6).reshape(2, 3)
@@ -193,6 +205,20 @@ A = np.random.rand(8, 2, 3)   # 8 matrices 2x3
 B = np.random.rand(8, 3, 4)   # 8 matrices 3x4
 np.einsum('bij,bjk->bik', A, B).shape   # (8, 2, 4)  ≡ A @ B
 ```
+
+### Proyección de canales en un tensor 4D (estilo deep learning)
+Un tensor de activaciones `(N, C, H, W)` (lote, canal, alto, ancho) proyectado sobre el eje del
+ancho a un nuevo tamaño `V` mediante una matriz `(W, V)`: la `w` se contrae, `n, c, h` viajan como
+lote y `v` es el eje nuevo.
+
+```python
+X = np.random.rand(4, 3, 8, 8)   # (N, C, H, W) = (4, 3, 8, 8)
+Wp = np.random.rand(8, 5)        # (W, V) = (8, 5)
+np.einsum('nchw,wv->nchv', X, Wp).shape   # (4, 3, 8, 5)  → W=8 contraído, V=5 nuevo
+```
+
+El mapa de shapes: $(\,n,c,h,\mathbf{w}\,),(\,\mathbf{w},v\,)
+\xrightarrow{\ \text{'nchw,wv->nchv'}\ } (\,n,c,h,v\,)$, con la `w` (en negrita) contraída.
 
 ### Norma de Frobenius y suma de productos elemento a elemento
 ```python

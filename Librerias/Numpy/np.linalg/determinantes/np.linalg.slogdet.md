@@ -132,6 +132,28 @@ sign * np.exp(logabsdet)    # -2.0  → reconstruye det(A)
 
 ## Casos de uso
 
+### El par $(\text{sign}, \text{logabsdet})$ trabajado a mano
+Para una matriz $2\times 2$ con determinante negativo, `slogdet` separa el signo del logaritmo de la
+magnitud. Sobre $\det = -2$:
+
+$$
+\begin{vmatrix} 1 & 2 \\ 3 & 4 \end{vmatrix} = 1\cdot 4 - 2\cdot 3 = -2
+\quad\Longrightarrow\quad
+\text{sign} = -1,\quad \text{logabsdet} = \ln\lvert -2\rvert = \ln 2 \approx 0.6931
+$$
+
+$$
+\det(A) = \text{sign}\cdot e^{\,\text{logabsdet}} = (-1)\cdot e^{0.6931} = -2
+$$
+
+```python
+sign, logabsdet = np.linalg.slogdet(np.array([[1., 2.],
+                                              [3., 4.]]))
+sign                       # -1.0
+logabsdet                  # 0.6931...   = ln(2)
+sign * np.exp(logabsdet)   # -2.0  → reconstruye det(A)
+```
+
 ### Determinante que desbordaría con `det`
 ```python
 M = np.eye(2000) * 10.0          # det "real" = 10**2000 → inf en det()
@@ -152,11 +174,19 @@ assert sign > 0     # una covarianza válida es definida positiva → det > 0
 log_det = logdet    # se usa tal cual, sin exponenciar
 ```
 
-### Detectar singularidad en un lote
+### Detectar singularidad en un lote 4D
+Con dos ejes de lote, **ambas** salidas heredan la forma del lote: $4\times 5 = 20$ matrices $3\times 3$
+producen un `sign` y un `logabsdet` de shape `(4, 5)` cada uno.
+
+$$
+\underbrace{(4,\,5,\,3,\,3)}_{\text{lote de matrices}}\ \xrightarrow{\ \text{slogdet}\ }\ \underbrace{(4,\,5)}_{\text{sign}}\ ,\ \underbrace{(4,\,5)}_{\text{logabsdet}}
+$$
+
 ```python
-batch = np.random.rand(50, 4, 4)
+batch = np.random.rand(4, 5, 3, 3)   # (4, 5, 3, 3): 20 matrices 3x3
 sign, logabsdet = np.linalg.slogdet(batch)
-singulares = (sign == 0)          # o logabsdet == -inf
+sign.shape, logabsdet.shape       # (4, 5), (4, 5)  → un par por matriz del lote
+singulares = (sign == 0)          # (4, 5) booleano; o logabsdet == -inf
 singulares.sum()                  # cuántas matrices del lote son singulares
 ```
 

@@ -129,6 +129,25 @@ expresar operaciones como $A^{\mathsf T} A$ por lotes.
 
 ## Casos de uso
 
+### Transponer una matriz concreta $(2,3)\to(3,2)$
+Sobre una matriz $2\times 3$ con números, la transpuesta intercambia filas por columnas
+$(B_{ij} = A_{ji})$ y el shape pasa de $(2, 3)$ a $(3, 2)$:
+
+$$
+A = \begin{bmatrix} 1 & 2 & 3 \\ 4 & 5 & 6 \end{bmatrix}
+\qquad
+\text{matrix\_transpose}(A) = \begin{bmatrix} 1 & 4 \\ 2 & 5 \\ 3 & 6 \end{bmatrix}
+$$
+
+```python
+A = np.array([[1, 2, 3],
+              [4, 5, 6]])                 # shape (2, 3)
+np.linalg.matrix_transpose(A)
+# [[1, 4],
+#  [2, 5],
+#  [3, 6]]                                # shape (3, 2)
+```
+
 ### Transponer un stack de matrices sin tocar el eje de lote
 ```python
 batch = np.random.rand(32, 4, 5)               # 32 matrices 4x5
@@ -146,6 +165,23 @@ AtA = np.matmul(np.linalg.matrix_transpose(A), A)   # (8, 3, 3)
 T = np.arange(24).reshape(2, 3, 4)       # lote de 2 matrices 3x4
 np.linalg.matrix_transpose(T).shape      # (2, 4, 3)  → cada matriz transpuesta
 T.T.shape                                # (4, 3, 2)  → orden de ejes invertido
+```
+
+### Dimensión alta: lote 4D `(4, 5, 2, 3)` — `matrix_transpose` vs `.T`
+Con un lote 4D —rejilla $4\times 5$ de matrices $2\times 3$— `matrix_transpose` permuta **solo los dos
+últimos ejes** (los $4\cdot 5 = 20$ ejes de lote quedan fijos), mientras que `.T` **invierte la tupla
+entera** y por tanto reordena también el lote:
+
+$$
+(4,\, 5,\, 2,\, 3)\ \xrightarrow{\ \text{matrix\_transpose}\ }\ (4,\, 5,\, 3,\, 2)
+\qquad\text{pero}\qquad
+(4,\, 5,\, 2,\, 3)\ \xrightarrow{\ .T\ }\ (3,\, 2,\, 5,\, 4)
+$$
+
+```python
+G = np.random.rand(4, 5, 2, 3)           # 20 matrices 2x3 en rejilla 4x5
+np.linalg.matrix_transpose(G).shape      # (4, 5, 3, 2)  ✅ lote intacto, matriz transpuesta
+G.T.shape                                # (3, 2, 5, 4)  ⚠️ invierte los 4 ejes, mezcla el lote
 ```
 
 ### Transpuesta conjugada (hermitiana) de complejos

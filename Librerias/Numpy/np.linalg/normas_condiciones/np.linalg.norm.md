@@ -220,6 +220,38 @@ type(np.linalg.norm([[3, 4]], axis=1))     # numpy.ndarray
 
 ## Casos de uso
 
+### Normas de una matriz concreta (Frobenius, 1, 2, ∞)
+Sea la matriz
+
+$$
+A=\begin{bmatrix}1&-2\\-3&4\end{bmatrix}
+$$
+
+Sus cuatro normas usuales, cada una con su fórmula:
+
+$$
+\lVert A\rVert_F=\sqrt{\textstyle\sum_{ij}A_{ij}^2}=\sqrt{1+4+9+16}=\sqrt{30}\approx 5.477
+$$
+
+$$
+\lVert A\rVert_1=\max_j\textstyle\sum_i|A_{ij}|=\max(1{+}3,\ 2{+}4)=6\ \text{(columna 2)}
+\qquad
+\lVert A\rVert_\infty=\max_i\textstyle\sum_j|A_{ij}|=\max(1{+}2,\ 3{+}4)=7\ \text{(fila 2)}
+$$
+
+$$
+\lVert A\rVert_2=\sigma_{\max}\approx 5.465\ \text{(mayor valor singular, vía SVD)}
+$$
+
+```python
+A = np.array([[1., -2.], [-3., 4.]])
+np.linalg.norm(A)              # 5.477...  → Frobenius (ord=None en matriz)
+np.linalg.norm(A, ord='fro')  # 5.477...  → idéntico
+np.linalg.norm(A, ord=1)      # 6.0       → máx. suma de columna
+np.linalg.norm(A, ord=np.inf) # 7.0       → máx. suma de fila
+np.linalg.norm(A, ord=2)      # 5.465...  → espectral (σ_max)
+```
+
 ### Distancia euclídea entre dos puntos
 ```python
 a = np.array([1, 2]); b = np.array([4, 6])
@@ -238,7 +270,15 @@ residuo = A @ x - b
 np.linalg.norm(residuo)      # ‖Ax - b‖₂  → cuánto falla la solución
 ```
 
-### N-D: norma de cada fila de una pila de vectores
+### N-D: norma por filas con `axis` en un array
+La norma por filas reduce el eje de columnas. Para
+
+$$
+X=\begin{bmatrix}3&4&0\\0&0&5\\1&2&2\end{bmatrix},
+\qquad
+\lVert X\rVert_{\text{filas}}=\begin{bmatrix}\sqrt{9+16+0}\\\sqrt{0+0+25}\\\sqrt{1+4+4}\end{bmatrix}=\begin{bmatrix}5\\5\\3\end{bmatrix}
+$$
+
 ```python
 X = np.array([[3., 4., 0.],
               [0., 0., 5.],
@@ -246,6 +286,17 @@ X = np.array([[3., 4., 0.],
 np.linalg.norm(X, axis=1)            # [5., 5., 3.]   → una norma por fila
 np.linalg.norm(X, axis=1, keepdims=True).shape   # (3, 1)  → listo para dividir
 X / np.linalg.norm(X, axis=1, keepdims=True)     # cada fila a norma 1
+```
+
+### Lote 4D: una norma de matriz por elemento `(4, 5, 3, 3)`
+Con `axis=(2, 3)` los dos últimos ejes forman cada matriz $3\times 3$ y los dos primeros son el lote; el resultado colapsa el par de ejes de la matriz: $(4,5,3,3)\to(4,5)$. Una norma de vector con `axis=3` daría en cambio $(4,5,3)$ (reduce un solo eje).
+
+```python
+np.random.seed(0)
+B = np.random.rand(4, 5, 3, 3)         # rejilla 4×5 de matrices 3×3
+np.linalg.norm(B, axis=(2, 3)).shape   # (4, 5)  → una Frobenius por matriz del lote
+np.linalg.norm(B, ord=1, axis=(2, 3)).shape   # (4, 5)  → norma-1 matricial por elemento
+np.linalg.norm(B, axis=3).shape        # (4, 5, 3)  → norma de vector por fila (reduce 1 eje)
 ```
 
 ## Errores comunes

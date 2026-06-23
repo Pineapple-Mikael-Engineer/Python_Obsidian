@@ -204,6 +204,13 @@ type(np.dot([[1, 2]], [[3], [4]]))  # numpy.ndarray  → (1,1)
 ## Casos de uso
 
 ### Producto punto de dos vectores (escalar)
+Visto como fila por columna, el 1D·1D colapsa a un número:
+
+$$
+\begin{bmatrix}1&2&3\end{bmatrix}\cdot\begin{bmatrix}4\\5\\6\end{bmatrix}
+= 1\cdot4 + 2\cdot5 + 3\cdot6 = 32
+$$
+
 ```python
 a = np.array([1, 2, 3])
 b = np.array([4, 5, 6])
@@ -211,7 +218,18 @@ np.dot(a, b)        # 32   → 1·4 + 2·5 + 3·6
 a @ b               # 32   → idéntico en 1D
 ```
 
-### Producto matricial 2D (igual que `@`)
+### Producto matricial 2D trabajado con números (igual que `@`)
+La contracción del eje interior, sobre matrices concretas:
+
+$$
+\begin{bmatrix}1&2\\3&4\end{bmatrix}
+\begin{bmatrix}5&6\\7&8\end{bmatrix}
+=
+\begin{bmatrix}1\cdot5+2\cdot7 & 1\cdot6+2\cdot8\\ 3\cdot5+4\cdot7 & 3\cdot6+4\cdot8\end{bmatrix}
+=
+\begin{bmatrix}19&22\\43&50\end{bmatrix}
+$$
+
 ```python
 A = np.array([[1, 2], [3, 4]])
 B = np.array([[5, 6], [7, 8]])

@@ -127,6 +127,38 @@ np.linalg.eigvalsh(a)                   # array([1., 3.])  → reales y ascenden
 
 ## Casos de uso
 
+### Ejemplo trabajado con números: espectro de una matriz simétrica
+
+Para la matriz **simétrica** 2×2:
+
+$$
+A=\begin{bmatrix} 2 & 1 \\ 1 & 2 \end{bmatrix}
+\ \xrightarrow{\ \text{eigvalsh}\ }\
+w=\begin{bmatrix} 1 & 3 \end{bmatrix}
+$$
+
+$\det(A-\lambda I)=(2-\lambda)^2-1=0$ da $\lambda=1,3$, y `eigvalsh` los devuelve **reales** y en
+**orden ascendente**. Una matriz simétrica 3×3 tridiagonal muestra lo mismo en dimensión mayor:
+
+$$
+B=\begin{bmatrix} 2 & 1 & 0 \\ 1 & 2 & 1 \\ 0 & 1 & 2 \end{bmatrix}
+\ \xrightarrow{\ \text{eigvalsh}\ }\
+w=\begin{bmatrix} 2-\sqrt2 & 2 & 2+\sqrt2 \end{bmatrix}
+\approx
+\begin{bmatrix} 0.586 & 2 & 3.414 \end{bmatrix}
+$$
+
+```python
+a = np.array([[2.0, 1.0],
+              [1.0, 2.0]])
+np.linalg.eigvalsh(a)                   # array([1., 3.])  → reales y ascendentes
+
+b = np.array([[2.0, 1.0, 0.0],
+              [1.0, 2.0, 1.0],
+              [0.0, 1.0, 2.0]])
+np.linalg.eigvalsh(b)                   # array([0.586, 2., 3.414])  → ascendentes
+```
+
 ### Test de definida positiva (sin autovectores)
 ```python
 C = np.cov(np.random.rand(50, 4), rowvar=False)   # covarianza 4×4 (simétrica)
@@ -140,11 +172,21 @@ cond = w[-1] / w[0]      # mayor / menor (ambos > 0 en SPD)
 ```
 
 ### Lote (N-D): inercia / chequeo con la traza
+
+Para un lote `(b, n, n)` simétrico la salida es `(b, n)`: `n` autovalores reales ascendentes por
+matriz, sin autovectores.
+
 ```python
-H = np.random.rand(20, 6, 6)
-H = H + H.transpose(0, 2, 1)            # 20 matrices simétricas
-w = np.linalg.eigvalsh(H)              # (20, 6)
+H = np.random.rand(20, 6, 6)           # b=20 matrices 6×6  → shape (20, 6, 6)
+H = H + H.transpose(0, 2, 1)           # simetrizar cada matriz del lote
+w = np.linalg.eigvalsh(H)              # w: (20, 6)
+w.shape                                # (20, 6)
 np.allclose(w.sum(axis=1), np.trace(H, axis1=1, axis2=2))   # True (suma = traza)
+
+# lote 2D (4D): (b, c, n, n) → (b, c, n)
+B = np.random.rand(9, 4, 5, 5)
+B = B + B.transpose(0, 1, 3, 2)               # simetrizar el bloque (5,5) final
+np.linalg.eigvalsh(B).shape                   # (9, 4, 5)
 ```
 
 ## Errores comunes

@@ -147,6 +147,32 @@ type(np.linalg.det(np.ones((5,2,2))))  # numpy.ndarray   → lote (5,)
 
 ## Casos de uso
 
+### Determinante $2\times 2$ trabajado a mano
+La regla del $2\times 2$ (producto de la diagonal menos el de la antidiagonal):
+
+$$
+\begin{vmatrix} 1 & 2 \\ 3 & 4 \end{vmatrix}
+= 1\cdot 4 - 2\cdot 3 = 4 - 6 = -2
+$$
+
+```python
+np.linalg.det(np.array([[1., 2.],
+                        [3., 4.]]))   # -2.0  → coincide con el cálculo a mano
+```
+
+### Determinante $3\times 3$ por la regla de Sarrus
+
+$$
+\begin{vmatrix} 2 & 0 & 1 \\ 3 & 1 & 2 \\ 1 & 0 & 1 \end{vmatrix}
+= 2(1\cdot 1 - 2\cdot 0) - 0 + 1(3\cdot 0 - 1\cdot 1) = 2 - 1 = 1
+$$
+
+```python
+np.linalg.det(np.array([[2., 0., 1.],
+                        [3., 1., 2.],
+                        [1., 0., 1.]]))   # 1.0
+```
+
 ### Comprobar invertibilidad antes de invertir
 ```python
 A = np.array([[2.0, 1.0], [1.0, 1.0]])
@@ -167,6 +193,20 @@ abs(np.linalg.det(M))    # 6.0  → |det| = volumen escalado
 rot = np.random.rand(100, 3, 3)   # 100 matrices 3x3
 d = np.linalg.det(rot)            # (100,)  → un determinante por matriz
 (d != 0).all()                    # ¿todas invertibles?
+```
+
+### Lote 4D: una rejilla de determinantes $2\times 2$
+Con dos ejes de lote, los **dos últimos ejes** colapsan a un escalar y sobreviven los dos primeros:
+$4\times 5 = 20$ matrices $2\times 2$ dan una rejilla `(4, 5)` de determinantes, sin un solo `for`:
+
+$$
+\underbrace{(4,\,5,\,2,\,2)}_{\text{lote de matrices}}\ \xrightarrow{\ \det\ }\ \underbrace{(4,\,5)}_{\text{rejilla de escalares}}
+$$
+
+```python
+A = np.random.rand(4, 5, 2, 2)   # (4, 5, 2, 2): 20 matrices 2x2
+d = np.linalg.det(A)
+d.shape                           # (4, 5)  → un determinante por matriz del lote
 ```
 
 ### Relación con los autovalores

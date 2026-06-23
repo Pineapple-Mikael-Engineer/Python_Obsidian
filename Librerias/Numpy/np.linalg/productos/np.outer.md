@@ -140,6 +140,26 @@ elemento a elemento, generando la rejilla `(m, n)`—. `np.outer` es el atajo no
 
 ## Casos de uso
 
+### Producto externo trabajado con números (columna × fila)
+Un vector columna $(3,)$ por un vector fila $(2,)$ produce la rejilla $3\times 2$ de todos los productos $a_i b_j$, sin sumar nada:
+
+$$
+\begin{bmatrix}1\\2\\3\end{bmatrix}\begin{bmatrix}4&5\end{bmatrix}
+=
+\begin{bmatrix}1\cdot4 & 1\cdot5\\ 2\cdot4 & 2\cdot5\\ 3\cdot4 & 3\cdot5\end{bmatrix}
+=
+\begin{bmatrix}4&5\\8&10\\12&15\end{bmatrix}
+$$
+
+Cada fila $i$ es `b` escalado por $a_i$; cada columna $j$ es `a` escalado por $b_j$ → la matriz tiene **rango 1**.
+
+```python
+np.outer([1, 2, 3], [4, 5])
+# [[ 4,  5],
+#  [ 8, 10],
+#  [12, 15]]   → shape (3, 2) = (len a) × (len b)
+```
+
 ### Tabla de multiplicar
 ```python
 np.outer(np.arange(1, 4), np.arange(1, 4))
@@ -180,6 +200,20 @@ np.outer(A, b)
 ```
 La forma `(2, 2)` de `A` se pierde: el resultado es `(4, 2)` porque `A` se aplana a longitud 4. Esa
 es la diferencia clave con cualquier producto que respete ejes.
+
+### Producto externo por lotes en dimensión alta (lo que `np.outer` NO hace)
+Como `np.outer` aplana y devuelve **siempre 2D**, no existe un "outer 4D" con esta función. Para un producto externo **por lotes** —una rejilla de matrices de rango 1— hay que usar broadcasting explícito, que sí produce un resultado de rango alto:
+
+```python
+A = np.random.rand(4, 5, 3)   # rejilla 4×5 de vectores de longitud 3
+B = np.random.rand(4, 5, 2)   # rejilla 4×5 de vectores de longitud 2
+
+# outer por cada celda del lote: a[..., :, None] * b[..., None, :]
+out = A[..., :, None] * B[..., None, :]
+out.shape                     # (4, 5, 3, 2)  → 20 productos externos 3×2, rango 4
+```
+
+Los dos primeros ejes `(4, 5)` son el lote; los dos últimos `(3, 2)` son la matriz de rango 1 de cada celda. `np.outer(A.ravel(), B.ravel())` daría otra cosa: una única matriz `(60, 40)` con todas las parejas mezcladas. Para conservar ejes, broadcasting o [[np.einsum]] (`'...i,...j->...ij'`).
 
 ## Errores comunes
 

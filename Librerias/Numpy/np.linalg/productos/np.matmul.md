@@ -168,6 +168,26 @@ A * B          # [[5, 12], [21, 32]]   → Hadamard (elemento a elemento), otra 
 
 ## Casos de uso
 
+### Producto matricial trabajado con números (2×2 · 2×2)
+La contracción del eje interior, hecha a mano sobre matrices concretas:
+
+$$
+\begin{bmatrix}1&2\\3&4\end{bmatrix}
+\begin{bmatrix}5&6\\7&8\end{bmatrix}
+=
+\begin{bmatrix}1\cdot5+2\cdot7 & 1\cdot6+2\cdot8\\ 3\cdot5+4\cdot7 & 3\cdot6+4\cdot8\end{bmatrix}
+=
+\begin{bmatrix}19&22\\43&50\end{bmatrix}
+$$
+
+Cada $c_{ij}$ suma la fila $i$ de la izquierda contra la columna $j$ de la derecha; el eje interior (tamaño 2) se contrae y desaparece.
+
+```python
+A = np.array([[1, 2], [3, 4]])
+B = np.array([[5, 6], [7, 8]])
+A @ B          # [[19, 22], [43, 50]]  → coincide con la cuenta a mano
+```
+
 ### Transformación lineal de un vector (rotación)
 ```python
 theta = np.pi / 2
@@ -184,12 +204,16 @@ W = np.random.rand(784, 128)  # pesos
 Y = X @ W                     # (64, 128)  → una capa lineal para todo el lote
 ```
 
-### Producto por lotes de matrices N-D
+### Producto por lotes de matrices N-D (rejilla 4D de productos)
+Con dos ejes de lote, `@` aplica un producto matricial **por cada celda** de la rejilla de lote, alineada por broadcasting. Aquí una rejilla $4\times 5$ de productos $(2\times 3)\cdot(3\times 4)$:
+
 ```python
-A = np.random.rand(8, 3, 3)   # 8 matrices 3x3
-B = np.random.rand(8, 3, 3)
-(A @ B).shape                 # (8, 3, 3)  → 8 productos, sin bucle
+A = np.random.rand(4, 5, 2, 3)   # rejilla 4×5 de matrices 2×3
+B = np.random.rand(4, 5, 3, 4)   # rejilla 4×5 de matrices 3×4
+(A @ B).shape                    # (4, 5, 2, 4)  → 20 productos en lote, sin bucle
 ```
+
+Los **dos últimos ejes** `(2, 3)` y `(3, 4)` son la matriz —contraen el interior `3`→ `(2, 4)`—; los **dos primeros** `(4, 5)` son ejes de lote que se conservan: $20 = 4\cdot 5$ productos independientes en una sola llamada. El caso más simple `(8, 3, 3) @ (8, 3, 3) → (8, 3, 3)` es esta misma idea con un único eje de lote.
 
 ## Errores comunes
 

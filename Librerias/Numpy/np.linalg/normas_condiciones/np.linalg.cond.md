@@ -151,6 +151,33 @@ type(np.linalg.cond(I))  # numpy.float64
 
 ## Casos de uso
 
+### Número de condición de una matriz concreta (κ = σmax/σmin)
+Una matriz diagonal hace transparente el cálculo, porque sus valores singulares **son** las magnitudes de la diagonal:
+
+$$
+A=\begin{bmatrix}100&0\\0&1\end{bmatrix},
+\qquad
+\sigma_{\max}=100,\ \ \sigma_{\min}=1,
+\qquad
+\kappa_2(A)=\frac{\sigma_{\max}}{\sigma_{\min}}=\frac{100}{1}=100
+$$
+
+La matriz "estira" una dirección $100$ veces más que la otra: al invertir, el ruido en la dirección débil se amplifica $\times 100$.
+
+```python
+A = np.array([[100., 0.], [0., 1.]])
+np.linalg.cond(A)              # 100.0   → σ_max/σ_min
+np.linalg.cond(np.eye(2))      # 1.0     → ortogonal, condición ideal
+```
+
+Un caso $2\times 2$ no diagonal, casi singular:
+
+$$
+A=\begin{bmatrix}1&1\\1&1.01\end{bmatrix}
+\qquad\Longrightarrow\qquad
+\kappa_2(A)\approx 4\times 10^{2}\ \text{(filas casi proporcionales)}
+$$
+
 ### Diagnosticar un sistema antes de resolverlo
 ```python
 A = np.array([[1.0, 1.0], [1.0, 1.0001]])
@@ -175,6 +202,16 @@ np.linalg.cond(np.vander([1,2,3,4]))  # ~ 1e3    → Vandermonde mal condicionad
 ```python
 lote = np.random.rand(5, 4, 4)
 np.linalg.cond(lote)     # (5,)  → un κ por matriz, para filtrar las inestables
+```
+
+### Lote 4D: una rejilla de números de condición `(4, 5, 3, 3)`
+Los dos últimos ejes son cada matriz $3\times 3$; los dos primeros, el lote. `cond` colapsa la matriz a un escalar: $(4,5,3,3)\to(4,5)$.
+
+```python
+np.random.seed(0)
+lote = np.random.rand(4, 5, 3, 3)   # rejilla 4×5 de matrices 3×3
+np.linalg.cond(lote).shape          # (4, 5)  → un κ por matriz del lote
+(np.linalg.cond(lote) > 1e3).sum()  # cuántas matrices están mal condicionadas
 ```
 
 ## Errores comunes

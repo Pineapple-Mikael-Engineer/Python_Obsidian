@@ -122,6 +122,36 @@ np.linalg.eigvals(r)            # array([0.+1.j, 0.-1.j]) → complejos
 
 ## Casos de uso
 
+### Ejemplo trabajado con números: espectro de una matriz general
+
+Para una matriz **triangular** el espectro es la diagonal, lo que permite comprobar `eigvals` a ojo:
+
+$$
+A=\begin{bmatrix} 2 & 5 & 1 \\ 0 & 3 & 4 \\ 0 & 0 & 7 \end{bmatrix}
+\ \xrightarrow{\ \text{eigvals}\ }\
+w=\begin{bmatrix} 2 & 3 & 7 \end{bmatrix}
+$$
+
+Y para una matriz **no simétrica** con raíces complejas conjugadas, `eigvals` devuelve `dtype`
+complejo aunque `a` sea real:
+
+$$
+R=\begin{bmatrix} 0 & -1 \\ 1 & 0 \end{bmatrix}
+\ \xrightarrow{\ \text{eigvals}\ }\
+w=\begin{bmatrix} +i & -i \end{bmatrix}
+$$
+
+```python
+a = np.array([[2.0, 5.0, 1.0],
+              [0.0, 3.0, 4.0],
+              [0.0, 0.0, 7.0]])
+np.linalg.eigvals(a)            # array([2., 3., 7.])  (triangular → diagonal; sin orden garantizado)
+
+r = np.array([[0.0, -1.0],
+              [1.0,  0.0]])
+np.linalg.eigvals(r)           # array([0.+1.j, 0.-1.j]) → complejos conjugados
+```
+
 ### Radio espectral: ¿converge `x_{k+1} = A x_k`?
 ```python
 A = np.array([[0.5, 0.1], [0.2, 0.4]])
@@ -136,10 +166,19 @@ np.all(np.linalg.eigvals(A).real < 0)   # True → sistema estable
 ```
 
 ### Lote (N-D): chequeo de consistencia traza/det
+
+Para un lote `(b, n, n)` la salida es `(b, n)`: los dos ejes de la matriz se contraen a un vector de
+`n` autovalores, y los ejes de lote sobreviven.
+
 ```python
-lote = np.random.rand(10, 3, 3)
-w = np.linalg.eigvals(lote)             # (10, 3)
-np.allclose(w.sum(axis=1), np.trace(lote, axis1=1, axis2=2))   # True
+lote = np.random.rand(10, 3, 3)         # b=10 matrices 3×3  → shape (10, 3, 3)
+w = np.linalg.eigvals(lote)             # w: (10, 3)
+w.shape                                 # (10, 3)
+np.allclose(w.sum(axis=1), np.trace(lote, axis1=1, axis2=2))   # True (suma = traza)
+
+# lote 2D (4D): (b, c, n, n) → (b, c, n)
+lote4d = np.random.rand(12, 7, 5, 5)
+np.linalg.eigvals(lote4d).shape         # (12, 7, 5)
 ```
 
 ## Errores comunes

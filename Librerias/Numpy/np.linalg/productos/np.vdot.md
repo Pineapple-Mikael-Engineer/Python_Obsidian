@@ -200,12 +200,37 @@ b = np.array([1+0j, 1+0j])
 np.vdot(a, b)        # (1-1j)  → conj(a)·b = (1)(1) + (-1j)(1)
 ```
 
-### Da igual el shape: aplana y opera
+### Da igual el shape: aplana y opera (trabajado con matrices)
+`np.vdot` aplana ambas matrices fila a fila (orden C) y hace el producto punto conjugado sobre el vector resultante:
+
+$$
+\begin{bmatrix}1&2\\3&4\end{bmatrix}\!\Rightarrow\![1\ 2\ 3\ 4]
+\qquad
+\begin{bmatrix}5&6\\7&8\end{bmatrix}\!\Rightarrow\![5\ 6\ 7\ 8]
+$$
+
+$$
+\begin{bmatrix}1&2&3&4\end{bmatrix}\cdot\begin{bmatrix}5\\6\\7\\8\end{bmatrix}
+= 1\cdot5 + 2\cdot6 + 3\cdot7 + 4\cdot8 = 70
+$$
+
 ```python
 M = np.array([[1, 2], [3, 4]])
 N = np.array([[5, 6], [7, 8]])
 np.vdot(M, N)        # 70   → 1·5+2·6+3·7+4·8 (ambos aplanados a 4 elementos)
 ```
+
+### Dimensión alta: un tensor 4D también colapsa a escalar
+Sea cual sea el rango, `np.vdot` aplana todo y devuelve un escalar; solo importa que coincida `size`. Aquí dos tensores **4D** con shapes distintos pero el mismo número de elementos:
+
+```python
+A = np.ones((4, 5, 2, 3))   # rango 4, size = 120
+B = np.ones((2, 3, 4, 5))   # rango 4, size = 120 (shape distinto, mismo size)
+np.vdot(A, B)               # 120.0  → ravel(A)·ravel(B), escalar shape ()
+np.vdot(A, B).shape         # ()     → NO hay rejilla 4D de salida; todo se contrae
+```
+
+Compárese con [[np.matmul]], donde `(4, 5, 2, 3)` sería una rejilla 4×5 de matrices 2×3 (ejes respetados); `np.vdot` ignora esa estructura por completo y produce un único número.
 
 ## Errores comunes
 

@@ -156,6 +156,28 @@ np.allclose(Q.T @ Q, np.eye(2))  # True  → columnas ortonormales
 
 ## Casos de uso
 
+### Ejemplo trabajado con números
+Una $A$ de $(3\times 2)$ con factor $R$ de entradas enteras. $Q$ tiene columnas ortonormales
+($Q^{T}Q=I$) y $R$ es triangular superior:
+
+$$
+A=\begin{bmatrix} 12 & -51 \\ 6 & 167 \\ -4 & 24 \end{bmatrix}
+= Q\,R,\quad
+Q=\begin{bmatrix} -0.857 & 0.394 \\ -0.429 & -0.903 \\ 0.286 & -0.171 \end{bmatrix},\quad
+R=\begin{bmatrix} -14 & -21 \\ 0 & -175 \end{bmatrix}
+$$
+
+Las dos columnas de $Q$ tienen norma 1 y son ortogonales entre sí; $R$ guarda los coeficientes
+triangulares. El signo global de cada columna de $Q$ (y la fila de $R$) puede variar según LAPACK.
+
+```python
+A = np.array([[12.0, -51.0], [6.0, 167.0], [-4.0, 24.0]])   # (3, 2)
+Q, R = np.linalg.qr(A)
+R                                  # [[-14., -21.], [0., -175.]]  → triangular superior
+np.allclose(A, Q @ R)              # True
+np.allclose(Q.T @ Q, np.eye(2))    # True  → columnas ortonormales
+```
+
 ### Mínimos cuadrados (sistema sobredeterminado)
 ```python
 # Resolver A x ≈ b con A (m, n), m > n: QR es más estable que las ecuaciones normales
@@ -177,9 +199,15 @@ R = np.linalg.qr(A, mode='r')          # más barato si Q no hace falta
 
 ### Lote de QR (N-D)
 ```python
-stack = np.random.rand(10, 6, 4)       # 10 matrices 6×4
+# 3D: 10 matrices 6×4 → k = min(6,4) = 4
+stack = np.random.rand(10, 6, 4)
 Q, R = np.linalg.qr(stack)
 Q.shape, R.shape                       # (10, 6, 4), (10, 4, 4)  → sin bucle
+
+# 4D: lote (8, 5) de matrices 6×4  → 40 factorizaciones, k = 4
+stack4 = np.random.rand(8, 5, 6, 4)
+Q4, R4 = np.linalg.qr(stack4)
+Q4.shape, R4.shape                     # (8, 5, 6, 4), (8, 5, 4, 4)
 ```
 
 ## Errores comunes

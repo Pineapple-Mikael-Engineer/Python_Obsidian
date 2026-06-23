@@ -199,6 +199,33 @@ np.kron(X, I)
 #  [0, 1, 0, 0]]
 ```
 
+Con la identidad a la izquierda, $I_2 \otimes B$ coloca **dos copias de $B$** en la diagonal de
+bloques (y ceros fuera): cada $a_{ij}$ de $I_2$ ($1$ en la diagonal, $0$ fuera) escala el bloque
+entero $B$. Con números concretos, $B=\begin{bmatrix}a&b\\c&d\end{bmatrix}$:
+
+$$
+\begin{bmatrix} 1 & 0 \\ 0 & 1 \end{bmatrix} \otimes
+\begin{bmatrix} a & b \\ c & d \end{bmatrix}
+=
+\left[\begin{array}{cc|cc}
+a & b & 0 & 0 \\
+c & d & 0 & 0 \\ \hline
+0 & 0 & a & b \\
+0 & 0 & c & d
+\end{array}\right]
+\quad (4\times4)
+$$
+
+```python
+I = np.eye(2, dtype=int)
+B = np.array([[1, 2], [3, 4]])   # a,b,c,d = 1,2,3,4
+np.kron(I, B)
+# [[1, 2, 0, 0],
+#  [3, 4, 0, 0],
+#  [0, 0, 1, 2],
+#  [0, 0, 3, 4]]   → B en bloques diagonales, ceros fuera
+```
+
 ### Replicar un patrón (escalado por bloques)
 `kron` con una matriz de unos "amplía" cada celda a un bloque, útil para upscaling de mallas o
 imágenes por vecino más cercano.
@@ -224,6 +251,19 @@ I = np.eye(n)
 L2 = np.kron(D, I) + np.kron(I, D)   # (16, 16) → laplaciano sobre la malla 4x4
 L2.shape                             # (16, 16)
 ```
+
+### Producto de Kronecker en dimensión alta (eje a eje)
+En rango $\geq 3$ cada eje del resultado es el **producto** del par de ejes alineados por la
+derecha. Útil para replicar un volumen/lote por bloques en cada dimensión a la vez.
+
+```python
+T = np.ones((2, 3, 4))   # shape (2, 3, 4)
+S = np.ones((5, 6, 7))   # shape (5, 6, 7)
+np.kron(T, S).shape      # (10, 18, 28)  → (2*5, 3*6, 4*7), eje contra eje
+```
+
+El mapa de shapes en 4D: $(2,3,4,5)\otimes(6,7,8,9)\longrightarrow(12,21,32,45)$ —cada eje se
+multiplica con su homólogo—.
 
 ## Errores comunes
 

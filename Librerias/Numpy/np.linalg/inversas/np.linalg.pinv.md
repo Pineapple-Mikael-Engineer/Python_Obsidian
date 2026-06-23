@@ -140,6 +140,31 @@ singularidad (esa es la razón de existir frente a `inv`).
 
 ## Casos de uso
 
+### Pseudoinversa de una matriz NO cuadrada (con números)
+Sea $A$ rectangular $3\times 2$ (más filas que columnas, sobredeterminada). Con columnas independientes, la pseudoinversa **por la izquierda** es $A^{+}=(A^\top A)^{-1}A^\top$ y cumple $A^{+}A=I_2$:
+
+$$
+A=\begin{bmatrix}1&0\\0&1\\1&1\end{bmatrix},
+\qquad
+A^\top A=\begin{bmatrix}2&1\\1&2\end{bmatrix},
+\qquad
+A^{+}=\frac{1}{3}\begin{bmatrix}2&-1&1\\-1&2&1\end{bmatrix}
+$$
+
+El shape se "transpone": $A$ es $(3,2)$ y $A^{+}$ es $(2,3)$. Verificación $A^{+}A=I_2$:
+
+$$
+A^{+}A=\frac{1}{3}\begin{bmatrix}2&-1&1\\-1&2&1\end{bmatrix}\begin{bmatrix}1&0\\0&1\\1&1\end{bmatrix}=\begin{bmatrix}1&0\\0&1\end{bmatrix}=I_2
+$$
+
+```python
+A = np.array([[1., 0.], [0., 1.], [1., 1.]])   # (3, 2) rectangular
+Aplus = np.linalg.pinv(A)
+Aplus.shape                     # (2, 3)
+Aplus                           # [[ 0.667, -0.333,  0.333], [-0.333,  0.667,  0.333]]
+np.allclose(Aplus @ A, np.eye(2))   # True → A⁺A = I₂ (columnas independientes)
+```
+
 ### Mínimos cuadrados explícitos (sistema sobredeterminado)
 ```python
 A = np.array([[1., 1.], [1., 2.], [1., 3.]])   # 3 ecuaciones, 2 incógnitas
@@ -160,6 +185,17 @@ T = np.random.rand(4, 3, 2)    # 4 matrices rectangulares 3×2
 P = np.linalg.pinv(T)
 P.shape                        # (4, 2, 3)
 np.allclose(P[0] @ T[0], np.eye(2))   # True → A⁺A ≈ I (lado izquierdo, columnas indep.)
+```
+
+### Lote 4D: rejilla de pseudoinversas `(4, 5, 3, 2)`
+Igual que `inv`, los dos últimos ejes son la matriz y los anteriores el lote; pero aquí esos dos ejes **se intercambian** en la salida: $(4,5,3,2)\to(4,5,2,3)$.
+
+```python
+np.random.seed(0)
+T = np.random.rand(4, 5, 3, 2)   # 20 matrices rectangulares 3×2
+P = np.linalg.pinv(T)
+P.shape                          # (4, 5, 2, 3)  → últimos dos ejes intercambiados
+np.allclose(P[0, 0] @ T[0, 0], np.eye(2))   # True → A⁺A ≈ I₂ en cada elemento del lote
 ```
 
 ## Errores comunes

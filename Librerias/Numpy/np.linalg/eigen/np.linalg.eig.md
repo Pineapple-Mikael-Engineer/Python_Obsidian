@@ -156,6 +156,44 @@ np.linalg.eig(r).eigenvalues          # array([0.+1.j, 0.-1.j]) → complejos
 
 ## Casos de uso
 
+### Ejemplo trabajado con números: matriz general 2×2
+
+Tomamos una matriz **no simétrica** y resolvemos a mano para ver qué devuelve `eig`:
+
+$$
+A=\begin{bmatrix} 4 & 1 \\ 2 & 3 \end{bmatrix}
+$$
+
+El polinomio característico $\det(A-\lambda I)=(4-\lambda)(3-\lambda)-2=\lambda^2-7\lambda+10=0$ da
+los autovalores $\lambda_0=5$ y $\lambda_1=2$. Resolviendo $(A-\lambda I)\mathbf v=\mathbf 0$ y
+**normalizando a norma 1**, los autovectores (las **columnas** de $v$) son:
+
+$$
+w=\begin{bmatrix} 5 & 2 \end{bmatrix}
+\qquad
+v=\begin{bmatrix} \tfrac{1}{\sqrt2} & -\tfrac{1}{\sqrt5} \\[4pt] \tfrac{1}{\sqrt2} & \tfrac{2}{\sqrt5} \end{bmatrix}
+\;\approx\;
+\begin{bmatrix} 0.707 & -0.447 \\ 0.707 & \phantom{-}0.894 \end{bmatrix}
+$$
+
+Verificación de $A\mathbf v=\lambda\mathbf v$ para la primera columna (autovalor $5$):
+
+$$
+A\begin{bmatrix} 1/\sqrt2 \\ 1/\sqrt2 \end{bmatrix}
+=\begin{bmatrix} 5/\sqrt2 \\ 5/\sqrt2 \end{bmatrix}
+=5\begin{bmatrix} 1/\sqrt2 \\ 1/\sqrt2 \end{bmatrix}\ \checkmark
+$$
+
+```python
+a = np.array([[4.0, 1.0],
+              [2.0, 3.0]])
+w, v = np.linalg.eig(a)
+w                                     # array([5., 2.])  (sin orden garantizado)
+v[:, 0]                               # array([0.707, 0.707])  → autovector de w[0]=5 (COLUMNA)
+np.allclose(a @ v[:, 0], w[0] * v[:, 0])   # True → A v = λ v
+np.allclose(a @ v, v @ np.diag(w))         # True → A V = V Λ
+```
+
 ### Diagonalización para potencias de matriz
 ```python
 a = np.array([[2.0, 0.0], [0.0, 0.5]])
@@ -170,10 +208,21 @@ estable = np.all(np.linalg.eig(A).eigenvalues.real < 0)   # True → estable
 ```
 
 ### Lote de matrices (N-D): descomponer muchas a la vez
+
+Para un lote `(b, n, n)` la salida `w` es `(b, n)` y `v` es `(b, n, n)`: por cada una de las `b`
+matrices del lote, `n` autovalores y una matriz `n×n` de autovectores en columnas.
+
 ```python
-lote = np.random.rand(100, 3, 3)
-w, v = np.linalg.eig(lote)            # w:(100,3)  v:(100,3,3)
-radios = np.abs(w).max(axis=1)        # radio espectral de cada matriz → (100,)
+lote = np.random.rand(100, 3, 3)     # b=100 matrices 3×3  → shape (100, 3, 3)
+w, v = np.linalg.eig(lote)           # w: (100, 3)   v: (100, 3, 3)
+w.shape, v.shape                     # ((100, 3), (100, 3, 3))
+v[7, :, 2]                           # autovector 2 de la matriz 7 (COLUMNA) → shape (3,)
+radios = np.abs(w).max(axis=1)       # radio espectral de cada matriz → (100,)
+
+# lote 2D (4D): (b, c, n, n) → w:(b, c, n)  v:(b, c, n, n)
+lote4d = np.random.rand(10, 6, 4, 4)        # shape (10, 6, 4, 4)
+w4, v4 = np.linalg.eig(lote4d)
+w4.shape, v4.shape                          # ((10, 6, 4), (10, 6, 4, 4))
 ```
 
 ## Errores comunes

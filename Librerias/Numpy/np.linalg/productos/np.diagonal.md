@@ -164,6 +164,17 @@ np.diagonal(A).copy()[:] = 9   # OK (modifica la copia, no A)
 ## Casos de uso
 
 ### Leer la diagonal de una matriz
+Con números concretos, se extraen los $A_{ii}$ resaltados a un vector:
+
+$$
+\begin{bmatrix}
+\mathbf{10} & 2 & 3 \\
+4 & \mathbf{20} & 6 \\
+7 & 8 & \mathbf{30}
+\end{bmatrix}
+\ \longrightarrow\ \begin{bmatrix} 10 & 20 & 30 \end{bmatrix}
+$$
+
 ```python
 M = np.array([[10, 2, 3], [4, 20, 6], [7, 8, 30]])
 np.diagonal(M)          # [10, 20, 30]
@@ -183,6 +194,19 @@ covs = np.random.rand(50, 4, 4)             # 50 matrices 4x4
 varianzas = np.diagonal(covs, axis1=-2, axis2=-1)
 varianzas.shape          # (50, 4)  → la diagonal (varianzas) de cada matriz
 ```
+
+### Lote 4D: una diagonal por matriz de una rejilla
+Con un tensor `(2, 3, n, n)` —rejilla `2x3` de matrices `n×n`— la diagonal sobre los dos últimos
+ejes elimina ese par y **añade** la diagonal de longitud $\min(n,n)=n$ como último eje:
+
+```python
+T = np.arange(2*3*4*4).reshape(2, 3, 4, 4)   # shape (2, 3, 4, 4)
+d = np.diagonal(T, axis1=-2, axis2=-1)
+d.shape    # (2, 3, 4)  → (2, 3, min(4,4)): una diagonal por matriz de la rejilla 2x3
+```
+
+El mapa de shapes: $(2,3,\mathbf{4},\mathbf{4})\xrightarrow{\ \text{diagonal}\ }(2,3,\ \min(4,4))
+=(2,3,4)$ —los dos ejes de la matriz (en negrita) se eliminan y la diagonal va al último eje—.
 
 ## `np.diagonal` vs `np.diag`
 

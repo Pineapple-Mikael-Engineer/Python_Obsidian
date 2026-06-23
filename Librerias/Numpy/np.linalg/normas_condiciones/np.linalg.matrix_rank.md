@@ -162,6 +162,28 @@ type(np.linalg.matrix_rank(A))        # <class 'int'>
 
 ## Casos de uso
 
+### Rango deficiente de una matriz concreta (fila dependiente)
+La tercera fila de $A$ es la **suma** de las dos primeras ($[5,7,9]=[1,2,3]+[4,5,6]$), así que solo hay **dos** filas independientes: el rango es $2 < 3=\min(m,n)$, deficiente.
+
+$$
+A=\begin{bmatrix}1&2&3\\4&5&6\\5&7&9\end{bmatrix},
+\qquad
+\text{fila}_3=\text{fila}_1+\text{fila}_2
+\ \Longrightarrow\
+\operatorname{rank}(A)=2
+$$
+
+Vía SVD, sus valores singulares son aproximadamente $\sigma\approx[15.7,\ 0.8,\ \mathbf{0}]$: el tercero, casi nulo, señala la dirección dependiente y no se cuenta.
+
+```python
+A = np.array([[1., 2., 3.],
+              [4., 5., 6.],
+              [5., 7., 9.]])         # fila 3 = fila 1 + fila 2
+np.linalg.matrix_rank(A)             # 2  → rango deficiente (una dependencia)
+np.linalg.svd(A, compute_uv=False)   # [15.7..., 0.8..., ~1e-16]  → un σ ≈ 0
+np.linalg.matrix_rank(np.eye(3))     # 3  → rango completo, sin dependencias
+```
+
 ### Detectar columnas redundantes en datos
 ```python
 X = np.array([[1, 2, 3],
@@ -183,10 +205,22 @@ np.linalg.matrix_rank(ruido)               # 3   → el ruido aparenta independe
 np.linalg.matrix_rank(ruido, rtol=1e-6)    # 3   → aquí sigue, pero el umbral controla
 ```
 
-### N-D: rango de un lote de matrices
+### N-D: rango de un lote de matrices `(b, m, n) → (b,)`
+Los dos últimos ejes son la matriz $m\times n$; el primero es el lote. `matrix_rank` colapsa cada matriz a un entero: $(b,m,n)\to(b,)$.
+
 ```python
-lote = np.random.rand(10, 5, 5)
-np.linalg.matrix_rank(lote)          # (10,)  → un rango por matriz del lote
+lote = np.random.rand(10, 5, 4)      # 10 matrices 5×4 (genéricas → rango 4)
+np.linalg.matrix_rank(lote).shape    # (10,)  → un rango por matriz del lote
+np.linalg.matrix_rank(lote)          # [4, 4, ..., 4]  → rango completo min(5,4)=4
+```
+
+### Lote 4D: rejilla de rangos `(4, 5, 3, 3)`
+Con un eje de lote extra, el resultado es una rejilla de enteros: $(4,5,3,3)\to(4,5)$.
+
+```python
+np.random.seed(0)
+lote = np.random.rand(4, 5, 3, 3)    # rejilla 4×5 de matrices 3×3
+np.linalg.matrix_rank(lote).shape    # (4, 5)  → un rango por matriz, sin bucle
 ```
 
 ## Errores comunes

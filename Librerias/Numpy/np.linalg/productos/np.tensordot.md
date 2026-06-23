@@ -210,6 +210,41 @@ eps   = np.random.rand(3, 3)
 np.tensordot(sigma, eps, axes=([0, 1], [0, 1]))   # escalar
 ```
 
+Con números concretos, la doble contracción `axes=([0,1],[0,1])` multiplica **elemento a
+elemento** ambas matrices y suma **todo** (es el producto interno de Frobenius $\langle\sigma,
+\varepsilon\rangle$, un escalar):
+
+$$
+\sigma = \begin{bmatrix} 1 & 2 \\ 3 & 4 \end{bmatrix} \qquad
+\varepsilon = \begin{bmatrix} 5 & 6 \\ 7 & 8 \end{bmatrix}
+$$
+
+$$
+\sum_{i,j}\sigma_{ij}\,\varepsilon_{ij}
+= \underbrace{1\cdot5}_{5} + \underbrace{2\cdot6}_{12} + \underbrace{3\cdot7}_{21} + \underbrace{4\cdot8}_{32}
+= 70
+$$
+
+```python
+sigma = np.array([[1, 2], [3, 4]])
+eps   = np.array([[5, 6], [7, 8]])
+np.tensordot(sigma, eps, axes=([0, 1], [0, 1]))   # 70  → escalar 0-d
+```
+
+### Lote 4D: contraer los dos últimos ejes de un tensor de rango 4
+```python
+# Campo de tensores de rigidez (2, 5) puntos, cada uno (3, 3):  shape (2, 5, 3, 3)
+# contraído con una deformación (3, 3) sobre sus dos últimos ejes →
+# energía elástica en cada punto de la rejilla 2x5.
+C   = np.arange(2*5*3*3).reshape(2, 5, 3, 3)   # shape (2, 5, 3, 3)
+eps = np.ones((3, 3))                           # shape (3, 3)
+W = np.tensordot(C, eps, axes=([2, 3], [0, 1]))
+W.shape    # (2, 5)  → libres: los dos primeros ejes de C; (3,3) se contraen y desaparecen
+```
+
+El mapa de shapes: $(2,5,\mathbf{3},\mathbf{3}),(\mathbf{3},\mathbf{3})
+\xrightarrow{\ \text{axes}=([2,3],[0,1])\ } (2,5)$, sumando sobre los dos ejes en negrita.
+
 ### Aplicar un tensor de rigidez de rango 4
 ```python
 # C de rango 4 (3,3,3,3) contraído con deformación (3,3) sobre sus dos últimos ejes:

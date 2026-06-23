@@ -165,10 +165,42 @@ np.allclose(np.tensordot(a, x, axes=x.ndim), b)   # True
 ```
 
 ### Equivalencia con `solve` en 2D
+En el caso plano, `tensorsolve` **es** un `solve`: el tensor $A$ ya es una matriz cuadrada y $\mathbf{b}$
+un vector. El sistema concreto y su solución:
+
+$$
+\begin{bmatrix} 3 & 1 \\ 1 & 2 \end{bmatrix}
+\begin{bmatrix} x_0 \\ x_1 \end{bmatrix}
+=
+\begin{bmatrix} 9 \\ 8 \end{bmatrix}
+\quad\Longrightarrow\quad
+\begin{bmatrix} x_0 \\ x_1 \end{bmatrix}
+=
+\begin{bmatrix} 2 \\ 3 \end{bmatrix}
+$$
+
 ```python
 A = np.array([[3., 1.], [1., 2.]])
 b = np.array([9., 8.])
 np.linalg.tensorsolve(A, b)   # [2., 3.]  → idéntico a np.linalg.solve(A, b)
+```
+
+### Operador tensorial $(2,3,2,3)$ que aplana a $\tilde A\,(6\times 6)$
+El operador $A$ de shape `(2,3,2,3)` contrae sus **dos últimos ejes** contra una incógnita $\mathbf{x}$
+de shape `(2,3)`, igualando un lado $\mathbf{b}$ de shape `(2,3)`. Al aplanar, el sistema es una matriz
+$\tilde A$ de $6\times 6$ resuelta con `solve`:
+
+$$
+\underbrace{(2,\,3,\,2,\,3)}_{A}\ ,\ \underbrace{(2,\,3)}_{b}\ \xrightarrow{\ \text{tensorsolve}\ }\ \underbrace{(2,\,3)}_{x}
+\qquad\text{con}\qquad P=2\cdot 3=6=2\cdot 3=Q
+$$
+
+```python
+A = np.eye(6).reshape(2, 3, 2, 3)   # operador identidad → aplana a Ã (6, 6)
+b = np.arange(6.).reshape(2, 3)     # lado (2, 3)
+x = np.linalg.tensorsolve(A, b)
+x.shape                              # (2, 3)  → incógnita tensorial
+np.allclose(np.tensordot(A, x, axes=x.ndim), b)   # True
 ```
 
 ## Errores comunes

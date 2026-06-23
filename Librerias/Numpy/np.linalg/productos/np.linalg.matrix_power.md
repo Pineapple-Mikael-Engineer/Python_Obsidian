@@ -140,6 +140,26 @@ matrices de golpe.
 
 ## Casos de uso
 
+### Potencias concretas de una matriz $2\times 2$
+Con la matriz de cizalladura (*shear*) $A = \begin{bmatrix} 1 & 1 \\ 0 & 1 \end{bmatrix}$, elevarla
+acumula el desplazamiento en la esquina superior derecha — un patrón clásico para fijar la intuición:
+
+$$
+A^2 = \begin{bmatrix} 1 & 1 \\ 0 & 1 \end{bmatrix}^2 = \begin{bmatrix} 1 & 2 \\ 0 & 1 \end{bmatrix}
+\qquad
+A^3 = \begin{bmatrix} 1 & 1 \\ 0 & 1 \end{bmatrix}^3 = \begin{bmatrix} 1 & 3 \\ 0 & 1 \end{bmatrix}
+\qquad
+A^n = \begin{bmatrix} 1 & n \\ 0 & 1 \end{bmatrix}
+$$
+
+```python
+A = np.array([[1, 1],
+              [0, 1]])
+np.linalg.matrix_power(A, 2)   # [[1, 2], [0, 1]]
+np.linalg.matrix_power(A, 3)   # [[1, 3], [0, 1]]
+np.linalg.matrix_power(A, 7)   # [[1, 7], [0, 1]]   → A^n = [[1, n], [0, 1]]
+```
+
 ### Cadena de Markov: distribución tras varios pasos
 ```python
 P = np.array([[0.9, 0.1],
@@ -164,6 +184,21 @@ I = np.linalg.matrix_power(A, 0)   # identidad MxM coherente con A
 ```python
 M = np.random.rand(8, 3, 3)        # 8 matrices 3x3
 np.linalg.matrix_power(M, 4).shape # (8, 3, 3)  → 8 potencias en lote
+```
+
+### Dimensión alta: lote 4D `(4, 5, 2, 2)` de potencias
+Con un lote 4D —una rejilla $4\times 5$ de matrices $2\times 2$— los **cuatro** primeros ejes son lote
+y cada una de las $4\cdot 5 = 20$ matrices se eleva por separado. El shape entra y sale idéntico:
+
+$$
+(4,\, 5,\, 2,\, 2)\ \xrightarrow{\ \text{matrix\_power},\ n=3\ }\ (4,\, 5,\, 2,\, 2)
+$$
+
+```python
+shears = np.tile(np.array([[1, 1], [0, 1]]), (4, 5, 1, 1))  # shape (4, 5, 2, 2)
+out = np.linalg.matrix_power(shears, 3)
+out.shape          # (4, 5, 2, 2)  → 20 potencias independientes, sin bucle
+out[0, 0]          # [[1, 3], [0, 1]]   → cada celda es [[1, n], [0, 1]]
 ```
 
 ## Errores comunes

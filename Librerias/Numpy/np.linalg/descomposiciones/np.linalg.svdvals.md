@@ -123,6 +123,30 @@ s[0]                                                 # el mayor (norma espectral
 
 ## Casos de uso
 
+### Ejemplo trabajado con números
+`svdvals` devuelve **solo la diagonal de $\Sigma$**. Para la $A$ simétrica de $(2\times 2)$, la SVD
+completa $A=U\,\Sigma\,V^{H}$ tiene factores concretos, pero `svdvals` extrae únicamente los
+$\sigma_i=(3,1)$:
+
+$$
+A=\begin{bmatrix} 2 & 1 \\ 1 & 2 \end{bmatrix}
+= U\,\underbrace{\begin{bmatrix} 3 & 0 \\ 0 & 1 \end{bmatrix}}_{\Sigma}\,V^{H}
+\ \xrightarrow{\ \text{svdvals}\ }\ \sigma(A)=\begin{bmatrix} 3 \\ 1 \end{bmatrix}
+$$
+
+Y para la $A$ de $(2\times 3)$ del resto de la nota, $\min(m,n)=2$ valores singulares:
+
+$$
+A=\begin{bmatrix} 1 & 2 & 3 \\ 4 & 5 & 6 \end{bmatrix}
+\ \xrightarrow{\ \text{svdvals}\ }\ \sigma(A)\approx\begin{bmatrix} 9.508 \\ 0.773 \end{bmatrix}
+$$
+
+```python
+np.linalg.svdvals(np.array([[2.0, 1.0], [1.0, 2.0]]))   # [3., 1.]
+np.linalg.svdvals(np.array([[1.0, 2.0, 3.0],
+                            [4.0, 5.0, 6.0]]))           # [9.508, 0.773]  → descendente
+```
+
 ### Rango numérico
 ```python
 s = np.linalg.svdvals(M)
@@ -142,9 +166,15 @@ norma2 = np.linalg.svdvals(A)[0]   # el mayor valor singular
 
 ### Lote: condicionamiento de muchas matrices (N-D)
 ```python
+# 3D: 100 matrices 6×6 → 6 valores singulares cada una
 stack = np.random.rand(100, 6, 6)
 s = np.linalg.svdvals(stack)        # (100, 6)
 conds = s[:, 0] / s[:, -1]          # número de condición de cada una, sin bucle
+
+# 4D: lote (8, 5) de matrices 4×3  → min(4,3)=3 valores por matriz
+stack4 = np.random.rand(8, 5, 4, 3)
+s4 = np.linalg.svdvals(stack4)      # (8, 5, 3)
+conds4 = s4[..., 0] / s4[..., -1]   # (8, 5)  número de condición de cada matriz del lote
 ```
 
 ## Errores comunes

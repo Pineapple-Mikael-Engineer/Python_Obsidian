@@ -121,6 +121,27 @@ intercambiados**.
 
 ## Casos de uso
 
+### Tensor pequeño `(2, 2, 2, 2)` con `ind=2` (matriz aplanada con números)
+Un tensor $a$ de shape $(2,2,2,2)$ se aplana a la matriz cuadrada $M$ de shape $(p,p)$ con $p=\operatorname{prod}(2,2)=4$. Si elegimos $a$ tal que su forma aplanada sea diagonal, la inversa es inmediata:
+
+$$
+M=a.\text{reshape}(4,4)=\begin{bmatrix}2&0&0&0\\0&4&0&0\\0&0&5&0\\0&0&0&8\end{bmatrix},
+\qquad
+M^{-1}=\begin{bmatrix}1/2&0&0&0\\0&1/4&0&0\\0&0&1/5&0\\0&0&0&1/8\end{bmatrix}
+$$
+
+`tensorinv` invierte esa $M$ y **reordena** los ejes de vuelta: el shape de salida es `a.shape[2:] + a.shape[:2]`, aquí $(2,2,2,2)$ otra vez (bloques iguales). La verificación reaplana $M\,M^{-1}=I_4$.
+
+```python
+diag = np.array([2., 4., 5., 8.])
+a = np.diag(diag).reshape(2, 2, 2, 2)   # prod(2,2)=4 == prod(2,2)=4
+ainv = np.linalg.tensorinv(a, ind=2)
+ainv.shape                              # (2, 2, 2, 2)  → bloques intercambiados (iguales aquí)
+ainv.reshape(4, 4)                      # diag(1/2, 1/4, 1/5, 1/8)
+ident = np.tensordot(a, ainv, axes=2)   # shape (2, 2, 2, 2)
+np.allclose(ident.reshape(4, 4), np.eye(4))   # True → identidad tensorial
+```
+
 ### Tensor `(4, 6, 8, 3)` con `ind=2` (el ejemplo canónico)
 ```python
 np.random.seed(0)

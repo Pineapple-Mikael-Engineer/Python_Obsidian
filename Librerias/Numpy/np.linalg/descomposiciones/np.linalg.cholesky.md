@@ -160,6 +160,26 @@ np.allclose(A, L @ L.T)            # True  (datos reales: L Lᵀ)
 
 ## Casos de uso
 
+### Ejemplo trabajado con números
+La $A$ de $(2\times 2)$ SPD del resto de la nota se factoriza en un triángulo inferior concreto. Como
+$L_{00}=\sqrt{4}=2$, $L_{10}=2/2=1$ y $L_{11}=\sqrt{3-1^2}=\sqrt{2}$:
+
+$$
+A=\begin{bmatrix} 4 & 2 \\ 2 & 3 \end{bmatrix}
+= L\,L^{T},\qquad
+L=\begin{bmatrix} 2 & 0 \\ 1 & \sqrt{2} \end{bmatrix},\quad
+L^{T}=\begin{bmatrix} 2 & 1 \\ 0 & \sqrt{2} \end{bmatrix}
+$$
+
+Comprobación del producto $L\,L^{T}$: $\begin{bmatrix}2\cdot2 & 2\cdot1\\ 1\cdot2 & 1\cdot1+2\end{bmatrix}=\begin{bmatrix}4&2\\2&3\end{bmatrix}=A$.
+
+```python
+A = np.array([[4.0, 2.0], [2.0, 3.0]])
+L = np.linalg.cholesky(A)
+L                                 # [[2., 0.], [1., 1.41421356]]  → √2 ≈ 1.4142
+np.allclose(A, L @ L.T)           # True
+```
+
 ### Resolver un sistema SPD de forma eficiente
 ```python
 # A x = b con A definida positiva: dos sustituciones triangulares
@@ -188,11 +208,17 @@ def es_definida_positiva(M):
 
 ### Lote de covarianzas (N-D)
 ```python
-# Factorizar 100 matrices de covarianza 3×3 de golpe
+# 3D: factorizar 100 matrices de covarianza 3×3 de golpe
 Sigmas = np.random.rand(100, 3, 3)
 Sigmas = Sigmas @ Sigmas.transpose(0, 2, 1) + 3 * np.eye(3)  # SPD por construcción
 Ls = np.linalg.cholesky(Sigmas)
-Ls.shape                              # (100, 3, 3)  → sin bucle
+Ls.shape                              # (100, 3, 3)  → un L por matriz, sin bucle
+
+# 4D: lote (8, 5) de matrices 3×3  → 40 factorizaciones independientes
+S4 = np.random.rand(8, 5, 3, 3)
+S4 = S4 @ S4.transpose(0, 1, 3, 2) + 3 * np.eye(3)           # (8, 5, 3, 3) SPD
+L4 = np.linalg.cholesky(S4)
+L4.shape                              # (8, 5, 3, 3)  → mismo shape que la entrada
 ```
 
 ## Errores comunes

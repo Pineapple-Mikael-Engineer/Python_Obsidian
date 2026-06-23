@@ -132,6 +132,27 @@ cadena. Para 2 matrices no hay nada que optimizar: usa `@` directamente.
 
 ## Casos de uso
 
+### Una cadena concreta $A\,@\,B\,@\,C$ con matrices $2\times 2$
+El resultado es **idéntico** al de encadenar `@`; `multi_dot` solo cambia el orden interno de los
+productos. Con tres matrices concretas:
+
+$$
+A = \begin{bmatrix} 1 & 2 \\ 0 & 1 \end{bmatrix}
+\quad
+B = \begin{bmatrix} 1 & 0 \\ 3 & 1 \end{bmatrix}
+\quad
+C = \begin{bmatrix} 2 & 0 \\ 0 & 1 \end{bmatrix}
+\quad\Longrightarrow\quad
+A\,B\,C = \begin{bmatrix} 14 & 2 \\ 6 & 1 \end{bmatrix}
+$$
+
+```python
+A = np.array([[1, 2], [0, 1]])
+B = np.array([[1, 0], [3, 1]])
+C = np.array([[2, 0], [0, 1]])
+np.linalg.multi_dot([A, B, C])   # [[14, 2], [6, 1]]   → idéntico a A @ B @ C
+```
+
 ### El ahorro frente a `A @ B @ C` ingenuo
 ```python
 A = np.random.rand(10, 100)

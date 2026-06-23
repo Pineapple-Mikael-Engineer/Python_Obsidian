@@ -132,13 +132,29 @@ con el de la entrada.
 
 ## Casos de uso
 
-### Inversa de una matriz de coeficientes
+### Inversa de una matriz de coeficientes (con números)
+Para una $2\times 2$, $\begin{bmatrix}a&b\\c&d\end{bmatrix}^{-1}=\frac{1}{ad-bc}\begin{bmatrix}d&-b\\-c&a\end{bmatrix}$. Con $A=\begin{bmatrix}4&7\\2&6\end{bmatrix}$ el determinante es $ad-bc=24-14=10$:
+
+$$
+A=\begin{bmatrix}4&7\\2&6\end{bmatrix},
+\qquad
+A^{-1}=\frac{1}{10}\begin{bmatrix}6&-7\\-2&4\end{bmatrix}=\begin{bmatrix}0.6&-0.7\\-0.2&0.4\end{bmatrix}
+$$
+
+y se verifica $AA^{-1}=I$:
+
+$$
+A\,A^{-1}=\begin{bmatrix}4&7\\2&6\end{bmatrix}\begin{bmatrix}0.6&-0.7\\-0.2&0.4\end{bmatrix}=\begin{bmatrix}1&0\\0&1\end{bmatrix}=I_2
+$$
+
 ```python
-A = np.array([[2., 1.], [1., 3.]])
+A = np.array([[4., 7.], [2., 6.]])
 Ainv = np.linalg.inv(A)
-Ainv               # [[ 0.6, -0.2], [-0.2,  0.4]]
+Ainv               # [[ 0.6, -0.7], [-0.2,  0.4]]
 A @ Ainv           # [[1., 0.], [0., 1.]]  → identidad (salvo error numérico)
 ```
+
+Un ejemplo $3\times 3$ con inversa exacta: $A=\begin{bmatrix}2&0&0\\0&4&0\\0&0&5\end{bmatrix}$ (diagonal) tiene $A^{-1}=\begin{bmatrix}1/2&0&0\\0&1/4&0\\0&0&1/5\end{bmatrix}$, el recíproco de cada entrada diagonal.
 
 ### Comprobar inversibilidad antes de invertir
 ```python
@@ -156,6 +172,18 @@ inv_T = np.linalg.inv(T)
 inv_T.shape                     # (4, 2, 2)
 np.allclose(T @ inv_T, np.eye(2))   # True → cada par A·A⁻¹ es la identidad
 ```
+
+### Lote 4D: una rejilla de matrices `(4, 5, 3, 3)`
+Los dos últimos ejes son las matrices $3\times 3$; los dos primeros, $4\times 5=20$ matrices que se invierten en paralelo. El shape **no cambia**: $(4,5,3,3)\to(4,5,3,3)$.
+
+```python
+np.random.seed(0)
+T = np.random.rand(4, 5, 3, 3)   # 20 matrices 3×3 organizadas en rejilla 4×5
+inv_T = np.linalg.inv(T)
+inv_T.shape                      # (4, 5, 3, 3)  → mismo shape que la entrada
+np.allclose(T @ inv_T, np.eye(3))   # True → cada A·A⁻¹ ≈ I₃ en todo el lote
+```
+Cada una de las 20 inversas es independiente; basta que **una** matriz sea singular para que la llamada entera falle.
 
 ## Errores comunes
 
