@@ -1,5 +1,5 @@
 ---
-title: legend — Leyendas: asociar muestras de color/estilo a etiquetas
+title: "legend — Leyendas: asociar muestras de color/estilo a etiquetas"
 tags: [matplotlib, indice]
 draft: false
 ---

@@ -1,5 +1,5 @@
 ---
-title: gridspec — Layout de subgráficos: repartir Axes en una rejilla
+title: "gridspec — Layout de subgráficos: repartir Axes en una rejilla"
 tags: [matplotlib, indice]
 draft: false
 ---
