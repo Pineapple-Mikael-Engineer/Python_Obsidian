@@ -141,16 +141,36 @@ delta = x - np.roll(x, 1)   # [10-40, 20-10, 30-20, 40-30] = [-30, 10, 10, 10]
 # Ojo: el primer valor (-30) es el wrap-around circular, no una diferencia real.
 ```
 
-### Rotar una señal periódica (desfase)
+### Rotar las columnas de una matriz `(2,3)` (envoltorio visible)
+Con `shift=1, axis=1` cada fila se desplaza una posición a la derecha y la última columna **reaparece** a la izquierda. El shape `(2,3)` se conserva exacto:
+
+$$
+\begin{bmatrix} 1 & 2 & 3 \\ 4 & 5 & 6 \end{bmatrix}
+\;\xrightarrow{\ \text{shift}=1,\ \text{axis}=1\ }\;
+\begin{bmatrix} 3 & 1 & 2 \\ 6 & 4 & 5 \end{bmatrix}
+$$
+
 ```python
-señal = np.sin(np.linspace(0, 2*np.pi, 100))
-desfasada = np.roll(señal, 25)   # desfase de un cuarto de ciclo
+M = np.arange(1, 7).reshape(2, 3)
+np.roll(M, 1, axis=1)   # el 3 y el 6 envuelven al frente; shape (2,3) intacto
 ```
 
-### Convolución / correlación circular en 2D (N-D)
+### Desplazamiento circular espacial en un lote 4D `(N, C, H, W)`
+`axis=2` es el alto `H`. Rotar ese eje desplaza la imagen verticalmente con envoltorio (las filas que salen por abajo reentran por arriba); ningún eje cambia de tamaño:
+
 ```python
-img = np.arange(3*3).reshape(3, 3)
-np.roll(img, (1, -1), axis=(0, 1))   # baja una fila, sube una columna, todo circular
+x = np.arange(8*3*32*32).reshape(8, 3, 32, 32)   # (N=8, C=3, H=32, W=32)
+np.roll(x, shift=5, axis=2).shape                 # (8, 3, 32, 32)
+# eje 2 (alto): cada imagen baja 5 filas circularmente ; shape conservado
+```
+
+### Desplazar ambos ejes espaciales en un tensor de vídeo 5D `(N, T, C, H, W)`
+Una tupla en `shift`/`axis` rota varios ejes a la vez. Aquí desplazamos el alto `H` y el ancho `W` (un *roll* diagonal de cada fotograma), todo circular y sin alterar el shape:
+
+```python
+video = np.zeros((4, 8, 3, 32, 32))               # (N=4, T=8, C=3, H=32, W=32)
+np.roll(video, shift=(5, -5), axis=(3, 4)).shape  # (4, 8, 3, 32, 32)
+# eje 3 (alto) +5 y eje 4 (ancho) -5, ambos con envoltorio ; shape intacto
 ```
 
 ## Errores comunes

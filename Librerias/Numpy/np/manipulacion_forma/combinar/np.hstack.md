@@ -95,22 +95,42 @@ Un **nuevo** `ndarray` (copia). Para 2D+ crece el eje 1; para 1D, el eje 0. dtyp
 
 ## Casos de uso
 
-### Añadir columnas a una matriz de diseño
+### Pegar dos columnas lado a lado
+Dos columnas `(3,1)` se unen por el eje 1 en una `(3,2)`:
+
+$$
+\begin{bmatrix} 1 \\ 2 \\ 3 \end{bmatrix},\;\begin{bmatrix} 4 \\ 5 \\ 6 \end{bmatrix}\;\xrightarrow{\ \text{hstack}\ }\;\begin{bmatrix} 1 & 4 \\ 2 & 5 \\ 3 & 6 \end{bmatrix}\qquad (3,1),(3,1)\to(3,2)
+$$
+
 ```python
 X = np.ones((100, 3))
 extra = np.random.rand(100, 2)
-X = np.hstack((X, extra))      # (100, 5)
+X = np.hstack((X, extra))      # (100, 5)  → añade columnas
 ```
 
 ### Concatenar tramos de una señal 1D
 ```python
-señal = np.hstack((tramo1, tramo2, tramo3))   # une en eje 0
+señal = np.hstack((tramo1, tramo2, tramo3))   # une en eje 0 (¡aplana!)
 ```
 
-### N-D: crecer el eje central de un tensor
+### 4D: crecer el eje 1 (canales) de un lote
+Sobre arrays 4D `(N,C,H,W)`, hstack une por `axis=1`: suma los canales dejando lote, alto y ancho intactos:
+
 ```python
-A = np.zeros((2, 3, 4)); B = np.zeros((2, 5, 4))
-np.hstack((A, B)).shape        # (2, 8, 4)  → concatenate(axis=1)
+a = np.random.rand(8, 3, 32, 32)   # lote de 8, 3 canales
+b = np.random.rand(8, 1, 32, 32)   # un canal extra (p. ej. máscara)
+todo = np.hstack((a, b))           # (8, 4, 32, 32)  → 4D
+# ejes: (lote=8, canal=3+1=4, alto=32, ancho=32)
+```
+
+### 5D: unir por el eje de frames un lote de vídeos
+Sobre tensores 5D `(V,F,C,H,W)`, hstack toca `axis=1` (los frames):
+
+```python
+v1 = np.random.rand(4, 10, 3, 32, 32)   # 4 vídeos de 10 frames
+v2 = np.random.rand(4,  5, 3, 32, 32)   # 5 frames más por vídeo
+todo = np.hstack((v1, v2))              # (4, 15, 3, 32, 32)  → 5D
+# ejes: (vídeo=4, frame=10+5=15, canal=3, alto=32, ancho=32)
 ```
 
 ## Errores comunes

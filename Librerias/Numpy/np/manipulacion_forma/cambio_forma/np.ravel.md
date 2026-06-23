@@ -126,21 +126,42 @@ Usa `ravel` si te vale una vista (más rápido); usa `flatten` (o `ravel().copy(
 
 ## Casos de uso
 
-### Recorrer todos los elementos en serie
+### Aplanar una matriz pequeña
+
+Una matriz `(2, 2)` colapsa a un vector de 4 elementos leídos fila a fila (`order='C'`):
+
+$$ \begin{bmatrix} 1 & 2 \\ 3 & 4 \end{bmatrix}_{(2,2)} \;\xrightarrow{\ \text{ravel}\ }\; [\,1,2,3,4\,]_{(4,)} $$
+
 ```python
-img = np.random.rand(100, 100)
-for pixel in img.ravel():        # acceso lineal a los 10 000 valores
-    ...
+M = np.array([[1, 2],
+              [3, 4]])           # (2, 2)
+M.ravel()                         # array([1, 2, 3, 4])  → (4,)
+M.ravel(order='F')                # array([1, 3, 2, 4])  → por columnas
 ```
 
-### Aplanar, operar y volver a la forma
+### Aplanar un lote de imágenes completo (4D → 1D)
+
+Tensor `(8, 3, 32, 32)` = `(lote, canal, alto, ancho)`: un lote de 8 imágenes RGB de 32×32. `ravel` lo colapsa entero a un único vector con todos los valores en serie:
+
 ```python
-A = np.arange(12).reshape(3, 4)
-plano = A.ravel()                # vista 1D
-plano[0] = 99                    # modifica también A[0, 0] (es vista)
+batch = np.arange(8*3*32*32).reshape(8, 3, 32, 32)  # (8, 3, 32, 32) = (lote, canal, alto, ancho)
+batch.ravel().shape          # (24576,)  → 8*3*32*32 todos los valores en serie
+batch[0].ravel().shape       # (3072,)   → solo la primera imagen (3*32*32)
 ```
 
-### Concatenar contenidos de varias matrices (caso N-D)
+Para aplanar manteniendo el eje de lote no es `ravel` sino `reshape(8, -1)` → `(8, 3072)`.
+
+### Aplanar un tensor de vídeo (5D → 1D)
+
+Tensor `(4, 10, 3, 32, 32)` = `(lote, frames, canal, alto, ancho)`: 4 clips de 10 frames. `ravel` ignora el número de ejes y siempre entrega 1D:
+
+```python
+vid = np.arange(4*10*3*32*32).reshape(4, 10, 3, 32, 32)  # (lote, frames, canal, alto, ancho)
+vid.ravel().shape            # (122880,)  → 4*10*3*32*32 en una fila larga
+vid[0, 0].ravel().shape      # (3072,)    → un solo frame aplanado (3*32*32)
+```
+
+### Concatenar contenidos de varias matrices
 ```python
 a = np.arange(6).reshape(2, 3)
 b = np.arange(6, 12).reshape(2, 3)

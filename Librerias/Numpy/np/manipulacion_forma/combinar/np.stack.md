@@ -135,10 +135,16 @@ Siempre un **nuevo** `ndarray` (copia) con `ndim + 1` ejes. El dtype es la promo
 
 ## Casos de uso
 
-### Construir un lote para un modelo
+### Apilar dos vectores como filas de una matriz
+Apilar en `axis=0` dos vectores `(3,)` los convierte en las dos filas de una `(2,3)`:
+
+$$
+\begin{bmatrix} 1 & 2 & 3 \end{bmatrix},\;\begin{bmatrix} 4 & 5 & 6 \end{bmatrix}\;\xrightarrow{\ \text{axis}=0\ }\;\begin{bmatrix} 1 & 2 & 3 \\ 4 & 5 & 6 \end{bmatrix}
+$$
+
 ```python
-muestras = [preprocesar(x) for x in lote]   # cada una (3, 224, 224)
-batch = np.stack(muestras)                   # (N, 3, 224, 224)
+a = np.array([1, 2, 3]); b = np.array([4, 5, 6])
+np.stack((a, b), axis=0)   # [[1,2,3],[4,5,6]]   → (2, 3)
 ```
 
 ### Emparejar coordenadas X e Y
@@ -147,11 +153,24 @@ x = np.array([0, 1, 2]); y = np.array([9, 8, 7])
 puntos = np.stack((x, y), axis=1)   # [[0,9],[1,8],[2,7]]  → (3, 2)
 ```
 
-### N-D: apilar matrices como capas temporales
+### 4D: armar un lote de imágenes RGB
+Apilar $8$ imágenes `(3, 32, 32)` (canales, alto, ancho) inserta un eje de lote al frente y produce un tensor **4D**:
+
 ```python
-frames = [np.full((2, 2), t) for t in range(4)]   # 4 frames (2,2)
-video = np.stack(frames, axis=0)                   # (4, 2, 2)
-video[2]   # el frame número 2, shape (2, 2), lleno de 2
+imgs = [np.random.rand(3, 32, 32) for _ in range(8)]   # 8 imágenes (3,32,32)
+batch = np.stack(imgs, axis=0)                          # (8, 3, 32, 32)  → 4D
+# ejes: (lote=8, canal=3, alto=32, ancho=32)
+batch[0].shape                                          # (3, 32, 32)  → una imagen
+```
+
+### 5D: apilar un conjunto de vídeos
+Cada vídeo es un tensor 4D `(10, 3, 32, 32)` (frames, canal, alto, ancho). Apilar $4$ de ellos inserta un eje de "vídeo" al frente y da un tensor **5D**:
+
+```python
+videos = [np.random.rand(10, 3, 32, 32) for _ in range(4)]   # 4 vídeos 4D
+lote = np.stack(videos, axis=0)                              # (4, 10, 3, 32, 32)  → 5D
+# ejes: (vídeo=4, frame=10, canal=3, alto=32, ancho=32)
+lote[1, 5].shape                                            # (3, 32, 32)  → frame 5 del vídeo 1
 ```
 
 ## Errores comunes

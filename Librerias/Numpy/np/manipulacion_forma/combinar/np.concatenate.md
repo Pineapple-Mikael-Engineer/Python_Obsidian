@@ -128,10 +128,17 @@ Siempre un **nuevo** `ndarray` (copia; no existe versión vista al fusionar buff
 
 ## Casos de uso
 
-### Acumular bloques de datos por filas
+### Unir dos matrices por filas
+Dos bloques `(2,2)` unidos por `axis=0` apilan sus filas en una `(4,2)`:
+
+$$
+\begin{bmatrix} 1 & 2 \\ 3 & 4 \end{bmatrix},\;\begin{bmatrix} 5 & 6 \\ 7 & 8 \end{bmatrix}\;\xrightarrow{\ \text{axis}=0\ }\;\begin{bmatrix} 1 & 2 \\ 3 & 4 \\ 5 & 6 \\ 7 & 8 \end{bmatrix}\qquad (2,2),(2,2)\to(4,2)
+$$
+
 ```python
-bloques = [np.random.rand(10, 4) for _ in range(5)]
-todo = np.concatenate(bloques, axis=0)   # (50, 4)
+A = np.array([[1, 2], [3, 4]]); B = np.array([[5, 6], [7, 8]])
+np.concatenate((A, B), axis=0)   # → (4, 2)
+np.concatenate((A, B), axis=1)   # → (2, 4)  → crece el ancho
 ```
 
 ### Añadir columnas a una matriz
@@ -141,12 +148,24 @@ nueva = np.zeros((100, 1))
 X = np.concatenate((X, nueva), axis=1)   # (100, 4)
 ```
 
-### N-D: unir lotes de tensores
+### 4D: unir dos lotes de imágenes por el eje del lote
+Dos lotes 4D `(8,3,32,32)` y `(4,3,32,32)` coinciden en canal, alto y ancho; solo crece `axis=0` (el lote):
+
 ```python
-lote1 = np.arange(24).reshape(2, 3, 4)
-lote2 = np.arange(36).reshape(3, 3, 4)
-np.concatenate((lote1, lote2), axis=0).shape   # (5, 3, 4)
-# coinciden en alto (3) y ancho (4); solo crece el eje del lote
+lote_a = np.random.rand(8, 3, 32, 32)   # 8 imágenes
+lote_b = np.random.rand(4, 3, 32, 32)   # 4 imágenes
+todo = np.concatenate((lote_a, lote_b), axis=0)   # (12, 3, 32, 32)  → 4D
+# ejes: (lote=8+4=12, canal=3, alto=32, ancho=32)
+```
+
+### 5D: alargar un lote de vídeos por el eje de frames
+Dos tensores 5D `(4,10,3,32,32)` (vídeo, frame, canal, alto, ancho) unidos por `axis=1` suman sus frames sin tocar los demás ejes:
+
+```python
+v1 = np.random.rand(4, 10, 3, 32, 32)   # 4 vídeos de 10 frames
+v2 = np.random.rand(4,  6, 3, 32, 32)   # los mismos 4 vídeos, 6 frames más
+largo = np.concatenate((v1, v2), axis=1)   # (4, 16, 3, 32, 32)  → 5D
+# ejes: (vídeo=4, frame=10+6=16, canal=3, alto=32, ancho=32)
 ```
 
 ## Errores comunes

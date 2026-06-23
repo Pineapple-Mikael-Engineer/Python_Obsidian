@@ -116,20 +116,50 @@ Si necesitas escribir, haz una copia explícita: `np.broadcast_to(a, shape).copy
 
 ## Casos de uso
 
-### Materializar una forma común sin gastar memoria
+### Estirar un vector fila a una matriz pequeña
+
+Un vector `(3,)` se estira a `(2, 3)` repitiendo la única fila (que en memoria sigue siendo una sola, con `stride 0` en el eje nuevo):
+
+$$ [\,1,2,3\,]_{(3,)} \;\xrightarrow{\ (2,3)\ }\; \begin{bmatrix} 1 & 2 & 3 \\ 1 & 2 & 3 \end{bmatrix}_{(2,3)} $$
+
 ```python
-media = np.array([0.1, 0.2, 0.3])       # (3,)  → media por canal
-vista = np.broadcast_to(media, (1000, 3))  # (1000, 3) sin replicar nada en memoria
-# útil para pasar a una función que exige la forma completa
+v = np.array([1, 2, 3])           # (3,)
+np.broadcast_to(v, (2, 3)).shape   # (2, 3)  → la fila se repite, 0 bytes extra
 ```
 
-### Crear un fondo/constante con forma de imagen (caso N-D)
+### Pintar un color por píxel en un lote de imágenes (1D → 4D)
+
+Vector RGB `(3,)` estirado a `(8, 32, 32, 3)` = `(lote, alto, ancho, canal)`: el mismo color en cada píxel de las 8 imágenes 32×32, sin replicar nada en memoria. Alinea por la derecha (`3 == 3`) y añade los ejes nuevos por la izquierda:
+
 ```python
-color = np.array([10, 20, 30])               # (3,) RGB
-lienzo = np.broadcast_to(color, (2, 2, 3))   # (2, 2, 3)
-lienzo
-# array([[[10, 20, 30], [10, 20, 30]],
-#        [[10, 20, 30], [10, 20, 30]]])
+color = np.array([255, 128, 0])                  # (3,) RGB
+fondo = np.broadcast_to(color, (8, 32, 32, 3))   # (8, 32, 32, 3) = (lote, alto, ancho, canal)
+fondo.shape                                      # (8, 32, 32, 3)  → 4D
+np.shares_memory(color, fondo)                   # True → no copió nada
+```
+
+Aunque `fondo` "ocupa" 24 576 valores lógicos, en memoria solo hay 3.
+
+### Estirar una media por canal a un lote (4D → 4D)
+
+Media por canal con forma `(1, 3, 1, 1)` estirada a `(8, 3, 32, 32)` = `(lote, canal, alto, ancho)`: típico al normalizar imágenes restando la media de cada canal. Se estiran los ejes que valen 1 (lote, alto, ancho), no el canal:
+
+```python
+media = np.array([0.485, 0.456, 0.406]).reshape(1, 3, 1, 1)  # (1, 3, 1, 1)
+m = np.broadcast_to(media, (8, 3, 32, 32))                    # (8, 3, 32, 32) = (lote, canal, alto, ancho)
+m.shape                                                       # (8, 3, 32, 32)  → 4D
+# uso típico: imgs - m   (resta la media por canal a todo el lote)
+```
+
+### Estirar una constante por canal a un tensor de vídeo (4D → 5D)
+
+Valor por canal con forma `(1, 1, 3, 1, 1)` estirado a `(4, 10, 3, 32, 32)` = `(lote, frames, canal, alto, ancho)`: el mismo valor por canal aplicado a cada frame de cada clip, sin copiar. Solo se estiran los ejes unitarios (lote, frames, alto, ancho); el canal queda fijo:
+
+```python
+escala = np.array([0.2, 0.5, 0.3]).reshape(1, 1, 3, 1, 1)  # (1, 1, 3, 1, 1)
+e = np.broadcast_to(escala, (4, 10, 3, 32, 32))             # (lote, frames, canal, alto, ancho)
+e.shape                                                     # (4, 10, 3, 32, 32)  → 5D
+np.shares_memory(escala, e)                                 # True → 0 bytes extra
 ```
 
 ### Comparar el coste frente a `np.tile`

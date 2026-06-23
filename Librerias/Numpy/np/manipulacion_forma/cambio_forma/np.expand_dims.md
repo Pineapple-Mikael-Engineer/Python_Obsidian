@@ -117,6 +117,18 @@ v.reshape(-1, 1)       # (3, 1)
 
 ## Casos de uso
 
+### Vector a fila y a columna (matriz pequeña)
+
+Un vector `(3,)` se convierte en fila `(1, 3)` o en columna `(3, 1)` según dónde caiga el eje nuevo:
+
+$$ [\,1,2,3\,]_{(3,)} \;\xrightarrow{\ \text{axis}=0\ }\; \begin{bmatrix} 1 & 2 & 3 \end{bmatrix}_{(1,3)} \qquad\qquad [\,1,2,3\,]_{(3,)} \;\xrightarrow{\ \text{axis}=1\ }\; \begin{bmatrix} 1 \\ 2 \\ 3 \end{bmatrix}_{(3,1)} $$
+
+```python
+v = np.array([1, 2, 3])           # (3,)
+np.expand_dims(v, axis=0).shape    # (1, 3)  → fila
+np.expand_dims(v, axis=1).shape    # (3, 1)  → columna
+```
+
 ### Habilitar broadcasting entre vector y matriz
 ```python
 M = np.ones((4, 3))
@@ -124,11 +136,24 @@ v = np.array([10, 20, 30, 40])      # (4,)  → NO alinea con (4, 3) por la dere
 M + np.expand_dims(v, axis=1)       # (4, 1) sí alinea → suma una constante por fila
 ```
 
-### Añadir dimensión de lote o de canal (caso N-D)
+### Añadir el eje de lote a una imagen (3D → 4D)
+
+Imagen `(3, 32, 32)` = `(canal, alto, ancho)`. Casi toda red espera un eje de lote por delante; `axis=0` lo inserta para meter la imagen como único ejemplo de un lote:
+
 ```python
-img = np.arange(2*2*3).reshape(2, 2, 3)   # (2, 2, 3) → imagen RGB 2×2
-lote = np.expand_dims(img, 0)             # (1, 2, 2, 3) → un ejemplo en el lote
-lote.shape                                # (1, 2, 2, 3)
+img = np.arange(3*32*32).reshape(3, 32, 32)   # (3, 32, 32) = (canal, alto, ancho)
+batch = np.expand_dims(img, axis=0)            # (1, 3, 32, 32) = (lote, canal, alto, ancho)
+batch.shape                                    # (1, 3, 32, 32)  → 4D
+```
+
+### Insertar un eje de tiempo en un lote (4D → 5D)
+
+Tensor `(8, 3, 32, 32)` = `(lote, canal, alto, ancho)`. Para tratarlo como una secuencia temporal de un solo frame, se inserta un eje de tiempo con `axis=1`:
+
+```python
+batch = np.arange(8*3*32*32).reshape(8, 3, 32, 32)  # (8, 3, 32, 32) = (lote, canal, alto, ancho)
+seq = np.expand_dims(batch, axis=1)                  # (8, 1, 3, 32, 32) = (lote, tiempo, canal, alto, ancho)
+seq.shape                                            # (8, 1, 3, 32, 32)  → 5D
 ```
 
 ## Errores comunes

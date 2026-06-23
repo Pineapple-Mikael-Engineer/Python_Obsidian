@@ -144,6 +144,21 @@ El `dtype` se conserva siempre. Nunca devuelve escalar.
 
 ## Casos de uso
 
+### Transpuesta clásica de una matriz 2D
+La inversión total sobre `(2, 3)` da `(3, 2)`: filas y columnas se cruzan.
+
+$$
+\begin{bmatrix} 1 & 2 & 3 \\ 4 & 5 & 6 \end{bmatrix}^{T} = \begin{bmatrix} 1 & 4 \\ 2 & 5 \\ 3 & 6 \end{bmatrix}
+$$
+
+```python
+M = np.array([[1, 2, 3],
+              [4, 5, 6]])              # (2, 3)
+M.T                                     # (3, 2)  → [[1,4],[2,5],[3,6]]
+# Ojo: en 1D no hace nada
+np.array([1, 2, 3]).T.shape             # (3,)  → para una columna usa reshape(-1, 1)
+```
+
 ### Transponer para una multiplicación matricial
 ```python
 A = np.random.rand(3, 5)
@@ -151,18 +166,28 @@ B = np.random.rand(3, 5)
 C = A.T @ B          # (5, 3) @ (3, 5) → (5, 5)
 ```
 
-### El atajo `.T` (inversión total)
+### 4D: lote de imágenes NCHW → NHWC
+El formato de PyTorch es `NCHW` (lote, canal, alto, ancho); muchas APIs de visión y TensorFlow
+esperan `NHWC` (canal al final). Hay que llevar el eje 1 (canal) al final manteniendo lote, alto y
+ancho en orden:
+
 ```python
-M = np.array([[1, 2, 3], [4, 5, 6]])   # (2, 3)
-M.T.shape                               # (3, 2)
-# Ojo: en 1D no hace nada
-np.array([1, 2, 3]).T.shape             # (3,)  → para una columna usa reshape(-1, 1)
+x = np.random.rand(8, 3, 32, 32)       # (N, C, H, W)  lote de 8 imágenes RGB 32x32
+nhwc = np.transpose(x, (0, 2, 3, 1))   # posiciones: N, H, W, C
+nhwc.shape                              # (8, 32, 32, 3)  → NHWC
 ```
 
-### N-D: convención de imagen HWC → CHW
+La permutación `(0, 2, 3, 1)` se lee: "en la salida, eje 0 = eje 0 (N), eje 1 = eje 2 (H),
+eje 2 = eje 3 (W), eje 3 = eje 1 (C)".
+
+### 5D: lote de vídeos NTCHW → NTHWC
+Un clip de vídeo añade el eje temporal: `(N, T, C, H, W)`. Para pasar cada fotograma a `HWC` se
+mueve solo el canal al final, dejando lote y tiempo al frente:
+
 ```python
-img = np.random.rand(224, 224, 3)     # alto, ancho, canal
-chw = np.transpose(img, (2, 0, 1))    # (3, 224, 224)  canal, alto, ancho
+vid = np.random.rand(4, 10, 3, 32, 32)     # (N, T, C, H, W)  4 clips de 10 frames RGB 32x32
+nthwc = np.transpose(vid, (0, 1, 3, 4, 2)) # N, T, H, W, C
+nthwc.shape                                 # (4, 10, 32, 32, 3)  → NTHWC
 ```
 
 ### Permutar solo dos ejes (existe alternativa más clara)
@@ -170,6 +195,7 @@ chw = np.transpose(img, (2, 0, 1))    # (3, 224, 224)  canal, alto, ancho
 T = np.ones((2, 3, 4))
 np.transpose(T, (0, 2, 1)).shape   # (2, 4, 3)
 # equivalente más legible: np.swapaxes(T, 1, 2)
+# para mover un solo eje, aún más claro: np.moveaxis(T, 1, -1)
 ```
 
 ## Errores comunes

@@ -87,7 +87,13 @@ Un **nuevo** `ndarray` (copia) de al menos 2D, con el eje 0 sumado. dtype: promo
 
 ## Casos de uso
 
-### Apilar filas de observaciones
+### Apilar dos vectores como filas
+Dos `(3,)` se promueven a `(1,3)` y se apilan en `(2,3)`:
+
+$$
+\begin{bmatrix} 1 & 2 & 3 \end{bmatrix},\;\begin{bmatrix} 4 & 5 & 6 \end{bmatrix}\;\xrightarrow{\ \text{vstack}\ }\;\begin{bmatrix} 1 & 2 & 3 \\ 4 & 5 & 6 \end{bmatrix}\qquad (3,),(3,)\to(2,3)
+$$
+
 ```python
 filas = [np.random.rand(4) for _ in range(5)]
 matriz = np.vstack(filas)      # (5, 4)  → cada vector es una fila
@@ -100,10 +106,24 @@ nueva = np.zeros(4)            # (4,)
 M = np.vstack((M, nueva))      # (4, 4)  → la fila 1D se promueve
 ```
 
-### N-D: concatenar lotes
+### 4D: unir dos lotes de imágenes por el eje 0
+Sobre arrays 4D `(N,3,32,32)`, vstack es exactamente `concatenate(axis=0)`: suma el eje del lote dejando intactos canal, alto y ancho:
+
 ```python
-A = np.zeros((2, 3, 4)); B = np.zeros((5, 3, 4))
-np.vstack((A, B)).shape        # (7, 3, 4)  → idéntico a concatenate(axis=0)
+lote_a = np.random.rand(8, 3, 32, 32)   # 8 imágenes (3,32,32)
+lote_b = np.random.rand(4, 3, 32, 32)   # 4 imágenes
+todo = np.vstack((lote_a, lote_b))      # (12, 3, 32, 32)  → 4D
+# ejes: (lote=12, canal=3, alto=32, ancho=32)
+```
+
+### 5D: apilar lotes de vídeos por el eje 0
+Sobre tensores 5D `(N,10,3,32,32)` (vídeo, frame, canal, alto, ancho), vstack apila el eje de vídeo:
+
+```python
+v1 = np.random.rand(4, 10, 3, 32, 32)   # 4 vídeos
+v2 = np.random.rand(2, 10, 3, 32, 32)   # 2 vídeos más
+todo = np.vstack((v1, v2))              # (6, 10, 3, 32, 32)  → 5D
+# ejes: (vídeo=4+2=6, frame=10, canal=3, alto=32, ancho=32)
 ```
 
 ## Errores comunes

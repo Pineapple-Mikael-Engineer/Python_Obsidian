@@ -141,6 +141,32 @@ chw = np.random.rand(3, 224, 224)     # canal, alto, ancho
 hwc = np.moveaxis(chw, 0, -1)         # (224, 224, 3)  alto, ancho, canal
 ```
 
+### 4D: lote de imágenes NCHW → NHWC (la forma idiomática)
+Este es **el** uso canónico de `moveaxis`: para convertir un lote de PyTorch (`NCHW`) al formato
+`NHWC` basta con mover el canal (eje 1) al final; lote, alto y ancho se desplazan solos en orden:
+
+```python
+x = np.random.rand(8, 3, 32, 32)     # (N, C, H, W)  lote de 8 imágenes RGB 32x32
+nhwc = np.moveaxis(x, 1, -1)         # lleva C al final; N, H, W quedan en orden
+nhwc.shape                            # (8, 32, 32, 3)  → NHWC
+```
+
+> [!note] Más legible que `transpose` para mover un eje
+> Lo mismo con [[np.transpose]] obliga a enumerar la permutación completa
+> `np.transpose(x, (0, 2, 3, 1))`. Con `moveaxis` dices solo *qué eje mueves y a dónde*
+> (`1 → -1`); el resto se reordena solo, sin riesgo de equivocarte al escribir la tupla.
+
+### 5D: lote de vídeos NTCHW → NTHWC
+En `(N, T, C, H, W)` se mueve el canal (eje 2) al final; lote y tiempo permanecen al frente y alto/
+ancho se adelantan una posición conservando su orden:
+
+```python
+vid = np.random.rand(4, 10, 3, 32, 32)   # (N, T, C, H, W)
+nthwc = np.moveaxis(vid, 2, -1)          # canal (2) al final
+nthwc.shape                               # (4, 10, 32, 32, 3)  → NTHWC
+# equivalente, menos legible: np.transpose(vid, (0, 1, 3, 4, 2))
+```
+
 ### Llevar el eje de lote al frente
 ```python
 datos = np.random.rand(32, 100, 10)   # (batch, tiempo, feat)

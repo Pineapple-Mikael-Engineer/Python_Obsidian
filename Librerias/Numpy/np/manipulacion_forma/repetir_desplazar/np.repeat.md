@@ -149,21 +149,52 @@ conteos = np.array([3, 2, 4])
 np.repeat(clases, conteos)   # [0,0,0,1,1,2,2,2,2]  → repeticiones desiguales
 ```
 
-### Upsample (escalar) de una imagen, eje por eje (N-D)
+### Repetir cada fila de una matriz `(2,2)`
+Con `axis=0` cada fila se duplica in situ (no se intercala el bloque entero). El eje 0 pasa de 2 a 4:
+
+$$
+\begin{bmatrix} 1 & 2 \\ 3 & 4 \end{bmatrix}
+\;\xrightarrow{\ \text{repeat}=2,\ \text{axis}=0\ }\;
+\begin{bmatrix} 1 & 2 \\ 1 & 2 \\ 3 & 4 \\ 3 & 4 \end{bmatrix}
+$$
+
 ```python
-img = np.array([[1, 2],
-                [3, 4]])
-grande = np.repeat(np.repeat(img, 2, axis=0), 2, axis=1)
-# [[1,1,2,2],
-#  [1,1,2,2],
-#  [3,3,4,4],
-#  [3,3,4,4]]   → (4, 4): cada píxel ocupa un bloque 2×2
+M = np.array([[1, 2], [3, 4]])
+np.repeat(M, 2, axis=0).shape   # (4, 2)  → cada fila dos veces seguida
 ```
 
-### Duplicar muestras en un lote N-D
+### Upsample espacial de imágenes repitiendo filas y columnas
+Encadenar `repeat` en los dos ejes espaciales hace *nearest-neighbour upsampling*: cada píxel pasa a ocupar un bloque `2×2`:
+
+$$
+\begin{bmatrix} 1 & 2 \\ 3 & 4 \end{bmatrix}
+\;\xrightarrow{\ \text{axis}=0,\ \text{axis}=1\ }\;
+\begin{bmatrix} 1 & 1 & 2 & 2 \\ 1 & 1 & 2 & 2 \\ 3 & 3 & 4 & 4 \\ 3 & 3 & 4 & 4 \end{bmatrix}
+$$
+
 ```python
-batch = np.arange(2*3).reshape(2, 3)   # 2 muestras de 3 features
-np.repeat(batch, 3, axis=0).shape      # (6, 3)  → cada muestra repetida 3 veces
+# Lote de imágenes (N, C, H, W): doblamos alto y ancho
+x = np.arange(8*3*32*32).reshape(8, 3, 32, 32)
+grande = np.repeat(np.repeat(x, 2, axis=2), 2, axis=3)
+grande.shape   # (8, 3, 64, 64)  → N y C intactos, H y W ×2
+```
+
+### Duplicar el lote completo en un tensor 4D `(N, C, H, W)`
+Repetir sobre `axis=0` clona cada imagen del lote (útil para *test-time augmentation* o emparejar tamaños de batch). Solo crece el eje del lote:
+
+```python
+x = np.arange(8*3*32*32).reshape(8, 3, 32, 32)   # (N=8, C=3, H=32, W=32)
+np.repeat(x, 2, axis=0).shape                     # (16, 3, 32, 32)
+# eje 0 (lote): 8 → 16 ; canales y espacio sin tocar
+```
+
+### Replicar fotogramas en un tensor de vídeo 5D `(N, T, C, H, W)`
+En un lote de clips, `axis=1` es el tiempo `T`. Repetir ese eje **duplica cada fotograma** (slow-motion ingenuo / aumentar la tasa temporal); el resto del shape no cambia:
+
+```python
+video = np.zeros((4, 8, 3, 32, 32))   # (N=4, T=8, C=3, H=32, W=32)
+np.repeat(video, 3, axis=1).shape     # (4, 24, 3, 32, 32)
+# eje 1 (tiempo): 8 → 24 ; lote, canales y espacio intactos
 ```
 
 ## Errores comunes

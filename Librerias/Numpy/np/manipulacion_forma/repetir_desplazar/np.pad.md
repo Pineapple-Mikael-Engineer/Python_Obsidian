@@ -158,24 +158,48 @@ ampliado eje por eje según `pad_width`.
 
 ## Casos de uso
 
-### Marco de ceros alrededor de una matriz
+### Marco de ceros alrededor de una matriz `(2,2)`
+Con `pad_width=1` y `mode='constant'` el `2×2` queda embebido en el centro de un `4×4` rodeado de ceros (cada eje crece en 2):
+
+$$
+\begin{bmatrix} 1 & 2 \\ 3 & 4 \end{bmatrix}
+\;\xrightarrow{\ \text{pad}=1,\ \text{constant}=0\ }\;
+\begin{bmatrix} 0 & 0 & 0 & 0 \\ 0 & 1 & 2 & 0 \\ 0 & 3 & 4 & 0 \\ 0 & 0 & 0 & 0 \end{bmatrix}
+$$
+
 ```python
 M = np.array([[1, 2], [3, 4]])
-np.pad(M, 1)            # (4, 4) con borde de ceros
+np.pad(M, 1).shape   # (4, 4)  → borde de ceros
 ```
 
-### Padding de una imagen para convolución (N-D, solo lo espacial)
+### Padding espacial de un lote de imágenes 4D `(N, C, H, W)`
+El caso más natural de `pad` en 4D: rellenar **solo** alto y ancho con `(0,0)` en lote y canales. Cada eje espacial crece en `before+after`:
+
 ```python
-img = np.zeros((128, 256, 3))                 # (alto, ancho, canales)
-borde = np.pad(img, ((2,2),(2,2),(0,0)),      # 2 px de marco
-               mode='reflect')
-borde.shape   # (132, 260, 3)  → canales intactos, espacio ampliado
+x = np.zeros((8, 3, 32, 32))                       # (N=8, C=3, H=32, W=32)
+borde = np.pad(x, ((0,0), (0,0), (1,1), (1,1)))    # 1 px en H y W
+borde.shape                                         # (8, 3, 34, 34)
+# lote y canales intactos ; H y W: 32 → 34
 ```
 
-### Desplazar con relleno (no circular, frente a roll)
+### Modos del borde: `constant` frente a `reflect`
+El `mode` decide qué hay en el marco. `constant` mete un valor fijo; `reflect` espeja los valores interiores (sin repetir el borde):
+
 ```python
-x = np.array([1, 2, 3, 4])
-np.pad(x, (1, 0), mode='constant')[:-1]   # [0,1,2,3]  → shift derecha rellenando con 0
+a = np.array([1, 2, 3])
+np.pad(a, 2, mode='constant')   # [0, 0, 1, 2, 3, 0, 0]
+np.pad(a, 2, mode='reflect')    # [3, 2, 1, 2, 3, 2, 1]  → espejo a cada lado
+```
+
+Para imágenes, `mode='reflect'` evita el borde negro de los ceros antes de una convolución.
+
+### Padding espacial en un tensor de vídeo 5D `(N, T, C, H, W)`
+En 5D el `pad_width` lleva un par por eje; rellenamos `H` y `W` y dejamos lote, tiempo y canales con `(0,0)`:
+
+```python
+video = np.zeros((4, 8, 3, 32, 32))                          # (N=4, T=8, C=3, H=32, W=32)
+np.pad(video, ((0,0), (0,0), (0,0), (2,2), (2,2))).shape     # (4, 8, 3, 36, 36)
+# solo los dos ejes espaciales crecen: 32 → 36 (2 px a cada lado)
 ```
 
 ## Errores comunes

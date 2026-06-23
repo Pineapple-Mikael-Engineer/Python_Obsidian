@@ -123,16 +123,47 @@ El `dtype` se conserva. Nunca devuelve escalar.
 
 ## Casos de uso
 
+### Transponer una matriz 2D cruzando sus dos ejes
+Sobre `(2, 3)`, `swapaxes(0, 1)` da `(3, 2)`: es la transpuesta clásica.
+
+$$
+\begin{bmatrix} 1 & 2 & 3 \\ 4 & 5 & 6 \end{bmatrix} \;\xrightarrow{\ \text{swapaxes}(0,1)\ }\; \begin{bmatrix} 1 & 4 \\ 2 & 5 \\ 3 & 6 \end{bmatrix}
+$$
+
+```python
+M = np.array([[1, 2, 3],
+              [4, 5, 6]])        # (2, 3)
+np.swapaxes(M, 0, 1).shape       # (3, 2)
+```
+
 ### De (batch, features, tiempo) a (batch, tiempo, features)
 ```python
 datos = np.random.rand(32, 10, 100)     # (batch, feat, tiempo)
 datos = np.swapaxes(datos, 1, 2)        # (32, 100, 10)
 ```
 
-### Transponer la matriz interna de un lote
+### 4D: lote de imágenes NCHW → NHWC cruzando canal y ancho
+Como aquí el canal (eje 1) y el ancho (eje 3) están en los extremos del bloque a reordenar,
+intercambiarlos basta para pasar de `NCHW` a `NHWC` (el alto, eje 2, queda en su sitio):
+
 ```python
-lote = np.random.rand(8, 3, 5)
-lote_T = np.swapaxes(lote, 1, 2)        # cada matriz 3x5 → 5x3
+x = np.random.rand(8, 3, 32, 32)     # (N, C, H, W)
+nhwc = np.swapaxes(x, 1, 3)          # cruza C (1) y W (3); N y H intactos
+nhwc.shape                            # (8, 32, 32, 3)  → NHWC
+```
+
+> [!note] Solo funciona porque C y W son simétricos aquí
+> `swapaxes(1, 3)` da el shape correcto porque `H == W == 32`; el **contenido** queda como un
+> intercambio C↔W, no como la rotación de ejes que hace `transpose(0,2,3,1)`. Si quieres la
+> conversión idiomática de canal úsa [[np.moveaxis]] (`moveaxis(x, 1, -1)`).
+
+### 5D: cruzar el eje temporal y el de canal en un lote de vídeos
+En `(N, T, C, H, W)`, intercambiar tiempo (eje 1) y canal (eje 2) deja N, H, W donde estaban:
+
+```python
+vid = np.random.rand(4, 10, 3, 32, 32)   # (N, T, C, H, W)
+swp = np.swapaxes(vid, 1, 2)             # cruza T (1) y C (2)
+swp.shape                                 # (4, 3, 10, 32, 32)  → (N, C, T, H, W)
 ```
 
 ### Equivalencia con transpose

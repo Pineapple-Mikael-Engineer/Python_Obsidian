@@ -121,11 +121,43 @@ datos = np.random.rand(100, 8)
 bloques = np.vsplit(datos, 5)   # 5 bloques de (20, 8)
 ```
 
+### Partir las filas de una matriz 2D (visto como matriz)
+`vsplit` sobre un `(4, 2)` en 2 corta el eje 0 (filas) en dos bloques de 2, dejando las columnas:
+
+$$
+\underbrace{\begin{bmatrix} 0 & 1 \\ 2 & 3 \\ 4 & 5 \\ 6 & 7 \end{bmatrix}}_{(4,\,2)}
+\;\xrightarrow{\ \text{vsplit},\ 2\ }\;
+\underbrace{\begin{bmatrix} 0 & 1 \\ 2 & 3 \end{bmatrix}}_{(2,\,2)}
+\;,\;
+\underbrace{\begin{bmatrix} 4 & 5 \\ 6 & 7 \end{bmatrix}}_{(2,\,2)}
+$$
+
+```python
+M = np.arange(8).reshape(4, 2)
+arriba, abajo = np.vsplit(M, 2)      # arriba:(2,2)  abajo:(2,2)
+```
+
 ### N-D: partir el primer eje de un lote de matrices
 ```python
 lote = np.arange(6*3*2).reshape(6, 3, 2)   # 6 matrices 3x2
 grupos = np.vsplit(lote, 3)                # 3 grupos de 2 matrices cada uno
 [g.shape for g in grupos]                  # [(2, 3, 2), (2, 3, 2), (2, 3, 2)]
+```
+
+### 4D: trocear un lote de imágenes por el eje de muestras
+```python
+# Lote (N=12, C=3, H=8, W=8) → vsplit siempre trocea el eje 0 (muestras)
+lote = np.arange(12*3*8*8).reshape(12, 3, 8, 8)
+sublotes = np.vsplit(lote, 3)              # parte las 12 muestras en 3 grupos de 4
+[s.shape for s in sublotes]                # [(4, 3, 8, 8), (4, 3, 8, 8), (4, 3, 8, 8)]
+```
+
+### 5D: partir un lote de vídeos por el eje de muestras
+```python
+# Lote de clips: (N=8, T=10, C=3, H=16, W=16) → vsplit parte el eje 0 (8 clips)
+clips = np.arange(8*10*3*16*16).reshape(8, 10, 3, 16, 16)
+mitades = np.vsplit(clips, 2)              # 2 grupos de 4 clips
+[m.shape for m in mitades]                 # [(4, 10, 3, 16, 16), (4, 10, 3, 16, 16)]
 ```
 
 ## Errores comunes

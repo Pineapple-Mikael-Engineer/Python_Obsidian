@@ -142,18 +142,40 @@ El shape y el `dtype` **siempre se conservan**. Nunca devuelve escalar.
 np.flip(np.array([1, 2, 3, 4]))   # [4, 3, 2, 1]
 ```
 
-### Reflejo horizontal y vertical de una imagen 2D
+### Reflejo horizontal de una matriz 2D
+Voltear el eje de columnas (`axis=1`) refleja la matriz en horizontal; el shape `(2, 3)` no cambia:
+
+$$
+\begin{bmatrix} 1 & 2 & 3 \\ 4 & 5 & 6 \end{bmatrix} \;\xrightarrow{\ \text{flip, axis}=1\ }\; \begin{bmatrix} 3 & 2 & 1 \\ 6 & 5 & 4 \end{bmatrix}
+$$
+
 ```python
-img = np.arange(9).reshape(3, 3)
-np.fliplr(img)   # reflejo horizontal  (== np.flip(img, 1))
-np.flipud(img)   # reflejo vertical    (== np.flip(img, 0))
-np.flip(img)     # rotación 180°       (ambos ejes)
+M = np.array([[1, 2, 3],
+              [4, 5, 6]])        # (2, 3)
+np.flip(M, axis=1)               # [[3,2,1],[6,5,4]]  → mismo shape (2, 3)
+np.fliplr(M)                     # idéntico (azúcar para axis=1)
+np.flipud(M)                     # reflejo vertical (== axis=0)
 ```
 
-### N-D: voltear el eje temporal de una serie por lotes
+### 4D: data augmentation — reflejo horizontal de un lote de imágenes
+En `NHWC` el eje horizontal (ancho) es el 2. Voltearlo refleja cada imagen del lote de izquierda a
+derecha; el shape se conserva, ideal para aumentar datos de entrenamiento:
+
 ```python
-serie = np.random.rand(16, 100, 3)   # (lote, tiempo, canal)
-inv = np.flip(serie, axis=1)         # (16, 100, 3)  cada serie del revés en el tiempo
+x = np.random.rand(8, 32, 32, 3)     # (N, H, W, C)  lote de 8 imágenes RGB
+flip_h = np.flip(x, axis=2)          # invierte el ancho (W) de cada imagen
+flip_h.shape                          # (8, 32, 32, 3)  → shape intacto
+# en NCHW (N, C, H, W) el ancho es el eje 3: np.flip(x, axis=3)
+```
+
+### 5D: voltear el tiempo y el ancho de un lote de vídeos
+En `(N, T, H, W, C)` se pueden invertir varios ejes a la vez con una tupla: reproducir cada clip al
+revés (eje 1) y además reflejarlo en horizontal (eje 3):
+
+```python
+vid = np.random.rand(4, 10, 32, 32, 3)   # (N, T, H, W, C)
+aug = np.flip(vid, axis=(1, 3))          # tiempo invertido + reflejo horizontal
+aug.shape                                 # (4, 10, 32, 32, 3)  → shape intacto
 ```
 
 ## Errores comunes

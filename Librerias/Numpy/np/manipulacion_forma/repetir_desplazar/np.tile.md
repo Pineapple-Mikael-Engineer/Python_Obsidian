@@ -131,7 +131,15 @@ Siempre un **`ndarray` nuevo** (copia materializada), con el `dtype` de `A`. El 
 
 ## Casos de uso
 
-### Construir un damero repitiendo un patrón (N-D)
+### Construir un damero repitiendo un patrón `(2,2)`
+El bloque entero se replica como baldosa, no el elemento. Con `reps=(2,2)` el `2×2` se embaldosa en un `4×4`:
+
+$$
+\begin{bmatrix} 0 & 1 \\ 1 & 0 \end{bmatrix}
+\;\xrightarrow{\ \text{tile},\ \text{reps}=(2,2)\ }\;
+\begin{bmatrix} 0 & 1 & 0 & 1 \\ 1 & 0 & 1 & 0 \\ 0 & 1 & 0 & 1 \\ 1 & 0 & 1 & 0 \end{bmatrix}
+$$
+
 ```python
 patron  = np.array([[0, 1], [1, 0]])
 tablero = np.tile(patron, (4, 4))    # (8, 8)  → damero tipo ajedrez
@@ -143,10 +151,30 @@ fila = np.array([1, 2, 3])
 np.tile(fila, (5, 1))   # (5, 3): la misma fila repetida 5 veces
 ```
 
-### Embaldosar un tensor de canales
+### Difundir una imagen plantilla a todo un lote 4D `(N, C, H, W)`
+Una sola imagen `(1, 3, 32, 32)` se replica `N` veces en el eje del lote dejando canales y espacio intactos (`reps=1` en esos ejes). Es la forma materializada de lo que normalmente haría el [[concepto_broadcasting|broadcasting]]:
+
+```python
+plantilla = np.zeros((1, 3, 32, 32))     # una imagen base (N=1)
+lote = np.tile(plantilla, (8, 1, 1, 1))  # reps por eje: solo el lote crece
+lote.shape                                # (8, 3, 32, 32)  → 8 copias idénticas
+```
+
+### Mosaico espacial de un canal (ampliar alto y ancho)
+Embaldosar solo los dos ejes espaciales repite la baldosa como un *tiling* de textura; el shape de cada eje se multiplica por su `reps`:
+
 ```python
 canal = np.arange(2*2).reshape(2, 2)   # (2, 2)
-np.tile(canal, (3, 1, 1)).shape        # (3, 2, 2)  → 3 copias apiladas en un eje nuevo
+np.tile(canal, (3, 4)).shape           # (6, 8)  → 3 baldosas de alto, 4 de ancho
+```
+
+### Replicar un clip plantilla a un lote de vídeo 5D `(N, T, C, H, W)`
+Con un clip base `(1, 4, 3, 32, 32)` y `reps` de 5 componentes, solo el eje del lote se repite; tiempo, canales y espacio quedan fijos:
+
+```python
+clip = np.zeros((1, 4, 3, 32, 32))         # (N=1, T=4, C=3, H=32, W=32)
+np.tile(clip, (6, 1, 1, 1, 1)).shape       # (6, 4, 3, 32, 32)
+# eje 0 (lote): 1 → 6 ; los otros cuatro ejes intactos
 ```
 
 ## Errores comunes

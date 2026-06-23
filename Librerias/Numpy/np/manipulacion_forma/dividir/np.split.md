@@ -168,17 +168,42 @@ datos = np.random.rand(100, 5)
 X, y = np.split(datos, [4], axis=1)   # X:(100,4)  y:(100,1)
 ```
 
+### Cortar columnas de una matriz 2D (visto como matriz)
+Partir un `(2, 4)` en 2 por `axis=1` corta el bloque de 4 columnas en dos bloques de 2,
+sin tocar las filas:
+
+$$
+\underbrace{\begin{bmatrix} 0 & 1 & 2 & 3 \\ 4 & 5 & 6 & 7 \end{bmatrix}}_{(2,\,4)}
+\;\xrightarrow{\ \text{split},\ 2,\ \text{axis}=1\ }\;
+\underbrace{\begin{bmatrix} 0 & 1 \\ 4 & 5 \end{bmatrix}}_{(2,\,2)}
+\;,\;
+\underbrace{\begin{bmatrix} 2 & 3 \\ 6 & 7 \end{bmatrix}}_{(2,\,2)}
+$$
+
+```python
+M = np.arange(8).reshape(2, 4)
+izq, der = np.split(M, 2, axis=1)     # izq:(2,2)  der:(2,2)
+```
+
 ### Partir en lotes iguales
 ```python
 lotes = np.split(np.arange(12), 4)    # 4 lotes de (3,)
 ```
 
-### N-D: trocear el eje espacial de un tensor de imágenes
+### 4D: trocear un lote de imágenes por el eje de muestras
 ```python
-# Lote de 8 imágenes 4x4 en escala de grises: (8, 4, 4)
-imgs = np.arange(8*4*4).reshape(8, 4, 4)
-mitades = np.split(imgs, 2, axis=1)   # parte cada imagen en mitad superior/inferior
-[m.shape for m in mitades]            # [(8, 2, 4), (8, 2, 4)]
+# Lote de imágenes CIFAR: (N=12, C=3, H=32, W=32) → (lote, canal, alto, ancho)
+lote = np.arange(12*3*32*32).reshape(12, 3, 32, 32)
+sublotes = np.split(lote, 3, axis=0)   # parte el eje de muestras (12) en 3
+[s.shape for s in sublotes]            # [(4, 3, 32, 32), (4, 3, 32, 32), (4, 3, 32, 32)]
+```
+
+### 5D: cortar un lote de vídeos por el eje de frames
+```python
+# Lote de clips: (N=8, T=10, C=3, H=32, W=32) → (clip, frame, canal, alto, ancho)
+clips = np.arange(8*10*3*32*32).reshape(8, 10, 3, 32, 32)
+mitades = np.split(clips, 2, axis=1)   # parte el eje temporal (10 frames) en dos tramos de 5
+[m.shape for m in mitades]             # [(8, 5, 3, 32, 32), (8, 5, 3, 32, 32)]
 ```
 
 ## Errores comunes

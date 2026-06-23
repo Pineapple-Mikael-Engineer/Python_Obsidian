@@ -152,6 +152,23 @@ lotes = np.array_split(datos, 7)   # 7 lotes (100 no es múltiplo de 7) → tama
 [len(l) for l in lotes]            # [15, 15, 14, 14, 14, 14, 14]
 ```
 
+### Reparto desigual de una matriz 2D (visto como matriz)
+Partir un `(2, 5)` en 2 por `axis=1`: 5 columnas no es divisible, así que el primer trozo
+se lleva la columna extra (3 columnas) y el segundo 2:
+
+$$
+\underbrace{\begin{bmatrix} 0 & 1 & 2 & 3 & 4 \\ 5 & 6 & 7 & 8 & 9 \end{bmatrix}}_{(2,\,5)}
+\;\xrightarrow{\ \text{array\_split},\ 2,\ \text{axis}=1\ }\;
+\underbrace{\begin{bmatrix} 0 & 1 & 2 \\ 5 & 6 & 7 \end{bmatrix}}_{(2,\,3)}
+\;,\;
+\underbrace{\begin{bmatrix} 3 & 4 \\ 8 & 9 \end{bmatrix}}_{(2,\,2)}
+$$
+
+```python
+M = np.arange(10).reshape(2, 5)
+a, b = np.array_split(M, 2, axis=1)   # a:(2,3)  b:(2,2)
+```
+
 ### Dividir un dataset en `k` folds para validación cruzada
 ```python
 X = np.random.rand(53, 4)          # 53 filas, no divisible
@@ -159,11 +176,20 @@ folds = np.array_split(X, 5, axis=0)   # 5 folds: 11,11,11,10,10 filas
 [f.shape[0] for f in folds]            # [11, 11, 11, 10, 10]
 ```
 
-### N-D: trocear un tensor por un eje no divisible
+### 4D: trocear un lote de imágenes en partes desiguales
 ```python
-T = np.arange(3*5*2).reshape(3, 5, 2)
-partes = np.array_split(T, 2, axis=1)   # eje de tamaño 5 en 2 → 3 y 2
-[p.shape for p in partes]               # [(3, 3, 2), (3, 2, 2)]
+# Lote CIFAR: (N=10, C=3, H=32, W=32) → 10 muestras no divisibles entre 3
+lote = np.arange(10*3*32*32).reshape(10, 3, 32, 32)
+sublotes = np.array_split(lote, 3, axis=0)   # reparte 10 = 4+3+3
+[s.shape for s in sublotes]                  # [(4, 3, 32, 32), (3, 3, 32, 32), (3, 3, 32, 32)]
+```
+
+### 5D: repartir un lote de vídeos por el eje de muestras
+```python
+# Lote de clips: (N=7, T=10, C=3, H=16, W=16) → 7 muestras no divisibles entre 3
+clips = np.arange(7*10*3*16*16).reshape(7, 10, 3, 16, 16)
+grupos = np.array_split(clips, 3, axis=0)    # reparte 7 = 3+2+2
+[g.shape for g in grupos]                    # [(3, 10, 3, 16, 16), (2, 10, 3, 16, 16), (2, 10, 3, 16, 16)]
 ```
 
 ## Errores comunes

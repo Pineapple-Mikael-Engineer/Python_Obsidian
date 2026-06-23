@@ -122,11 +122,43 @@ datos = np.random.rand(100, 6)
 primeras, ultimas = np.hsplit(datos, [3])   # (100,3) y (100,3)
 ```
 
+### Partir las columnas de una matriz 2D (visto como matriz)
+`hsplit` sobre un `(2, 4)` en 2 corta el eje 1 (columnas) en dos bloques de 2, dejando las filas:
+
+$$
+\underbrace{\begin{bmatrix} 0 & 1 & 2 & 3 \\ 4 & 5 & 6 & 7 \end{bmatrix}}_{(2,\,4)}
+\;\xrightarrow{\ \text{hsplit},\ 2\ }\;
+\underbrace{\begin{bmatrix} 0 & 1 \\ 4 & 5 \end{bmatrix}}_{(2,\,2)}
+\;,\;
+\underbrace{\begin{bmatrix} 2 & 3 \\ 6 & 7 \end{bmatrix}}_{(2,\,2)}
+$$
+
+```python
+M = np.arange(8).reshape(2, 4)
+izq, der = np.hsplit(M, 2)            # izq:(2,2)  der:(2,2)
+```
+
 ### N-D: partir el eje de columnas de un lote de matrices
 ```python
 lote = np.arange(5*8*2).reshape(5, 8, 2)   # 5 matrices 8x2
 mitades = np.hsplit(lote, 2)               # parte las 8 "columnas" en dos bloques de 4
 [m.shape for m in mitades]                 # [(5, 4, 2), (5, 4, 2)]
+```
+
+### 4D: cortar el eje 1 de un lote de tensores
+```python
+# Tensor 4D (N=4, eje1=8, H=5, W=5): hsplit siempre trocea el eje 1
+t = np.arange(4*8*5*5).reshape(4, 8, 5, 5)
+mitades = np.hsplit(t, 2)                   # parte el eje 1 (8) en dos bloques de 4
+[m.shape for m in mitades]                  # [(4, 4, 5, 5), (4, 4, 5, 5)]
+```
+
+### 5D: cortar el eje 1 de un lote de vídeos
+```python
+# Lote de clips: (N=2, C=8, T=3, H=16, W=16) → hsplit parte el eje 1 (8 canales)
+clips = np.arange(2*8*3*16*16).reshape(2, 8, 3, 16, 16)
+bloques = np.hsplit(clips, 2)               # parte los 8 canales en dos grupos de 4
+[b.shape for b in bloques]                  # [(2, 4, 3, 16, 16), (2, 4, 3, 16, 16)]
 ```
 
 ## Errores comunes

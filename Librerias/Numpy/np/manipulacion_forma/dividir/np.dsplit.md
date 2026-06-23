@@ -116,11 +116,27 @@ conserva el shape original salvo el eje 2.
 
 ## Casos de uso
 
-### Separar los canales de color de una imagen RGB
+### Separar los canales de color de una imagen RGB (eje 2 = canales)
 ```python
-img = np.arange(4*4*3).reshape(4, 4, 3)   # imagen 4x4 con 3 canales
-r, g, b = np.dsplit(img, 3)               # cada uno (4, 4, 1)
+img = np.arange(4*4*3).reshape(4, 4, 3)   # imagen 4x4 con 3 canales (H, W, C)
+r, g, b = np.dsplit(img, 3)               # cada uno (4, 4, 1) → un canal por trozo
 r.shape                                    # (4, 4, 1)
+```
+
+### Profundidad de un volumen pequeño 2×2 (visto como matriz por canal)
+Un volumen `(2, 2, 2)` apila dos "láminas" en el eje 2. `dsplit(_, 2)` separa esas láminas;
+cada trozo es un `(2, 2, 1)` cuya cara `[:, :, 0]` se lee como matriz:
+
+$$
+\text{cara } d{=}0:\ \begin{bmatrix} 0 & 2 \\ 4 & 6 \end{bmatrix}
+\qquad
+\text{cara } d{=}1:\ \begin{bmatrix} 1 & 3 \\ 5 & 7 \end{bmatrix}
+$$
+
+```python
+vol = np.arange(8).reshape(2, 2, 2)
+c0, c1 = np.dsplit(vol, 2)          # c0:(2,2,1)  c1:(2,2,1)
+c0[:, :, 0]                          # [[0, 2], [4, 6]]
 ```
 
 ### Partir el eje de profundidad por puntos de corte
@@ -128,6 +144,23 @@ r.shape                                    # (4, 4, 1)
 vol = np.arange(2*3*8).reshape(2, 3, 8)
 bloques = np.dsplit(vol, [3, 6])          # (2,3,3), (2,3,3), (2,3,2)
 [b.shape for b in bloques]                # [(2, 3, 3), (2, 3, 3), (2, 3, 2)]
+```
+
+### 4D: trocear el eje 2 de un lote de tensores
+```python
+# dsplit SIEMPRE actúa sobre el eje 2, sea cual sea ndim.
+# Tensor 4D (N=8, M=4, eje2=6, K=3): se parte el eje de tamaño 6
+t = np.arange(8*4*6*3).reshape(8, 4, 6, 3)
+mitades = np.dsplit(t, 2)                  # parte el eje 2 (6) en dos bloques de 3
+[m.shape for m in mitades]                 # [(8, 4, 3, 3), (8, 4, 3, 3)]
+```
+
+### 5D: separar el eje 2 de un volumen multicanal
+```python
+# Tensor 5D (4, 5, eje2=6, 3, 2): dsplit trocea el eje 2 (6) en 3 bloques de 2
+v = np.arange(4*5*6*3*2).reshape(4, 5, 6, 3, 2)
+bloques = np.dsplit(v, 3)                   # 3 trozos a lo largo del eje 2
+[b.shape for b in bloques]                  # [(4, 5, 2, 3, 2), (4, 5, 2, 3, 2), (4, 5, 2, 3, 2)]
 ```
 
 ## Errores comunes

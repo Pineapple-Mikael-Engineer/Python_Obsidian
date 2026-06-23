@@ -136,11 +136,16 @@ Como suele ser vista, **escribir en el resultado puede alterar `a`**; añade `.c
 
 ## Casos de uso
 
-### Vector ↔ matriz
+### Transponer la forma de una matriz pequeña
+
+Una matriz `(2, 3)` reorganizada a `(3, 2)`: el orden lineal `[1,2,3,4,5,6]` se vuelve a empaquetar fila a fila bajo la forma nueva (no es una transpuesta, es un re-empaquetado del buffer):
+
+$$ \begin{bmatrix} 1 & 2 & 3 \\ 4 & 5 & 6 \end{bmatrix}_{(2,3)} \;\xrightarrow{\ \text{reshape}(3,2)\ }\; \begin{bmatrix} 1 & 2 \\ 3 & 4 \\ 5 & 6 \end{bmatrix}_{(3,2)} $$
+
 ```python
-datos = np.arange(1, 13)        # (12,)
-tabla = datos.reshape(3, 4)     # 3 filas, 4 columnas
-tabla.reshape(-1)               # de vuelta a (12,)
+M = np.array([[1, 2, 3],
+              [4, 5, 6]])         # (2, 3)
+M.reshape(3, 2)                    # (3, 2) → [[1,2],[3,4],[5,6]]
 ```
 
 ### Insertar un eje de tamaño 1
@@ -150,13 +155,28 @@ v.reshape(1, -1)    # (1, 3) fila    (más expresivo: np.expand_dims o np.newaxi
 v.reshape(-1, 1)    # (3, 1) columna
 ```
 
-### Aplanar todo menos el lote (caso N-D)
+### Aplanar por muestra un lote de imágenes (4D → 2D)
+
+Tensor `(2, 3, 4, 5)` = `(lote, canal, alto, ancho)`: aplanamos todo lo que no sea el lote a un único vector de características por muestra. El `-1` deja que NumPy infiera `3*4*5 = 60`:
+
 ```python
-batch = np.arange(2*3*4).reshape(2, 3, 4)
-plano = batch.reshape(batch.shape[0], -1)   # (2, 12)
-plano
-# array([[ 0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11],
-#        [12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23]])
+batch = np.arange(2*3*4*5).reshape(2, 3, 4, 5)   # (2, 3, 4, 5) = (lote, canal, alto, ancho)
+batch.reshape(2, 60).shape                        # (2, 60)  → un vector plano por muestra
+batch.reshape(2, -1).shape                        # (2, 60)  → idéntico; -1 = 3*4*5 = 60
+batch.reshape(2, 3, -1).shape                     # (2, 3, 20) → fusiona alto×ancho, conserva canal
+```
+
+El `-1` resuelve la dimensión que falta dividiendo el `size` (120) entre el producto de los ejes fijados: `reshape(2, -1)` → `120 / 2 = 60`.
+
+### Reagrupar un tensor de vídeo (5D)
+
+Tensor `(2, 3, 4, 5, 6)` = `(lote, frames, canal, alto, ancho)`. Distintas reagrupaciones según qué ejes se fusionen, manteniendo el `size = 720` constante:
+
+```python
+vid = np.arange(2*3*4*5*6).reshape(2, 3, 4, 5, 6)  # (2, 3, 4, 5, 6) = (lote, frames, canal, alto, ancho)
+vid.reshape(6, 120).shape       # (6, 120) → fusiona lote×frames (2*3=6) y canal×alto×ancho (4*5*6=120)
+vid.reshape(2, 3, 120).shape    # (2, 3, 120) → conserva lote y frames, aplana cada frame a un vector
+vid.reshape(2, 3, 4, -1).shape  # (2, 3, 4, 30) → fusiona alto×ancho (5*6=30) en un eje espacial
 ```
 
 ## Errores comunes

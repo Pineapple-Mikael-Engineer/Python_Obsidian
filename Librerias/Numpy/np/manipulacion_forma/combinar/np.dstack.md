@@ -77,6 +77,12 @@ Un **nuevo** `ndarray` (copia) de al menos 3D, con el eje 2 sumado. dtype: promo
 ## Casos de uso
 
 ### Componer canales de color en una imagen
+Dos matrices `(2,2)` se promueven a `(2,2,1)` y se apilan en profundidad como `(2,2,2)`:
+
+$$
+\begin{bmatrix} 1 & 2 \\ 3 & 4 \end{bmatrix},\;\begin{bmatrix} 5 & 6 \\ 7 & 8 \end{bmatrix}\;\xrightarrow{\ \text{dstack}\ }\;(2,2,2)\quad\text{con capa 0}=\begin{bmatrix} 1 & 2 \\ 3 & 4 \end{bmatrix},\ \text{capa 1}=\begin{bmatrix} 5 & 6 \\ 7 & 8 \end{bmatrix}
+$$
+
 ```python
 r = np.zeros((100, 100))
 g = np.ones((100, 100))
@@ -84,11 +90,31 @@ b = np.zeros((100, 100))
 rgb = np.dstack((r, g, b))      # (100, 100, 3)  → cada canal una capa
 ```
 
-### N-D: apilar mapas 2D como volumen
+### Apilar mapas 2D como volumen
 ```python
 capas = [np.full((4, 4), k) for k in range(3)]
 vol = np.dstack(capas)          # (4, 4, 3)
 vol[:, :, 1]                    # la capa 1, llena de 1, shape (4, 4)
+```
+
+### 4D: crecer el eje 2 de un tensor
+Sobre arrays ya 3D/4D, dstack une por `axis=2` **sin promover nada**, y exige que todos los demás ejes coincidan. Sobre dos tensores 4D `(N, H, W, C)`, el eje 2 es el ancho:
+
+```python
+a = np.random.rand(8, 32, 16, 3)   # lote 8, alto 32, ancho 16, 3 canales
+b = np.random.rand(8, 32,  8, 3)   # 8 columnas más de ancho
+todo = np.dstack((a, b))           # (8, 32, 24, 3)  → 4D
+# ejes: (lote=8, alto=32, ancho=16+8=24, canal=3)  → suma el eje 2
+```
+
+### 5D: crecer el eje 2 en un lote de vídeos
+Sobre tensores 5D `(V, F, H, W, C)`, dstack toca `axis=2`, que aquí es el alto; los demás ejes deben coincidir:
+
+```python
+v1 = np.random.rand(4, 10, 16, 32, 3)   # alto=16
+v2 = np.random.rand(4, 10,  8, 32, 3)   # 8 filas más de alto
+todo = np.dstack((v1, v2))              # (4, 10, 24, 32, 3)  → 5D
+# ejes: (vídeo=4, frame=10, alto=16+8=24, ancho=32, canal=3)  → suma el eje 2
 ```
 
 ## Errores comunes

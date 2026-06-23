@@ -109,10 +109,15 @@ Ojo con el caso `(1,1,1)`: queda un array 0-D, no un número de Python; usa `.it
 
 ## Casos de uso
 
-### Quitar la dimensión de lote tras una predicción
+### Comprimir una matriz columna a vector
+
+Una matriz `(3, 1)` (vector columna) se queda en un vector 1D `(3,)` al quitar el eje unitario:
+
+$$ \begin{bmatrix} 1 \\ 2 \\ 3 \end{bmatrix}_{(3,1)} \;\xrightarrow{\ \text{squeeze}\ }\; [\,1,2,3\,]_{(3,)} $$
+
 ```python
-pred = modelo(x)            # shape (1, 10)
-logits = np.squeeze(pred)   # shape (10,)  → vector de logits
+col = np.array([[1], [2], [3]])   # (3, 1)
+np.squeeze(col).shape              # (3,)
 ```
 
 ### Colapsar el resultado de una reducción con `keepdims`
@@ -122,11 +127,24 @@ s = M.sum(axis=1, keepdims=True)   # (4, 1)
 s = np.squeeze(s, axis=1)          # (4,)
 ```
 
-### Limpiar ejes sobrantes de un slice (caso N-D)
+### Limpiar varios ejes unitarios de golpe (5D → 2D)
+
+Tensor `(1, 8, 1, 3, 1)` = `(lote, secuencia, eje_extra, canal, eje_extra)`: tres ejes valen 1 y solo aportan ruido a la forma. `squeeze` sin `axis` los borra todos a la vez:
+
 ```python
-cubo = np.arange(10*1*10).reshape(10, 1, 10)
-plano = np.squeeze(cubo)    # (10, 10)  → desaparece el eje central de tamaño 1
-plano.shape                 # (10, 10)
+t = np.arange(8*3).reshape(1, 8, 1, 3, 1)  # (1, 8, 1, 3, 1) → 5D con 3 ejes unitarios
+np.squeeze(t).shape          # (8, 3)  → quedan solo los ejes con tamaño > 1
+np.squeeze(t, axis=(0, 2, 4)).shape   # (8, 3)  → mismos ejes, indicados explícitamente
+```
+
+### Quitar el eje de canal único de un lote de imágenes (4D → 3D)
+
+Tensor `(8, 1, 32, 32)` = `(lote, canal, alto, ancho)` con un solo canal (escala de grises). Conviene quitar solo el canal con `axis=1` y **no** `axis=None`, para no borrar por accidente el lote si valiera 1:
+
+```python
+gris = np.arange(8*1*32*32).reshape(8, 1, 32, 32)  # (8, 1, 32, 32) = (lote, canal=1, alto, ancho)
+np.squeeze(gris, axis=1).shape    # (8, 32, 32)  → quita solo el canal único
+np.squeeze(gris).shape            # (8, 32, 32)  → aquí coincide (solo el eje 1 vale 1)
 ```
 
 ## Errores comunes

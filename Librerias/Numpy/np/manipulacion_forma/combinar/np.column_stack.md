@@ -104,11 +104,29 @@ xs = np.array([0, 1, 2]); ys = np.array([9, 8, 7])
 puntos = np.column_stack((xs, ys))     # cada fila es un punto (x, y), (3, 2)
 ```
 
+Apilar dos vectores como columnas:
+
+$$
+\begin{bmatrix} 1 \\ 2 \\ 3 \end{bmatrix},\;\begin{bmatrix} 4 \\ 5 \\ 6 \end{bmatrix}\;\xrightarrow{\ \text{column\_stack}\ }\;\begin{bmatrix} 1 & 4 \\ 2 & 5 \\ 3 & 6 \end{bmatrix}\qquad (3,),(3,)\to(3,2)
+$$
+
 ### Mezclar un vector con una matriz (mismo nº de filas)
 ```python
 v = np.array([1, 2, 3])          # (3,)
 M = np.array([[4, 5], [6, 7], [8, 9]])   # (3, 2)
 np.column_stack((v, M))          # (3, 3)  → v se vuelve la primera columna
+```
+
+### Más allá de 2D: usa la herramienta N-D adecuada
+`column_stack` es **1D/2D por diseño**: no existe un caso 4D/5D propio (con tensores produciría una unión por el eje 1 difícil de leer, o un error). Para construir o unir tensores de 4D/5D, usa las funciones base:
+
+```python
+# 4D: armar un lote de 8 imágenes (3,32,32)  → eje NUEVO con stack
+batch = np.stack([np.random.rand(3, 32, 32) for _ in range(8)])   # (8, 3, 32, 32)
+
+# 5D: unir dos lotes de vídeos por el eje de frames  → eje EXISTENTE con concatenate
+v1 = np.random.rand(4, 10, 3, 32, 32); v2 = np.random.rand(4, 6, 3, 32, 32)
+np.concatenate((v1, v2), axis=1).shape                            # (4, 16, 3, 32, 32)
 ```
 
 ## Errores comunes
