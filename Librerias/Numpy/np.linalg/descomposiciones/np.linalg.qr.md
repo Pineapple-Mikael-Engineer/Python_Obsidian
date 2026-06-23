@@ -1,5 +1,5 @@
 ---
-title: np.linalg.qr — Descomposición QR (ortogonal · triangular)
+title: np.linalg.qr — factoriza A = QR (Q ortonormal · R triangular superior)
 aliases:
   - qr
   - linalg.qr
@@ -13,107 +13,175 @@ mod: np.linalg
 tipo: funcion
 retorna: tuple (Q, R) o ndarray según mode
 inplace: false
+requiere:
+  - concepto_shape
 draft: false
 ---
 
-# np.linalg.qr — Descomposición QR (ortogonal · triangular)
+# np.linalg.qr — factoriza A = QR (Q ortonormal · R triangular superior)
 
-Factoriza una matriz `a` como `a = Q @ R`, donde `Q` tiene columnas **ortonormales** y `R` es **triangular superior**. Es la herramienta estándar para resolver mínimos cuadrados y para ortogonalizar bases de forma numéricamente estable (alternativa robusta a Gram-Schmidt).
+`np.linalg.qr` **descompone** una matriz $A$ en el producto $A = QR$, donde $Q$ tiene **columnas
+ortonormales** y $R$ es **triangular superior**. Es la herramienta estándar para resolver mínimos
+cuadrados de forma estable y para **ortonormalizar** una base (alternativa robusta a Gram-Schmidt,
+basada en reflectores de Householder). A diferencia de una reducción, no colapsa un eje: parte la
+matriz en dos factores con estructura. El parámetro `mode` cambia los **shapes** de los factores, así
+que la nota lo desambigua en una tabla.
 
-## Firma de la función
+## La idea en una fórmula
+
+QR factoriza $A$ en una parte ortonormal $Q$ (preserva ángulos y longitudes) y una triangular superior
+$R$ (los coeficientes):
+
+$$
+A = Q\,R \qquad Q^{H} Q = I \ (\text{columnas ortonormales}),\quad R \text{ triangular superior}
+$$
+
+El **mapa de shapes** depende de `mode`; en el modo `reduced` (defecto), con $k = \min(m, n)$:
+
+$$
+(m,\, n)\ \xrightarrow{\ \text{qr, reduced}\ }\ Q\,(m,\, k),\ R\,(k,\, n)\qquad k=\min(m,n)
+$$
+
+Para una matriz **alta** ($m > n$), $k = n$: $Q$ es $(m, n)$ con columnas ortonormales y $R$ es
+$(n, n)$ cuadrada triangular. Visualmente, una $A$ de $(3\times 2)$:
+
+```text
+┌ a00 a01 ┐     ┌ q00 q01 ┐
+│ a10 a11 │  =  │ q10 q11 │  ┌ r00 r01 ┐
+└ a20 a21 ┘     └ q20 q21 ┘  └  0  r11 ┘
+   A (3×2)         Q (3×2)      R (2×2)
+                ortonormales   triangular sup.
+```
+
+## Firma
 
 ```python
 np.linalg.qr(
-    a,
-    mode='reduced'
+    a,                  # array_like: matriz (..., m, n)
+    mode='reduced',     # 'reduced' | 'complete' | 'r' | 'raw'
 ) -> tuple[ndarray, ndarray] | ndarray
 ```
 
-## Valor de retorno
+## Los parámetros en detalle
 
-Para una entrada `a` de [[concepto_shape|shape]] `(M, N)` y `K = min(M, N)`, el retorno depende de `mode`:
-
-| `mode` | Retorno | Shapes | Descripción |
-|--------|---------|--------|-------------|
-| `'reduced'` (defecto) | **tupla** `(Q, R)` | `Q (M, K)`, `R (K, N)` | Forma económica; suficiente para `a = Q @ R` |
-| `'complete'` | **tupla** `(Q, R)` | `Q (M, M)`, `R (M, N)` | `Q` cuadrada y ortogonal completa |
-| `'r'` | **solo** `R` (ndarray) | `R (K, N)` | Únicamente la triangular superior |
-| `'raw'` | **tupla** `(h, tau)` | `h (N, M)`, `tau (K,)` | Reflectores de Householder crudos (uso avanzado/LAPACK) |
-
-En los modos `'reduced'` y `'complete'` se cumple que `Q.T @ Q = I` (columnas ortonormales) y `R` es triangular superior.
+### `a` — la matriz de entrada
+`array_like` de [[concepto_shape|shape]] `(..., m, n)`, de cualquier forma (no tiene que ser
+cuadrada). Los dos últimos ejes son la matriz; los `…` anteriores son lote. Enteros se promueven a
+`float64`.
 
 ```python
-import numpy as np
 A = np.array([[1.0, 2.0],
               [3.0, 4.0],
-              [5.0, 6.0]])          # shape (3, 2)
-
-Q, R = np.linalg.qr(A)             # mode='reduced'
-Q.shape    # (3, 2)
-R.shape    # (2, 2)   → triangular superior
-np.allclose(A, Q @ R)             # True
-np.allclose(Q.T @ Q, np.eye(2))   # True  → columnas ortonormales
+              [5.0, 6.0]])      # (3, 2)
+Q, R = np.linalg.qr(A)         # reduced: Q (3,2), R (2,2)
 ```
 
-## Parámetros en detalle
+### `mode` — variante de la descomposición (cambia el retorno y los shapes)
+`str`, defecto `'reduced'`. Controla **qué** se devuelve y con **qué shapes** (con $k = \min(m, n)$):
 
-### `a` — matriz de entrada
+| `mode` | Retorno | Shapes | Cuándo |
+|--------|---------|--------|--------|
+| `'reduced'` (defecto) | tupla `(Q, R)` | `Q (..., m, k)`, `R (..., k, n)` | el habitual; económico, basta para `A = Q @ R` |
+| `'complete'` | tupla `(Q, R)` | `Q (..., m, m)`, `R (..., m, n)` | base ortonormal **completa** (incluye el complemento ortogonal) |
+| `'r'` | solo `R` (ndarray) | `R (..., k, n)` | cuando solo interesa `R` (evita calcular `Q`) |
+| `'raw'` | tupla `(h, tau)` | `h (..., n, m)`, `tau (..., k)` | reflectores de Householder crudos (uso avanzado / LAPACK) |
 
-Array de shape `(..., M, N)`. Admite **stacks**: las dimensiones iniciales actúan como lote y la QR se calcula sobre cada matriz `(M, N)` final.
+En `'reduced'` y `'complete'` se cumple `Q.conj().T @ Q == I` y `R` triangular superior. La diferencia:
+`'complete'` rellena $Q$ hasta ser cuadrada $(m, m)$ y $R$ hasta $(m, n)$ con filas de ceros abajo.
+
+```python
+R = np.linalg.qr(A, mode='r')              # devuelve SOLO R (un array)
+Qc, Rc = np.linalg.qr(A, mode='complete')  # Qc (3,3), Rc (3,2)
+```
+
+## El caso N-D
+
+La descomposición se aplica **a los dos últimos ejes** `(m, n)` y trata los anteriores como **lote**:
+dada una pila `(..., m, n)`, NumPy calcula la QR de cada matriz por separado y apila los $Q$ y $R$. No
+hay broadcasting entre matrices; cada una produce su propio par de factores.
+
+| `a.shape` | `mode` | `Q.shape` | `R.shape` |
+|-----------|--------|-----------|-----------|
+| `(m, n)` | `reduced` | `(m, k)` | `(k, n)` |
+| `(b, m, n)` | `reduced` | `(b, m, k)` | `(b, k, n)` |
+| `(b, m, n)` | `complete` | `(b, m, m)` | `(b, m, n)` |
 
 ```python
 lote = np.random.rand(4, 5, 3)    # 4 matrices 5×3
 Q, R = np.linalg.qr(lote)
-Q.shape                           # (4, 5, 3)
+Q.shape                           # (4, 5, 3)   → k = min(5,3) = 3
 R.shape                           # (4, 3, 3)
 ```
 
-### `mode` — variante de la descomposición
+## Vectorización
 
-Controla qué se devuelve y los tamaños (ver tabla de retorno). Reglas prácticas:
-
-- `'reduced'`: el habitual; barato y suficiente para reconstruir `a`.
-- `'complete'`: cuando necesitas la base ortonormal completa del espacio (incluido el complemento ortogonal).
-- `'r'`: cuando solo te interesa `R` (p. ej. para resolver el sistema triangular en mínimos cuadrados).
+El lote de QR es [[concepto_vectorizacion|vectorización]]: NumPy recorre los ejes previos en código
+compilado y delega cada factorización en **LAPACK** (`geqrf` + `orgqr`), sin un bucle Python por
+matriz:
 
 ```python
-R = np.linalg.qr(A, mode='r')          # devuelve solo R (un array)
-Qc, Rc = np.linalg.qr(A, mode='complete')
-Qc.shape                               # (3, 3)
+# Bucle Python: una QR por matriz, con salto al intérprete
+def qr_lote(stack):
+    Qs, Rs = [], []
+    for i in range(stack.shape[0]):
+        q, r = np.linalg.qr(stack[i])
+        Qs.append(q); Rs.append(r)
+    return np.stack(Qs), np.stack(Rs)
+
+# Vectorizado: NumPy itera el lote sobre los dos últimos ejes
+Q, R = np.linalg.qr(stack)
+```
+
+## Valor de retorno
+
+El tipo del retorno **depende de `mode`** (tabla del parámetro). Para `a` de shape `(m, n)` y
+$k = \min(m, n)$:
+
+| `mode` | objetos devueltos | shapes |
+|--------|-------------------|--------|
+| `'reduced'` | tupla `(Q, R)` | `Q (m, k)`, `R (k, n)` |
+| `'complete'` | tupla `(Q, R)` | `Q (m, m)`, `R (m, n)` |
+| `'r'` | un único ndarray `R` | `R (k, n)` |
+| `'raw'` | tupla `(h, tau)` | `h (n, m)`, `tau (k,)` |
+
+`dtype` de punto flotante (`float64`/`complex128`). En los modos con `Q` se cumple
+`np.allclose(A, Q @ R)`.
+
+```python
+A = np.array([[1.0, 2.0], [3.0, 4.0], [5.0, 6.0]])   # (3, 2)
+Q, R = np.linalg.qr(A)
+Q.shape, R.shape                  # (3, 2), (2, 2)
+np.allclose(A, Q @ R)            # True
+np.allclose(Q.T @ Q, np.eye(2))  # True  → columnas ortonormales
 ```
 
 ## Casos de uso
 
 ### Mínimos cuadrados (sistema sobredeterminado)
-
 ```python
-# Resolver A x ≈ b con A de shape (m, n), m > n
+# Resolver A x ≈ b con A (m, n), m > n: QR es más estable que las ecuaciones normales
 Q, R = np.linalg.qr(A)
 x = np.linalg.solve(R, Q.T @ b)        # R x = Qᵀ b (triangular, barato)
 ```
 
 ### Ortonormalizar un conjunto de vectores
-
 ```python
 V = np.random.rand(5, 3)               # 3 vectores columna en R^5
-Q, _ = np.linalg.qr(V)                 # columnas de Q: base ortonormal
+Q, _ = np.linalg.qr(V)                 # columnas de Q: base ortonormal de span(V)
 np.allclose(Q.T @ Q, np.eye(3))        # True
 ```
 
-### Estabilidad numérica frente a Gram-Schmidt
-
+### Solo R, sin calcular Q
 ```python
-# QR de Householder es estable incluso con columnas casi colineales
-Q, R = np.linalg.qr(matriz_mal_condicionada)
+R = np.linalg.qr(A, mode='r')          # más barato si Q no hace falta
 ```
 
-## Buenas prácticas
-
-1. Para mínimos cuadrados, QR es más estable que las ecuaciones normales `(AᵀA)x = Aᵀb`.
-2. Usa `mode='reduced'` (defecto) salvo que necesites el espacio ortogonal completo.
-3. `R` es triangular superior: aprovéchalo con [[np.linalg.solve]] o una sustitución hacia atrás en vez de invertir.
-4. Si solo necesitas `R`, usa `mode='r'` y evita calcular `Q`.
-5. Las columnas de `Q` ya están ortonormalizadas: úsalas directamente como base.
+### Lote de QR (N-D)
+```python
+stack = np.random.rand(10, 6, 4)       # 10 matrices 6×4
+Q, R = np.linalg.qr(stack)
+Q.shape, R.shape                       # (10, 6, 4), (10, 4, 4)  → sin bucle
+```
 
 ## Errores comunes
 
@@ -121,14 +189,13 @@ Q, R = np.linalg.qr(matriz_mal_condicionada)
 |-------|-------|----------|
 | `LinAlgError` al converger | entrada con `NaN`/`inf` | validar con `np.isfinite(a).all()` |
 | Esperar `Q` con `mode='r'` | ese modo devuelve **solo** `R` | usar `'reduced'`/`'complete'` si quieres `Q` |
-| `R` no parece triangular | confundir `R` con `Q`, o lote mal interpretado | recordar el orden `(Q, R)` y el shape `(M, N)` |
 | `ValueError` al desempaquetar | `mode='r'` no devuelve tupla | asignar a una sola variable |
-| `Q @ R` no reconstruye `a` | mezclar resultados de modos distintos | usar el `Q` y `R` del mismo `mode` |
+| `R` no parece triangular | confundir `R` con `Q`, o lote mal interpretado | recordar el orden `(Q, R)` y los shapes |
+| `Q @ R` no reconstruye `A` | mezclar resultados de modos distintos | usar `Q` y `R` del **mismo** `mode` |
 
 ## Notas relacionadas
 
-- [[concepto_shape]]
-- [[np.linalg.svd]]
-- [[np.linalg.solve]]
-- [[np.linalg.cholesky]]
-- [[np.linalg.lstsq]]
+- [[concepto_shape]] — el mapa de shapes `(m, n) → Q(m, k), R(k, n)`
+- [[concepto_vectorizacion]] — por qué el lote de factorizaciones evita el bucle
+- [[Librerias/Numpy/np.linalg/descomposiciones/index|descomposiciones]] — la familia completa
+- [[np.linalg.svd]] · [[np.linalg.cholesky]] · [[np.linalg.solve]] · [[np.linalg.lstsq]]
