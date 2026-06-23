@@ -15,41 +15,43 @@ draft: false
 
 # np.random.gamma — Muestras de la distribución gamma
 
-Modela el **tiempo de espera hasta que ocurren `k` eventos** de un proceso de Poisson, es decir la suma de `k` exponenciales independientes. Generaliza a la exponencial mediante dos parámetros: la **forma** (`shape`, número de eventos / curvatura) y la **escala** (`scale = 1/λ`). Aparece en fiabilidad, tiempos agregados, lluvias y como prior bayesiano de tasas.
+Genera muestras de una distribución **Gamma(k, θ)**, que modela el **tiempo de espera hasta que ocurren `k` eventos** de un proceso de Poisson, es decir la suma de `k` exponenciales independientes. Generaliza a la exponencial mediante dos parámetros: la **forma** (`shape`, número de eventos / curvatura, $k$) y la **escala** (`scale`, $\theta = 1/\lambda$). Aparece en fiabilidad, tiempos agregados, modelos de lluvia y como prior bayesiano de tasas.
 
-## Firma de la función
+## La idea
+
+La densidad de la Gamma sobre `x ≥ 0` depende de la **forma** $k = $ `shape` y la **escala** $\theta = $ `scale`:
+
+$$ f(x;k,\theta) \;=\; \frac{x^{\,k-1}\,e^{-x/\theta}}{\Gamma(k)\,\theta^{\,k}} \;\propto\; x^{\,k-1}\,e^{-x/\theta}, \qquad x \ge 0 $$
+
+donde $\Gamma(k)$ es la función gamma, que solo normaliza el área a 1. La intuición de los dos parámetros:
+
+- `shape` ($k$) controla la **curvatura**: con `k<1` la masa se agolpa cerca de 0 con cola larga; con `k` grande la forma se vuelve casi simétrica (tiende a normal).
+- `scale` ($\theta$) **estira el eje horizontal**: misma forma, valores mayores.
+
+Propiedades clave:
+
+- Media $\mathbb{E}[X] = k\theta = $ `shape·scale` y varianza $\operatorname{Var}[X] = k\theta^2 = $ `shape·scale²`.
+- Con `shape=1` recupera la **exponencial** de escala `scale`.
+- `gamma(shape=df/2, scale=2)` es la **chi-cuadrado** con `df` grados de libertad.
+
+> [!tip] Versión moderna
+> La API recomendada desde NumPy 1.17 usa un generador explícito en vez del estado global. Ver [[np.random.default_rng]].
+> ```python
+> rng = np.random.default_rng()
+> rng.gamma(shape=2.0, scale=2.0, size=1000)
+> ```
+
+## Firma
 
 ```python
-np.random.gamma(
-    shape,
-    scale=1.0,
-    size=None
-) -> ndarray | float
+np.random.gamma(shape, scale=1.0, size=None) -> ndarray | float
 ```
 
-## Valor de retorno
-
-Devuelve reales no negativos de densidad `f(x) ∝ x^(shape−1)·exp(−x/scale)`. La media tiende a `shape·scale` y la varianza a `shape·scale²`. Con `shape=1` recupera la exponencial.
-
-| Entrada | Retorno | Ejemplo |
-|---------|---------|---------|
-| `gamma(2.0)` con `size=None` | `float` | `1.85` |
-| `gamma(2.0, size=4)` | `ndarray (4,)` | `[1.2, 3.4, 0.9, 2.1]` |
-| `gamma(2.0, scale=3.0)` | media ≈ 6.0 | valores escalados ×3 |
-| `gamma(9.0, size=(2,2))` | `ndarray (2,2)` | casi simétrica (forma alta) |
-
-```python
-import numpy as np
-np.random.seed(0)
-np.random.gamma(shape=2.0, scale=2.0, size=3)
-# array([4.12, 6.78, 1.43])  → media tiende a 2*2 = 4
-```
-
-## Parámetros en detalle
+## Los parámetros en detalle
 
 ### `shape` — parámetro de forma (k)
 
-Controla la curvatura. Valores bajos (`<1`) concentran masa cerca de 0 con cola larga; `shape=1` es exponencial; valores altos hacen la distribución cada vez más simétrica (tiende a normal). Debe ser `> 0`.
+Controla la curvatura. Valores bajos (`<1`) concentran masa cerca de 0 con cola larga; `shape=1` es exponencial; valores altos hacen la distribución cada vez más simétrica (tiende a normal). Debe ser `> 0`. Acepta escalar o array (broadcasting con `scale` y `size`).
 
 ```python
 np.random.gamma(0.5)   # muy asimétrica, masa cerca de 0
@@ -59,7 +61,7 @@ np.random.gamma(10.0)  # casi acampanada
 
 ### `scale` — escala (1/λ)
 
-Estira el eje horizontal: misma forma, valores más grandes. Es `1/λ`, igual que en la exponencial. Debe ser `> 0`.
+Estira el eje horizontal: misma forma, valores más grandes. Es `1/λ`, igual que en la exponencial. Por defecto `1.0`. Debe ser `> 0`.
 
 ```python
 np.random.gamma(2.0, scale=1.0)   # media ≈ 2
@@ -73,6 +75,24 @@ Entero o tupla que fija el [[concepto_shape|shape]] del array; `None` devuelve u
 ```python
 np.random.gamma(3.0, size=1000)     # vector (1000,)
 np.random.gamma(3.0, size=(4, 5))   # matriz (4, 5)
+```
+
+## size y la forma de salida
+
+Devuelve reales no negativos con media tendente a `shape·scale` y varianza a `shape·scale²`.
+
+| Llamada | Distribución | Shape | dtype |
+|---------|--------------|-------|-------|
+| `np.random.gamma(2.0)` | Gamma(2, 1) | `()` escalar | `float` |
+| `np.random.gamma(2.0, size=4)` | Gamma(2, 1) | `(4,)` | `float64` |
+| `np.random.gamma(2.0, 3.0)` | Gamma(2, 3), media ≈ 6 | `()` escalar | `float` |
+| `np.random.gamma(9.0, size=(2, 2))` | Gamma(9, 1), casi simétrica | `(2, 2)` | `float64` |
+
+```python
+import numpy as np
+np.random.seed(0)
+np.random.gamma(shape=2.0, scale=2.0, size=3)
+# array([4.12, 6.78, 1.43])  → media tiende a 2*2 = 4
 ```
 
 ## Casos de uso
@@ -92,12 +112,12 @@ espera_3_fallos.mean()   # ≈ 300
 montos = np.random.gamma(shape=2.5, scale=40, size=5000)
 ```
 
-## Buenas prácticas
+### Recuperar la exponencial y la chi-cuadrado
 
-1. Piensa en `shape` como "número de exponenciales sumadas" y en `scale` como `1/λ`.
-2. Para una sola espera (`shape=1`) usa directamente [[np.random.exponential]], es más claro.
-3. La suma de gammas con igual `scale` es otra gamma: útil para componer modelos.
-4. Fija la semilla con [[np.random.seed]] para reproducibilidad.
+```python
+np.random.gamma(shape=1, scale=2.0, size=1000)    # ≡ exponential(scale=2)
+np.random.gamma(shape=4/2, scale=2, size=1000)    # ≡ chisquare(df=4)
+```
 
 ## Errores comunes
 
@@ -111,6 +131,7 @@ montos = np.random.gamma(shape=2.5, scale=40, size=5000)
 ## Notas relacionadas
 
 - [[concepto_shape]]
+- [[np.random.default_rng]]
 - [[np.random.exponential]]
 - [[np.random.chisquare]]
 - [[np.random.seed]]

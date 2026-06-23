@@ -15,40 +15,42 @@ draft: false
 
 # np.random.exponential — Muestras de la distribución exponencial
 
-Modela el **tiempo entre eventos** de un proceso de Poisson (llegadas de clientes, fallos de un componente, desintegraciones). La exponencial no tiene memoria: la probabilidad de esperar otro intervalo no depende de cuánto hayas esperado ya. Su parámetro de escala es `scale = 1/λ`, donde `λ` es la tasa media de eventos por unidad de tiempo.
+Genera muestras de una distribución **exponencial**, que modela el **tiempo entre eventos** de un proceso de Poisson (llegadas de clientes, fallos de un componente, desintegraciones). Su rasgo característico es que **no tiene memoria**: la probabilidad de esperar otro intervalo no depende de cuánto hayas esperado ya. Se parametriza por la **escala** `scale = 1/λ`, donde `λ` es la tasa media de eventos por unidad de tiempo.
 
-## Firma de la función
+## La idea
+
+La densidad de la exponencial sobre `x ≥ 0`, escrita con la tasa `λ`, es:
+
+$$ f(x;\lambda) \;=\; \lambda\,e^{-\lambda x}, \qquad x \ge 0 $$
+
+NumPy no recibe `λ` sino su inversa, la **escala** $\theta = $ `scale` $= 1/\lambda$, de modo que la misma densidad se lee:
+
+$$ f(x;\theta) \;=\; \frac{1}{\theta}\,e^{-x/\theta}, \qquad x \ge 0 $$
+
+Aquí el único **parámetro de forma/escala** es `scale`. Propiedades clave:
+
+- Media $\mathbb{E}[X] = \theta = $ `scale` y varianza $\operatorname{Var}[X] = \theta^2$.
+- Es muy **asimétrica**: cola larga a la derecha, masa concentrada cerca de 0.
+- Es el caso particular de la gamma con `shape=1`.
+
+> [!tip] Versión moderna
+> La API recomendada desde NumPy 1.17 usa un generador explícito en vez del estado global. Ver [[np.random.default_rng]].
+> ```python
+> rng = np.random.default_rng()
+> rng.exponential(scale=2.0, size=1000)
+> ```
+
+## Firma
 
 ```python
-np.random.exponential(
-    scale=1.0,
-    size=None
-) -> ndarray | float
+np.random.exponential(scale=1.0, size=None) -> ndarray | float
 ```
 
-## Valor de retorno
-
-Devuelve valores reales no negativos extraídos de una densidad `f(x) = (1/scale)·exp(−x/scale)` para `x ≥ 0`. La media de las muestras tiende a `scale` y la varianza a `scale²`.
-
-| Entrada | Retorno | Ejemplo |
-|---------|---------|---------|
-| `size=None` | `float` escalar | `0.73` |
-| `size=5` | `ndarray (5,)` | `[0.2, 1.4, 0.05, 3.1, 0.9]` |
-| `size=(2, 3)` | `ndarray (2, 3)` | matriz de tiempos |
-| `scale=10` | valores ~10× mayores | media ≈ 10 |
-
-```python
-import numpy as np
-np.random.seed(0)
-np.random.exponential(scale=2.0, size=4)
-# array([1.59, 2.39, 0.47, 1.78])  → media tiende a 2.0
-```
-
-## Parámetros en detalle
+## Los parámetros en detalle
 
 ### `scale` — escala (inversa de la tasa)
 
-Es `1/λ`. A mayor `scale`, eventos más espaciados (tasa baja); a menor `scale`, eventos frecuentes. Debe ser `> 0`. Acepta escalar o array (se aplica broadcasting con `size`).
+Es `1/λ`. A mayor `scale`, eventos más espaciados (tasa baja); a menor `scale`, eventos frecuentes. Por defecto `1.0`. Debe ser `> 0`. Acepta escalar o array (se combina por [[concepto_broadcasting|broadcasting]] con `size`).
 
 ```python
 np.random.exponential(scale=0.5)   # tasa λ=2 eventos/unidad → esperas cortas
@@ -60,9 +62,27 @@ np.random.exponential(scale=5.0)   # tasa λ=0.2 → esperas largas
 Entero o tupla que define el [[concepto_shape|shape]] del resultado. Con `None` devuelve un único `float`.
 
 ```python
-np.random.exponential(1.0)            # escalar
-np.random.exponential(1.0, size=1000) # vector (1000,)
-np.random.exponential(1.0, (3, 4))    # matriz (3, 4)
+np.random.exponential(1.0)             # escalar
+np.random.exponential(1.0, size=1000)  # vector (1000,)
+np.random.exponential(1.0, (3, 4))     # matriz (3, 4)
+```
+
+## size y la forma de salida
+
+Devuelve reales no negativos con media tendente a `scale` y varianza a `scale²`.
+
+| Llamada | Distribución | Shape | dtype |
+|---------|--------------|-------|-------|
+| `np.random.exponential()` | Exp(scale=1) | `()` escalar | `float` |
+| `np.random.exponential(2.0, 5)` | Exp(scale=2) | `(5,)` | `float64` |
+| `np.random.exponential(10)` | Exp(scale=10), media ≈ 10 | `()` escalar | `float` |
+| `np.random.exponential(1.0, (2, 3))` | Exp(scale=1) | `(2, 3)` | `float64` |
+
+```python
+import numpy as np
+np.random.seed(0)
+np.random.exponential(scale=2.0, size=4)
+# array([1.59, 2.39, 0.47, 1.78])  → media tiende a 2.0
 ```
 
 ## Casos de uso
@@ -83,25 +103,26 @@ vidas = np.random.exponential(scale=5000, size=1000)
 vidas.mean()   # ≈ 5000
 ```
 
-## Buenas prácticas
+### Equivalencia con la gamma de forma 1
 
-1. Recuerda que el parámetro es `scale = 1/λ`, **no** la tasa `λ`; es el error más común.
-2. Fija la semilla con [[np.random.seed]] para resultados reproducibles en simulaciones.
-3. Para el conteo de eventos en un intervalo (no el tiempo entre ellos) usa la distribución de Poisson.
-4. La exponencial es el caso particular de [[np.random.gamma]] con `shape=1`.
+```python
+# exponential(scale) ≡ gamma(shape=1, scale)
+np.random.gamma(shape=1, scale=2.0, size=1000)
+```
 
 ## Errores comunes
 
 | Error | Causa | Solución |
 |-------|-------|----------|
-| Media muy distinta a la esperada | Pasar `λ` en lugar de `1/λ` | Usar `scale=1/lambda` |
+| Media muy distinta a la esperada | Pasar `λ` en lugar de `1/λ` | Usar `scale = 1/lambda` |
 | `ValueError: scale < 0` | `scale` negativo | Garantizar `scale > 0` |
-| Valores siempre iguales | Semilla fijada en bucle | Sembrar una sola vez |
+| Confundir con conteo de eventos | La exponencial da tiempos, no conteos | Para conteos usa [[np.random.poisson]] |
 | Esperar simetría | La exponencial es muy asimétrica | Es correcto: cola larga a la derecha |
 
 ## Notas relacionadas
 
 - [[concepto_shape]]
+- [[np.random.default_rng]]
 - [[np.random.gamma]]
 - [[np.random.seed]]
 - [[np.random.lognormal]]
