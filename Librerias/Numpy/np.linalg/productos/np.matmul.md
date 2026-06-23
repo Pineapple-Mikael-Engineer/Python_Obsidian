@@ -1,10 +1,9 @@
 ---
-title: producto matricial — @ / np.matmul / np.dot (contracción de un eje)
+title: np.matmul — producto matricial (@): contrae la dimensión interior
 aliases:
   - producto matricial
   - matmul
   - np.matmul
-  - np.dot
   - "@"
 tags:
   - numpy
