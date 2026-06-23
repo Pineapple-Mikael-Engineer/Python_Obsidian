@@ -241,7 +241,7 @@ La contigüidad es la cara física de los strides de un [[concepto_ndarray]], y 
 - [[concepto_dtype]]
 - [[np.reshape]]
 - [[np.ravel]]
-- [[ndarray.flatten]]
+- [[Librerias/Numpy/np.ndarray/metodos/forma/index|ndarray.flatten]]
 - [[ndarray.flags]]
 - [[ndarray.strides]]
 - [[np.transpose]]

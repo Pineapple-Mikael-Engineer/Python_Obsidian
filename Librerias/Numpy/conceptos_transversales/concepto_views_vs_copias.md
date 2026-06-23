@@ -194,7 +194,7 @@ copia = arr.T.reshape(1000000)      # lento: copia (no contiguo)
 - [[concepto_indexing]]
 - [[np.reshape]]
 - [[np.ravel]]
-- [[ndarray.flatten]]
+- [[Librerias/Numpy/np.ndarray/metodos/forma/index|ndarray.flatten]]
 - [[ndarray.copy]]
 - [[ndarray.base]]
 - [[ndarray.flags]]

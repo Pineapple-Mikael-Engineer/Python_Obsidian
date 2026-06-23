@@ -1,81 +1,57 @@
 ---
-title: np.ndarray — metodos de serializacion
+title: np.ndarray — métodos de serialización
 tags:
   - numpy
   - indice
 draft: false
 ---
 
-# np.ndarray — metodos de serializacion
+# np.ndarray — métodos de serialización
 
-5 metodos para exportar el ndarray fuera del ecosistema NumPy: a disco, a estructuras Python nativas o a bytes en memoria. Ningun metodo modifica el array original. La eleccion depende del destino y de si se necesita preservar el dtype y la shape exactos para poder reconstruir el array despues.
+Estos cinco **métodos propios del `ndarray`** convierten o guardan el array fuera del ecosistema NumPy: a
+una estructura de Python, a bytes en memoria, o a un archivo. Ninguno modifica el array original (solo lo
+exportan). La pregunta que decide cuál usar es siempre la misma: **¿necesito poder reconstruir el array
+exacto después, y dónde va el resultado?**
 
-## Tabla de metodos segun destino
+- [[ndarray.tolist]] — a una **lista anidada de Python** (escalares nativos). Pierde el dtype; ideal para JSON.
+- [[ndarray.tobytes]] — a los **bytes crudos** del buffer, en memoria. Sin metadatos.
+- [[ndarray.tofile]] — a un **archivo binario crudo** (o texto). Rápido, no portable.
+- [[ndarray.dump]] — a un **archivo** con pickle. Conserva dtype y shape.
+- [[ndarray.dumps]] — a **bytes** con pickle. Conserva dtype y shape, en memoria.
 
-| Destino | Metodo | Preserva metadatos | Descripcion |
-|---------|--------|--------------------|-------------|
-| Disco binario raw | [[ndarray.tofile]] | No | Escribe los bytes crudos del array a un fichero; maximo rendimiento |
-| Disco con pickle | [[ndarray.dump]] | Si (pickle) | Serializa con `pickle` a un fichero; preserva dtype y shape |
-| Lista Python | [[ndarray.tolist]] | No (tipos Python) | Convierte a lista anidada de escalares nativos (int, float) |
-| Bytes en memoria (raw) | [[ndarray.tobytes]] | No | Devuelve el buffer crudo del array como objeto `bytes` |
-| Bytes con pickle | [[ndarray.dumps]] | Si (pickle) | Serializa con `pickle` y devuelve `bytes` en vez de escribir a archivo |
+## Tabla comparativa
 
-## `tofile` — binario raw
+| Método | Formato | Inverso | ¿Portable? |
+|--------|---------|---------|------------|
+| `tolist` | lista de Python anidada | `np.array(lista, dtype=...)` | Sí (pierde el dtype) |
+| `tobytes` | `bytes` crudos del buffer | `np.frombuffer(b, dtype=...).reshape(...)` | No (dtype/shape/endianness aparte) |
+| `tofile` | archivo binario crudo (o texto) | `np.fromfile(f, dtype=...).reshape(...)` | No (dtype/shape/endianness aparte) |
+| `dump` | archivo pickle | `np.load(f, allow_pickle=True)` / `pickle.load` | Parcial (depende de versiones, inseguro) |
+| `dumps` | `bytes` pickle | `pickle.loads(b)` | Parcial (depende de versiones, inseguro) |
 
-Escribe los bytes del array directamente al archivo sin ningun encabezado. Maximo rendimiento, minima portabilidad: para releer los datos hay que conocer el dtype, shape y endianness exactos:
+El eje que organiza la tabla: **crudo** (`tobytes`/`tofile`) frente a **autodescriptivo** (`dump`/`dumps`),
+y **memoria** (`tolist`/`tobytes`/`dumps`) frente a **disco** (`tofile`/`dump`).
 
-```python
-arr = np.arange(6).reshape(2, 3)
-arr.tofile("datos.bin")
+## La recomendación general
 
-# Relectura — requiere conocer dtype y shape de antemano
-arr2 = np.fromfile("datos.bin", dtype=np.int64).reshape(2, 3)
-```
-
-## `dump` y `dumps` — pickle
-
-Preservan dtype, shape y todos los metadatos del array. `dump` escribe a un archivo; `dumps` devuelve los bytes para transmision o almacenamiento en memoria:
-
-```python
-arr = np.arange(6).reshape(2, 3)
-
-arr.dump("array.pkl")
-arr2 = np.load("array.pkl", allow_pickle=True)
-
-b = arr.dumps()
-import pickle
-arr3 = pickle.loads(b)
-```
-
-Para arrays numericos simples, `np.save` / `np.load` (formato `.npy`) son preferibles a `dump/dumps` por ser mas robustos entre versiones de Python y NumPy.
-
-## `tolist` — lista Python
-
-Convierte el array a una lista Python anidada de escalares nativos (int, float, bool). Los elementos dejan de ser tipos NumPy y pasan a ser tipos Python estandar, lo que los hace serializables a JSON:
+Para **guardar arrays de verdad** (persistirlos y releerlos exactos más tarde), ninguno de estos cinco es
+la primera opción: usa **`np.save`** (formato `.npy`), que guarda dtype, shape y endianness en una
+cabecera y se relee con un simple `np.load("x.npy")`, sin recordar metadatos, de forma portable entre
+versiones y **sin el riesgo de seguridad de pickle**.
 
 ```python
-arr = np.array([[1, 2], [3, 4]])
-arr.tolist()  # → [[1, 2], [3, 4]]
-
-import json
-json.dumps(arr.tolist())  # funciona; json.dumps(arr) fallaria
+np.save("arr.npy", arr)        # portable, autodescriptivo, seguro
+back = np.load("arr.npy")      # round-trip exacto, shape y dtype incluidos
 ```
 
-## `tobytes` — buffer crudo en memoria
+Cuándo usar cada uno de los métodos propios:
+- **`tolist`** → frontera con código no-NumPy (JSON, APIs, plantillas).
+- **`tobytes`** → enviar por red, hashear, o columna BLOB, controlando tú el dtype/shape.
+- **`tofile`** → interoperar con C/Fortran que esperan un buffer crudo concreto.
+- **`dump` / `dumps`** → caché o snapshot **de confianza** dentro de tu propio proceso (nunca datos ajenos).
 
-Equivalente a `tofile` pero en memoria: devuelve los bytes del array como objeto `bytes` Python. Util para transmision por red, hashing o interfaz con otros sistemas que esperan bytes crudos. Para reconstruir se necesita conocer el dtype:
+## Notas relacionadas
 
-```python
-arr = np.array([1, 2, 3], dtype=np.int32)
-b = arr.tobytes()                          # 12 bytes (3 elementos x 4 bytes)
-arr2 = np.frombuffer(b, dtype=np.int32)   # reconstruye el array
-```
-
-## Cuadro comparativo `tofile` vs `dump`
-
-| | `tofile` | `dump` |
-|-|----------|--------|
-| Formato | Binario raw (sin metadatos) | Pickle (incluye dtype, shape) |
-| Para releer | `np.fromfile(f, dtype=...)` | `pickle.load(f)` o `np.load(f, allow_pickle=True)` |
-| Portabilidad | Depende de dtype y endianness del sistema | Portable entre sistemas Python |
-| Tamaño en disco | Minimo (solo datos) | Ligeramente mayor (overhead de pickle) |
+- [[concepto_dtype]] — el metadato que estos métodos conservan o descartan
+- [[concepto_contiguidad_memoria]] — el `order` en que se serializan los bytes
+- [[np.save]] · [[np.fromfile]] · [[np.frombuffer]]

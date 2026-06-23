@@ -162,4 +162,4 @@ todo   # array([ 0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11])
 - [[concepto_shape]] — el `size` que se vuelve el único eje
 - [[concepto_views_vs_copias]] — vista (ravel) frente a copia siempre (`flatten`)
 - [[np.reshape]] — `ravel` es `reshape(-1)` con nombre propio
-- [[ndarray.flatten]] · [[np.expand_dims]] · [[np.squeeze]]
+- [[Librerias/Numpy/np.ndarray/metodos/forma/index|ndarray.flatten]] · [[np.expand_dims]] · [[np.squeeze]]

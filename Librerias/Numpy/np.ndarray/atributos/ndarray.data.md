@@ -1,5 +1,5 @@
 ---
-title: ndarray.data — Buffer de Python con la memoria cruda
+title: ndarray.data — Buffer crudo de memoria del array
 aliases:
   - data
   - ndarray.data
@@ -8,27 +8,27 @@ tags:
   - api/atributo
   - memoria
 lib: numpy
-obj: ndarray
+mod: np.ndarray
 tipo: atributo
 draft: false
 ---
 
-# ndarray.data — Buffer de Python con la memoria cruda
+# ndarray.data — Buffer crudo de memoria del array
 
-## Qué representa
+Objeto `memoryview` (buffer de Python) que apunta al **bloque lineal de bytes** donde el array guarda sus valores. Es el dato bruto que `shape`, `dtype` y `strides` interpretan como tensor: ver [[concepto_ndarray]]. Rara vez se accede directamente; sirve para interoperar con el protocolo buffer de Python o inspeccionar la memoria de bajo nivel.
 
-Objeto `memoryview` (buffer de Python) que apunta al **bloque lineal de bytes** donde el array almacena sus valores. Es el componente fundamental del ndarray: el buffer crudo que `shape`, `dtype` y `strides` interpretan. Rara vez se usa directamente; sirve para interoperar con el protocolo buffer de Python o inspeccionar la memoria subyacente: ver [[concepto_ndarray]].
-
-## Tipo y acceso
+## Tipo y lectura/escritura
 
 | Aspecto | Valor |
 |---------|-------|
 | Tipo devuelto | `memoryview` (buffer de Python) |
-| Acceso | **SOLO LECTURA** del atributo (no se reasigna el buffer) |
+| Lectura/escritura | **Solo lectura** del atributo (el buffer no se reasigna) |
 | Contenido | Bytes brutos del array |
 | Uso típico | Protocolo buffer / interop de bajo nivel |
 
-## Ejemplos
+## En detalle
+
+El `memoryview` es escribible si el array lo es, pero el atributo `data` en sí no se reasigna. Acceder a los bytes respeta el orden de almacenamiento del buffer (C-order por defecto), no la forma lógica.
 
 ```python
 import numpy as np
@@ -43,7 +43,7 @@ mv = arr.data
 mv.readonly                 # → False  (escribible si el array lo es)
 ```
 
-## Relación con la arquitectura interna
+Lugar de `data` entre los componentes del ndarray:
 
 | Componente | Atributo | Rol |
 |------------|----------|-----|
@@ -51,6 +51,12 @@ mv.readonly                 # → False  (escribible si el array lo es)
 | Forma | `ndarray.shape` | Cómo se agrupan |
 | Tipo | `ndarray.dtype` | Cómo se decodifican |
 | Saltos | `ndarray.strides` | Cómo se recorren |
+
+## Casos de uso
+
+- Exponer el array a una API que consume el protocolo buffer de Python.
+- Inspeccionar los bytes crudos para depurar endianness o empaquetado.
+- Pasar memoria sin copia a bibliotecas que aceptan `memoryview`.
 
 ## Notas relacionadas
 
