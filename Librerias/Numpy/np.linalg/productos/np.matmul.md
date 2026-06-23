@@ -1,5 +1,5 @@
 ---
-title: np.matmul — producto matricial (@): contrae la dimensión interior
+title: np.matmul — producto matricial (@), contrae la dimensión interior
 aliases:
   - producto matricial
   - matmul
@@ -55,14 +55,14 @@ casos: producto punto ($k$ contra $k$ → escalar), matriz·vector, y la pila N-
 
 Visualmente, para $A_{(2\times 3)}$ y $B_{(3\times 2)}$ se contrae la dimensión $3$:
 
-```text
-        ┌ b00 b01 ┐
-        │ b10 b11 │   (3×2)
-        └ b20 b21 ┘
-┌ a00 a01 a02 ┐  →  c00 = a00·b00 + a01·b10 + a02·b20   (suma sobre k=0,1,2)
-│ a10 a11 a12 │     c01 = a00·b01 + a01·b11 + a02·b21
-└ (2×3) ──────┘     resultado (2×2): el eje k=3 desaparece
-```
+$$
+\begin{bmatrix} a_{00} & a_{01} & a_{02} \\ a_{10} & a_{11} & a_{12} \end{bmatrix}_{(2\times 3)}
+\begin{bmatrix} b_{00} & b_{01} \\ b_{10} & b_{11} \\ b_{20} & b_{21} \end{bmatrix}_{(3\times 2)}
+=
+\begin{bmatrix} c_{00} & c_{01} \\ c_{10} & c_{11} \end{bmatrix}_{(2\times 2)}
+$$
+
+$c_{00}=a_{00}b_{00}+a_{01}b_{10}+a_{02}b_{20}$ y $c_{01}=a_{00}b_{01}+a_{01}b_{11}+a_{02}b_{21}$ (suma sobre $k=0,1,2$); el eje interior $k=3$ desaparece.
 
 ## Firma
 

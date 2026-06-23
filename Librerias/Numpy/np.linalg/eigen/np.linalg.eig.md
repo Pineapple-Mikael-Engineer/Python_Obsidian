@@ -54,13 +54,15 @@ $$
 Los dos últimos ejes de $A$ son la matriz; los `…` anteriores son ejes de **lote**. Por cada matriz
 del lote salen $n$ autovalores (vector) y una matriz $n\times n$ de autovectores en columnas.
 
-```text
-        ┌ v00 v01 ┐
-   v =  │ v10 v11 │      v[:, i] = autovector i-ésimo (COLUMNA), norma 1
-        └ v20 v21 ┘
-   w =  [ λ0  λ1  λ2 ]   w[i] = autovalor del autovector v[:, i]
-   relación:  A @ v[:, i] == w[i] * v[:, i]
-```
+$$
+v = \begin{bmatrix} v_{00} & v_{01} \\ v_{10} & v_{11} \\ v_{20} & v_{21} \end{bmatrix}
+\qquad
+w = \begin{bmatrix} \lambda_0 & \lambda_1 & \lambda_2 \end{bmatrix}
+$$
+
+- `v[:, i]` = autovector $i$-ésimo (**COLUMNA**), norma 1.
+- `w[i]` = autovalor del autovector `v[:, i]`.
+- Relación: `A @ v[:, i] == w[i] * v[:, i]`.
 
 ## Firma
 

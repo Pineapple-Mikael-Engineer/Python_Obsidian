@@ -23,7 +23,7 @@ draft: false
 `np.linalg.solve` halla el vector $\mathbf{x}$ que satisface $A\mathbf{x}=\mathbf{b}$ cuando $A$ es
 **cuadrada e invertible**. Es la herramienta canónica para resolver un sistema determinado: en vez de
 calcular la inversa y multiplicar, factoriza $A$ una sola vez y sustituye. La pregunta que responde no
-es "¿cuál es $A^{-1}$?" sino directamente "¿qué $\mathbf{x}$ resuelve el sistema?".
+es "¿cuál es la inversa de A?" sino directamente "¿qué x resuelve el sistema?".
 
 > [!regla] Regla de oro: `solve(A, b)`, nunca `inv(A) @ b`
 > Para resolver $A\mathbf{x}=\mathbf{b}$ **siempre** se usa `np.linalg.solve(A, b)`, no
@@ -59,11 +59,15 @@ Los `…` previos son **ejes de lote** que se alinean por broadcasting (ver [[co
 de sistemas $A_i\mathbf{x}_i=\mathbf{b}_i$ se resuelve de golpe. El eje de tamaño $n$ común a $A$ y
 $\mathbf{b}$ es el que se "contrae" al resolver.
 
-```text
-┌ 3 1 ┐ ┌ x0 ┐   ┌ 9 ┐        3·x0 + 1·x1 = 9
-│ 1 2 │ │ x1 │ = │ 8 │   →    1·x0 + 2·x1 = 8   →   x = [2, 3]
-└─────┘ └────┘   └───┘
-```
+$$
+\begin{bmatrix} 3 & 1 \\ 1 & 2 \end{bmatrix}
+\begin{bmatrix} x_0 \\ x_1 \end{bmatrix}
+=
+\begin{bmatrix} 9 \\ 8 \end{bmatrix}
+\quad\Longrightarrow\quad
+\begin{aligned} 3x_0 + 1x_1 &= 9 \\ 1x_0 + 2x_1 &= 8 \end{aligned}
+\quad\Longrightarrow\quad x = [2,\, 3]
+$$
 
 ## Firma
 

@@ -1,5 +1,5 @@
 ---
-title: np.dot — el producto "clásico": punto en 1D, matricial en 2D, tensorial en N-D
+title: np.dot — el producto "clásico", punto en 1D, matricial en 2D, tensorial en N-D
 aliases:
   - dot
   - np.dot
@@ -69,21 +69,22 @@ $$
 
 Visualmente, para $A_{(2\times 3)}$ y $B_{(3\times 2)}$ se contrae la dimensión $3$:
 
-```text
-        ┌ b00 b01 ┐
-        │ b10 b11 │   (3×2)
-        └ b20 b21 ┘
-┌ a00 a01 a02 ┐  →  c00 = a00·b00 + a01·b10 + a02·b20   (suma sobre k=0,1,2)
-│ a10 a11 a12 │     c01 = a00·b01 + a01·b11 + a02·b21
-└ (2×3) ──────┘     resultado (2×2): el eje k=3 desaparece
-```
+$$
+\begin{bmatrix} a_{00} & a_{01} & a_{02} \\ a_{10} & a_{11} & a_{12} \end{bmatrix}_{(2\times 3)}
+\begin{bmatrix} b_{00} & b_{01} \\ b_{10} & b_{11} \\ b_{20} & b_{21} \end{bmatrix}_{(3\times 2)}
+=
+\begin{bmatrix} c_{00} & c_{01} \\ c_{10} & c_{11} \end{bmatrix}_{(2\times 2)}
+$$
+
+$c_{00}=a_{00}b_{00}+a_{01}b_{10}+a_{02}b_{20}$ y $c_{01}=a_{00}b_{01}+a_{01}b_{11}+a_{02}b_{21}$ (suma sobre $k=0,1,2$); el eje interior $k=3$ desaparece.
 
 Y el caso 1D·1D, donde todo colapsa a un número:
 
-```text
-a = [a0 a1 a2]
-b = [b0 b1 b2]   →   c = a0·b0 + a1·b1 + a2·b2   (un escalar, shape ())
-```
+$$
+a = \begin{bmatrix} a_0 & a_1 & a_2 \end{bmatrix} \qquad b = \begin{bmatrix} b_0 & b_1 & b_2 \end{bmatrix} \qquad c = a_0 b_0 + a_1 b_1 + a_2 b_2
+$$
+
+(un escalar, shape `()`)
 
 ## Firma
 

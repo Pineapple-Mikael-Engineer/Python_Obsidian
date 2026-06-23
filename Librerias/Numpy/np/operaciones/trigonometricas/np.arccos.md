@@ -33,7 +33,7 @@ devolviendo el ángulo **en radianes** cuyo coseno es $x_i$. Es el inverso de [[
 sus vecinos** y **conserva el shape**. Como `arcsin`, tiene **dominio restringido** a $x\in[-1,1]$
 (el recorrido del coseno); fuera de ahí devuelve `nan` con warning. Su rango de salida es $[0,\pi]$
 (la rama principal): a diferencia de `arcsin`, el resultado nunca es negativo. La pregunta al usarla
-no es "¿qué eje desaparece?" sino **"¿está mi `x` dentro de $[-1,1]$?"** —crítico al venir de un
+no es "¿qué eje desaparece?" sino **"¿está mi `x` dentro de [-1, 1]?"** —crítico al venir de un
 producto escalar donde el redondeo puede dar `1.0000001`—.
 
 ## La idea en una fórmula

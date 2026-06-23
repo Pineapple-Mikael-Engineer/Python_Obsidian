@@ -33,7 +33,7 @@ el ángulo **en radianes** cuyo seno es $x_i$. Es el inverso de [[np.sin]], **no
 **conserva el shape**. Su rasgo definitorio es el **dominio restringido**: solo acepta $x\in[-1,1]$
 (el recorrido del seno); fuera de ahí no hay ángulo real y devuelve `nan` con warning. El rango de
 salida es $[-\pi/2,\pi/2]$ (la rama principal). La pregunta al usarla no es "¿qué eje desaparece?"
-(no desaparece ninguno) sino **"¿está mi `x` dentro de $[-1,1]$?"**.
+(no desaparece ninguno) sino **"¿está mi `x` dentro de [-1, 1]?"**.
 
 ## La idea en una fórmula
 

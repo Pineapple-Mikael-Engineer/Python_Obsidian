@@ -54,12 +54,13 @@ $$
 Truncar esa suma a los primeros componentes da la **mejor aproximación de rango bajo** (base de la
 compresión). Visualmente, una $A$ de $(2\times 3)$:
 
-```text
-┌ a00 a01 a02 ┐     ┌ u00 u01 ┐ ┌ σ0  0   0 ┐ ┌ v00 v01 v02 ┐
-└ a10 a11 a12 ┘  =  └ u10 u11 ┘ └  0  σ1  0 ┘ │ v10 v11 v12 │
-   A (2×3)            U (2×2)      Σ (2×3)     └ v20 v21 v22 ┘
-                   ortonormal   σ descendente    Vh (3×3)
-```
+$$
+\underbrace{\begin{bmatrix} a_{00} & a_{01} & a_{02} \\ a_{10} & a_{11} & a_{12} \end{bmatrix}}_{A\ (2\times 3)}
+=
+\underbrace{\begin{bmatrix} u_{00} & u_{01} \\ u_{10} & u_{11} \end{bmatrix}}_{U\ (2\times 2)\ \text{ortonormal}}
+\underbrace{\begin{bmatrix} \sigma_0 & 0 & 0 \\ 0 & \sigma_1 & 0 \end{bmatrix}}_{\Sigma\ (2\times 3)\ \sigma\ \text{descendente}}
+\underbrace{\begin{bmatrix} v_{00} & v_{01} & v_{02} \\ v_{10} & v_{11} & v_{12} \\ v_{20} & v_{21} & v_{22} \end{bmatrix}}_{V\!h\ (3\times 3)}
+$$
 
 ## Firma
 

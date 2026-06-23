@@ -60,13 +60,17 @@ b = [b0 b1 b2]   →   c = a0·b0 + a1·b1 + a2·b2   (escalar, shape ())
 
 Visual del **aplanado**: una matriz se recorre fila a fila antes de contraer:
 
-```text
-A = ┌ 1 2 ┐   ravel(A) = [1 2 3 4]
-    └ 3 4 ┘
-B = ┌ 5 6 ┐   ravel(B) = [5 6 7 8]
-    └ 7 8 ┘
-vdot(A, B) = 1·5 + 2·6 + 3·7 + 4·8 = 70   (un escalar, no una matriz)
-```
+$$
+A = \begin{bmatrix} 1 & 2 \\ 3 & 4 \end{bmatrix} \;\Rightarrow\; \mathrm{ravel}(A) = [1\ 2\ 3\ 4]
+\qquad
+B = \begin{bmatrix} 5 & 6 \\ 7 & 8 \end{bmatrix} \;\Rightarrow\; \mathrm{ravel}(B) = [5\ 6\ 7\ 8]
+$$
+
+$$
+\mathrm{vdot}(A, B) = 1\cdot 5 + 2\cdot 6 + 3\cdot 7 + 4\cdot 8 = 70
+$$
+
+(un escalar, no una matriz)
 
 Visual con **complejos** (se conjuga `a`):
 

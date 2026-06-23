@@ -54,14 +54,21 @@ $$
 Visualmente, contraer el último eje de $A_{(2\times 3)}$ con el primero de $B_{(3\times 2)}$
 (`axes=([1],[0])`, que es justo el producto matricial) suma sobre la dimensión $3$:
 
-```text
-        ┌ b00 b01 ┐
-        │ b10 b11 │   (3×2)
-        └ b20 b21 ┘
-┌ a00 a01 a02 ┐  →  c00 = a00·b00 + a01·b10 + a02·b20   (suma sobre k=0,1,2)
-│ a10 a11 a12 │     c01 = a00·b01 + a01·b11 + a02·b21
-└ (2×3) ──────┘     resultado (2×2): el eje contraído de tamaño 3 desaparece
-```
+$$
+A = \begin{bmatrix} a_{00} & a_{01} & a_{02} \\ a_{10} & a_{11} & a_{12} \end{bmatrix} \ (2\times3)
+\qquad
+B = \begin{bmatrix} b_{00} & b_{01} \\ b_{10} & b_{11} \\ b_{20} & b_{21} \end{bmatrix} \ (3\times2)
+$$
+
+$$
+\begin{aligned}
+c_{00} &= a_{00}b_{00} + a_{01}b_{10} + a_{02}b_{20} \\
+c_{01} &= a_{00}b_{01} + a_{01}b_{11} + a_{02}b_{21}
+\end{aligned}
+\qquad (\text{suma sobre } k=0,1,2)
+$$
+
+El resultado $(2\times2)$: el eje contraído de tamaño $3$ desaparece.
 
 ## Firma
 

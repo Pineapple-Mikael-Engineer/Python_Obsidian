@@ -55,12 +55,12 @@ $$
 
 Visualmente, una $A$ de $(3\times 3)$ se factoriza en un triángulo inferior y su espejo superior:
 
-```text
-┌ a00 a01 a02 ┐     ┌ l00  0   0  ┐ ┌ l00 l10 l20 ┐
-│ a10 a11 a12 │  =  │ l10 l11  0  │ │  0  l11 l21 │
-└ a20 a21 a22 ┘     └ l20 l21 l22 ┘ └  0   0  l22 ┘
-   A  (n×n)              L  (n×n)        Lᴴ (n×n)
-```
+$$
+\underbrace{\begin{bmatrix} a_{00} & a_{01} & a_{02} \\ a_{10} & a_{11} & a_{12} \\ a_{20} & a_{21} & a_{22} \end{bmatrix}}_{A\ (n\times n)}
+=
+\underbrace{\begin{bmatrix} l_{00} & 0 & 0 \\ l_{10} & l_{11} & 0 \\ l_{20} & l_{21} & l_{22} \end{bmatrix}}_{L\ (n\times n)}
+\underbrace{\begin{bmatrix} l_{00} & l_{10} & l_{20} \\ 0 & l_{11} & l_{21} \\ 0 & 0 & l_{22} \end{bmatrix}}_{L^{H}\ (n\times n)}
+$$
 
 ## Firma
 

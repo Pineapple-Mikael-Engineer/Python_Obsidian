@@ -41,7 +41,7 @@ $$
 z_i = \log_{10} x_i = \frac{\ln x_i}{\ln 10} \qquad (n_0,\dots,n_k)\ \xrightarrow{\ \text{log10}\ }\ (n_0,\dots,n_k)
 $$
 
-El logaritmo decimal responde "¿cuántos ceros / cuántos órdenes de magnitud tiene $x_i$?". Solo está
+El logaritmo decimal responde "¿cuántos ceros / cuántos órdenes de magnitud tiene x?". Solo está
 definido para $x_i>0$:
 
 | `x` | $\log_{10} x$ |

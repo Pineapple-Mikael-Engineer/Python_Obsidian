@@ -45,13 +45,12 @@ $$
 Para una matriz **alta** ($m > n$), $k = n$: $Q$ es $(m, n)$ con columnas ortonormales y $R$ es
 $(n, n)$ cuadrada triangular. Visualmente, una $A$ de $(3\times 2)$:
 
-```text
-┌ a00 a01 ┐     ┌ q00 q01 ┐
-│ a10 a11 │  =  │ q10 q11 │  ┌ r00 r01 ┐
-└ a20 a21 ┘     └ q20 q21 ┘  └  0  r11 ┘
-   A (3×2)         Q (3×2)      R (2×2)
-                ortonormales   triangular sup.
-```
+$$
+\underbrace{\begin{bmatrix} a_{00} & a_{01} \\ a_{10} & a_{11} \\ a_{20} & a_{21} \end{bmatrix}}_{A\ (3\times 2)}
+=
+\underbrace{\begin{bmatrix} q_{00} & q_{01} \\ q_{10} & q_{11} \\ q_{20} & q_{21} \end{bmatrix}}_{Q\ (3\times 2)\ \text{ortonormales}}
+\underbrace{\begin{bmatrix} r_{00} & r_{01} \\ 0 & r_{11} \end{bmatrix}}_{R\ (2\times 2)\ \text{triangular sup.}}
+$$
 
 ## Firma
 

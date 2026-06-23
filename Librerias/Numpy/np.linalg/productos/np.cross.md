@@ -1,5 +1,5 @@
 ---
-title: np.cross — producto vectorial (a × b): el vector perpendicular a dos vectores 3D
+title: np.cross — producto vectorial (a × b), el vector perpendicular a dos vectores 3D
 aliases:
   - producto vectorial
   - producto cruz

@@ -42,7 +42,7 @@ $$
 z_i = \ln x_i = \log_e x_i \qquad (n_0,\dots,n_k)\ \xrightarrow{\ \text{log}\ }\ (n_0,\dots,n_k)
 $$
 
-El logaritmo natural responde "¿a qué exponente elevo $e$ para obtener $x_i$?". Solo está definido
+El logaritmo natural responde "¿a qué exponente elevo e para obtener x?". Solo está definido
 para $x_i>0$:
 
 | `x` | $\ln x$ |

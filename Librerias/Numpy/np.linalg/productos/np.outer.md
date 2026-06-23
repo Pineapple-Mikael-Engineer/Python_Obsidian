@@ -1,5 +1,5 @@
 ---
-title: np.outer — producto externo: todas las parejas de dos vectores
+title: np.outer — producto externo, todas las parejas de dos vectores
 aliases:
   - outer
   - np.outer
@@ -18,7 +18,7 @@ requiere:
 draft: false
 ---
 
-# np.outer — producto externo: todas las parejas de dos vectores
+# np.outer — producto externo, todas las parejas de dos vectores
 
 `np.outer(a, b)` **aplana** ambas entradas a 1D y multiplica **todas las parejas**: el resultado es
 la rejilla $C_{ij} = a_i\,b_j$, una matriz donde cada elemento es el producto de un valor de `a` por
@@ -47,15 +47,16 @@ $$
 Cada **fila** $i$ es el vector `b` escalado por $a_i$; cada **columna** $j$ es `a` escalado por $b_j$.
 Por eso $C$ siempre tiene **rango 1**. Visualmente, es una rejilla fila × columna:
 
-```text
-            b →   b0    b1    b2          (b se reparte por columnas)
-        ┌──────────────────────────┐
-   a0   │  a0·b0  a0·b1  a0·b2      │
-   a1   │  a1·b0  a1·b1  a1·b2      │      C[i,j] = aᵢ · bⱼ
-   a2   │  a2·b0  a2·b1  a2·b2      │
-        └──────────────────────────┘
-   ↑ a se reparte por filas         shape (3, 3) = (len a) × (len b)
-```
+$$
+C = \begin{bmatrix}
+a_0 b_0 & a_0 b_1 & a_0 b_2 \\
+a_1 b_0 & a_1 b_1 & a_1 b_2 \\
+a_2 b_0 & a_2 b_1 & a_2 b_2
+\end{bmatrix}
+\qquad C_{ij} = a_i\, b_j
+$$
+
+`b` se reparte por columnas y `a` por filas; shape `(3, 3)` = `(len a)` × `(len b)`.
 
 ## Firma
 

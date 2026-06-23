@@ -47,13 +47,18 @@ $\min(n,m)$ se **añade como ÚLTIMO eje**. Esto sorprende: aunque diagonalices 
 el eje de la diagonal aparece al **final**, no donde estaban. Una matriz $(n,m)$ da $(\min(n,m),)$;
 una pila $(b,n,n)$ da $(b, n)$ —una diagonal por matriz—.
 
-Visualmente, para una matriz $3\times 3$ se extraen los elementos marcados a un vector:
+Visualmente, para una matriz $3\times 3$ se extraen los elementos marcados (los $A_{ii}$) a un
+vector:
 
-```text
-┌ ■  ·  · ┐
-│ ·  ■  · │   →   [A00, A11, A22]   (offset=0, longitud 3)
-└ ·  ·  ■ ┘
-```
+$$
+\begin{bmatrix}
+\mathbf{A_{00}} & \cdot & \cdot \\
+\cdot & \mathbf{A_{11}} & \cdot \\
+\cdot & \cdot & \mathbf{A_{22}}
+\end{bmatrix}
+\ \longrightarrow\ \begin{bmatrix} A_{00} & A_{11} & A_{22} \end{bmatrix}
+\qquad (\text{offset}=0,\ \text{longitud } 3)
+$$
 
 ## Firma
 

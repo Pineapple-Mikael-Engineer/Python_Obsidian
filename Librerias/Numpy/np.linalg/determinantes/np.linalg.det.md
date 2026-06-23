@@ -1,5 +1,5 @@
 ---
-title: np.linalg.det — determinante: colapsa una matriz a un escalar (factor de volumen)
+title: np.linalg.det — determinante, colapsa una matriz a un escalar (factor de volumen)
 aliases:
   - det
   - linalg.det
@@ -55,11 +55,12 @@ $$
 Para una sola matriz $(n,n)$ el lote es vacío y la salida es un **escalar** `()`; para una pila
 $(b,n,n)$ la salida es `(b,)`, **un determinante por matriz**.
 
-```text
-┌ a00 a01 ┐
-│ a10 a11 │   (2×2)   →   det = a00·a11 − a01·a10   →   un escalar ()
-└─────────┘
-```
+$$
+\begin{vmatrix} a_{00} & a_{01} \\ a_{10} & a_{11} \end{vmatrix}
+\ (2\times 2)
+\;\longrightarrow\; \det = a_{00}\cdot a_{11} - a_{01}\cdot a_{10}
+\;\longrightarrow\; \text{un escalar } ()
+$$
 
 ## Firma
 

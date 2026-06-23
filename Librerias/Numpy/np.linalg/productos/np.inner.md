@@ -55,16 +55,19 @@ $$
 Visualmente, con $a$ de shape $(2, 3)$ y $b$ de shape $(2, 3)$ (último eje $k=3$ común), el resultado
 es $(2, 2)$: cada fila de `a` se contrae contra cada fila de `b`.
 
-```text
-a = ┌ a0 = [a00 a01 a02] ┐      b = ┌ b0 = [b00 b01 b02] ┐
-    └ a1 = [a10 a11 a12] ┘          └ b1 = [b10 b11 b12] ┘
-                                 (cada fila es una fibra de longitud k=3)
+$$
+a = \begin{bmatrix} a_0 = [a_{00}\ a_{01}\ a_{02}] \\ a_1 = [a_{10}\ a_{11}\ a_{12}] \end{bmatrix}
+\qquad
+b = \begin{bmatrix} b_0 = [b_{00}\ b_{01}\ b_{02}] \\ b_1 = [b_{10}\ b_{11}\ b_{12}] \end{bmatrix}
+$$
 
-C[i, j] = aᵢ · bⱼ = Σₖ a[i,k]·b[j,k]      →   C tiene shape (2, 2):
+Cada fila es una fibra de longitud $k=3$. Con $C_{ij} = a_i \cdot b_j = \sum_k a_{ik}\,b_{jk}$, la salida tiene shape $(2, 2)$:
 
-        ┌ a0·b0   a0·b1 ┐
-   C =  └ a1·b0   a1·b1 ┘     el eje k=3 se contrae y desaparece
-```
+$$
+C = \begin{bmatrix} a_0 \cdot b_0 & a_0 \cdot b_1 \\ a_1 \cdot b_0 & a_1 \cdot b_1 \end{bmatrix}
+$$
+
+el eje $k=3$ se contrae y desaparece.
 
 ## Firma
 

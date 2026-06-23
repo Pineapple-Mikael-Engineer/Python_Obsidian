@@ -1,5 +1,5 @@
 ---
-title: np.kron — producto de Kronecker (A ⊗ B): cada elemento escala el bloque entero B
+title: np.kron — producto de Kronecker (A ⊗ B), cada elemento escala el bloque entero B
 aliases:
   - producto de Kronecker
   - kron
@@ -60,16 +60,23 @@ $$
 
 Visualmente, para $A_{(2\times2)}$ y $B_{(2\times2)}$ el resultado es $(4\times4)$ por bloques:
 
-```text
-A = ┌ a b ┐      B = ┌ e f ┐
-    └ c d ┘          └ g h ┘
+$$
+A = \begin{bmatrix} a & b \\ c & d \end{bmatrix} \qquad
+B = \begin{bmatrix} e & f \\ g & h \end{bmatrix}
+$$
 
-            ┌ a·B  b·B ┐   ┌ ae  af │ be  bf ┐
-A ⊗ B  =    │          │ = │ ag  ah │ bg  bh │   (4×4)
-            └ c·B  d·B ┘   │────────┼────────│
-                           │ ce  cf │ de  df │
-                           └ cg  ch │ dg  dh ┘
-```
+$$
+A \otimes B =
+\begin{bmatrix} a\,B & b\,B \\ c\,B & d\,B \end{bmatrix}
+=
+\left[\begin{array}{cc|cc}
+ae & af & be & bf \\
+ag & ah & bg & bh \\ \hline
+ce & cf & de & df \\
+cg & ch & dg & dh
+\end{array}\right]
+\quad (4\times4)
+$$
 
 Cada uno de los 4 bloques `(2×2)` es una copia de `B` escalada por el elemento de `A` que ocupa esa
 posición: el eje de `A` y el eje de `B` se **entrelazan**, no se cancelan.

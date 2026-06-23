@@ -47,14 +47,21 @@ anteriores son ejes de lote que **sobreviven**. Una matriz $(n,n)$ da un escalar
 $(b,n,n)$ da un vector $(b,)$ —una traza por matriz del lote—. La regla extendida con `offset` suma
 la diagonal desplazada $A_{i,\,i+\text{offset}}$.
 
-Visualmente, para una matriz $4\times 4$ la traza recorre la diagonal marcada:
+Visualmente, para una matriz $4\times 4$ la traza recorre la diagonal marcada (los elementos
+$A_{ii}$):
 
-```text
-┌ ■  ·  ·  · ┐
-│ ·  ■  ·  · │   tr = A00 + A11 + A22 + A33
-│ ·  ·  ■  · │   (offset=0: la diagonal principal)
-└ ·  ·  ·  ■ ┘
-```
+$$
+\operatorname{tr}(A) =
+\begin{bmatrix}
+\mathbf{A_{00}} & \cdot & \cdot & \cdot \\
+\cdot & \mathbf{A_{11}} & \cdot & \cdot \\
+\cdot & \cdot & \mathbf{A_{22}} & \cdot \\
+\cdot & \cdot & \cdot & \mathbf{A_{33}}
+\end{bmatrix}
+= A_{00} + A_{11} + A_{22} + A_{33}
+$$
+
+(con `offset=0`, la diagonal principal $A_{ii}$).
 
 ## Firma
 
