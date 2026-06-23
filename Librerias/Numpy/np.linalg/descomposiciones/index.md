@@ -1,47 +1,81 @@
 ---
-title: np.linalg — descomposiciones matriciales
+title: descomposiciones — factorizar una matriz en producto de matrices con estructura
 tags:
   - numpy
   - indice
 draft: false
 ---
 
-# np.linalg — descomposiciones matriciales
+# descomposiciones — factorizar una matriz en producto de matrices con estructura
 
-Factorizar una matriz en el producto de matrices con propiedades especiales permite resolver sistemas de forma mas eficiente, analizar los datos que contiene (SVD para PCA), o verificar propiedades (Cholesky solo funciona en matrices positivas definidas). Las descomposiciones son el nucleo del algebra lineal numerica moderna.
+Esta carpeta reúne las **descomposiciones (factorizaciones) matriciales** de `numpy.linalg`: escribir
+una matriz $A$ como el **producto de varias matrices con estructura especial** (triangular, ortonormal,
+diagonal). Esa estructura es lo que hace barato lo que sería caro sobre $A$ directamente: resolver
+sistemas, calcular el rango, invertir de forma estable o analizar los datos. La regla práctica para
+elegir: no preguntes "¿qué descomposición?", pregunta "¿qué **propiedad** tiene mi matriz (SPD,
+rectangular, cualquiera) y **qué quiero hacer** (resolver, ortonormalizar, comprimir)?". Todas se
+aplican a los **dos últimos ejes** y operan en [[concepto_shape|lote]] sobre los ejes previos.
 
-## Funciones
+## Qué descomposición necesito
 
-| Funcion | Factorizacion | Requisito de la matriz |
-|---|---|---|
-| [[np.linalg.svd]] | A = U Σ V^T (valores singulares) | Cualquier forma (M×N) |
-| [[np.linalg.qr]] | A = QR | Cualquier forma (M×N) |
-| [[np.linalg.cholesky]] | A = LL^T | Cuadrada, simetrica y positiva definida |
-| `scipy.linalg.lu` | A = PLU | Cuadrada — **no existe en np.linalg** |
+```mermaid
+flowchart TD
+    classDef raiz fill:#4c6f9c,stroke:#2e4a6b,color:#fff,font-weight:bold;
+    classDef fam fill:#e3edf7,stroke:#4c6f9c,color:#1a2b3c;
+    classDef op fill:#d6e9d6,stroke:#4c7a4c,color:#1a2b3c;
 
-> [!warning] np.linalg.lu no existe
-> La factorizacion LU no esta en NumPy. Usar `scipy.linalg.lu` o `scipy.linalg.lu_factor` + `scipy.linalg.lu_solve`.
+    R["¿qué matriz tengo / qué quiero?"]:::raiz
 
-## Descripcion de cada funcion
+    SPD["simétrica definida positiva"]:::fam
+    RECT["rectangular / mínimos cuadrados"]:::fam
+    ANY["cualquier matriz / análisis"]:::fam
+    VAL["solo magnitudes (rango, condición)"]:::fam
 
-**`np.linalg.svd(a, full_matrices)`** — Descomposicion en Valores Singulares: A = U S V^T. U y V son matrices ortonormales; S contiene los valores singulares en orden descendente. Es la factorizacion mas general y numericamente estable. Base de PCA, compresion de imagenes, regresion ridge y muchos algoritmos de ML.
+    R --> SPD
+    R --> RECT
+    R --> ANY
+    R --> VAL
 
-**`np.linalg.qr(a, mode)`** — Descomposicion QR: A = Q R donde Q es ortogonal y R es triangular superior. Util para resolver sistemas sobredeterminados (minimos cuadrados) y para el algoritmo QR de calculo de autovalores. El parametro `mode='reduced'` da la forma compacta.
+    SPD --> SPDo["np.linalg.cholesky — A = L Lᴴ"]:::op
+    RECT --> RECTo["np.linalg.qr — A = Q R"]:::op
+    ANY --> ANYo["np.linalg.svd — A = U Σ Vᴴ"]:::op
+    VAL --> VALo["np.linalg.svdvals — solo σ"]:::op
+```
 
-**`np.linalg.cholesky(a)`** — Descomposicion de Cholesky: A = L L^T donde L es triangular inferior. Solo funciona si A es simetrica positiva definida (todas las matrices de covarianza bien condicionadas). Es el doble de rapido que LU para este tipo de matrices. Util en simulacion de variables gaussianas correlacionadas.
+Por intención: matriz **simétrica definida positiva** (covarianzas, Gram) → [[np.linalg.cholesky]] ·
+matriz **rectangular** o **mínimos cuadrados** → [[np.linalg.qr]] · **cualquier** matriz, PCA,
+pseudo-inversa, compresión → [[np.linalg.svd]] · solo los **valores singulares** (rango, número de
+condición) → [[np.linalg.svdvals]].
 
-## Cuando usar cada una
+## Tabla de descomposiciones
 
-| Aplicacion | Descomposicion recomendada |
+| Descomposición | Factores | Requiere | Uso |
+|---|---|---|---|
+| [[np.linalg.cholesky]] | $A = L\,L^{*}$ ($L$ triangular inferior) | simétrica/hermítica **definida positiva** | resolver sistemas SPD, muestreo gaussiano, test de SPD |
+| [[np.linalg.qr]] | $A = QR$ ($Q$ ortonormal, $R$ triangular sup.) | cualquier $(m, n)$ | mínimos cuadrados, ortonormalizar bases |
+| [[np.linalg.svd]] | $A = U\,\Sigma\,V^{H}$ ($U, V$ ortonormales, $\Sigma$ diagonal) | cualquier $(m, n)$ | rango, pseudo-inversa, PCA, compresión |
+| [[np.linalg.svdvals]] | solo $\sigma_1 \ge \dots \ge \sigma_k$ | cualquier $(m, n)$ | rango numérico, número de condición, norma 2 |
+
+> [!warning] La descomposición LU **no** está en `numpy.linalg`
+> No existe `np.linalg.lu`. La factorización LU ($A = PLU$) vive en **`scipy.linalg.lu`** (o
+> `scipy.linalg.lu_factor` + `scipy.linalg.lu_solve`). NumPy la usa **internamente** en
+> [[np.linalg.solve]] y [[np.linalg.det]], pero no la expone como función. Si necesitas $P$, $L$, $U$
+> explícitos, usa SciPy.
+
+## Mapa de shapes (resumen)
+
+Todas factorizan los **dos últimos ejes** y dejan intactos los de lote `(...)`:
+
+| Función | Mapa de shapes |
 |---|---|
-| Analisis de datos, PCA, reduccion de dimension | [[np.linalg.svd]] |
-| Sistemas sobredeterminados (minimos cuadrados) | [[np.linalg.qr]] |
-| Matrices de covarianza, simulacion de multivariada normal | [[np.linalg.cholesky]] |
-| Resolver sistemas cuadrados eficientemente (alternativa a solve) | `scipy.linalg.lu` |
-| Pseudoinversa numericamente estable | [[np.linalg.svd]] (base de `pinv`) |
+| [[np.linalg.cholesky]] | $(\dots, n, n) \to L\,(\dots, n, n)$ |
+| [[np.linalg.qr]] | $(\dots, m, n) \to Q\,(\dots, m, k),\ R\,(\dots, k, n)$, $\ k=\min(m,n)$ |
+| [[np.linalg.svd]] | $(\dots, m, n) \to U\,(\dots, m, m\|k),\ S\,(\dots, k),\ V\!h\,(\dots, n\|k, n)$ |
+| [[np.linalg.svdvals]] | $(\dots, m, n) \to (\dots, \min(m, n))$ |
 
-## Notas rapidas
+## Notas relacionadas
 
-- **SVD**: la mas universal; `full_matrices=False` da la forma economica (recomendada para matrices grandes).
-- **QR**: `Q` es ortogonal, `R` es triangular superior; util para sistemas de ecuaciones con estructura rectangular.
-- **Cholesky**: la factorizacion mas rapida cuando aplica; falla con `LinAlgError` si la matriz no es positiva definida.
+- [[concepto_shape]] — el mapa de shapes que gobierna toda la familia (dos últimos ejes + lote)
+- [[np.linalg.svd]] — la descomposición universal, eje central de la carpeta
+- [[np.linalg.solve]] · [[np.linalg.lstsq]] · [[np.linalg.eig]] — consumidores de estas factorizaciones
+- [[Librerias/Numpy/np.linalg/index|np.linalg]] · [[Librerias/Numpy/index|NumPy raíz]]

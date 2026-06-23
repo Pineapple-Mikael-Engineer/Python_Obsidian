@@ -1,5 +1,5 @@
 ---
-title: np.linalg.eigh — Autovalores/autovectores de matriz simétrica o Hermitiana
+title: np.linalg.eigh — autovalores y autovectores de una matriz simétrica/Hermítica
 aliases:
   - eigh
   - linalg.eigh
@@ -11,96 +11,231 @@ tags:
 lib: numpy
 mod: np.linalg
 tipo: funcion
-retorna: tuple (w, v)
+retorna: tuple (eigenvalues, eigenvectors)
 inplace: false
+requiere:
+  - concepto_shape
 draft: false
 ---
 
-# np.linalg.eigh — Autovalores/autovectores de matriz simétrica o Hermitiana
+# np.linalg.eigh — autovalores y autovectores de una matriz simétrica/Hermítica
 
-## Firma de la función
+`np.linalg.eigh` resuelve el problema de autovalores cuando la matriz es **simétrica** (real) o
+**Hermítica** (compleja). Es la versión especializada y **preferida** frente a [[np.linalg.eig]]
+siempre que la matriz lo sea: explota la simetría para ser **más rápida y numéricamente más estable**,
+y garantiza dos propiedades que `eig` no da: los autovalores son **reales** y vienen en **orden
+ascendente**, y los autovectores son **ortonormales**. Es el caballo de batalla del PCA, los
+Hamiltonianos cuánticos y cualquier matriz de covarianza, Gram o $A^{\mathsf{T}}A$.
+
+## La idea en una fórmula
+
+El par autovalor–autovector cumple la ecuación central; la diferencia es que aquí, por la simetría
+de $A$, todo sale "bonito":
+
+$$
+A\,\mathbf{v} = \lambda\,\mathbf{v}, \qquad \lambda\in\mathbb{R}, \qquad \mathbf{v}_i^{\mathsf{T}}\mathbf{v}_j=\delta_{ij}
+$$
+
+Como los autovectores son **ortonormales**, $V$ es una matriz ortogonal/unitaria ($V^{-1}=V^{\mathsf{T}}$),
+y la diagonalización se vuelve una **descomposición espectral**:
+
+$$
+A = V\,\Lambda\,V^{\mathsf{T}} \qquad \Lambda=\operatorname{diag}(\lambda_0\le\lambda_1\le\dots\le\lambda_{n-1})
+$$
+
+**El mapa de shapes** — entrada `(...,n,n)` → dos salidas:
+
+$$
+\underbrace{(n_0,\dots,n_{k-1},\,n,\,n)}_{A}\ \xrightarrow{\ \text{eigh}\ }\ \big(\ \underbrace{(n_0,\dots,n_{k-1},\,n)}_{w\ \text{reales, ascendentes}}\ ,\ \underbrace{(n_0,\dots,n_{k-1},\,n,\,n)}_{v\ \text{ortonormales en columnas}}\ \big)
+$$
+
+```text
+   w =  [ λ0 ≤ λ1 ≤ λ2 ]      orden ASCENDENTE garantizado
+   v =  columnas ortonormales:  v[:, i] = autovector de w[i],  v.T @ v == I
+   relación:  A @ v[:, i] == w[i] * v[:, i]
+```
+
+## Firma
 
 ```python
 np.linalg.eigh(a, UPLO='L') -> EighResult(eigenvalues, eigenvectors)
+# a    : array_like, shape (..., n, n) — simétrica (real) o Hermítica (compleja)
+# UPLO : {'L', 'U'} — qué triángulo de a se lee (defecto 'L', inferior)
 ```
 
-Donde `a` es una matriz **simétrica** (real) o **Hermitiana** (compleja) de [[concepto_shape|shape]] `(..., M, M)`. Es la versión especializada y preferida frente a [[np.linalg.eig]] cuando la matriz es simétrica.
+## Los parámetros en detalle
+
+### `a` — la(s) matriz(ces) simétrica(s)/Hermítica(s)
+`array_like` de shape `(..., n, n)`, opcionalmente apilada en un lote. Solo se lee el **triángulo**
+indicado por `UPLO`; el otro **se ignora** (se asume simetría). Por eso, si pasas una matriz no
+simétrica, `eigh` **no falla**: opera como si la matriz fuera la simetrización del triángulo leído,
+lo que puede dar un resultado silenciosamente distinto al esperado.
+
+### `UPLO` — qué triángulo se usa (`'L'` o `'U'`)
+Selecciona la mitad de `a` que se lee: `'L'` (defecto) el triángulo **inferior**, `'U'` el
+**superior**. La otra mitad se reconstruye por simetría/conjugación, no se mira.
+
+```python
+a = np.array([[2.0, 1.0],
+              [9.9, 2.0]])   # triángulo superior "sucio" (9.9 no es 1.0)
+np.linalg.eigh(a, UPLO='L').eigenvalues   # usa el 1.0 inferior → array([1., 3.])
+np.linalg.eigh(a, UPLO='U').eigenvalues   # usaría el 9.9 superior → otro resultado
+```
+
+## El caso N-D
+
+Como [[np.matmul]] y `eig`, los **dos últimos ejes** son la matriz y los anteriores son **lote**.
+No hay `axis`; la descomposición es siempre sobre el bloque `(n, n)` final.
+
+| `a.shape` | `w.shape` | `v.shape` | qué pasa |
+|-----------|-----------|-----------|----------|
+| `(n, n)` | `(n,)` | `(n, n)` | una descomposición |
+| `(b, n, n)` | `(b, n)` | `(b, n, n)` | `b` descomposiciones independientes |
+| `(b, c, n, n)` | `(b, c, n)` | `(b, c, n, n)` | lote 2D |
+
+```python
+lote = np.random.rand(8, 4, 4)
+sim  = lote + lote.transpose(0, 2, 1)        # simetrizar cada matriz
+w, v = np.linalg.eigh(sim)                   # w:(8,4) ascendente  v:(8,4,4)
+np.allclose(sim @ v, v @ (w[..., None, :] * np.eye(4)))   # True
+```
+
+## Vectorización
+
+El lote evita el bucle Python y delega en **LAPACK** (rutina `syevd`/`heevd`, optimizada para
+matrices simétricas):
+
+```python
+# Bucle Python: una eigh por matriz
+def batch_eigh(A):
+    ws, vs = [], []
+    for k in range(A.shape[0]):
+        w, v = np.linalg.eigh(A[k])
+        ws.append(w); vs.append(v)
+    return np.array(ws), np.array(vs)
+
+# Vectorizado: NumPy recorre el lote en C / LAPACK
+w, v = np.linalg.eigh(A)
+```
+
+Ver [[concepto_vectorizacion]]: describes *qué* descomponer, no *cómo* iterar el lote.
 
 ## Valor de retorno
 
-Devuelve una **tupla** (named tuple `EighResult`) con autovalores y autovectores. A diferencia de `eig`, los autovalores son **reales** y vienen en **orden ascendente**.
+Devuelve un **namedtuple** `EighResult(eigenvalues, eigenvectors)` —la tupla
+`(autovalores, autovectores)`, desempaquetable como `w, v = np.linalg.eigh(a)`.
 
 | Posición | Nombre | Shape | Contenido |
 |----------|--------|-------|-----------|
-| `w` (índice 0) | `eigenvalues` | `(..., M)` | Autovalores **reales**, en orden **ascendente** |
-| `v` (índice 1) | `eigenvectors` | `(..., M, M)` | Matriz cuyas **columnas** son los autovectores (ortonormales); `v[:, i]` corresponde a `w[i]` |
+| 0 | `eigenvalues` (`w`) | `(..., n)` | los $n$ autovalores **reales**, en **orden ascendente** (`w[..., 0]` el menor, `w[..., -1]` el mayor) |
+| 1 | `eigenvectors` (`v`) | `(..., n, n)` | matriz cuyas **columnas** son los autovectores **ortonormales**: `v[..., :, i]` ↔ `w[..., i]` |
 
-> [!tip] Como `a` es simétrica, los autovalores son reales y `v` es **ortogonal**: `v.T @ v == I`. Las columnas de `v` son los autovectores.
+> [!tip] Los autovectores son las COLUMNAS de `v`, y `v` es ortogonal
+> El autovector de `w[i]` es `v[:, i]` (columna), nunca `v[i]`. Como las columnas son ortonormales,
+> `v.T @ v == I`. Y como `w` está **ordenado ascendente**, la **componente principal** (mayor
+> autovalor) es `v[:, -1]`.
 
 ```python
-import numpy as np
 a = np.array([[2.0, 1.0],
-              [1.0, 2.0]])          # simétrica
+              [1.0, 2.0]])              # simétrica
 w, v = np.linalg.eigh(a)
-w            # array([1., 3.])       → reales y ascendentes
-v[:, 0]      # autovector de w[0]=1
-np.allclose(v.T @ v, np.eye(2))     # True → columnas ortonormales
-np.allclose(a @ v, v @ np.diag(w))  # True
-```
-
-## Parámetros en detalle
-
-### `a` — matriz simétrica/Hermitiana
-
-Array de shape `(..., M, M)`. Solo se lee el **triángulo** indicado por `UPLO`; el otro triángulo se ignora (se asume simetría). Si pasas una matriz no simétrica, el resultado será el de su parte simétrica implícita, no un error.
-
-### `UPLO` — triángulo a usar (`'L'` o `'U'`)
-
-Indica qué mitad de la matriz se lee. `'L'` (por defecto) usa el triángulo **inferior**; `'U'` el **superior**.
-
-```python
-a = np.array([[2.0, 1.0],
-              [9.9, 2.0]])   # triángulo superior "sucio"
-np.linalg.eigh(a, UPLO='L').eigenvalues   # usa 1.0 → simétrica real
+w                                       # array([1., 3.])  → reales y ascendentes
+np.allclose(v.T @ v, np.eye(2))         # True → columnas ortonormales
+np.allclose(a @ v, v @ np.diag(w))      # True → A V = V Λ
 ```
 
 ## Casos de uso
 
-| Caso | Idea |
-|------|------|
-| PCA | `eigh` de la matriz de **covarianza** (siempre simétrica) → componentes principales |
-| Matrices de Gram / kernels | Son simétricas positivas semidefinidas |
-| Definir positividad | Todos `w > 0` ⇒ definida positiva (Cholesky existe) |
-| Física cuántica | Hamiltonianos Hermitianos: energías (reales) = autovalores |
+### Ejemplo trabajado con números: matriz simétrica 2×2
+
+Tomamos una matriz **simétrica** y resolvemos a mano para ver el resultado "bonito" de `eigh`:
+
+$$
+A=\begin{bmatrix} 2 & 1 \\ 1 & 2 \end{bmatrix}
+$$
+
+$\det(A-\lambda I)=(2-\lambda)^2-1=0$ da $\lambda=1,3$. Como `eigh` los devuelve en **orden
+ascendente**, $\lambda_0=1$ y $\lambda_1=3$. Los autovectores **ortonormales** (columnas de $v$) son:
+
+$$
+w=\begin{bmatrix} 1 & 3 \end{bmatrix}
+\qquad
+v=\begin{bmatrix} -\tfrac{1}{\sqrt2} & \tfrac{1}{\sqrt2} \\[4pt] \phantom{-}\tfrac{1}{\sqrt2} & \tfrac{1}{\sqrt2} \end{bmatrix}
+\;\approx\;
+\begin{bmatrix} -0.707 & 0.707 \\ \phantom{-}0.707 & 0.707 \end{bmatrix}
+$$
+
+La columna 0 es $\tfrac{1}{\sqrt2}\begin{bmatrix}-1\\1\end{bmatrix}$ (para $\lambda=1$) y la columna 1
+es $\tfrac{1}{\sqrt2}\begin{bmatrix}1\\1\end{bmatrix}$ (para $\lambda=3$); el signo global no está
+fijado. Verificación de $A\mathbf v=\lambda\mathbf v$ para la columna 1 (autovalor $3$):
+
+$$
+A\begin{bmatrix} 1/\sqrt2 \\ 1/\sqrt2 \end{bmatrix}
+=\begin{bmatrix} 3/\sqrt2 \\ 3/\sqrt2 \end{bmatrix}
+=3\begin{bmatrix} 1/\sqrt2 \\ 1/\sqrt2 \end{bmatrix}\ \checkmark
+$$
 
 ```python
-# PCA: direcciones de máxima varianza
-X = np.random.rand(100, 3)
-C = np.cov(X, rowvar=False)              # covarianza 3×3 (simétrica)
-w, v = np.linalg.eigh(C)
-componente_principal = v[:, -1]          # mayor autovalor está al final
+a = np.array([[2.0, 1.0],
+              [1.0, 2.0]])
+w, v = np.linalg.eigh(a)
+w                                       # array([1., 3.])  → reales y ascendentes
+v[:, 1]                                 # array([0.707, 0.707]) → autovector de w[1]=3 (COLUMNA)
+np.allclose(a @ v[:, 1], w[1] * v[:, 1])   # True → A v = λ v
+np.allclose(v.T @ v, np.eye(2))            # True → columnas ortonormales
 ```
 
-## Buenas prácticas
+> [!example] Matriz simétrica 3×3 (tridiagonal) trabajada
+> Para $A=\begin{bmatrix} 2 & 1 & 0 \\ 1 & 2 & 1 \\ 0 & 1 & 2 \end{bmatrix}$ los autovalores son
+> $w=\begin{bmatrix} 2-\sqrt2 & 2 & 2+\sqrt2 \end{bmatrix}\approx\begin{bmatrix} 0.586 & 2 & 3.414 \end{bmatrix}$,
+> de nuevo reales y en orden ascendente. La componente principal es `v[:, -1]` (autovalor $2+\sqrt2$).
 
-1. Si la matriz es simétrica/Hermitiana, usa **siempre** `eigh` en lugar de [[np.linalg.eig]]: más rápida, más estable y sin parte imaginaria espuria.
-2. Aprovecha el **orden ascendente**: el mayor autovalor (y su componente principal) es `w[-1]` / `v[:, -1]`.
-3. Indexa los autovectores por **columna** (`v[:, i]`), nunca por fila.
-4. Si solo necesitas autovalores (test de definida positiva, etc.), usa [[np.linalg.eigvalsh]].
+### PCA: direcciones de máxima varianza
+```python
+X = np.random.rand(100, 3)
+C = np.cov(X, rowvar=False)             # covarianza 3×3 (simétrica)
+w, v = np.linalg.eigh(C)
+componente_principal = v[:, -1]         # mayor autovalor → al FINAL (orden ascendente)
+```
+
+### Test de definida positiva
+```python
+G = X @ X.T                             # matriz de Gram (simétrica, ≥0)
+es_pos_def = np.all(np.linalg.eigh(G).eigenvalues > 0)
+```
+
+### Lote de Hamiltonianos (N-D): niveles de energía
+
+Para un lote `(b, n, n)` simétrico, `w` es `(b, n)` y `v` es `(b, n, n)`: por cada matriz, `n`
+autovalores reales ascendentes y `n` autovectores ortonormales en columnas.
+
+```python
+H = np.random.rand(50, 6, 6)           # b=50 matrices 6×6  → shape (50, 6, 6)
+H = H + H.transpose(0, 2, 1)           # simetrizar cada matriz del lote
+w, v = np.linalg.eigh(H)               # w: (50, 6)   v: (50, 6, 6)
+w.shape, v.shape                       # ((50, 6), (50, 6, 6))
+estado_fundamental = v[:, :, 0]        # autovector del menor autovalor por matriz → (50, 6)
+
+# lote 2D (4D): (b, c, n, n) → w:(b, c, n)  v:(b, c, n, n)
+B = np.random.rand(8, 5, 4, 4)
+B = B + B.transpose(0, 1, 3, 2)               # simetrizar el bloque (4,4) final
+w4, v4 = np.linalg.eigh(B)
+w4.shape, v4.shape                            # ((8, 5, 4), (8, 5, 4, 4))
+```
 
 ## Errores comunes
 
 | Error | Causa | Solución |
 |-------|-------|----------|
-| `LinAlgError: Last 2 dimensions must be square` | matriz no cuadrada | verificar shape `(..., M, M)` |
+| `LinAlgError: Last 2 dimensions must be square` | matriz no cuadrada | verificar shape `(..., n, n)` |
 | Resultado inesperado con matriz no simétrica | `eigh` ignora medio triángulo | asegurar simetría o usar [[np.linalg.eig]] |
 | Tomar `v[i]` como autovector | son **columnas**, no filas | usar `v[:, i]` |
 | Buscar el mayor autovalor en `w[0]` | el orden es **ascendente** | el máximo está en `w[-1]` |
-| Autovalores con parte imaginaria al usar `eig` | matriz simétrica con la función general | cambiar a `eigh` |
+| Resultado distinto al cambiar `UPLO` | la matriz no era simétrica | simetrizar antes, o usar `eig` |
 
 ## Notas relacionadas
 
-- [[np.linalg.eig]]
-- [[np.linalg.eigvalsh]]
-- [[np.linalg.eigvals]]
-- [[concepto_shape]]
+- [[concepto_shape]] — el lote `(..., n, n)` y el mapa a las dos salidas
+- [[np.linalg.eig]] — la versión general (matrices no simétricas)
+- [[np.linalg.eigvalsh]] — solo los autovalores de una matriz Hermítica
+- [[np.linalg.eigvals]] · [[np.trace]] · [[np.linalg.det]]

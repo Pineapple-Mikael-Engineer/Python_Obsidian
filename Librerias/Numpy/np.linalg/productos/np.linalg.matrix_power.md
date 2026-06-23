@@ -1,5 +1,5 @@
 ---
-title: np.linalg.matrix_power — Potencia entera de una matriz cuadrada
+title: np.linalg.matrix_power — potencia entera de una matriz cuadrada (A^n)
 aliases:
   - matrix_power
   - linalg.matrix_power
@@ -13,93 +13,207 @@ mod: np.linalg
 tipo: funcion
 retorna: ndarray
 inplace: false
+requiere:
+  - concepto_shape
 draft: false
 ---
 
-# np.linalg.matrix_power — Potencia entera de una matriz cuadrada
+# np.linalg.matrix_power — potencia entera de una matriz cuadrada (A^n)
 
-## Firma de la función
+`np.linalg.matrix_power` eleva una matriz **cuadrada** $A$ a una potencia **entera** $n$ usando el
+**producto matricial repetido**: $A^n = A\,@\,A\,@\,\dots\,@\,A$ ($n$ veces). Es la versión matricial
+de `**`, no la potencia elemento a elemento. La operación está gobernada por el [[np.matmul|producto
+matricial]]: cada paso contrae la dimensión interior, por lo que la matriz debe ser cuadrada para
+poder multiplicarse consigo misma. Aparece en cadenas de Markov, sistemas dinámicos discretos
+($x_{t} = A^t x_0$) y cualquier iteración lineal repetida.
+
+## La idea en una fórmula
+
+Para $A$ de shape $(n_0,\dots,n_{k-1}, m, m)$, la potencia $n$-ésima encadena $n$ productos matriciales:
+
+$$
+A^n = \underbrace{A \cdot A \cdots A}_{n\ \text{factores}} \qquad (A^n)_{ij} = \sum_{k_1,\dots,k_{n-1}} A_{i k_1} A_{k_1 k_2} \cdots A_{k_{n-1} j}
+$$
+
+**El mapa de shapes** — la matriz debe ser **cuadrada** ($m \times m$) y la salida conserva el shape;
+los $n_0,\dots,n_{k-1}$ son ejes de lote que se preservan intactos:
+
+$$
+(n_0,\dots,n_{k-1},\, m,\, m)\ \xrightarrow{\ \text{matrix\_power},\ n\ }\ (n_0,\dots,n_{k-1},\, m,\, m)
+$$
+
+El exponente $n$ es un entero con tres regímenes según su signo:
+
+$$
+A^n =
+\begin{cases}
+\underbrace{A \cdots A}_{n} & n > 0 \quad \text{(producto repetido)} \\[4pt]
+I_m & n = 0 \quad \text{(identidad } m\times m\text{)} \\[4pt]
+\underbrace{A^{-1} \cdots A^{-1}}_{|n|} & n < 0 \quad \text{(potencia de la inversa, requiere } A \text{ invertible)}
+\end{cases}
+$$
+
+## Firma
 
 ```python
 np.linalg.matrix_power(a, n) -> ndarray
 ```
 
+## Los parámetros en detalle
+
+### `a` — la matriz (o lote de matrices) a elevar
+`array_like` con `ndim >= 2` cuyos **dos últimos ejes son iguales** (`a.shape[-1] == a.shape[-2]`),
+es decir cuadrada $(n_0,\dots,n_{k-1}, m, m)$. Admite **pilas**: los ejes anteriores son lote y cada matriz del
+lote se eleva por separado. Si no es cuadrada, lanza `LinAlgError`.
+
+### `n` — el exponente entero
+Un **entero** de Python o NumPy (no acepta floats; un float lanza `TypeError`). Su signo determina el
+comportamiento:
+- `n > 0`: producto matricial repetido `n` veces. Internamente usa **exponenciación binaria**
+  (cuadrados sucesivos), así que `A**16` no hace 16 productos sino unos $\log_2 16 = 4$.
+- `n == 0`: devuelve la **identidad** $I_m$ del tamaño adecuado, sea cual sea `a` (mientras sea
+  cuadrada).
+- `n < 0`: eleva la **inversa** `inv(a)` a `abs(n)`; requiere que `a` sea **invertible** (no
+  singular), o lanza `LinAlgError: Singular matrix`.
+
+```python
+A = np.array([[2, 0], [0, 3]])
+np.linalg.matrix_power(A, 3)    # [[8, 0], [0, 27]]   → A @ A @ A
+np.linalg.matrix_power(A, 0)    # [[1, 0], [0, 1]]    → identidad
+np.linalg.matrix_power(A, -1)   # [[0.5, 0], [0, 0.333...]]  → inv(A)
+```
+
+## El caso N-D
+
+Como toda la familia de productos, `matrix_power` trata los **dos últimos ejes** como la matriz y
+**todos los anteriores como un lote**. Cada matriz del lote se eleva de forma independiente; el shape
+no cambia:
+
+| `a.shape` | `n` | resultado | qué pasa |
+|-----------|-----|-----------|----------|
+| `(m, m)` | `> 0` | `(m, m)` | potencia de una sola matriz |
+| `(m, m)` | `0` | `(m, m)` | identidad $I_m$ |
+| `(m, m)` | `< 0` | `(m, m)` | potencia de la inversa |
+| `(b, m, m)` | `k` | `(b, m, m)` | **lote**: `b` potencias independientes |
+| `(p, q, m, m)` | `k` | `(p, q, m, m)` | lote 2D de potencias |
+
+```python
+# Lote de 4 matrices 2x2, cada una elevada al cubo
+batch = np.tile(np.array([[2, 0], [0, 3]]), (4, 1, 1))   # shape (4, 2, 2)
+np.linalg.matrix_power(batch, 3).shape   # (4, 2, 2)  → 4 potencias, sin bucle
+np.linalg.matrix_power(batch, 3)[0]      # [[8, 0], [0, 27]]
+```
+
+## Vectorización
+
+El valor de `matrix_power` es doble. Por un lado, frente a un bucle Python que encadena `@` a mano,
+delega los productos en **BLAS** y usa **exponenciación binaria** (menos productos que `n`):
+
+```python
+# Bucle Python ingenuo: n-1 productos explícitos
+def power_loop(A, n):
+    out = A.copy()
+    for _ in range(n - 1):
+        out = out @ A
+    return out
+
+# Vectorizado: BLAS + exponenciación binaria (≈ log2(n) productos)
+np.linalg.matrix_power(A, n)
+```
+
+Por otro lado, en N-D recorre el **lote en C** sin un `for` por matriz. Razonar "los dos últimos ejes
+son la matriz, lo demás es lote" (ver [[concepto_shape]]) es lo que permite elevar un tensor de
+matrices de golpe.
+
 ## Valor de retorno
 
-Eleva una matriz **cuadrada** `a` a la potencia entera `n`, es decir `a @ a @ ... @ a` (`n` veces). Es la versión matricial de `**` con producto matricial, no elemento a elemento.
+| `a` | `n` | salida | tipo |
+|-----|-----|--------|------|
+| `(m, m)` int | `> 0` | `(m, m)` | `ndarray`, dtype de `a` |
+| `(m, m)` | `0` | `(m, m)` identidad | `ndarray` |
+| `(m, m)` | `< 0` | `(m, m)` | `ndarray` **float** (la inversa promueve a float) |
+| `(b, m, m)` | cualquiera | `(b, m, m)` | `ndarray` |
 
-| `n` | Resultado | Significado |
-|-----|-----------|-------------|
-| `n > 0` | `a @ a @ ... @ a` | producto matricial repetido `n` veces |
-| `n == 0` | `I` | matriz identidad del mismo tamaño |
-| `n < 0` | `inv(a) @ ... @ inv(a)` | potencia de la inversa (`abs(n)` veces) |
-
-```python
-import numpy as np
-A = np.array([[2, 0],
-              [0, 3]])
-
-np.linalg.matrix_power(A, 3)   # array([[8, 0], [0, 27]])
-np.linalg.matrix_power(A, 0)   # array([[1, 0], [0, 1]])  → identidad
-np.linalg.matrix_power(A, -1)  # array([[0.5, 0. ], [0. , 0.333...]])  → inversa
-```
-
-## No confundir con potencia elemento a elemento
-
-```python
-A ** 2                         # eleva cada elemento al cuadrado (Hadamard)
-np.linalg.matrix_power(A, 2)   # A @ A  → producto matricial
-```
-
-Igual que con `@` frente a `*` (ver [[np.multiply]]), `matrix_power` actúa en el sentido del álgebra matricial, no posición a posición.
-
-## Parámetros en detalle
-
-| Parámetro | Tipo | Descripción |
-|-----------|------|-------------|
-| `a` | ndarray cuadrado `(..., M, M)` | Matriz a elevar. Admite pilas: los 2 últimos ejes deben ser cuadrados |
-| `n` | int | Exponente entero (positivo, cero o negativo). No admite floats |
-
-### Requisitos
-
-- `a` debe ser **cuadrada** en sus dos últimos ejes (ver [[concepto_shape|shape]] `(..., M, M)`).
-- Para `n < 0`, `a` debe ser **invertible** (no singular); internamente usa `np.linalg.inv`.
-- `n` debe ser un **entero** de Python/NumPy; un float lanza error.
+- Con `n >= 0` y `a` entera, el resultado conserva el `dtype` entero.
+- Con `n < 0` el resultado es **float** porque `inv(a)` lo es, aunque `a` sea entera.
+- Siempre devuelve un `ndarray` nuevo (nunca una vista).
 
 ## Casos de uso
 
-### Iteración de sistemas dinámicos / cadenas de Markov
+### Potencias concretas de una matriz $2\times 2$
+Con la matriz de cizalladura (*shear*) $A = \begin{bmatrix} 1 & 1 \\ 0 & 1 \end{bmatrix}$, elevarla
+acumula el desplazamiento en la esquina superior derecha — un patrón clásico para fijar la intuición:
 
+$$
+A^2 = \begin{bmatrix} 1 & 1 \\ 0 & 1 \end{bmatrix}^2 = \begin{bmatrix} 1 & 2 \\ 0 & 1 \end{bmatrix}
+\qquad
+A^3 = \begin{bmatrix} 1 & 1 \\ 0 & 1 \end{bmatrix}^3 = \begin{bmatrix} 1 & 3 \\ 0 & 1 \end{bmatrix}
+\qquad
+A^n = \begin{bmatrix} 1 & n \\ 0 & 1 \end{bmatrix}
+$$
+
+```python
+A = np.array([[1, 1],
+              [0, 1]])
+np.linalg.matrix_power(A, 2)   # [[1, 2], [0, 1]]
+np.linalg.matrix_power(A, 3)   # [[1, 3], [0, 1]]
+np.linalg.matrix_power(A, 7)   # [[1, 7], [0, 1]]   → A^n = [[1, n], [0, 1]]
+```
+
+### Cadena de Markov: distribución tras varios pasos
 ```python
 P = np.array([[0.9, 0.1],
               [0.5, 0.5]])
-estado_t10 = np.linalg.matrix_power(P, 10)   # transición tras 10 pasos
+P10 = np.linalg.matrix_power(P, 10)   # matriz de transición tras 10 pasos
 ```
 
-### Identidad rápida de tamaño adecuado
+### Sistema dinámico discreto $x_t = A^t x_0$
+```python
+A = np.array([[1.0, 1.0], [0.0, 1.0]])   # avance con "inercia"
+x0 = np.array([0.0, 1.0])
+A5 = np.linalg.matrix_power(A, 5)
+x5 = A5 @ x0                              # estado en t=5
+```
 
+### Identidad del tamaño adecuado
 ```python
 I = np.linalg.matrix_power(A, 0)   # identidad MxM coherente con A
 ```
 
-## Buenas prácticas
+### N-D: potencia por lotes
+```python
+M = np.random.rand(8, 3, 3)        # 8 matrices 3x3
+np.linalg.matrix_power(M, 4).shape # (8, 3, 3)  → 8 potencias en lote
+```
 
-1. Verifica que la matriz sea cuadrada antes de llamar.
-2. Para `n` negativo, confirma que la matriz es invertible (evita matrices singulares).
-3. Recuerda que `n=0` siempre devuelve la identidad, sea cual sea `a` (si es cuadrada).
-4. No uses `**` esperando potencia matricial: eso es elemento a elemento.
+### Dimensión alta: lote 4D `(4, 5, 2, 2)` de potencias
+Con un lote 4D —una rejilla $4\times 5$ de matrices $2\times 2$— los **cuatro** primeros ejes son lote
+y cada una de las $4\cdot 5 = 20$ matrices se eleva por separado. El shape entra y sale idéntico:
+
+$$
+(4,\, 5,\, 2,\, 2)\ \xrightarrow{\ \text{matrix\_power},\ n=3\ }\ (4,\, 5,\, 2,\, 2)
+$$
+
+```python
+shears = np.tile(np.array([[1, 1], [0, 1]]), (4, 5, 1, 1))  # shape (4, 5, 2, 2)
+out = np.linalg.matrix_power(shears, 3)
+out.shape          # (4, 5, 2, 2)  → 20 potencias independientes, sin bucle
+out[0, 0]          # [[1, 3], [0, 1]]   → cada celda es [[1, n], [0, 1]]
+```
 
 ## Errores comunes
 
 | Error | Causa | Solución |
 |-------|-------|----------|
-| `LinAlgError: Last 2 dimensions ... must be square` | matriz no cuadrada | usar `(M, M)` |
+| `LinAlgError: Last 2 dimensions ... must be square` | matriz no cuadrada | dar forma `(..., M, M)` |
 | `TypeError: exponent must be an integer` | `n` es float | pasar un entero |
-| `LinAlgError: Singular matrix` | `n<0` con matriz no invertible | usar `n>=0` o matriz regular |
-| Resultado elemento a elemento | se usó `**` | usar `matrix_power` |
+| `LinAlgError: Singular matrix` | `n < 0` con matriz no invertible | usar `n >= 0` o una matriz regular |
+| Resultado elemento a elemento inesperado | se usó `**` | usar `matrix_power` (ver [[np.multiply]]) |
+| Esperar `dtype` entero con `n < 0` | la inversa promueve a float | esperado: la inversa es float |
 
 ## Notas relacionadas
 
-- [[np.linalg.dot]]
-- [[np.multiply]]
-- [[np.linalg.matrix_transpose]]
+- [[np.matmul]] — el producto matricial que se repite en cada paso
+- [[concepto_shape]] — los dos últimos ejes son la matriz; lo demás es lote
+- [[np.multiply]] — la potencia elemento a elemento (`**`), no confundir
+- [[np.linalg.matrix_transpose]] · [[np.linalg.multi_dot]]

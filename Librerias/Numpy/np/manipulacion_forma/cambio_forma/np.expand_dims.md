@@ -1,5 +1,5 @@
 ---
-title: np.expand_dims — Insertar un eje de tamaño 1
+title: np.expand_dims — inserta un eje de tamaño 1 en la posición axis
 aliases:
   - expand_dims
   - np.expand_dims
@@ -25,106 +25,149 @@ requiere:
 draft: false
 ---
 
-# np.expand_dims — Insertar un eje de tamaño 1
+# np.expand_dims — inserta un eje de tamaño 1 en la posición axis
 
-## Firma de la función
+`np.expand_dims` es la inversa de [[np.squeeze|squeeze]]: añade al [[concepto_shape|shape]] un eje nuevo de tamaño 1 en la posición que digas, subiendo `ndim` en 1. No replica datos ni cambia el `size`; solo crea una dimensión "virtual" que sirve para **alinear formas**. Es la herramienta clave para preparar arrays de cara al [[concepto_broadcasting|broadcasting]]: un vector `(4,)` que no casa con una matriz `(4, 3)` se vuelve compatible al convertirlo en `(4, 1)`.
+
+## La idea en una fórmula
+
+Expand_dims inserta un `1` en la posición `axis` de la tupla, desplazando los ejes posteriores:
+
+$$ (n_0, \dots, n_{k-1}) \;\xrightarrow{\ \text{expand\_dims, axis}=p\ }\; (n_0, \dots, n_{p-1},\, 1,\, n_p, \dots, n_{k-1}) $$
+
+El nuevo eje vale 1, así que el `size` no cambia (multiplicar por 1 no altera el producto). Dónde cae el `1` decide cómo se alineará la forma por la derecha en broadcasting:
+
+$$ (3,) \;\xrightarrow{\ \text{axis}=0\ }\; (1, 3) \quad\text{(fila)} \qquad\qquad (3,) \;\xrightarrow{\ \text{axis}=1\ }\; (3, 1) \quad\text{(columna)} $$
+
+## Firma
 
 ```python
 np.expand_dims(
-    a,
-    axis
+    a,                 # array_like: el array al que añadir el eje
+    axis,              # int | tuple[int]: posición(es) donde insertar el eje de tamaño 1
 ) -> ndarray
 ```
 
-## Valor de retorno
+## Los parámetros en detalle
 
-Devuelve una [[concepto_views_vs_copias|vista]] de `a` con un nuevo eje de tamaño 1 insertado en la posición `axis`. Aumenta `ndim` en 1; los datos no cambian. Es clave para habilitar [[concepto_broadcasting|broadcasting]].
+### `a` — el array de entrada
+`array_like` de cualquier forma. Se convierte a `ndarray` si no lo es. No se modifica; el resultado es una vista.
 
-| Shape entrada | `axis` | Shape salida |
-|---------------|--------|--------------|
-| `(3,)` | `0` | `(1, 3)` |
-| `(3,)` | `1` | `(3, 1)` |
-| `(2, 3)` | `0` | `(1, 2, 3)` |
-| `(2, 3)` | `-1` | `(2, 3, 1)` |
+### `axis` — dónde insertar el eje
+`int` o tupla de `int` (tupla admitida desde NumPy ≥ 1.18). Es la posición que ocupará el nuevo eje **en el shape de salida**. Admite valores negativos (cuentan desde el final). El rango válido es `[-(ndim+1), ndim]`.
 
 ```python
-import numpy as np
-v = np.array([1, 2, 3])        # shape (3,)
-np.expand_dims(v, axis=0).shape  # (1, 3)  fila
-np.expand_dims(v, axis=1).shape  # (3, 1)  columna
+v = np.array([1, 2, 3])            # (3,)
+np.expand_dims(v, axis=0).shape    # (1, 3)  → fila
+np.expand_dims(v, axis=1).shape    # (3, 1)  → columna
+np.expand_dims(v, axis=-1).shape   # (3, 1)  → al final sin saber ndim
+
+a = np.ones((2, 3))
+np.expand_dims(a, axis=(0, 3)).shape   # (1, 2, 3, 1)  → dos ejes a la vez
 ```
 
-## Relación con newaxis y reshape
+`axis=-1` es idiomático para "añadir un canal/eje al final" sin tener que conocer `ndim`.
 
-Tres formas equivalentes de añadir un eje:
+## El caso N-D
+
+La regla: el eje de tamaño 1 se inserta en la posición `axis` y todo lo demás se desplaza. Con tupla, se insertan varios ejes a la vez (las posiciones se interpretan sobre el shape final).
+
+| `a.shape` | `axis` | salida | uso |
+|-----------|--------|--------|-----|
+| `(3,)` | `0` | `(1, 3)` | vector → fila |
+| `(3,)` | `1` | `(3, 1)` | vector → columna |
+| `(2, 3)` | `0` | `(1, 2, 3)` | añadir eje de lote |
+| `(2, 3)` | `-1` | `(2, 3, 1)` | añadir eje de canal |
+| `(28, 28)` | `(0, -1)` | `(1, 28, 28, 1)` | lote + canal de golpe |
+
+```python
+# Imagen 2-D → tensor con ejes de lote y canal
+img = np.random.rand(28, 28)        # (28, 28)
+batch = np.expand_dims(img, 0)      # (1, 28, 28)   → un solo ejemplo en el lote
+canal = np.expand_dims(img, -1)     # (28, 28, 1)   → un canal al final
+np.expand_dims(img, (0, -1)).shape  # (1, 28, 28, 1) → formato lote-alto-ancho-canal
+```
+
+## Vista vs copia
+
+`np.expand_dims` devuelve **siempre una vista**: solo reescribe shape y `strides` (el nuevo eje recibe stride 0 / sin efecto), nunca mueve datos (ver [[concepto_views_vs_copias]]). Modificar el resultado modifica `a`.
+
+## Valor de retorno
+
+`ndarray` con el mismo `dtype` y los mismos datos que `a`, con `ndim` aumentado en tantas posiciones como indique `axis`. Siempre vista.
+
+| Entrada | `axis` | salida | `ndim` |
+|---------|--------|--------|--------|
+| `(3,)` | `0` | `(1, 3)` | 1 → 2 |
+| `(2, 3)` | `-1` | `(2, 3, 1)` | 2 → 3 |
+| `(2, 3)` | `(0, 3)` | `(1, 2, 3, 1)` | 2 → 4 |
+
+## Relación con `np.newaxis` y `reshape`
+
+Tres formas equivalentes de añadir un eje de tamaño 1:
 
 ```python
 v = np.arange(3)
 np.expand_dims(v, 1)   # (3, 1)
-v[:, np.newaxis]       # (3, 1)  → np.newaxis es None
+v[:, np.newaxis]       # (3, 1)  → np.newaxis es un alias de None
 v.reshape(-1, 1)       # (3, 1)
 ```
 
-`expand_dims` es la más explícita y legible cuando el eje se calcula en código.
-
-## Parámetros en detalle
-
-### `a` — array de entrada
-
-Array de cualquier forma.
-
-### `axis` — posición del nuevo eje
-
-Entero o tupla de enteros (NumPy ≥ 1.18). Admite valores negativos (desde el final).
-
-```python
-a = np.ones((2, 3))
-np.expand_dims(a, axis=(0, 3)).shape   # (1, 2, 3, 1)
-```
+`np.newaxis` es el más compacto al indexar a mano; `expand_dims` es el más legible cuando el eje viene en una **variable** (`np.expand_dims(a, axis=eje)`) o cuando insertas varios a la vez.
 
 ## Casos de uso
 
-### Preparar broadcasting entre vector y matriz
+### Vector a fila y a columna (matriz pequeña)
 
+Un vector `(3,)` se convierte en fila `(1, 3)` o en columna `(3, 1)` según dónde caiga el eje nuevo:
+
+$$ [\,1,2,3\,]_{(3,)} \;\xrightarrow{\ \text{axis}=0\ }\; \begin{bmatrix} 1 & 2 & 3 \end{bmatrix}_{(1,3)} \qquad\qquad [\,1,2,3\,]_{(3,)} \;\xrightarrow{\ \text{axis}=1\ }\; \begin{bmatrix} 1 \\ 2 \\ 3 \end{bmatrix}_{(3,1)} $$
+
+```python
+v = np.array([1, 2, 3])           # (3,)
+np.expand_dims(v, axis=0).shape    # (1, 3)  → fila
+np.expand_dims(v, axis=1).shape    # (3, 1)  → columna
+```
+
+### Habilitar broadcasting entre vector y matriz
 ```python
 M = np.ones((4, 3))
-v = np.array([10, 20, 30, 40])      # (4,)  → no alinea con (4, 3)
-M + np.expand_dims(v, axis=1)       # (4,1) sí alinea → suma por fila
+v = np.array([10, 20, 30, 40])      # (4,)  → NO alinea con (4, 3) por la derecha
+M + np.expand_dims(v, axis=1)       # (4, 1) sí alinea → suma una constante por fila
 ```
 
-### Añadir dimensión de batch o canal
+### Añadir el eje de lote a una imagen (3D → 4D)
+
+Imagen `(3, 32, 32)` = `(canal, alto, ancho)`. Casi toda red espera un eje de lote por delante; `axis=0` lo inserta para meter la imagen como único ejemplo de un lote:
 
 ```python
-img = np.random.rand(28, 28)        # (28, 28)
-batch = np.expand_dims(img, 0)      # (1, 28, 28)  → un solo ejemplo
-canal = np.expand_dims(img, -1)     # (28, 28, 1)  → un canal
+img = np.arange(3*32*32).reshape(3, 32, 32)   # (3, 32, 32) = (canal, alto, ancho)
+batch = np.expand_dims(img, axis=0)            # (1, 3, 32, 32) = (lote, canal, alto, ancho)
+batch.shape                                    # (1, 3, 32, 32)  → 4D
 ```
 
-## Buenas prácticas
+### Insertar un eje de tiempo en un lote (4D → 5D)
 
-1. Es la operación **inversa** de [[np.squeeze]].
-2. Úsalo para resolver errores de broadcasting por dimensiones que no alinean (ver [[concepto_axis_parametro]]).
-3. Prefiérelo sobre `reshape` cuando solo quieras *insertar* un eje: comunica mejor la intención.
-4. Acepta `axis` negativo para insertar al final sin conocer `ndim`.
+Tensor `(8, 3, 32, 32)` = `(lote, canal, alto, ancho)`. Para tratarlo como una secuencia temporal de un solo frame, se inserta un eje de tiempo con `axis=1`:
+
+```python
+batch = np.arange(8*3*32*32).reshape(8, 3, 32, 32)  # (8, 3, 32, 32) = (lote, canal, alto, ancho)
+seq = np.expand_dims(batch, axis=1)                  # (8, 1, 3, 32, 32) = (lote, tiempo, canal, alto, ancho)
+seq.shape                                            # (8, 1, 3, 32, 32)  → 5D
+```
 
 ## Errores comunes
 
 | Error | Causa | Solución |
 |-------|-------|----------|
-| `AxisError: axis N is out of bounds` | `axis` mayor que `ndim` del resultado | el rango válido es `[-(ndim+1), ndim]` |
-| Broadcasting sigue fallando | se insertó el eje en la posición equivocada | revisar si querías `axis=0` vs `axis=1` |
-| Forma duplicada inesperada | se llamó dos veces | un solo `expand_dims` por eje deseado |
-
-## Limitaciones
-
-- Solo inserta ejes de **tamaño 1**; no replica datos (eso es [[np.repeat]] o [[np.tile]]).
-- Aumenta `ndim` de uno en uno por posición indicada.
+| `AxisError: axis N is out of bounds` | `axis` fuera de `[-(ndim+1), ndim]` | el rango es `ndim+1` posiciones |
+| El broadcasting sigue fallando | se insertó el eje en la posición equivocada | revisar `axis=0` (fila) vs `axis=1` (columna) |
+| Eje duplicado inesperado | se llamó dos veces sobre el mismo array | un solo `expand_dims` por eje deseado |
+| Se quería replicar datos, no insertar | `expand_dims` no copia valores | usar [[np.repeat]] o [[np.tile]] |
 
 ## Notas relacionadas
 
-- [[concepto_shape]]
-- [[concepto_broadcasting]]
-- [[concepto_axis_parametro]]
-- [[np.squeeze]]
-- [[np.reshape]]
-- [[np.newaxis]]
+- [[concepto_shape]] — qué es un eje de tamaño 1 y por qué no cambia el `size`
+- [[concepto_broadcasting]] — el motivo principal para insertar ejes: alinear formas
+- [[np.squeeze]] — la operación inversa: quita los ejes de tamaño 1
+- [[np.newaxis]] · [[np.reshape]] · [[np.broadcast_to]]

@@ -1,43 +1,80 @@
 ---
-title: np.ndarray — metodos
+title: np.ndarray — métodos
 tags:
   - numpy
   - indice
 draft: false
 ---
 
-# np.ndarray — metodos
+# np.ndarray — métodos
 
-Los 34 metodos del ndarray son operaciones que el array realiza sobre si mismo: `arr.metodo()`. La mayoria tiene una funcion equivalente en el namespace `np` (`arr.sum()` equivale a `np.sum(arr)`), pero los metodos son mas concisos para uso interactivo y permiten encadenamiento fluido: `arr.reshape(-1).cumsum()`.
+Un método es una operación que el array realiza sobre sí mismo: `arr.metodo()`. Frente a las funciones del namespace `np`, los métodos son más concisos para uso interactivo y permiten encadenar: `arr.reshape(-1).cumsum()`. Pero hay una distinción que conviene tener clara desde el principio, porque cambia *dónde está la explicación* de cada método.
+
+## La regla método ↔ función
+
+La inmensa mayoría de los métodos del ndarray son **espejo** de una función de [[Librerias/Numpy/np/index|np]]: hacen exactamente lo mismo, solo cambia la sintaxis.
+
+$$ \texttt{arr.f(...)} \;\equiv\; \texttt{np.f(arr, ...)} $$
 
 ```python
-# Funcion
-np.sum(arr, axis=0)
-
-# Metodo equivalente — mismo resultado, mas conciso
-arr.sum(axis=0)
+np.sum(arr, axis=0)     # función
+arr.sum(axis=0)         # método espejo — mismo resultado, más conciso
 ```
 
-La diferencia funcional es que los metodos a veces tienen comportamientos por defecto distintos a sus contrapartes funcionales, pero en la gran mayoria de casos el resultado es identico.
+Por eso el repertorio de métodos se parte en **dos tipos**, y eso decide qué nota leer:
 
-## Subcarpetas
+- **Métodos espejo** — la lógica (firma, `axis`, mapa de shapes, vectorización) vive en la **nota de la función** `np.f`. La nota del método solo recuerda la equivalencia y las diferencias de defaults, si las hay.
+- **Métodos propios del objeto** — no tienen función espejo: pertenecen al ndarray como objeto (cambiar su `dtype`, copiar su buffer, serializarlo). Aquí la **nota del método es la completa**.
 
-### [[Librerias/Numpy/np.ndarray/metodos/forma/index|forma/]]
+Además, algunos métodos son **in-place**: modifican el array y devuelven `None` (`fill`, `put`, `sort`), en vez de producir uno nuevo. Eso siempre se marca explícitamente.
 
-6 metodos para cambiar la estructura dimensional del array sin tocar los datos. `reshape` asigna una nueva forma compatible y devuelve vista si el array es contiguo; `ravel` y `flatten` aplanan a 1D con la diferencia clave de que `ravel` devuelve vista cuando es posible y `flatten` siempre devuelve copia; `transpose` y `swapaxes` reordenan los ejes (siempre vista); `squeeze` elimina las dimensiones de tamaño 1 que dejan residuos de forma como `(1, n, 1)`.
+## El mapa de los métodos
 
-### [[Librerias/Numpy/np.ndarray/metodos/seleccion/index|seleccion/]]
+```mermaid
+flowchart TD
+    classDef raiz fill:#4c6f9c,stroke:#2e4a6b,color:#fff,font-weight:bold;
+    classDef espejo fill:#d6e9d6,stroke:#4c7a4c,color:#1a2b3c;
+    classDef propio fill:#eae3f7,stroke:#7a5e9c,color:#1a2b3c;
 
-4 metodos para extraer o modificar elementos por indices o condiciones booleanas. `take` extrae elementos por indices con soporte explicito de `axis` (equivalente mas legible al fancy indexing); `put` escribe in-place usando indices planos; `compress` filtra filas o columnas donde una mascara booleana es `True`; `nonzero` devuelve las posiciones de todos los elementos distintos de cero, uno por dimension, listas para usar directamente como indices.
+    M["ndarray — métodos"]:::raiz
 
-### [[Librerias/Numpy/np.ndarray/metodos/reducciones/index|reducciones/]]
+    E["Espejo de np.f\n(arr.f ≡ np.f(arr))"]:::espejo
+    P["Propios del objeto\n(nota completa)"]:::propio
 
-14 metodos que colapsan el array (o uno de sus ejes) a un resultado de menor dimension. Incluyen suma y producto con sus versiones acumuladas (`sum`, `cumsum`, `prod`, `cumprod`); estadistica descriptiva (`mean`, `var`, `std` con soporte de `ddof=`); localizacion de extremos (`min`, `max`, `argmin`, `argmax`); y utilidades de preprocesado (`clip` para recortar valores a un rango, `round` para redondear decimales).
+    M --> E
+    M --> P
 
-### [[Librerias/Numpy/np.ndarray/metodos/transformacion/index|transformacion/]]
+    E --> RD["reducciones\nsum · mean · max · argmin …"]:::espejo
+    E --> FO["forma\nreshape · ravel · transpose …"]:::espejo
+    E --> SE["seleccion\ntake · put · compress · nonzero"]:::espejo
 
-5 metodos que cambian el tipo de dato, la interpretacion de los bytes o el contenido del array. La distincion vista/copia/in-place es critica: `astype` siempre copia y convierte valores; `view` reinterpreta los mismos bytes sin copiar; `copy` garantiza una copia profunda independiente; `fill` rellena todos los elementos in-place sin devolver nada; `byteswap` invierte el orden de bytes para compatibilidad de endianness entre arquitecturas.
+    P --> TR["transformacion\nastype · copy · view · fill"]:::propio
+    P --> SR["serializacion\ntolist · tobytes · tofile · dump"]:::propio
+```
 
-### [[Librerias/Numpy/np.ndarray/metodos/serializacion/index|serializacion/]]
+## Métodos espejo — la explicación está en la función
 
-5 metodos para exportar el array fuera del ecosistema NumPy. `tofile` escribe los bytes crudos a disco sin metadatos (maximo rendimiento, minima portabilidad); `dump` serializa con pickle preservando dtype y shape; `tolist` convierte a lista Python anidada de escalares nativos (util para JSON); `tobytes` devuelve el buffer crudo como objeto `bytes` en memoria; `dumps` hace lo mismo que `dump` pero devuelve `bytes` en vez de escribir a archivo.
+Para estos, `arr.f()` es solo azúcar sobre `np.f(arr)`. Lee la nota de la función para el detalle; aquí está el grupo y para qué sirve.
+
+| Subcarpeta | Qué hace | Equivale a |
+|---|---|---|
+| [[Librerias/Numpy/np.ndarray/metodos/reducciones/index\|reducciones]] | Colapsan el array o un eje a un resultado menor: `sum`, `mean`, `var`, `std`, `min`, `max`, `argmin`, `argmax`, `cumsum`, `prod`, `clip`, `round`… | `np.sum`, `np.mean`, … |
+| [[Librerias/Numpy/np.ndarray/metodos/forma/index\|forma]] | Reorganizan la estructura dimensional sin tocar los datos: `reshape`, `ravel`, `transpose`, `swapaxes`, `squeeze` (la mayoría devuelve vista). | `np.reshape`, `np.transpose`, … |
+| [[Librerias/Numpy/np.ndarray/metodos/seleccion/index\|seleccion]] | Extraen o modifican elementos por índices o máscara: `take`, `put` (in-place), `compress`, `nonzero`. | `np.take`, `np.compress`, … |
+
+## Métodos propios del objeto — nota completa
+
+No tienen función espejo: actúan sobre el ndarray *como objeto*. La nota de cada método es la fuente de verdad.
+
+| Subcarpeta | Qué hace | Vista / copia / in-place |
+|---|---|---|
+| [[Librerias/Numpy/np.ndarray/metodos/transformacion/index\|transformacion]] | Cambian el tipo o el contenido: `astype` (convierte, **copia**), `copy` (copia profunda), `view` (reinterpreta bytes, **vista**), `fill` (**in-place**), `byteswap`. | crítico distinguir las tres |
+| [[Librerias/Numpy/np.ndarray/metodos/serializacion/index\|serializacion]] | Exportan el array fuera de NumPy: `tolist`, `tobytes`, `tofile`, `dump`, `dumps`. | producen objetos nuevos (lista, bytes, archivo) |
+
+## Notas relacionadas
+
+- [[concepto_ndarray]] — el objeto sobre el que operan estos métodos
+- [[concepto_views_vs_copias]] — la distinción vista/copia/in-place que recorre toda la tabla
+- [[Librerias/Numpy/np/index|np — namespace de funciones]] — donde vive la explicación de los métodos espejo
+- [[Librerias/Numpy/np.ndarray/atributos/index|atributos del ndarray]]
+- [[Librerias/Numpy/np.ndarray/index|np.ndarray — el objeto]]

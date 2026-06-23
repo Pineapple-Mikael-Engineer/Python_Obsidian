@@ -1,67 +1,72 @@
 ---
-title: np.ndarray — metodos de reduccion
+title: ndarray — métodos de reducción (forma-método de las funciones)
 tags:
   - numpy
   - indice
 draft: false
 ---
 
-# np.ndarray — metodos de reduccion
+# ndarray — métodos de reducción (forma-método de las funciones)
 
-14 metodos que colapsan el array (o uno de sus ejes) a un resultado de menor dimension. Son los mismos conceptos que en `np/reducciones/` pero como metodos del objeto, lo que permite encadenamiento fluido: `arr.sum(axis=1).mean()`.
+Estos métodos son la **forma-método** de funciones de reducción que ya están documentadas en
+[[Librerias/Numpy/np/reducciones/index|np/reducciones]]. La regla general es
 
-Todos aceptan el parametro `axis=None` (reduccion global sobre todos los elementos) o un entero (reduccion a lo largo de ese eje unicamente). Con `keepdims=True` la dimension reducida se mantiene con tamaño 1, lo que facilita el broadcasting posterior.
+$$ \texttt{arr.f(args)} \;\equiv\; \texttt{np.f(arr, args)} $$
 
-## Suma y producto
+mismo comportamiento, mismo retorno y misma semántica de `axis` / `keepdims` / `dtype`. No hay
+teoría nueva aquí: el mapa de shapes, el caso N-D y los parámetros completos viven en la nota de
+**la función**. Esta nota solo da el **mapeo método → función** y lo que es **propio del método**.
 
-| Metodo | Descripcion |
-|--------|-------------|
-| [[ndarray.sum]] | Suma de todos los elementos (o por eje). El resultado es un escalar si no se especifica `axis`. |
-| [[ndarray.cumsum]] | Suma acumulada: devuelve un array del mismo shape con la suma corriente hasta cada elemento. No reduce la dimension. |
-| [[ndarray.prod]] | Producto de todos los elementos (o por eje). Analogo a `sum` pero con multiplicacion. |
-| [[ndarray.cumprod]] | Producto acumulado: analogo a `cumsum` con multiplicacion. Devuelve array del mismo shape. |
+## Método ≡ función
 
-`cumsum` y `cumprod` no son reductores en el sentido estricto — no colapsan la dimension — pero se agrupan aqui por semantica de suma/producto:
+| Método | Equivale a | Qué hace (1 línea) |
+|--------|-----------|--------------------|
+| `arr.sum(...)` | [[np.sum]] | Suma los elementos a lo largo del eje (colapsa ese eje). |
+| `arr.mean(...)` | [[np.mean]] | Media aritmética sobre el eje; enteros → `float64`. |
+| `arr.max(...)` | [[np.max]] | Valor máximo a lo largo del eje. |
+| `arr.min(...)` | [[np.min]] | Valor mínimo a lo largo del eje. |
+| `arr.prod(...)` | [[np.prod]] | Producto de los elementos sobre el eje. |
+| `arr.std(...)` | [[np.std]] | Desviación estándar; acepta `ddof=`. |
+| `arr.var(...)` | [[np.var]] | Varianza; `ddof=0` poblacional, `ddof=1` muestral. |
+| `arr.cumsum(...)` | [[np.cumsum]] | Suma acumulada (scan): conserva el shape. |
+| `arr.cumprod(...)` | [[np.cumprod]] | Producto acumulado (scan): conserva el shape. |
+| `arr.argmax(...)` | [[np.argmax]] | Índice (no valor) del máximo en el eje o en el array aplanado. |
+| `arr.argmin(...)` | [[np.argmin]] | Índice del mínimo en el eje o en el array aplanado. |
+| `arr.ptp(...)` | [[np.ptp]] | Rango pico a pico `max - min` sobre el eje. |
+| `arr.clip(a_min, a_max)` | [[np.clip]] | Recorta cada valor al rango `[a_min, a_max]`. |
+| `arr.round(decimals)` | [[np.round]] | Redondea cada elemento al número de decimales dado. |
 
-```python
-arr = np.array([1, 2, 3, 4])
-arr.sum()     # → 10           (escalar)
-arr.cumsum()  # → [1, 3, 6, 10]  (mismo shape)
-```
+## Cuándo usar la forma-método
 
-## Estadistica
+La forma-método es **más concisa al encadenar** y deja la lectura izquierda→derecha en el orden
+de las operaciones: `a.sum(0).max()` se lee mejor que `np.max(np.sum(a, 0))`. Es idéntica en
+resultado a la función.
 
-| Metodo | Descripcion |
-|--------|-------------|
-| [[ndarray.mean]] | Media aritmetica. Para arrays enteros devuelve float64 por defecto. |
-| [[ndarray.var]] | Varianza. Acepta `ddof=` (grados de libertad a restar): `ddof=0` es varianza poblacional (por defecto), `ddof=1` es muestral. |
-| [[ndarray.std]] | Desviacion estandar. Mismo comportamiento que `var` respecto a `ddof`; equivale a `np.sqrt(arr.var(ddof=...))`. |
+La **forma-función** es preferible cuando se necesita lo que solo ella ofrece: el parámetro `out=`
+para escribir en un buffer existente, o aceptar entradas que aún no son ndarray (listas, tuplas,
+escalares), porque `np.sum([1, 2, 3])` funciona pero `[1, 2, 3].sum()` no existe.
 
-## Extremos
+## Lo que SÍ difiere
 
-| Metodo | Descripcion |
-|--------|-------------|
-| [[ndarray.min]] | Valor minimo del array (o por eje). |
-| [[ndarray.max]] | Valor maximo del array (o por eje). |
-| [[ndarray.argmin]] | Indice del elemento minimo en el array aplanado, o a lo largo del eje especificado. Devuelve el indice, no el valor. |
-| [[ndarray.argmax]] | Indice del elemento maximo. Mismo comportamiento que `argmin`. |
-| [[ndarray.ptp]] | Rango pico a pico: `max - min`. Deprecado en NumPy >= 2.0; usar `np.ptp` o `arr.max() - arr.min()`. |
+- **Todos los de esta carpeta son idénticos a su función** (mismo retorno, ninguno modifica
+  `arr`): devuelven un array o escalar nuevo y no tocan el original.
+- `clip` y `round` **no son reducciones** (no colapsan ningún eje: devuelven un array del mismo
+  shape). Están aquí por ser métodos del objeto `ndarray`; enlazan a [[np.clip]] y [[np.round]].
+- `cumsum` / `cumprod` son **scan**, no reduce: conservan el shape (el último elemento coincide
+  con la reducción total). El detalle está en su nota de función.
+- `ptp` como método está **deprecado en NumPy ≥ 2.0**; usa la función [[np.ptp]] o
+  `arr.max() - arr.min()`.
 
-## Utilidades
+> [!warning] Principio general: método in-place vs función que copia
+> En otras familias del `ndarray` algunos métodos son **in-place** y mutan `arr` (`arr.sort()`,
+> `arr.fill()`), mientras su función equivalente devuelve una copia (`np.sort` no toca la entrada).
+> **Las reducciones de esta carpeta NO son de ese tipo**: ninguna muta `arr`. Pero conviene tener
+> presente la distinción al saltar a las carpetas `forma/` (`flatten` copia) y `seleccion/`
+> (`put` es in-place).
 
-| Metodo | Descripcion |
-|--------|-------------|
-| [[ndarray.clip]] | Recorta valores al rango `[a_min, a_max]`: los menores que `a_min` pasan a `a_min` y los mayores que `a_max` pasan a `a_max`. Devuelve un array nuevo (copia). |
-| [[ndarray.round]] | Redondea cada elemento al numero de decimales indicado. `arr.round(0)` redondea a entero pero mantiene el dtype float. |
+## Notas relacionadas
 
-## `argmin` / `argmax` con axis
-
-Sin `axis` devuelven el indice en el array aplanado; con `axis` devuelven un array de indices en esa dimension:
-
-```python
-arr = np.array([[3, 1],
-                [4, 2]])
-arr.argmin()        # → 1  (indice plano del elemento 1)
-arr.argmin(axis=0)  # → [0, 0]  (fila del minimo en cada columna)
-arr.argmin(axis=1)  # → [1, 1]  (columna del minimo en cada fila)
-```
+- [[Librerias/Numpy/np/reducciones/index|np/reducciones]] — la teoría completa de cada función
+- [[concepto_axis_parametro]] — el eje que la reducción consume
+- [[concepto_vectorizacion]] — por qué reducir sobre un eje sustituye al bucle Python
+- [[Librerias/Numpy/index|NumPy raíz]]

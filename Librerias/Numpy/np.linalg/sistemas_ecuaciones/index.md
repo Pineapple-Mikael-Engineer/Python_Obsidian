@@ -3,49 +3,63 @@ title: np.linalg — sistemas de ecuaciones
 tags:
   - numpy
   - indice
+lib: numpy
+mod: np.linalg
 draft: false
 ---
 
 # np.linalg — sistemas de ecuaciones
 
-Resolver Ax = b es el problema fundamental del algebra lineal aplicada. Las tres funciones de este directorio cubren los tres casos principales: sistema cuadrado exacto, sistema tensorial, y sistema sobredeterminado (minimos cuadrados).
+Resolver $A\mathbf{x}=\mathbf{b}$ es el problema fundamental del álgebra lineal aplicada: dada una matriz
+de coeficientes $A$ y un lado derecho $\mathbf{b}$, encontrar la $\mathbf{x}$ que satisface el sistema.
+Las tres funciones de este directorio cubren los tres escenarios según **cómo sea $A$**: cuadrada y
+exacta, rectangular (mínimos cuadrados) o un tensor N-D.
 
-## Funciones
+## Las tres funciones
 
-| Funcion | Sistema que resuelve | Requisito de A |
-|---|---|---|
-| [[np.linalg.solve]] | Exacto: `Ax = b` | Cuadrada (M×M) y no singular |
-| [[np.linalg.tensorsolve]] | Tensorial: `A x = b` con indices multiples | Forma compatible para contraccion tensorial |
-| [[np.linalg.lstsq]] | Minimos cuadrados: `min \|\|Ax - b\|\|` | Cualquier forma (M×N), incluido sobredeterminado |
+| Función | Sistema que resuelve | Requisito de $A$ | Devuelve |
+|---|---|---|---|
+| [[np.linalg.solve]] | exacto $A\mathbf{x}=\mathbf{b}$ | **cuadrada** $(n,n)$ e invertible | `x` |
+| [[np.linalg.lstsq]] | mínimos cuadrados $\min\lVert A\mathbf{x}-\mathbf{b}\rVert_2$ | **cualquier** forma $(M,N)$; sobredeterminado o rango deficiente | `(x, residuals, rank, s)` |
+| [[np.linalg.tensorsolve]] | ecuación **tensorial** $A\mathbf{x}=\mathbf{b}$ | tensor N-D **cuadrado al aplanar** | `x` |
 
-## Descripcion de cada funcion
+- **[[np.linalg.solve]]** resuelve un sistema determinado vía factorización LU. Acepta varios lados a la
+  vez (`b` puede ser `(n, k)`) y lotes de sistemas por broadcasting.
+- **[[np.linalg.lstsq]]** minimiza el residuo cuando no hay solución exacta (más ecuaciones que
+  incógnitas, o $A$ singular). Usa SVD y devuelve además rango y valores singulares. Es el motor de la
+  **regresión lineal** y el **ajuste polinómico**.
+- **[[np.linalg.tensorsolve]]** generaliza `solve` a tensores: reordena y aplana $A$ a una matriz
+  cuadrada, resuelve y reconstruye $\mathbf{x}$. Reservada para sistemas genuinamente N-dimensionales.
 
-**`np.linalg.solve(a, b)`** — resuelve Ax = b cuando A es cuadrada y no singular. Usa factorizacion LU internamente. Es mas rapido y numericamente mas estable que `inv(A) @ b`. Acepta multiples vectores `b` simultaneamente (b puede ser una matriz).
+## Tabla de decisión
 
-**`np.linalg.lstsq(a, b, rcond)`** — resuelve Ax ≈ b en el sentido de minimos cuadrados: encuentra x que minimiza ||Ax - b||. Funciona con sistemas sobredeterminados (mas ecuaciones que incognitas) y subdeterminados. Usa SVD internamente. Devuelve (solucion, residuales, rango, valores singulares).
-
-**`np.linalg.tensorsolve(a, b, axes)`** — generaliza `solve` a tensores de orden superior: resuelve la ecuacion tensorial sum_j A[...,j] x[j] = b. Para la mayoria de casos `solve` es suficiente.
-
-## Regla de decision
-
-```
-¿A es cuadrada y no singular?
-  Si  → solve (mas rapido, solucion exacta)
-  No  → lstsq (minimos cuadrados, tolera sobredeterminado/subdeterminado)
-¿Trabajo con tensores de orden superior?
-  Si  → tensorsolve
-```
-
-| Caso | Funcion |
+| ¿Cómo es $A$? | Función |
 |---|---|
-| Sistema cuadrado `Ax = b`, A invertible | [[np.linalg.solve]] |
-| Sistema sobredeterminado (mas ecuaciones que incognitas) | [[np.linalg.lstsq]] |
-| Sistema subdeterminado (mas incognitas que ecuaciones) | [[np.linalg.lstsq]] |
-| A singular o casi singular | [[np.linalg.lstsq]] |
-| Ecuacion tensorial `A[i,j,k,l] x[k,l] = b[i,j]` | [[np.linalg.tensorsolve]] |
+| Cuadrada $(n,n)$ e invertible → solución **exacta** | [[np.linalg.solve]] |
+| Rectangular: más ecuaciones que incógnitas (**sobredeterminado**) | [[np.linalg.lstsq]] |
+| Rectangular: más incógnitas que ecuaciones (**subdeterminado**) | [[np.linalg.lstsq]] |
+| Singular o casi singular (**rango deficiente**) | [[np.linalg.lstsq]] |
+| **Tensor N-D**: $A_{ijkl}\,x_{kl}=b_{ij}$ | [[np.linalg.tensorsolve]] |
 
-## Buenas practicas
+```text
+¿A es cuadrada y no singular?
+  Sí → solve         (LU, exacto, más rápido)
+  No → lstsq         (SVD, mínimos cuadrados; tolera sobre/subdeterminado y rango deficiente)
+¿A es un tensor de orden superior?
+  Sí → tensorsolve   (aplana a matriz cuadrada y resuelve)
+```
 
-- Nunca usar `inv(A) @ b` para resolver sistemas: `solve` es mas rapido y estable.
-- `lstsq` devuelve ademas el rango efectivo y los valores singulares, utiles para diagnostico.
-- Para multiples terminos independientes con la misma `A`, pasar todos en `b` como columnas: una sola factorizacion para todos.
+## La regla de oro: `solve`, no `inv`
+
+> [!regla] Nunca `inv(A) @ b` para resolver un sistema
+> Para hallar $\mathbf{x}$ en $A\mathbf{x}=\mathbf{b}$ se usa **siempre** [[np.linalg.solve]], no
+> `np.linalg.inv(A) @ b`. `solve` factoriza $A$ una sola vez (LU) en lugar de calcular la inversa
+> completa: es **más rápido** y **numéricamente más estable**. Calcular [[np.linalg.inv|la inversa]] solo
+> se justifica si necesitas $A^{-1}$ como objeto en sí mismo, cosa rara.
+
+Notas complementarias:
+
+- Para varios términos independientes con la misma $A$, pásalos juntos como columnas de `b`: una sola
+  factorización los resuelve todos.
+- `lstsq` devuelve además el **rango efectivo** y los **valores singulares**, útiles para diagnosticar
+  el condicionamiento del problema.
