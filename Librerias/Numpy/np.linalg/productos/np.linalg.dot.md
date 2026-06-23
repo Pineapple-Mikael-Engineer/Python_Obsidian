@@ -1,142 +1,210 @@
 ---
-title: np.linalg.dot — Producto matricial (@ / np.matmul / np.dot)
+title: producto matricial — @ / np.matmul / np.dot (contracción de un eje)
 aliases:
-  - dot
-  - linalg.dot
-  - np.linalg.dot
+  - producto matricial
+  - matmul
+  - np.matmul
+  - np.dot
+  - "@"
 tags:
   - numpy
   - api/funcion
   - algebra/matricial
 lib: numpy
-mod: np.linalg
+mod: np
 tipo: funcion
-retorna: ndarray
+retorna: ndarray | escalar
 inplace: false
+requiere:
+  - concepto_shape
+  - concepto_vectorizacion
 draft: false
 ---
 
-# np.linalg.dot — Producto matricial (@ / np.matmul / np.dot)
+# producto matricial — `@` / `np.matmul` / `np.dot`
 
-## ⚠️ Aclaración de nombre
+El producto matricial **contrae** una dimensión: toma la dimensión interior compartida de dos
+tensores, multiplica y **suma sobre ella**, haciéndola desaparecer. Es la operación detrás de toda
+transformación lineal, capa densa de una red o cambio de base. En NumPy se escribe con el operador
+`@` (recomendado, PEP 465), o las funciones [[np.matmul]]/`np.dot`.
 
-En NumPy **no existe `np.linalg.dot` como producto matricial canónico**. El producto matricial vive en el **namespace raíz** y se expresa con:
+> [!warning] No existe `np.linalg.dot`
+> El producto matricial vive en el **namespace raíz** (`@`, `np.matmul`, `np.dot`), no en
+> `np.linalg`. Esta nota documenta el producto matricial general; el nombre del archivo es histórico.
+> Para el producto **elemento a elemento** (Hadamard) ver [[np.multiply]] (`*`).
 
-- el operador `@` (recomendado, PEP 465),
-- la función `np.matmul`,
-- la función `np.dot` (más antigua, semántica ligeramente distinta en >2D).
+## La idea en una fórmula
 
-Esta nota documenta el **producto matricial** en general. Para multiplicación elemento a elemento (Hadamard) ver `@` vs `*` y la nota [[np.multiply]].
+Para dos matrices $A$ de shape $(m, k)$ y $B$ de shape $(k, n)$, el elemento $(i, j)$ del resultado
+es la **contracción** sobre el eje compartido $k$:
 
-> El producto matricial **NO es conmutativo**: en general `A @ B != B @ A`.
+$$
+C_{ij} = \sum_{k} A_{ik}\, B_{kj} \qquad C \in \mathbb{R}^{m \times n}
+$$
 
-## Firma de la función
+El eje $k$ —la dimensión interior— **aparece en el sumatorio y desaparece** del resultado.
+
+**El mapa de shapes** (la relación entrada → salida, incluido el caso por lotes N-D):
+
+$$
+(\underbrace{\dots}_{\text{lote}},\, m,\, k)\ \times\ (\underbrace{\dots}_{\text{lote}},\, k,\, n)\ \longrightarrow\ (\underbrace{\dots}_{\text{lote}},\, m,\, n)
+$$
+
+Los **dos últimos ejes** son la matriz; los `…` anteriores son ejes de lote que se alinean por
+broadcasting; el eje interior $k$ se **contrae y desaparece**. Esta única regla gobierna todos los
+casos: producto punto ($k$ contra $k$ → escalar), matriz·vector, y la pila N-D.
+
+Visualmente, para $A_{(2\times 3)}$ y $B_{(3\times 2)}$ se contrae la dimensión $3$:
+
+```text
+        ┌ b00 b01 ┐
+        │ b10 b11 │   (3×2)
+        └ b20 b21 ┘
+┌ a00 a01 a02 ┐  →  c00 = a00·b00 + a01·b10 + a02·b20   (suma sobre k=0,1,2)
+│ a10 a11 a12 │     c01 = a00·b01 + a01·b11 + a02·b21
+└ (2×3) ──────┘     resultado (2×2): el eje k=3 desaparece
+```
+
+## Firma
 
 ```python
-A @ B                       # operador (recomendado)
-np.matmul(x1, x2, /, out=None, *, ...) -> ndarray
+A @ B                                          # operador (recomendado)
+np.matmul(x1, x2, /, out=None, *, casting='same_kind', order='K', dtype=None) -> ndarray
 np.dot(a, b, out=None) -> ndarray
 ```
 
+## Los parámetros en detalle
+
+### `x1`, `x2` (matmul) / `a`, `b` (dot) — los operandos
+Los dos tensores a multiplicar. La regla de compatibilidad es **siempre la misma**: la dimensión
+interior debe coincidir, `x1.shape[-1] == x2.shape[-2]`. Lo que cambia es cómo se interpretan los
+ejes **anteriores** (ver N-D, abajo).
+
+### `out` — buffer de salida
+`ndarray` preasignado con el shape exacto del resultado. Evita asignar memoria; útil al repetir el
+producto en un bucle. En `matmul` debe tener `dtype` compatible.
+
+### `casting`, `order`, `dtype` (solo `matmul`)
+- `dtype`: fuerza el tipo de salida (y del cómputo). Útil para acumular en `float64` aunque los
+  operandos sean `float32`.
+- `casting='same_kind'` (defecto): controla qué conversiones de tipo se permiten entre operandos y
+  `out`/`dtype`. Rara vez se toca; importa si pasas un `out` de tipo distinto.
+- `order='K'`: layout de memoria del resultado (`'C'` filas, `'F'` columnas, `'K'` el que más se
+  parezca a las entradas). Solo afecta rendimiento/contigüidad, no los valores.
+
+> `np.dot` **no** acepta `where`/`order`/`dtype`: es la API antigua. Para control fino, usa `matmul`.
+
+## El eje y el caso N-D
+
+En 2D el producto es el de toda la vida. En **N-D**, `@`/`matmul` tratan los **dos últimos ejes**
+como la matriz y **todos los anteriores como un lote** (batch) que se alinea por
+[[concepto_broadcasting|broadcasting]]:
+
+| `A.shape` | `B.shape` | resultado | qué pasa |
+|-----------|-----------|-----------|----------|
+| `(k,)` | `(k,)` | `()` escalar | producto punto (1D·1D): $\sum_k a_k b_k$ |
+| `(m, k)` | `(k, n)` | `(m, n)` | matricial estándar |
+| `(m, k)` | `(k,)` | `(m,)` | matriz · vector |
+| `(k,)` | `(k, n)` | `(n,)` | vector · matriz |
+| `(b, m, k)` | `(b, k, n)` | `(b, m, n)` | **lote**: `b` productos matriciales |
+| `(b, m, k)` | `(k, n)` | `(b, m, n)` | `B` se **broadcastea** a todo el lote |
+| `(b, 1, m, k)` | `(1, c, k, n)` | `(b, c, m, n)` | lote 2D por broadcasting de los ejes previos |
+
+```python
+P = np.ones((10, 2, 3))     # 10 matrices 2x3
+Q = np.ones((10, 3, 4))     # 10 matrices 3x4
+(P @ Q).shape               # (10, 2, 4)  → 10 productos en lote
+(P @ np.ones((3, 4))).shape # (10, 2, 4)  → la misma matriz aplicada a las 10
+```
+La diferencia clave **`matmul` vs `dot` en >2D**: `matmul`/`@` hacen *broadcasting por lotes* de los
+dos últimos ejes; `np.dot` hace un **producto tensorial** distinto (suma el último eje de `a` con el
+penúltimo de `b`), generando un resultado de mayor rango. En N-D casi siempre quieres `@`/`matmul`.
+
+| Caso | `@` / `np.matmul` | `np.dot` |
+|------|-------------------|----------|
+| 2D × 2D | matricial | matricial (igual) |
+| Pila N-D | lote por broadcasting de los 2 últimos ejes | producto tensorial (rango mayor) |
+| Escalar | **no permitido** | permitido (equivale a `*`) |
+
+## Vectorización
+
+El caso por lotes es el ejemplo perfecto de [[concepto_vectorizacion]]: aplicar el mismo producto a
+muchas matrices **sin bucle Python**. Además, NumPy delega cada producto en **BLAS** (código
+numérico optimizado), no en el intérprete:
+
+```python
+# Bucle Python: un matmul por elemento del lote
+def batch_matmul(P, Q):
+    out = np.empty((P.shape[0], P.shape[1], Q.shape[2]))
+    for i in range(P.shape[0]):
+        out[i] = P[i] @ Q[i]
+    return out
+
+# Vectorizado: NumPy recorre el lote en C / BLAS
+P @ Q
+```
+Mismo resultado; la versión vectorizada evita `P.shape[0]` saltos al intérprete y aprovecha BLAS.
+Razonar en términos de "los dos últimos ejes son la matriz, lo demás es lote" es lo que permite
+escribir el producto de un tensor 4D sin un solo `for`.
+
 ## Valor de retorno
 
-Devuelve el producto matricial, sumando sobre la dimensión interior compartida. Para 2D, multiplica filas de `A` por columnas de `B`.
+| `A` | `B` | salida | tipo |
+|-----|-----|--------|------|
+| 1D `(k,)` | 1D `(k,)` | `()` | **escalar** de NumPy |
+| 2D | 2D/1D | `(m, n)` / `(m,)` | `ndarray` |
+| N-D | N-D/2D | lote `(..., m, n)` | `ndarray` |
 
-| `A.shape` | `B.shape` | Resultado | Regla |
-|-----------|-----------|-----------|-------|
-| `(M, K)` | `(K, N)` | `(M, N)` | matricial estándar |
-| `(K,)` | `(K,)` | escalar `()` | producto punto (1D·1D) |
-| `(M, K)` | `(K,)` | `(M,)` | matriz · vector |
-| `(K,)` | `(K, N)` | `(N,)` | vector · matriz |
-| `(B, M, K)` | `(B, K, N)` | `(B, M, N)` | lotes de matrices (`matmul`) |
-
-```python
-import numpy as np
-A = np.array([[1, 2],
-              [3, 4]])
-B = np.array([[5, 6],
-              [7, 8]])
-
-A @ B            # array([[19, 22], [43, 50]])
-B @ A            # array([[23, 34], [31, 46]])  → distinto: no conmutativo
-```
-
-## Producto matricial vs producto punto
-
-| Operación | Entrada | Suma sobre | Resultado |
-|-----------|---------|------------|-----------|
-| Producto punto | dos 1D `(K,)` | el eje único | escalar |
-| Producto matricial | 2D `(M,K)` × `(K,N)` | dimensión `K` | matriz `(M,N)` |
-
-El requisito siempre es que las dimensiones interiores coincidan: `(M, K) @ (K, N)`. Conviene razonar cada operación en términos de [[concepto_shape|shape]].
-
-## Contraste con multiplicación elemento a elemento
+- El `dtype` sigue las reglas de **promoción**: `int` × `float` → `float`; `float32` × `float64`
+  → `float64`. Para forzarlo, `np.matmul(..., dtype=np.float64)`.
+- `@` y `np.matmul` **no** aceptan escalares: `5 @ A` es error (usa `5 * A`).
 
 ```python
-A * B            # Hadamard: array([[ 5, 12], [21, 32]])  (elemento a elemento)
-A @ B            # matricial: array([[19, 22], [43, 50]])
-```
-
-`*` (y `np.multiply`) operan posición a posición con broadcasting; `@` contrae una dimensión. Son operaciones distintas: ver [[np.multiply]].
-
-## Parámetros en detalle
-
-| Parámetro | Aplica a | Descripción |
-|-----------|----------|-------------|
-| `x1`, `x2` | `matmul` | operandos; primer y último eje definen la matriz |
-| `a`, `b` | `dot` | operandos del producto punto/matricial |
-| `out` | ambas | ndarray destino preasignado (opcional) |
-
-### matmul vs dot en N>2D
-
-| Caso | `np.matmul` / `@` | `np.dot` |
-|------|-------------------|----------|
-| 2D × 2D | producto matricial | producto matricial (igual) |
-| Pila ND | broadcasting por lotes de los 2 últimos ejes | producto tensorial (suma último de `a` con penúltimo de `b`) |
-| Escalar | **no permitido** | permitido |
-
-```python
-P = np.ones((10, 2, 3))
-Q = np.ones((10, 3, 4))
-(P @ Q).shape    # (10, 2, 4)  → 10 productos matriciales en lote
+A = np.array([[1, 2], [3, 4]])
+B = np.array([[5, 6], [7, 8]])
+A @ B          # [[19, 22], [43, 50]]
+B @ A          # [[23, 34], [31, 46]]  ≠ A@B → no conmutativo
+A * B          # [[5, 12], [21, 32]]   → Hadamard (elemento a elemento), otra operación
 ```
 
 ## Casos de uso
 
-### Transformación lineal de un vector
-
+### Transformación lineal de un vector (rotación)
 ```python
-M = np.array([[0, -1],
-              [1,  0]])     # rotación 90°
+theta = np.pi / 2
+R = np.array([[np.cos(theta), -np.sin(theta)],
+              [np.sin(theta),  np.cos(theta)]])
 v = np.array([1, 0])
-M @ v            # array([0, 1])
+R @ v          # [0, 1]  → rota 90°
 ```
 
-### Cadena de transformaciones
-
+### Cadena de transformaciones (capa densa)
 ```python
-resultado = A @ B @ C       # se evalúa de izquierda a derecha
+X = np.random.rand(64, 784)   # 64 muestras de 784 features
+W = np.random.rand(784, 128)  # pesos
+Y = X @ W                     # (64, 128)  → una capa lineal para todo el lote
 ```
 
-## Buenas prácticas
-
-1. Usa `@` por defecto: es legible y específico de producto matricial.
-2. Usa `np.matmul` cuando necesites `out=` o trabajar con lotes ND.
-3. Reserva `np.dot` para producto punto de vectores o compatibilidad antigua.
-4. Verifica las dimensiones interiores antes de operar: `A.shape[-1] == B.shape[-2]`.
+### Producto por lotes de matrices N-D
+```python
+A = np.random.rand(8, 3, 3)   # 8 matrices 3x3
+B = np.random.rand(8, 3, 3)
+(A @ B).shape                 # (8, 3, 3)  → 8 productos, sin bucle
+```
 
 ## Errores comunes
 
 | Error | Causa | Solución |
 |-------|-------|----------|
-| `shapes ... not aligned` | dimensiones interiores no coinciden | asegurar `(M,K)@(K,N)` |
-| Esperar `A @ B == B @ A` | producto no conmutativo | respetar el orden |
-| Confundir `@` con `*` | `*` es elemento a elemento | usar `@` para matricial |
-| `matmul` con escalar | `matmul`/`@` no admite escalares | usar `*` o `np.dot` |
+| `shapes ... not aligned` | la dimensión interior no coincide | asegurar `A.shape[-1] == B.shape[-2]` |
+| Esperar `A @ B == B @ A` | el producto **no es conmutativo** | respetar el orden |
+| Resultado elemento a elemento inesperado | usaste `*` en vez de `@` | `*` es Hadamard; usa `@` (ver [[np.multiply]]) |
+| `matmul`/`@` con escalar falla | no admiten escalares | usar `*` o `np.dot` |
+| Resultado de rango raro en N-D | usaste `np.dot` en >2D | usar `@`/`np.matmul` para lotes |
 
 ## Notas relacionadas
 
-- [[np.multiply]]
-- [[concepto_shape]]
-- [[np.linalg.multi_dot]]
-- [[np.linalg.matrix_power]]
+- [[concepto_shape]] — razonar el producto en términos de ejes
+- [[concepto_vectorizacion]] — el producto por lotes sin bucle (BLAS)
+- [[np.multiply]] — el producto elemento a elemento (`*`), no confundir
+- [[np.matmul]] · [[np.linalg.multi_dot]] · [[np.linalg.matrix_power]]
