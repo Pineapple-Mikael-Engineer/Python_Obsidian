@@ -1,57 +1,62 @@
 ---
-title: np/manipulacion_forma/reordenar_ejes — permutar dimensiones
+title: np/manipulacion_forma/reordenar_ejes — reordenar ejes y voltear contenido
 tags:
   - numpy
   - indice
 draft: false
 ---
 
-# np/manipulacion_forma/reordenar_ejes — permutar dimensiones
+# np/manipulacion_forma/reordenar_ejes — reordenar ejes y voltear contenido
 
-Cambiar el orden de los ejes de un array sin mover sus datos. Cuando NumPy permuta ejes, no reorganiza los bytes en memoria: solo ajusta los *strides* — los saltos que usa para avanzar de un elemento al siguiente en cada dimension. El resultado siempre es una **vista**.
+Reorientar un array **sin tocar sus datos en memoria**. Hay dos operaciones distintas en este grupo:
+**reordenar ejes** (cambiar qué dimensión va en qué posición: [[np.transpose]], [[np.swapaxes]],
+[[np.moveaxis]]) e **invertir el contenido** a lo largo de un eje conservando la forma
+([[np.flip]]). En todos los casos NumPy no reorganiza los bytes: solo reescribe los `strides` —los
+saltos con que avanza de un elemento al siguiente en cada eje—. Por eso **todas devuelven una vista**
+de coste $O(1)$, sin importar el tamaño del array.
 
-Este grupo existe porque en matematicas y en datos la orientacion importa. Una matriz de coeficientes, un tensor de imagenes `(batch, H, W, C)`, una serie temporal `(tiempo, canales)` — todos pueden necesitar ser transpuestos o reorientados antes de pasarlos a una funcion que espera un eje especifico. Las tres funciones difieren en cuanto control ofrecen: desde la transposicion global hasta el intercambio de exactamente dos ejes.
+Este grupo existe porque en matemáticas y en datos la orientación importa: una matriz de
+coeficientes, un tensor de imágenes `(batch, H, W, C)`, una serie temporal `(tiempo, canales)`...
+todos pueden necesitar transponerse, reorientarse o reflejarse antes de pasarlos a una función que
+espera un eje en una posición concreta.
 
-## Por que siempre es una vista
+## Por qué siempre es una vista
 
-Permutar ejes es equivalente a reescribir el vector de strides. Si un array 2D tiene strides `(32, 8)` (avanza 32 bytes por fila, 8 por columna), su transpuesta tiene strides `(8, 32)` — el mismo buffer, leido en orden diferente. No hay copia, sin importar el tamano del array.
+Permutar o invertir ejes equivale a reescribir el vector de `strides` (ver
+[[concepto_views_vs_copias]]). Si una matriz 2D tiene strides `(32, 8)`, su transpuesta tiene
+`(8, 32)` —el mismo buffer leído en otro orden— y su `flip` por columnas tiene un stride **negativo**
+con el puntero al final. Nunca hay copia; el resultado simplemente deja de ser C-contiguo.
 
-## Funciones
+## Reordenar ejes vs voltear contenido
 
-### [[np.transpose]] — permutacion completa de todos los ejes
+La distinción es la clave del grupo: **transpose / swapaxes / moveaxis cambian el shape** (reordenan
+las dimensiones), mientras que **flip conserva el shape** y solo invierte el orden de los elementos.
 
-La operacion de transposicion generica. Sin argumento `axes`, invierte el orden de todos los ejes: `(a, b, c)` se convierte en `(c, b, a)`. Para una matriz 2D esto intercambia filas y columnas, el uso mas comun. Con `axes=(2, 0, 1)` reordena segun el patron indicado. El atributo `.T` es un alias para el caso sin argumentos.
-
-Caso tipico: adaptar un tensor de imagenes de `(H, W, C)` (formato matplotlib) a `(C, H, W)` (formato PyTorch) con `np.transpose(img, (2, 0, 1))`.
-
-### [[np.moveaxis]] — mover ejes seleccionados
-
-Mueve uno o varios ejes de sus posiciones actuales a nuevas posiciones sin alterar el resto. `np.moveaxis(a, source=0, destination=-1)` toma el primer eje y lo pone al final. Acepta listas: `np.moveaxis(a, [0, 1], [-1, -2])`. Es mas legible que `transpose` cuando se quiere mover ejes especificos sin enumerar todos los demas.
-
-Diferencia con `transpose`: `moveaxis` permite especificar solo los ejes que cambian; el resto se ajusta automaticamente. Con `transpose` hay que indicar la permutacion completa.
-
-### [[np.swapaxes]] — intercambiar exactamente dos ejes
-
-Intercambia dos ejes entre si. `np.swapaxes(a, 1, 2)` en un array `(batch, H, W)` produce `(batch, W, H)`. Es el caso especial de `transpose` donde se intercambian solo dos posiciones. Mas explicito que `transpose` cuando la intencion es precisamente "intercambiar estos dos ejes y dejar el resto igual".
+| Operación | Qué cambia | Mapa de shapes |
+|-----------|------------|----------------|
+| reordenar ejes | la posición de las dimensiones | $(n_0,\dots,n_{k-1}) \to (n_{\sigma(0)},\dots,n_{\sigma(k-1)})$ |
+| voltear contenido | el orden de los elementos (no el shape) | $(n_0,\dots,n_{k-1}) \to (n_0,\dots,n_{k-1})$ invertido |
 
 ## Tabla de funciones
 
-| Funcion | Descripcion | Cuantos ejes mueve | Vista |
-|---------|-------------|-------------------|-------|
-| [[np.transpose]] | Permutacion completa o inversion de todos los ejes | Todos | Siempre |
-| [[np.moveaxis]] | Mueve ejes elegidos a posiciones arbitrarias | Uno o varios | Siempre |
+| Función | Descripción | Ejes / efecto | Vista |
+|---------|-------------|---------------|-------|
+| [[np.transpose]] | Permuta (o invierte) todos los ejes; `.T` es la inversión total | Todos | Siempre |
+| [[np.moveaxis]] | Mueve ejes elegidos a otra posición, conservando el orden del resto | Uno o varios | Siempre |
 | [[np.swapaxes]] | Intercambia exactamente dos ejes | Dos | Siempre |
+| [[np.flip]] | Invierte el orden de los elementos (shape intacto); atajos `fliplr`/`flipud` | Contenido | Siempre |
 
-## Guia de eleccion
+## Guía de elección
 
-| Situacion | Funcion |
+| Situación | Función |
 |-----------|---------|
-| Transponer matriz 2D | `a.T` o `np.transpose(a)` |
-| Reordenar tensor con patron conocido, todos los ejes | `np.transpose(a, axes)` |
-| Mover un eje al principio o al final | `np.moveaxis(a, source, destination)` |
+| Transponer una matriz 2D | `a.T` o `np.transpose(a)` |
+| Reordenar un tensor con permutación conocida de todos los ejes | `np.transpose(a, axes)` |
+| Mover un eje al principio o al final (canal, lote, tiempo) | `np.moveaxis(a, source, destination)` |
 | Intercambiar dos dimensiones concretas | `np.swapaxes(a, ax1, ax2)` |
+| Reflejar/invertir el contenido a lo largo de un eje | `np.flip(a, axis)` (`fliplr`/`flipud` en 2D) |
 
-## Ejemplo: formato de imagen
+## Ejemplo: formato de imagen y reflejo
 
 ```python
 import numpy as np
@@ -59,8 +64,10 @@ import numpy as np
 # Imagen en formato HWC (matplotlib): shape (480, 640, 3)
 img = np.zeros((480, 640, 3))
 
-# Convertir a CHW (PyTorch): shape (3, 480, 640)
+# Reordenar ejes a CHW (PyTorch): shape (3, 480, 640)
 img_torch = np.transpose(img, (2, 0, 1))
+img_torch2 = np.moveaxis(img, -1, 0)   # equivalente, más legible
 
-# Equivalente con moveaxis: mas legible si solo se mueve el eje de canales
-img_torch2 = np.moveaxis(img, -1, 0)
+# Voltear el contenido: reflejo horizontal (shape intacto, (480, 640, 3))
+img_espejo = np.flip(img, axis=1)
+```

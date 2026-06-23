@@ -1,59 +1,97 @@
 ---
-title: np/manipulacion_forma — reorganizar arrays
+title: manipulacion_forma — transformar la forma de un tensor
 tags:
   - numpy
   - indice
 draft: false
 ---
 
-# np/manipulacion_forma — reorganizar arrays
+# manipulacion_forma — transformar la forma de un tensor
 
-La **forma** (`shape`) de un array es el esquema que determina como se interpretan sus bytes: cuantas filas, columnas, capas, etc. Lo que hace `manipulacion_forma/` es cambiar ese esquema — y en la mayoria de casos sin mover un solo byte en memoria. Un array de 12 elementos puede aparecer como `(12,)`, `(3,4)`, `(2,6)`, `(2,3,2)` o `(1,12)` usando el mismo buffer; solo cambian los *strides* que NumPy usa para avanzar entre dimensiones.
+El **shape** $(n_0,\dots,n_{k-1})$ es el esquema que convierte un buffer plano de bytes en un tensor
+navegable (ver [[concepto_shape]]): dice cuántas filas, columnas y capas hay, no los almacena. Esta
+familia agrupa todas las funciones que **transforman ese esquema** — reorganizar, combinar, dividir,
+permutar o duplicar — la mayoría **sin mover un solo byte** en memoria.
 
-Este grupo de 19 funciones existe porque el shape no es un detalle estetico: define que operaciones son validas, como se aplica el broadcasting, y como interactua el array con algebra lineal, redes neuronales o senales. Dominar estas funciones es la diferencia entre escribir bucles manuales y aprovechar NumPy al maximo.
+Cada operación se entiende por su **mapa de shapes**: la transformación explícita de la forma de
+entrada en la de salida. Unas conservan el `size` y solo reescriben la tupla (`reshape`, `transpose`),
+otras lo cambian uniendo, partiendo o repitiendo datos. Saber *qué le pasa al shape* es saber usar la
+función.
 
-## Por que existe este grupo
+## El mapa de la familia
 
-En NumPy los datos viven en un buffer plano (un bloque contiguo de bytes). La *shape* y los *strides* son metadatos que le dicen al interprete: "para avanzar una posicion en el eje 0, salta N bytes; en el eje 1, salta M bytes". Cambiar esos metadatos es gratis en tiempo y memoria. Solo se genera una copia cuando el array no es contiguo y el nuevo layout lo exige — y saber cuando ocurre eso es una de las lecciones clave de `cambio_forma/`.
+```mermaid
+flowchart TD
+    classDef raiz fill:#4c6f9c,stroke:#2e4a6b,color:#fff,font-weight:bold;
+    classDef fam fill:#e3edf7,stroke:#4c6f9c,color:#1a2b3c;
+    classDef op fill:#d6e9d6,stroke:#4c7a4c,color:#1a2b3c;
+
+    R["manipulacion_forma"]:::raiz
+
+    CF["cambio_forma"]:::fam
+    CO["combinar"]:::fam
+    DI["dividir"]:::fam
+    RE["reordenar_ejes"]:::fam
+    RD["repetir_desplazar"]:::fam
+
+    R --> CF
+    R --> CO
+    R --> DI
+    R --> RE
+    R --> RD
+
+    CF --> CFo["reshape / ravel / squeeze / expand_dims / broadcast_to"]:::op
+    CO --> COo["concatenate / stack / vstack / hstack / dstack / column_stack"]:::op
+    DI --> DIo["split / array_split / vsplit / hsplit / dsplit"]:::op
+    RE --> REo["transpose / swapaxes / moveaxis / flip"]:::op
+    RD --> RDo["repeat / tile / roll / pad"]:::op
+```
 
 ## Subcarpetas
 
-### [[Numpy/np/manipulacion_forma/cambio_forma/index|cambio_forma]] — nueva shape, mismos datos
+| Subcarpeta | Qué hace al shape | Notas |
+|---|---|---|
+| [[Librerias/Numpy/np/manipulacion_forma/cambio_forma/index\|cambio_forma]] | Reorganiza con $\prod n_i$ constante: `(12,) → (3,4)` | [[np.reshape]] · [[np.ravel]] · [[np.squeeze]] · [[np.expand_dims]] · [[np.broadcast_to]] |
+| [[Librerias/Numpy/np/manipulacion_forma/combinar/index\|combinar]] | Une varios arrays a lo largo de un eje (o crea uno nuevo) | [[np.concatenate]] · [[np.stack]] · [[np.vstack]] · [[np.hstack]] · [[np.dstack]] · [[np.column_stack]] |
+| [[Librerias/Numpy/np/manipulacion_forma/dividir/index\|dividir]] | Parte un array en subarrays (el inverso de combinar) | [[np.split]] · [[np.array_split]] · [[np.vsplit]] · [[np.hsplit]] · [[np.dsplit]] |
+| [[Librerias/Numpy/np/manipulacion_forma/reordenar_ejes/index\|reordenar_ejes]] | Permuta o invierte ejes: $(n_{\pi(0)},\dots)$, mismo `size` | [[np.transpose]] · [[np.swapaxes]] · [[np.moveaxis]] · [[np.flip]] |
+| [[Librerias/Numpy/np/manipulacion_forma/repetir_desplazar/index\|repetir_desplazar]] | Duplica, rota o rellena: el eje crece o se conserva | [[np.repeat]] · [[np.tile]] · [[np.roll]] · [[np.pad]] |
 
-Reinterpreta los elementos en una forma diferente. `np.reshape` es la navaja suiza; `np.ravel` aplana a 1D; `np.squeeze` y `np.expand_dims` insertan o eliminan dimensiones de tamano 1. Casi siempre devuelven vistas.
+## Vistas vs copias — la regla transversal
 
-### [[Numpy/np/manipulacion_forma/reordenar_ejes/index|reordenar_ejes]] — permutar dimensiones
+Muchas de estas funciones **no mueven datos**: solo reescriben el shape y los `strides`, devolviendo
+una **vista** sobre el mismo buffer (ver [[concepto_views_vs_copias]]). Es lo que las hace baratas, y
+también lo que obliga a tener cuidado: modificar una vista modifica el original.
 
-Cambia el orden de los ejes sin mover datos. `np.transpose` lo hace sobre todos los ejes a la vez (es la `T` de matrices); `np.moveaxis` mueve ejes elegidos a posiciones arbitrarias; `np.swapaxes` intercambia exactamente dos. Siempre devuelven vistas.
+| Familia | Resultado típico |
+|---|---|
+| `cambio_forma` | vista (copia si el layout lo exige) |
+| `reordenar_ejes` | vista (solo reescribe `strides`) |
+| `dividir` | vistas de los trozos |
+| `combinar` | siempre copia (materializa el array unido) |
+| `repetir_desplazar` | copia (`repeat`, `tile`, `pad`, `roll`) |
 
-### [[Numpy/np/manipulacion_forma/combinar/index|combinar]] — unir varios arrays en uno
+Para comprobar si dos arrays comparten memoria: `np.shares_memory(a, resultado)`.
 
-Une arrays a lo largo de un eje existente (`np.concatenate`, `np.vstack`, `np.hstack`, `np.dstack`, `np.column_stack`) o crea un eje nuevo en el proceso (`np.stack`). La confusion mas comun: `stack` aumenta el numero de dimensiones; `concatenate` no. Siempre copias.
-
-### [[Numpy/np/manipulacion_forma/dividir/index|dividir]] — partir en subarrays
-
-El inverso de combinar. `np.split` es la funcion generica; `np.vsplit` y `np.hsplit` son atajos por eje. Los subarrays devueltos son vistas del original. La restriccion principal: si se pide division en partes iguales, el eje debe ser divisible exactamente.
-
-### [[Numpy/np/manipulacion_forma/repetir_desplazar/index|repetir_desplazar]] — duplicar o rotar elementos
-
-`np.tile` repite el array completo como un mosaico; `np.repeat` repite cada elemento individualmente — la diferencia es sutil pero importante. `np.roll` desplaza los elementos de forma circular sin cambiar el tamano: lo que cae por un extremo reaparece por el otro.
-
-## Tabla de decision rapida
+## Tabla de decisión rápida
 
 | Quiero… | Ir a |
-|---------|------|
-| Cambiar la shape total del array | [[Numpy/np/manipulacion_forma/cambio_forma/index\|cambio_forma]] |
+|---|---|
+| Cambiar la shape total conservando el `size` | [[np.reshape]] |
 | Aplanar a 1D | [[np.ravel]] |
-| Eliminar dimensiones de tamano 1 | [[np.squeeze]] |
-| Anadir una dimension de tamano 1 | [[np.expand_dims]] |
-| Transponer o permutar ejes | [[Numpy/np/manipulacion_forma/reordenar_ejes/index\|reordenar_ejes]] |
-| Unir arrays sin crear nueva dimension | [[np.concatenate]] |
-| Apilar arrays creando nueva dimension | [[np.stack]] |
-| Partir un array en trozos | [[Numpy/np/manipulacion_forma/dividir/index\|dividir]] |
-| Repetir el array completo N veces | [[np.tile]] |
-| Repetir cada elemento N veces | [[np.repeat]] |
-| Rotar elementos circularmente | [[np.roll]] |
+| Quitar/añadir ejes de tamaño 1 | [[np.squeeze]] · [[np.expand_dims]] |
+| Transponer o permutar ejes | [[np.transpose]] · [[np.moveaxis]] |
+| Unir arrays a lo largo de un eje | [[np.concatenate]] |
+| Apilar creando un eje nuevo | [[np.stack]] |
+| Partir en trozos | [[np.split]] |
+| Repetir el array entero (mosaico) | [[np.tile]] |
+| Repetir cada elemento | [[np.repeat]] |
+| Rotar circularmente | [[np.roll]] |
+| Rellenar un borde | [[np.pad]] |
 
-## Vista vs. copia — regla practica
+## Notas relacionadas
 
-La mayoria de funciones de `cambio_forma/` y `reordenar_ejes/` devuelven vistas cuando el array de entrada es C-contiguo (layout por filas, el mas comun). Todas las funciones de `combinar/` devuelven copias. Las de `dividir/` devuelven vistas. Las de `repetir_desplazar/` devuelven copias (`tile`, `repeat`) o vistas (`roll` devuelve copia en la implementacion actual). Para verificar: `np.shares_memory(a, resultado)`.
+- [[concepto_shape]] — la tupla que estas funciones transforman
+- [[concepto_views_vs_copias]] — cuándo cambiar la forma copia y cuándo no
+- [[concepto_broadcasting]] — alinear shapes sin reorganizar físicamente
+- [[Librerias/Numpy/index|NumPy raíz]]

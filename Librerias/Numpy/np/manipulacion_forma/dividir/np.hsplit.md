@@ -1,5 +1,5 @@
 ---
-title: np.hsplit — Dividir por columnas (eje 1)
+title: np.hsplit — parte un array por columnas (eje 1, atajo de split)
 aliases:
   - hsplit
   - np.hsplit
@@ -14,7 +14,7 @@ mod: np
 tipo: funcion
 
 # --- Comportamiento ---
-retorna: list
+retorna: list[ndarray]
 inplace: false
 
 # --- Dependencias ---
@@ -24,72 +24,123 @@ requiere:
 draft: false
 ---
 
-# np.hsplit — Dividir por columnas (eje 1)
+# np.hsplit — parte un array por columnas (eje 1, atajo de split)
 
-## Firma de la función
+`np.hsplit` es un **atajo de [[np.split]] con el eje fijado en 1** (las columnas). Parte un array
+**horizontalmente** y devuelve una **lista** de sub-arrays. Como atajo legible, su único valor es
+hacer evidente la intención —"separar columnas"— sin escribir `axis=1`. Es la operación inversa de
+[[np.hstack]].
+
+## La idea en una fórmula
+
+`hsplit` trocea el **eje 1**. Para una matriz $(m, n)$, partir en $s$ trozos divide las columnas y
+deja las filas intactas:
+
+$$
+(m,\,n) \;\xrightarrow{\ \text{hsplit},\ s\ \text{partes}\ }\; \big[\ (m,\,n/s)\ \big]\times s
+\qquad\equiv\qquad \texttt{np.split(ary, s, axis=1)}
+$$
+
+En el caso general N-D actúa sobre el eje de índice 1:
+$(n_0,\,n_1,\dots)\to[\,(n_0,\,n_1/s,\dots)\,]\times s$.
+
+> [!note] Excepción para 1D: cae al eje 0
+> Un array 1D no tiene eje 1. `hsplit` lo trata como caso especial y parte el **eje 0**:
+> $(n,)\to[\,(n/s,)\,]\times s$. Es la única función de la familia "h/v/d" que acepta 1D.
+
+## Firma
 
 ```python
 np.hsplit(
-    ary,
-    indices_or_sections
+    ary,                  # array_like: el array a partir (1D o más)
+    indices_or_sections,  # int | sequence[int]: nº de partes iguales, o puntos de corte
 ) -> list[ndarray]
+```
+
+No tiene parámetro `axis`: el eje está fijado (1, o 0 en 1D). Internamente llama a
+`np.split(ary, indices_or_sections, axis=...)`.
+
+## Los parámetros en detalle
+
+### `ary` — el array a partir
+`array_like`. A diferencia de [[np.vsplit]], **acepta arrays 1D** (los parte por el eje 0). Los
+trozos devueltos son **vistas** (ver [[concepto_views_vs_copias]]).
+
+### `indices_or_sections` — cómo se corta
+Igual que en `split`: un `int` (partes iguales, exige que las columnas sean divisibles, si no
+`ValueError`) o una secuencia de índices de corte (sin requisito de divisibilidad).
+
+```python
+M = np.arange(12).reshape(3, 4)
+np.hsplit(M, 2)        # 2 arrays de (3, 2)
+np.hsplit(M, [1, 3])   # (3,1), (3,2), (3,1) → cortes en columnas 1 y 3
+```
+
+## El caso N-D
+
+`hsplit` siempre apunta al **eje 1** (salvo en 1D, donde usa el eje 0). El resto del shape no cambia.
+
+| `ary.shape` | `indices_or_sections` | salida | equivalente |
+|---|---|---|---|
+| `(4, 6)` | `3` | 3 × `(4, 2)` | `split(ary, 3, axis=1)` |
+| `(4, 6)` | `[2, 4]` | `(4,2)`, `(4,2)`, `(4,2)` | `split(ary, [2,4], axis=1)` |
+| `(6,)` | `2` | 2 × `(3,)` | `split(ary, 2, axis=0)` (caso 1D) |
+| `(2, 6, 4)` | `3` | 3 × `(2, 2, 4)` | `split(ary, 3, axis=1)` |
+
+```python
+T = np.arange(2*6*4).reshape(2, 6, 4)
+[p.shape for p in np.hsplit(T, 3)]   # [(2, 2, 4), (2, 2, 4), (2, 2, 4)]
+```
+
+## Vectorización
+
+`hsplit` no añade cómputo: es azúcar sintáctico sobre [[np.split]] que mejora la **legibilidad** en
+código con matrices. Las dos líneas son idénticas en resultado y coste (vistas, sin copia); la
+primera dice mejor *qué* se separa (ver [[concepto_vectorizacion]]):
+
+```python
+izq, der = np.hsplit(M, 2)            # "parto las columnas en dos"
+izq, der = np.split(M, 2, axis=1)     # idéntico, menos directo de leer
 ```
 
 ## Valor de retorno
 
-Devuelve una lista de sub-arrays cortando `ary` **horizontalmente** (eje 1, columnas) en 2D+, o en el eje 0 si el array es 1D. Atajo de [[np.split]]. Inverso de [[np.hstack]].
+Devuelve una **`list` de `ndarray`** (vistas), de longitud $s$ o `len(indices)+1`. Cada trozo
+conserva el shape original salvo el eje 1 (o el 0 en 1D).
 
-| Entrada | `indices_or_sections` | Salida |
-|---------|------------------------|--------|
-| `(4, 6)` | `3` | 3 arrays de `(4, 2)` |
-| `(4, 6)` | `[2, 4]` | `(4,2)`, `(4,2)`, `(4,2)` |
-| `(6,)` | `2` | 2 arrays de `(3,)` |
-
-```python
-import numpy as np
-M = np.arange(12).reshape(3, 4)
-np.hsplit(M, 2)   # dos bloques de (3, 2)
-```
-
-## Parámetros en detalle
-
-### `ary` — array de entrada
-
-A diferencia de [[np.vsplit]], `hsplit` acepta arrays 1D (corta en el eje 0).
-
-### `indices_or_sections`
-
-Entero (partes iguales) o lista de índices de corte.
+| Entrada | `indices_or_sections` | longitud | shape de cada trozo |
+|---|---|---|---|
+| `(m, n)` divisible | `int` $s$ | $s$ | `(m, n/s)` |
+| `(m, n)` | `[c1, c2]` | 3 | `(m, c1)`, `(m, c2-c1)`, `(m, n-c2)` |
+| `(n,)` | `int` $s$ | $s$ | `(n/s,)` |
 
 ## Casos de uso
 
-### Separar columnas de variables
-
+### Separar grupos de columnas (features)
 ```python
 datos = np.random.rand(100, 6)
 primeras, ultimas = np.hsplit(datos, [3])   # (100,3) y (100,3)
 ```
 
-## Buenas prácticas
-
-1. Más legible que `split(..., axis=1)` para matrices.
-2. Si no es divisible, usa `np.array_split(ary, n, axis=1)`.
-3. Para cortar por filas, usa [[np.vsplit]].
+### N-D: partir el eje de columnas de un lote de matrices
+```python
+lote = np.arange(5*8*2).reshape(5, 8, 2)   # 5 matrices 8x2
+mitades = np.hsplit(lote, 2)               # parte las 8 "columnas" en dos bloques de 4
+[m.shape for m in mitades]                 # [(5, 4, 2), (5, 4, 2)]
+```
 
 ## Errores comunes
 
 | Error | Causa | Solución |
 |-------|-------|----------|
-| división no exacta | tamaño no divisible | `np.array_split` |
-| cortes en el eje equivocado | esperar filas | `hsplit` corta columnas; usar [[np.vsplit]] |
-
-## Limitaciones
-
-- En 2D fija el eje en 1; para control total usa [[np.split]] con `axis`.
+| `array split does not result in an equal division` | columnas no divisibles | usar `np.array_split(ary, n, axis=1)` |
+| Cortar filas en vez de columnas | `hsplit` actúa sobre el eje 1 | para filas usar [[np.vsplit]] |
+| Esperar un array y recibir una lista | devuelve `list[ndarray]` | desempaquetar o indexar |
 
 ## Notas relacionadas
 
-- [[concepto_shape]]
-- [[np.split]]
-- [[np.vsplit]]
-- [[np.hstack]]
+- [[concepto_shape]] — qué eje trocea el atajo
+- [[np.split]] — la función general (`hsplit` = `split` con `axis=1`)
+- [[np.array_split]] — variante que admite partes desiguales
+- [[np.vsplit]] · [[np.dsplit]] — atajos para los ejes 0 y 2
+- [[np.hstack]] — la operación inversa (une por columnas)
