@@ -76,6 +76,62 @@ No cambian *qué* hay ni *cuándo*, sino *qué se ve delante* cuando dos Mobject
 | [[Scene.bring_to_front]] | lleva los objetos al frente (encima de todo) |
 | `bring_to_back` | manda los objetos al fondo (detrás de todo) |
 
+## Recetas
+
+Dos patrones que se repiten una y otra vez al escribir `construct`, cada uno apoyado en la distinción **instantáneo vs animado** que gobierna todos estos métodos.
+
+### Mostrar algo fijo y luego animarlo (add + play)
+
+Cuando algo debe estar en pantalla **desde el primer fotograma** (un fondo, unos ejes, un marco) pero no quieres gastar una animación en que aparezca, lo metes con `add` (instantáneo) y reservas `play` para lo que sí debe verse cambiar. Es el patrón de "decorado fijo + actor animado".
+
+```python
+from manim import *
+
+class FijoYAnimado(Scene):
+    def construct(self):
+        ejes = Axes()                       # el decorado...
+        self.add(ejes)                      # ...entra de golpe, sin animacion
+        punto = Dot(color=YELLOW).move_to(ejes.c2p(0, 0))
+        self.play(Create(punto))            # solo el actor se anima
+        self.play(punto.animate.move_to(ejes.c2p(2, 1)))  # y se mueve
+        self.wait()
+```
+
+```bash
+manim -pql archivo.py FijoYAnimado   # -p reproduce, -ql = calidad baja (rapido)
+```
+
+### Limpiar la escena entre pasos (remove vs FadeOut)
+
+Para vaciar la pantalla antes del siguiente paso tienes dos vías, y la elección es estética. `remove` quita el objeto **al instante** (corte seco, no se ve salir): ideal entre secciones donde no importa la transición. `self.play(FadeOut(...))` lo saca **animado** (se desvanece): cuesta tiempo de vídeo pero queda fino. Para barrer *todo* de golpe sin nombrar cada objeto está `self.clear()`.
+
+```python
+from manim import *
+
+class Limpiar(Scene):
+    def construct(self):
+        a = Square(color=BLUE)
+        self.play(Create(a))
+        self.wait()
+        self.remove(a)                  # corte seco: desaparece al instante
+
+        b = Circle(color=GREEN)
+        self.play(Create(b))
+        self.wait()
+        self.play(FadeOut(b))           # salida animada: se desvanece
+
+        self.add(Triangle(), Star())    # un par de objetos mas...
+        self.wait()
+        self.clear()                    # ...y se barren todos de una vez
+        self.wait()
+```
+
+```bash
+manim -pql archivo.py Limpiar   # compara el corte seco con el desvanecido
+```
+
+La regla para decidir: usa `remove`/`clear` cuando el *cómo desaparece* no importa (cambios de sección, limpieza interna); usa `FadeOut` dentro de `play` cuando la salida es parte del guion que el espectador debe ver.
+
 ## Notas relacionadas
 
 - [[Scene]] — la clase que aporta todos estos métodos vía `self`.

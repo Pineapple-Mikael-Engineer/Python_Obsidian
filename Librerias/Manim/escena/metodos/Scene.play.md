@@ -38,9 +38,9 @@ def play(
 
 `play` siempre se llama sobre `self` dentro de `construct`. No devuelve nada útil (`None`): su efecto es grabar un tramo de vídeo.
 
-## Los parametros en detalle
+### Parametros
 
-### `*animations` — las animaciones a reproducir
+#### `*animations` — las animaciones a reproducir
 
 Una o varias `Animation`, pasadas como argumentos posicionales separados por comas. **Todas las que pongas en un mismo `play` se reproducen a la vez** (en paralelo), compartiendo el `run_time` del bloque. Cada argumento debe ser una `Animation` de verdad, no un Mobject: `self.play(Create(c))` (correcto) y no `self.play(c)` (error). También acepta la sintaxis `.animate`, que fabrica una animación a partir de un método del mobject: `self.play(c.animate.shift(RIGHT))` (ver [[concepto_animate_syntax]]).
 
@@ -51,23 +51,23 @@ Una o varias `Animation`, pasadas como argumentos posicionales separados por com
 | una **tras** otra | dos `self.play` seguidos |
 | animar un método (mover, escalar…) | `self.play(c.animate.shift(RIGHT))` |
 
-### `run_time` — la duración del bloque
+#### `run_time` — la duración del bloque
 
 Float en segundos. Si lo das, **sobreescribe** el `run_time` propio de las animaciones: todo el bloque dura exactamente esos segundos. Si lo dejas en `None`, manda el `run_time` de las animaciones (por defecto `1.0` cada una). Es el parámetro que más se toca para acelerar o frenar un paso completo.
 
-### `rate_func` — la curva de velocidad
+#### `rate_func` — la curva de velocidad
 
 Una **función** que mapea el tiempo lineal (0→1) al `alpha` de interpolación; cambia *cómo se siente* el movimiento sin tocar ni el objeto ni la duración. Por defecto `smooth` (arranca y frena suave). Otras útiles: `linear` (ritmo mecánico constante), `there_and_back` (va al estado final y vuelve), `rush_into` / `rush_from`. Se pasa **sin paréntesis** (la función, no su llamada): `rate_func=linear`, nunca `rate_func=smooth()`. Ver el catálogo en [[rate_functions]].
 
-### `lag_ratio` — el desfase entre animaciones
+#### `lag_ratio` — el desfase entre animaciones
 
 Float que **escalona el arranque** de cada animación del bloque. Con `lag_ratio=0` (defecto) todas empiezan a la vez; con `lag_ratio>0` cada una arranca cuando la anterior lleva esa fracción recorrida, produciendo una **cascada**. `lag_ratio=1` las encadena casi sin solape. Es la forma rápida de obtener el efecto cascada sin envolver en [[LaggedStart]].
 
-### `subcaption` — subtítulo del tramo
+#### `subcaption` — subtítulo del tramo
 
 String opcional con un subtítulo que se asocia al tramo de vídeo (útil al exportar con subtítulos). `subcaption_duration` y `subcaption_offset` ajustan cuánto dura y con qué desfase aparece. Rara vez se usan en animaciones normales.
 
-## Que hace / devuelve
+### Valor de retorno
 
 `play` toma las animaciones, las prepara (lee el estado inicial de cada mobject), y las **renderiza fotograma a fotograma** según `run_time`, `rate_func` y los FPS de la calidad elegida. Cada fotograma evalúa `interpolate_mobject(alpha)` de cada animación y compone la imagen. Al terminar, los mobjects quedan en su estado final dentro de la escena. Devuelve `None`: no encadenes nada sobre su resultado. El efecto observable es un tramo de vídeo de `run_time` segundos.
 

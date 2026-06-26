@@ -85,6 +85,36 @@ Las ocho notas de esta carpeta, con la idea que captura cada una:
 
 Lee de los cimientos hacia arriba: primero **scene_construct** y **mobject** (la base), luego **animation** y su atajo **animate_syntax**, después **sistema_coordenadas** para colocar objetos con soltura. Los dos avanzados —**updaters** y **herencia_mobjects**— se entienden mejor cuando ya tienes escenas funcionando. Y **render_cli** puedes leerlo en cualquier momento: lo necesitas en cuanto quieras *ver* tu primera escena.
 
+## Una escena que usa todo
+
+Una escena algo más larga, comentada línea a línea, donde cada paso ilustra un concepto de la carpeta. Léela como un repaso: si entiendes por qué cada comentario es lo que es, tienes el modelo mental completo. A la derecha de cada línea va el concepto que ejemplifica.
+
+```python
+from manim import *
+
+class UsaTodo(Scene):                     # [scene_construct] subclaseas Scene...
+    def construct(self):                  # [scene_construct] ...y escribes el guion en construct(self)
+        titulo = Text("Modelo mental").to_edge(UP)   # [mobject] un Mobject de texto; [coordenadas] UP lo lleva al borde
+        c = Circle(color=BLUE).shift(LEFT * 2)       # [mobject] otro Mobject; [coordenadas] LEFT = direccion
+
+        self.play(Write(titulo))          # [animation] self.play reproduce una Animation en el tiempo
+        self.play(Create(c))              # [animation] Create dibuja el circulo animadamente
+
+        # [animate] .animate convierte un cambio en animacion; sin el, el cambio seria instantaneo
+        self.play(c.animate.shift(RIGHT * 4).set_color(YELLOW))  # [coordenadas] RIGHT mueve a la derecha
+
+        cuadro = Square(color=GREEN)      # [mobject] un tercer Mobject
+        self.play(Transform(c, cuadro))   # [animation] Transform interpola un Mobject hacia otro
+
+        self.wait()                       # [scene_construct] wait pausa en el ultimo fotograma
+```
+
+```bash
+manim -pql archivo.py UsaTodo   # -p reproduce, -ql = calidad baja (rapido)
+```
+
+Lo que esta escena resume: **subclaseas `Scene` y el orden de las líneas es el orden del vídeo** (`concepto_scene_construct`); **`Circle`, `Text` y `Square` son Mobjects**, lo que se ve (`concepto_mobject`); **`Write`, `Create` y `Transform` son Animations** que `self.play` reproduce (`concepto_animation`); **`.animate` anima un cambio de estado** que de otro modo sería instantáneo (`concepto_animate_syntax`); y **`UP`, `LEFT`, `RIGHT` son las constantes de dirección** del espacio donde todo se coloca (`concepto_sistema_coordenadas`). Cinco conceptos en una sola escena ejecutable.
+
 ## Notas relacionadas
 
 - [[Manim/index|Manim]] — el índice raíz de la librería y la tríada Scene/Mobject/Animation.

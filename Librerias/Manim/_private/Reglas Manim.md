@@ -87,10 +87,10 @@ draft: false
 
 ## 4. Índice por carpeta (`index.md`) — OBLIGATORIO y con `classDiagram`
 
-> [!regla]
-> Cada directorio lleva su `index.md` como **nota madre** (no un listado). Debe incluir un **`classDiagram` de Mermaid** con la rama de herencia de esa carpeta (p. ej. la jerarquía de geometría bajo `VMobject`, o la de las animaciones de creación bajo `Animation`).
+> [!regla] El index es una nota completa, NO un listado
+> Cada directorio lleva su `index.md` como **nota madre de pleno derecho**: además de presentar a sus hijas, **enseña el grupo** con ejemplos ejecutables, modos de uso, recetas cortas y los errores o decisiones comunes a todas. Debe incluir un **`classDiagram` de Mermaid** con la rama de herencia de esa carpeta (p. ej. la jerarquía de geometría bajo `VMobject`).
 
-Estructura del `index.md`: título + párrafo · `## En accion` (una `Scene` ejecutable usando varias clases del grupo + el comando CLI) · `## Herencia` (`classDiagram` decorado) · `## Clases que aporta` (tabla `| Clase | Hereda de | Para que |`) · `## Como elegir` (tabla de decisión) · `## Notas relacionadas`.
+Estructura del `index.md` (desarrollada, no mínima): título + párrafo · `## En accion` (una `Scene` ejecutable real que combine varias clases del grupo + el comando CLI) · `## Herencia` (`classDiagram` decorado) · `## Clases que aporta` (tabla `| Clase | Hereda de | Para que |`) · `## Como elegir` (tabla/árbol de decisión) · `## Patrones y recetas del grupo` (2-3 mini-`Scene` con usos típicos: combinar las clases, el truco que comparten, el error frecuente) · `## Notas relacionadas`. La intención es que, leyendo solo el index, ya se aprenda a usar el grupo.
 
 ---
 
@@ -106,10 +106,10 @@ Las secciones `##` (cada una se ramifica en `###`/`####`):
 3. `## Herencia`
    - `### La cadena` — `classDiagram` de la herencia completa hasta `Mobject`/`Animation`.
    - `### Que aporta cada ancestro` — de dónde vienen color, posición, animación (lo que no define, lo hereda).
-4. `## Constructor`
-   - `### Firma` — bloque ```python con la firma, tipos y valores por defecto.
+4. `## Constructor` — primero el bloque ```python con la firma, tipos y valores por defecto; y DEBAJO, sus parámetros y el retorno como **subsecciones** (`###`/`####`), nunca como `##` hermanos:
    - `### Parametros principales` — tabla `| Parametro | Tipo | Defecto | Controla |`; un parámetro con trampa puede llevar su propio `#### <parametro>` con ejemplo.
    - `### Parametros de estilo` — `color`, `fill_opacity`, `stroke_width`...
+   - `### Que construye / devuelve` — qué objeto produce.
 5. `## Metodos clave` — agrupados por `###`: `### Transformar` (`shift`, `scale`, `rotate`), `### Estilizar` (`set_color`, `set_fill`), `### Consultar` (`get_center`, `get_width`); una tabla por grupo. Remitir a [[posicionamiento]] / [[estilo]] para los transversales.
 6. `## Ejemplo`
    - `### Version minima` — la `Scene` ejecutable más corta + el **comando CLI** (ver §6).
@@ -123,6 +123,26 @@ Las secciones `##` (cada una se ramifica en `###`/`####`):
 10. `## Notas relacionadas`.
 
 > La profundidad se adapta: una clase central (`Mobject`, `Scene`, `Transform`) tendrá muchos `###` y algún `####`; una figura simple, menos. Pero **el desarrollo en `###`/`####` y el ejemplo ejecutable (Scene + comando) son el listón** de toda nota de clase.
+
+---
+
+## 5b. Estructura de una nota de MÉTODO (`Scene.play`, `next_to`...)
+
+> [!regla] Los parámetros y el retorno van DENTRO de la firma
+> El error a evitar: poner `## Firma`, `## Parametros` y `## Devuelve` al **mismo** nivel `##`. Conceptualmente los parámetros y el valor de retorno **son parte de la firma**, así que van como **subsecciones `###` debajo de `## Firma`**. Así la firma destaca como el ancla de la nota.
+
+Estructura de una nota de método:
+
+1. `# título` + párrafo de qué hace y cuándo se usa.
+2. `## Firma` — el ancla de la nota:
+   - el bloque ```python con la firma completa (tipos y defaults).
+   - `### Parametros` — uno por `####` o una tabla `| Parametro | Tipo | Defecto | Que controla |`; los que tengan trampa, con su mini-ejemplo.
+   - `### Valor de retorno` — qué devuelve (a menudo `None` o `self` para encadenar).
+3. `## Ejemplos` — varios, progresivos, cada uno una `Scene` ejecutable + comando.
+4. `## Errores comunes` — tabla.
+5. `## Notas relacionadas`.
+
+La misma regla aplica a la firma del constructor de una clase (§5.4): el bloque primero, los parámetros y el retorno como `###` debajo.
 
 ---
 

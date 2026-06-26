@@ -28,9 +28,9 @@ def add(self, *mobjects: Mobject) -> Scene:
 
 Sin parámetros de tiempo (no anima): solo recibe los mobjects. **Devuelve la propia `Scene`** (`self`), lo que permite encadenar, aunque en la práctica casi nunca se aprovecha.
 
-## Los parametros en detalle
+### Parametros
 
-### `*mobjects` — los objetos a mostrar
+#### `*mobjects` — los objetos a mostrar
 
 Uno o varios `Mobject`, pasados como argumentos posicionales separados por comas. Cada uno entra en la lista `self.mobjects` y pasa a renderizarse en cada fotograma a partir de ese punto. Reglas que conviene tener claras:
 
@@ -43,7 +43,7 @@ Uno o varios `Mobject`, pasados como argumentos posicionales separados por comas
 
 El **orden de dibujado** importa cuando los objetos se solapan: el último añadido tapa a los anteriores. Para reordenar después se usan `bring_to_front` / `bring_to_back`, o se vuelve a añadir el que quieres delante.
 
-## Que hace / devuelve
+### Valor de retorno
 
 `add` inserta los mobjects en `self.mobjects` (la lista de lo que está en pantalla) y los marca para renderizarse desde el siguiente fotograma; no genera ningún tramo de vídeo por sí mismo (es instantáneo). Devuelve la propia `Scene`. Como no consume tiempo, si una escena **solo** usa `add` sin ningún `play` ni `wait`, el vídeo resultante dura 0 segundos: añade un `self.wait()` para verlo.
 

@@ -31,7 +31,7 @@ def bring_to_back(self, *mobjects: Mobject) -> Scene
 - Ambos devuelven la propia `Scene` (`self`).
 - Solo reordenan objetos que **ya están** en la escena; no añaden nada (para eso está [[Scene.add]]).
 
-## Los parametros en detalle
+### Parametros
 
 | Parámetro | Tipo | Defecto | Controla |
 |-----------|------|---------|----------|
@@ -41,7 +41,7 @@ def bring_to_back(self, *mobjects: Mobject) -> Scene
 - Si el Mobject **no estaba** en la escena, estos métodos lo añaden implícitamente al reordenar; en la práctica conviene haberlo añadido antes con `add`/`play`.
 - El **z-order** aquí es por orden en la lista de la escena. Para un control numérico más fino existe además `mobject.set_z_index(n)`, pero `bring_to_front`/`bring_to_back` cubren el caso habitual "ponlo delante / detrás".
 
-## Que hace / devuelve
+### Valor de retorno
 
 Ambos métodos editan la lista interna `self.mobjects`, que define el orden de pintado. `bring_to_front(x)` saca `x` de su posición actual y lo **reinserta al final** de la lista, de modo que se dibuja el último y, por tanto, queda **por encima** de cualquier objeto que se solape con él. `bring_to_back(x)` lo reinserta **al principio**, así se dibuja primero y el resto queda por encima (lo manda **al fondo**). El efecto es **inmediato y sin animación**, y solo afecta a *qué se ve delante*: las coordenadas, el color y el tamaño del Mobject no cambian. Ambos devuelven `self`.
 

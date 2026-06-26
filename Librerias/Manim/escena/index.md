@@ -90,6 +90,72 @@ La clase base es lo primero que se decide: marca lo que `self` puede hacer dentr
 | Trabajar en 3D (rotar la cámara, superficies, ejes 3D) | `ThreeDScene` |
 | Abrir un recuadro que muestra una zona ampliada del lienzo | `ZoomedScene` |
 
+## Patrones y recetas
+
+Tres recetas que se repiten al trabajar con esta carpeta: el esqueleto común a toda escena, cómo elegir la variante según lo que necesites, y el error que más se comete al empezar.
+
+### El esqueleto que se repite en TODA escena
+
+Cualquier animación de Manim, por compleja que sea, parte del mismo molde: **subclasear** una de las cuatro clases, **sobreescribir `construct(self)`**, y dentro **reproducir** con `self.play(...)`. No hay otra forma de entrar; memoriza este molde y el resto es rellenarlo.
+
+```python
+from manim import *
+
+class Esqueleto(Scene):          # 1. subclaseas una Scene (o una variante)
+    def construct(self):         # 2. sobreescribes construct(self)  <- ojo al self
+        c = Circle(color=BLUE)   # 3. creas tus Mobjects
+        self.play(Create(c))     # 4. los animas con self.play(...)
+        self.wait()              # 5. cierras con una pausa
+```
+
+```bash
+manim -pql archivo.py Esqueleto   # -p reproduce, -ql = calidad baja (rapido)
+```
+
+### Elegir la variante según la necesidad
+
+La misma figura, dos clases base distintas. En `Scene` el círculo se crea y ya; en `MovingCameraScene` puedes **acercar la cámara** animando `self.camera.frame`, algo que la `Scene` normal no permite. La regla: si vas a tocar la cámara, arrancas desde la variante adecuada, no desde `Scene`.
+
+```python
+from manim import *
+
+class Normal(Scene):                 # Scene: animacion 2D normal
+    def construct(self):
+        c = Circle(color=BLUE)
+        self.play(Create(c))
+        self.wait()
+
+class Acercamiento(MovingCameraScene):   # variante: la camara es animable
+    def construct(self):
+        c = Circle(color=BLUE)
+        self.play(Create(c))
+        # self.camera.frame solo existe porque heredamos de MovingCameraScene
+        self.play(self.camera.frame.animate.scale(0.5).move_to(c))  # zoom al circulo
+        self.wait()
+```
+
+```bash
+manim -pql archivo.py Acercamiento   # renderiza la variante con zoom
+```
+
+### El error común: instanciar la Scene a mano y olvidar self
+
+No se crea la escena tú mismo (`MiEscena()`) ni se llama a `construct` a mano: el **comando `manim`** instancia la clase y llama a `construct` por ti. Y `construct` **siempre** lleva `self`, porque es a través de `self` que llegas a `play`, `add` y `wait`.
+
+```python
+from manim import *
+
+class MalUso(Scene):
+    def construct():                 # ERROR: falta self
+        self.play(Create(Circle()))  # ...y sin self, esto ni existiria
+
+# ERROR: tampoco se instancia ni se llama a mano:
+# escena = MalUso()
+# escena.construct()
+```
+
+El primero falla con `construct() takes 0 positional arguments but 1 was given`; el segundo no renderiza nada porque Manim solo graba el vídeo cuando es **él** quien ejecuta `construct` desde el CLI. La forma correcta es la del esqueleto de arriba: defines la clase con `def construct(self):` y la renderizas con `manim -pql archivo.py MalUso`.
+
 ## Notas relacionadas
 
 - [[concepto_scene_construct]] — el modelo mental: la Scene y `construct()`

@@ -27,7 +27,7 @@ def remove(self, *mobjects: Mobject) -> Scene
 - Acepta **uno o varios** Mobjects separados por comas (es variádico, `*mobjects`).
 - Devuelve la propia `Scene` (`self`), lo que permite encadenar, aunque rara vez se hace.
 
-## Los parametros en detalle
+### Parametros
 
 | Parámetro | Tipo | Defecto | Controla |
 |-----------|------|---------|----------|
@@ -37,7 +37,7 @@ def remove(self, *mobjects: Mobject) -> Scene
 - Si pasas un [[VGroup]] (o cualquier grupo), se quita el grupo completo de la lista de la escena.
 - No hace falta pasar `run_time` ni nada parecido: al ser instantánea, no tiene parámetros de tiempo.
 
-## Que hace / devuelve
+### Valor de retorno
 
 `remove` edita la lista interna `self.mobjects` (la que también consulta `self.add`): elimina de ella los objetos indicados, de modo que a partir del siguiente fotograma renderizado ya no se dibujan. El cambio es **inmediato y sin transición**: el objeto desaparece de golpe. Devuelve `self` (la `Scene`). Importante: `remove` no *destruye* el Mobject en Python — la variable sigue existiendo y puedes volver a añadirlo más tarde con `self.add(mob)` o animarlo de nuevo con `self.play(...)`; solo deja de estar *en pantalla*.
 

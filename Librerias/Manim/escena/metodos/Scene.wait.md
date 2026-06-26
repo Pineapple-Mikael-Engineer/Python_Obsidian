@@ -33,21 +33,21 @@ def wait(
 
 `wait` no devuelve nada (`None`); su efecto es añadir un tramo de vídeo en el que el estado no cambia (salvo updaters activos).
 
-## Los parametros en detalle
+### Parametros
 
-### `duration` — cuántos segundos pausa
+#### `duration` — cuántos segundos pausa
 
 Float en segundos, `1.0` por defecto. Es lo único que se pasa el 95 % de las veces: `self.wait()` pausa 1 s, `self.wait(0.5)` medio segundo, `self.wait(3)` tres segundos. Durante ese tiempo el último fotograma se mantiene fijo, lo que da al espectador margen para leer o asimilar lo que acaba de pasar.
 
-### `stop_condition` — cortar la espera antes de tiempo
+#### `stop_condition` — cortar la espera antes de tiempo
 
 Un **callable sin argumentos** que devuelve `bool`. Si lo das, Manim evalúa la condición en cada fotograma de la espera y **corta** en cuanto devuelve `True`, aunque no se hayan cumplido los `duration` segundos (que actúan como tope máximo). Es la forma de esperar a que **algo dinámico ocurra** —por ejemplo, que un objeto movido por un updater alcance cierta posición— sin saber de antemano cuánto tardará.
 
-### `frozen_frame` — congelar o no el fotograma
+#### `frozen_frame` — congelar o no el fotograma
 
 Bool opcional. Si es `None` (defecto), Manim decide solo: congela el frame cuando no hay nada que actualizar (espera estática, más eficiente) y lo deja "vivo" cuando hay updaters o una `stop_condition` que evaluar. Pásalo explícito solo en casos raros: `frozen_frame=False` fuerza el render fotograma a fotograma durante la espera (necesario si quieres que se sigan ejecutando updaters), `True` lo congela.
 
-## Que hace / devuelve
+### Valor de retorno
 
 `wait` graba un tramo de vídeo de hasta `duration` segundos en el que la cámara sigue capturando pero **no se reproduce ninguna animación nueva**. Si hay updaters activos en los mobjects, **sí siguen ejecutándose** (el fotograma no se congela), de modo que `wait` es también la forma de "dejar correr" el tiempo para que los updaters animen. Si hay `stop_condition`, la espera termina antes en cuanto se cumple. Devuelve `None`.
 
