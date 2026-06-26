@@ -128,7 +128,7 @@ Casi todo lo útil es herencia (mover, colorear, escalar): remitir a [[posiciona
 
 ### Reencuadrar un objeto que se mueve
 
-Igual que [[Brace]], un `SurroundingRectangle` se calcula una sola vez. Si el objeto rodeado se desplaza, el recuadro se queda donde estaba; envuélvelo en `always_redraw` para que lo siga (ver [[updaters]]).
+Igual que [[Brace]], un `SurroundingRectangle` se calcula una sola vez. Si el objeto rodeado se desplaza, el recuadro se queda donde estaba; envuélvelo en `always_redraw` para que lo siga (ver [[concepto_updaters]]).
 
 ```python
 caja = always_redraw(lambda: SurroundingRectangle(objeto, color=YELLOW))

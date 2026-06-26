@@ -218,7 +218,7 @@ self.play(llave.animate.set_color(YELLOW))     # recolorear con .animate
 
 ### Mantenerla pegada a un objeto que se mueve
 
-Una llave se calcula **una vez** a partir del mobject en su posición de ese instante: si luego mueves el objeto, la llave **no** lo sigue sola. Para que la siga, usa un `always_redraw` que la reconstruya cada fotograma (ver [[updaters]]).
+Una llave se calcula **una vez** a partir del mobject en su posición de ese instante: si luego mueves el objeto, la llave **no** lo sigue sola. Para que la siga, usa un `always_redraw` que la reconstruya cada fotograma (ver [[concepto_updaters]]).
 
 ```python
 llave = always_redraw(lambda: Brace(objeto, DOWN))   # se recalcula cada frame
