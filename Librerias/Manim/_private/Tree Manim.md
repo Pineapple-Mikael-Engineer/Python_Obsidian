@@ -8,31 +8,25 @@ draft: true
 
 # 🎬 Tree Manim
 
-> Organizacion **jerarquica por rol en el modelo de Manim** (Community Edition). Manim es, como
-> PyQt6, una libreria muy **orientada a objetos**: se construye una **Scene**, se le anaden
-> **Mobjects** (objetos matematicos dibujables) y se los transforma con **Animations**. Por eso la
-> **herencia** es dato de primera clase (campo `hereda_de` + `classDiagram` en cada index): casi
-> todo lo dibujable hereda de `Mobject`/`VMobject` y casi toda transformacion hereda de `Animation`.
-> `✅` = nota creada · sin marca = roadmap pendiente.
+> Organización **jerárquica por rol en el modelo de Manim** (Community Edition). Manim es, como PyQt6, una librería muy **orientada a objetos**: se construye una **Scene**, se le añaden **Mobjects** (objetos matemáticos dibujables) y se los transforma con **Animations**. Por eso la **herencia** es dato de primera clase (campo `hereda_de` + `classDiagram` en cada index): casi todo lo dibujable hereda de `Mobject`/`VMobject` y casi toda transformación hereda de `Animation`. `✅` = nota creada · sin marca = roadmap pendiente.
 
 ---
 
 ## 📁 Tipos de notas
 
-| Tipo | Ubicacion | Ejemplo |
+| Tipo | Ubicación | Ejemplo |
 |------|-----------|---------|
 | **Concepto transversal** | `conceptos_transversales/` | `concepto_scene_construct.md` |
 | **Clase (Mobject/Animation/Scene)** | `<area>/` | `mobjects/geometria/Circle.md` |
-| **Metodo de posicionamiento/estilo** | `posicionamiento/`, `estilo/` | `posicionamiento/next_to.md` |
-| **Patron / receta** | `patrones/` | `mobject_personalizado.md` |
-| **Indice de carpeta** | `index.md` | nota madre con `classDiagram` de su rama |
+| **Método de posicionamiento/estilo** | `posicionamiento/`, `estilo/` | `posicionamiento/next_to.md` |
+| **Patrón / receta** | `patrones/` | `mobject_personalizado.md` |
+| **Índice de carpeta** | `index.md` | nota madre con `classDiagram` de su rama |
 
-> Naming API-style con el **nombre real** de la clase, respetando mayusculas (`Circle.md`,
-> `ReplacementTransform.md`, `ThreeDScene.md`). El metodo se nombra por su nombre (`next_to.md`).
+> Naming API-style con el **nombre real** de la clase, respetando mayúsculas (`Circle.md`, `ReplacementTransform.md`, `ThreeDScene.md`). El método se nombra por su nombre (`next_to.md`). El nombre del archivo va en ASCII; el contenido, en español normal.
 
 ---
 
-## 📂 Estructura completa (nucleo de animacion 2D + intro 3D)
+## 📂 Estructura completa (núcleo de animación 2D + intro 3D)
 
 ```tree
 Manim/
@@ -173,27 +167,26 @@ Manim/
 
 ---
 
-## 📊 Roadmap (estado de implementacion)
+## 📊 Roadmap (estado de implementación)
 
-> Rama **limpia** creada desde el commit de skills (`8e98b49`), sin notas de otras librerias.
-> Nucleo de animacion 2D primero; 3D y temas avanzados como roadmap.
+> Rama **limpia** creada desde el commit de skills (`8e98b49`), sin notas de otras librerías. Núcleo de animación 2D primero; 3D y temas avanzados como roadmap.
 
 | Bloque | Notas (aprox.) | Prioridad |
 |--------|:---:|-----------|
 | `conceptos_transversales/` | 8 | 🔴 primero (modelo mental Scene/Mobject/Animation) |
-| `escena/` (Scene + metodos) | ~10 | 🔴 el contenedor de todo |
-| `mobjects/` (geometria + texto + graficos) | ~35 | 🟠 lo que se ve |
-| `animaciones/` (creacion + transform + ...) | ~25 | 🟠 lo que se mueve |
+| `escena/` (Scene + métodos) | ~10 | 🔴 el contenedor de todo |
+| `mobjects/` (geometría + texto + gráficos) | ~35 | 🟠 lo que se ve |
+| `animaciones/` (creación + transform + ...) | ~25 | 🟠 lo que se mueve |
 | `posicionamiento/` | 6 | 🟠 imprescindible para componer |
 | `dinamico/` (updaters, ValueTracker) | 4 | 🟡 lo potente |
 | `estilo/` + `config_cli/` | 5 | 🟢 apariencia y render |
-| `camara/` + `mobjects/3d/` | ~7 | 🟢 3D (despues) |
+| `camara/` + `mobjects/3d/` | ~7 | 🟢 3D (después) |
 | `patrones/` | 4 | 🟡 recetas |
 
 ### Orden sugerido de relleno
 
-1. **`conceptos_transversales`** + `index.md` raiz — Scene/construct, Mobject, Animation, coordenadas.
-2. **`escena/Scene`** + sus metodos (`play`, `add`, `wait`) — el guion.
+1. **`conceptos_transversales`** + `index.md` raíz — Scene/construct, Mobject, Animation, coordenadas.
+2. **`escena/Scene`** + sus métodos (`play`, `add`, `wait`) — el guion.
 3. **`mobjects`** base (`Mobject`, `VMobject`, `VGroup`) + `geometria/` + `texto/`.
 4. **`posicionamiento/`** — colocar y componer los mobjects.
 5. **`animaciones`** (`creacion`, `transformacion`, `.animate`) — darles vida.
