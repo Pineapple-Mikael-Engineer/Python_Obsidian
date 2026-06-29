@@ -239,5 +239,5 @@ plt.show()
 - [[PropertyPlot.savefig]]
 - [[Common.unit_system]]
 - [[AbstractState]]
-- [[matplotlib.pyplot]]
+- `matplotlib.pyplot`
 

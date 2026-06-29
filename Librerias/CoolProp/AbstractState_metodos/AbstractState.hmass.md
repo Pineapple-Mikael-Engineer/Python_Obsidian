@@ -73,7 +73,7 @@ print(f"Calor latente: {h_fg:.0f} J/kg")  # ~2,257,000 J/kg
 
 ```python
 # Estado 1: entrada (vapor saturado a -10°C)
-state.update(CP.TQ_INPUTS, 263.15, 1)
+state.update(CP.QT_INPUTS, 1, 263.15)
 h1 = state.hmass()
 s1 = state.smass()
 

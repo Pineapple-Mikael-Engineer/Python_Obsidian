@@ -45,7 +45,7 @@ Estas son las **más importantes** para `AbstractState.update`. Definen qué par
 |-----------|-----------|-------|------------|
 | `CP.PT_INPUTS` | Presión, Temperatura | `(P, T)` | Estado general |
 | `CP.PQ_INPUTS` | Presión, Calidad | `(P, Q)` | Saturación por presión |
-| `CP.TQ_INPUTS` | Temperatura, Calidad | `(T, Q)` | Saturación por temperatura |
+| `CP.QT_INPUTS` | Calidad, Temperatura | `(Q, T)` | Saturación por temperatura |
 | `CP.PH_INPUTS` | Presión, Entalpía | `(P, H)` | Procesos reales |
 | `CP.PSmass_INPUTS` | Presión, Entropía | `(P, S)` | Procesos isentrópicos |
 | `CP.HmassP_INPUTS` | Entalpía, Presión | `(H, P)` | Estado por entalpía |

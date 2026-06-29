@@ -57,7 +57,7 @@ print(f"Entropía: {s:.1f} J/(kg·K)")  # Entropía: 367.0 J/(kg·K)
 
 ```python
 # Guardar entropía del estado inicial
-state.update(CP.TQ_INPUTS, 263.15, 1)  # -10°C, vapor saturado
+state.update(CP.QT_INPUTS, 1, 263.15)  # -10°C, vapor saturado
 s1 = state.smass()
 
 # Forzar misma entropía con nueva presión

@@ -117,7 +117,7 @@ plot.draw_isolines()  # Dibuja todas
 - `calc_isolines` solo **calcula**, no dibuja. Usar [[PropertyPlot.draw_isolines]] después.
 - Si no se llama a `calc_isolines`, `draw_isolines` no dibujará nada.
 - `iso_range` debe contener **exactamente 2 valores** (mínimo y máximo).
-- Para dibujar isolíneas en valores específicos (ej: solo 300K, 350K, 400K), no se puede con `calc_isolines`. Se debe dibujar manualmente con [[matplotlib.pyplot]].
+- Para dibujar isolíneas en valores específicos (ej: solo 300K, 350K, 400K), no se puede con `calc_isolines`. Se debe dibujar manualmente con `matplotlib.pyplot`.
 
 ## Errores comunes
 
