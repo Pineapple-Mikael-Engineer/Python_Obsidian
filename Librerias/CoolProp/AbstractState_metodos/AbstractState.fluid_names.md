@@ -87,6 +87,6 @@ print(f"Componentes de R410A: {names}")  # ['R32', 'R125']
 ## Notas relacionadas
 
 - [[AbstractState]]
-- [[AbstractState.fluid_parameter]]
+- [[CoolProp.get_fluid_param_string]]
 - [[AbstractState.get_mass_fractions]]
-- [[CoolProp.has_fluid]]
+- [[CoolProp.get_global_param_string]]

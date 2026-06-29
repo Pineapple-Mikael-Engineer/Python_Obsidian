@@ -47,7 +47,7 @@ AbstractState.p() -> float
 import CoolProp.CoolProp as CP
 
 state = CP.AbstractState('HEOS', 'Water')
-state.update(CP.TQ_INPUTS, 373.15, 0)  # Líquido saturado a 100°C
+state.update(CP.QT_INPUTS, 0, 373.15)  # Líquido saturado a 100°C
 
 P = state.p()
 print(f"Presión de saturación: {P / 1000:.2f} kPa")  # ~101.33 kPa
@@ -67,7 +67,7 @@ P_atm = P_Pa / 101325         # atmósferas
 
 ```python
 # Dada una temperatura, obtener Psat
-state.update(CP.TQ_INPUTS, 373.15, 0)  # Líquido saturado a 100°C
+state.update(CP.QT_INPUTS, 0, 373.15)  # Líquido saturado a 100°C
 Psat = state.p()
 print(f"Psat a 100°C: {Psat / 1000:.2f} kPa")
 ```

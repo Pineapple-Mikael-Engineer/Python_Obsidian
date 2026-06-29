@@ -51,14 +51,20 @@ flowchart TD
 
 | Nota / carpeta | Qué aporta |
 |----------------|-----------|
+| [[CoolProp/conceptos_transversales/index\|conceptos_transversales]] | El **modelo mental**: el estado por 2 propiedades, el backend de cálculo, las unidades SI |
 | [[CoolProp.PropsSI]] | La función de **alto nivel**: una propiedad por llamada. El punto de entrada habitual |
+| [[CoolProp.HAPropsSI]] | Propiedades del **aire húmedo** (psicrometría): necesita 3 entradas |
+| [[CoolProp.PhaseSI]] | La **fase** como texto (`liquid`, `gas`, `supercritical`, `twophase`…) |
 | [[AbstractState]] | El objeto de **bajo nivel**: fija un estado y consulta muchas propiedades; soporta mezclas |
 | [[CoolProp/AbstractState_metodos/index\|AbstractState_metodos]] | Los métodos del objeto: `update`, propiedades (`T`, `p`, `hmass`…), saturación, derivadas |
+| [[CoolProp/backends/index\|backends]] | El **motor de cálculo** intercambiable: `HEOS`, `IF97`, `REFPROP`, `SRK` |
 | [[Constants]] | Los pares de entrada (`PT_INPUTS`, `QT_INPUTS`…) y las claves de propiedad |
 | [[CoolProp/Plots/index\|Plots]] | Diagramas termodinámicos (P-h, T-s…) con isolíneas vía `PropertyPlot` |
+| Metadata | [[CoolProp.get_global_param_string]], [[CoolProp.get_fluid_param_string]], [[CoolProp.set_reference_state]] |
 
 ## Notas relacionadas
 
+- [[concepto_estado_termodinamico]] — la regla de las dos propiedades independientes
 - [[CoolProp.PropsSI]] — el primer paso para la mayoría de cálculos
 - [[AbstractState]] — la vía eficiente y para mezclas
 - [[Tree CoolProp]] — mapa completo del vault
