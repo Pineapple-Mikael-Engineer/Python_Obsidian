@@ -61,7 +61,7 @@ densidades = PropsSI('D', 'T', temperaturas, 'P', 101325, 'Water')
 
 ### `output` — propiedad de salida
 
-String que indica qué propiedad calcular. Ver [[Propiedades_SI]] para lista completa.
+String que indica qué propiedad calcular. Ver [[concepto_propiedades_SI]] para lista completa.
 
 | Símbolo | Descripción | Unidad |
 |---------|-------------|--------|
@@ -78,7 +78,7 @@ String que indica qué propiedad calcular. Ver [[Propiedades_SI]] para lista com
 
 ### `input1`, `input2` — variables de entrada
 
-Pares de variables independientes que definen el estado termodinámico. Ver [[Concepto_estado_termodinamico]].
+Pares de variables independientes que definen el estado termodinámico. Ver [[concepto_estado_termodinamico]].
 
 | Input | Descripción | Unidad |
 |-------|-------------|--------|
@@ -95,7 +95,7 @@ Pares de variables independientes que definen el estado termodinámico. Ver [[Co
 
 ### `fluid` — nombre del fluido
 
-String con el fluido. Opcionalmente con prefijo de [[Concepto_backend|backend]]:
+String con el fluido. Opcionalmente con prefijo de [[concepto_backend|backend]]:
 
 ```python
 # Backend por defecto (HEOS)
@@ -121,7 +121,7 @@ PropsSI('D', 'T', 300, 'P', 1e5, 'REFPROP::Water')
 | CO₂ | `'CarbonDioxide'` |
 | Aire | `'Air'` |
 
-Ver [[CoolProp.has_fluid]] para verificar disponibilidad.
+Ver [[CoolProp.get_global_param_string]] para verificar disponibilidad.
 
 ### `fractions` — fracciones para mezclas (opcional)
 
@@ -207,21 +207,21 @@ entalpias = PropsSI('H', 'T', temperaturas, 'P', presiones, 'Water')
 
 | Error | Causa | Solución |
 |-------|-------|----------|
-| `CoolProp does not have fluid '...'` | Fluido mal escrito | Verificar con [[CoolProp.has_fluid]] |
+| `CoolProp does not have fluid '...'` | Fluido mal escrito | Verificar con [[CoolProp.get_global_param_string]] |
 | `The given state is not valid` | Combinación de propiedades fuera de rango físico | Usar [[CoolProp.PhaseSI]] para depurar |
 | `No backend could be obtained` | Backend no disponible para ese fluido | Usar `'HEOS::'` o verificar backends con [[CoolProp.get_parameter_information]] |
 | `Inputs are not consistent` | Par de variables incompatible | Cambiar combinación (ej: `T+P` en lugar de `T+H` en ciertas regiones) |
 
 ## Limitaciones
 
-- No todos los fluidos tienen todos los [[Concepto_backend|backends]]
+- No todos los fluidos tienen todos los [[concepto_backend|backends]]
 - Estados cerca del punto crítico pueden tener baja precisión
 - Algunas combinaciones (`'H'` + `'S'`) pueden fallar por no ser monotónicas
-- Para cálculos repetitivos en bucles, usar [[AbstractState.__init__|AbstractState]] es más eficiente
+- Para cálculos repetitivos en bucles, usar [[AbstractState]] es más eficiente
 
 ## Alternativa: AbstractState
 
-Para múltiples consultas al mismo fluido, [[AbstractState.__init__]] es más rápido:
+Para múltiples consultas al mismo fluido, [[AbstractState]] es más rápido:
 
 ```python
 import CoolProp.CoolProp as CP
@@ -234,11 +234,11 @@ Ver [[AbstractState.update]] y [[AbstractState.rho]] para más detalles.
 
 ## Notas relacionadas
 
-- [[Propiedades_SI]]
-- [[Concepto_estado_termodinamico]]
-- [[Concepto_backend]]
+- [[concepto_propiedades_SI]]
+- [[concepto_estado_termodinamico]]
+- [[concepto_backend]]
 - [[CoolProp.PhaseSI]]
-- [[CoolProp.has_fluid]]
-- [[AbstractState.__init__]]
+- [[CoolProp.get_global_param_string]]
+- [[AbstractState]]
 - [[AbstractState.update]]
 - [[AbstractState.rho]]

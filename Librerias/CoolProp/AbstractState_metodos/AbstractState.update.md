@@ -48,7 +48,7 @@ Entero (`int`) que define qué par de variables se está especificando. Las comb
 |-----------|-----------|-------|----------|
 | `CP.PT_INPUTS` | Presión, Temperatura | `(P, T)` | Pa, K |
 | `CP.PQ_INPUTS` | Presión, Calidad | `(P, Q)` | Pa, - |
-| `CP.TQ_INPUTS` | Temperatura, Calidad | `(T, Q)` | K, - |
+| `CP.QT_INPUTS` | Calidad, Temperatura | `(Q, T)` | -, K |
 | `CP.PH_INPUTS` | Presión, Entalpía | `(P, H)` | Pa, J/kg |
 | `CP.PSmass_INPUTS` | Presión, Entropía | `(P, S)` | Pa, J/(kg·K) |
 | `CP.HmassP_INPUTS` | Entalpía, Presión | `(H, P)` | J/kg, Pa |
@@ -71,7 +71,7 @@ import CoolProp.CoolProp as CP
 # Combinaciones disponibles
 print(CP.PT_INPUTS)      # 0
 print(CP.PQ_INPUTS)      # 1
-print(CP.TQ_INPUTS)      # 2
+print(CP.QT_INPUTS)      # par (Q, T)
 ```
 
 ### Estado general (P, T)
@@ -105,10 +105,10 @@ state.update(CP.PQ_INPUTS, 5e5, 0.5)
 ```python
 # Vapor saturado a 100°C
 state = CP.AbstractState('HEOS', 'Water')
-state.update(CP.TQ_INPUTS, 373.15, 1.0)
+state.update(CP.QT_INPUTS, 1.0, 373.15)
 
 # Líquido saturado a 100°C
-state.update(CP.TQ_INPUTS, 373.15, 0.0)
+state.update(CP.QT_INPUTS, 0.0, 373.15)
 ```
 
 ### Proceso isentrópico (compresor)
@@ -116,7 +116,7 @@ state.update(CP.TQ_INPUTS, 373.15, 0.0)
 ```python
 # Estado 1: entrada al compresor (vapor saturado a -10°C)
 state = CP.AbstractState('HEOS', 'R134a')
-state.update(CP.TQ_INPUTS, 263.15, 1.0)
+state.update(CP.QT_INPUTS, 1.0, 263.15)
 
 # Guardar entropía
 s1 = state.smass()
@@ -160,7 +160,7 @@ state.specify_phase(CP.iphase_gas)  # forzar fase gas
 state.update(CP.PT_INPUTS, 2.2e7, 374.15)
 ```
 
-Ver [[Constants.phase_flags]] para valores disponibles.
+Ver [[Constants]] para valores disponibles.
 
 ## Verificar si el update fue exitoso
 

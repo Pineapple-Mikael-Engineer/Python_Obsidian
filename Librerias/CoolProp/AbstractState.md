@@ -47,7 +47,7 @@ class AbstractState(
 
 | Parámetro | Tipo | Descripción |
 |-----------|------|-------------|
-| `backend` | `str` | Motor de cálculo. Ver [[Concepto_backend]] |
+| `backend` | `str` | Motor de cálculo. Ver [[concepto_backend]] |
 | `fluid` | `str` | Nombre del fluido o mezcla (`'Water'`, `'R134a'`, `'R32&R134a'`) |
 
 ## Instanciación
@@ -93,7 +93,7 @@ El método [[AbstractState.update]] define el estado termodinámico usando combi
 |----------------|------------------|------------|
 | `CP.PT_INPUTS` | `(P, T)` | Estado general |
 | `CP.PQ_INPUTS` | `(P, Q)` | Saturación por presión |
-| `CP.TQ_INPUTS` | `(T, Q)` | Saturación por temperatura |
+| `CP.QT_INPUTS` | `(Q, T)` | Saturación por temperatura |
 | `CP.PH_INPUTS` | `(P, H)` | Procesos reales (compresores) |
 | `CP.PSmass_INPUTS` | `(P, S)` | Procesos isentrópicos |
 | `CP.HmassP_INPUTS` | `(H, P)` | Entalpía y presión |
@@ -189,7 +189,7 @@ for T in temperaturas:
 ## Notas relacionadas
 
 - [[CoolProp.PropsSI]]
-- [[Concepto_backend]]
+- [[concepto_backend]]
 - [[AbstractState.update]]
 - [[AbstractState.rho]]
 - [[AbstractState.hmass]]
